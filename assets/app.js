@@ -1,5 +1,27 @@
 const STORAGE_KEY = "100dias_participant_state_v1";
 const LEADS_KEY = "100dias_sales_leads_v1";
+const PLAN_DETAILS = {
+  Alpha: {
+    key: "alpha",
+    label: "Grupo Alpha",
+    price: "USD 9",
+  },
+  "El Metodo": {
+    key: "metodo",
+    label: "El Metodo",
+    price: "USD 29",
+  },
+  "El Metodo + Sistema": {
+    key: "sistema",
+    label: "El Metodo + Sistema",
+    price: "USD 79",
+  },
+  "El Metodo Premium": {
+    key: "premium",
+    label: "El Metodo Premium",
+    price: "USD 297",
+  },
+};
 
 const dailyContent = Array.from({ length: 100 }, (_, index) => {
   const day = index + 1;
@@ -186,11 +208,61 @@ const planSelect = leadForm?.querySelector("select[name='plan']");
 const accessArea = document.querySelector("#accessArea");
 const accessMessage = accessArea?.querySelector(".access-message");
 const accessLinks = accessArea?.querySelector(".access-links");
+const paymentSummary = document.querySelector("[data-payment-summary]");
+const paymentNote = document.querySelector("[data-payment-note]");
+const paymentLinks = document.querySelectorAll("[data-payment-provider]");
 
 document.querySelectorAll("[data-plan]").forEach((button) => {
   button.addEventListener("click", () => {
     if (planSelect) {
       planSelect.value = button.dataset.plan;
+      updatePaymentLinks();
+    }
+  });
+});
+
+planSelect?.addEventListener("change", updatePaymentLinks);
+
+function getSelectedPlan() {
+  return PLAN_DETAILS[planSelect?.value] || PLAN_DETAILS.Alpha;
+}
+
+function updatePaymentLinks() {
+  if (!planSelect) return;
+  const plan = getSelectedPlan();
+  const configuredLinks = window.PAYMENT_LINKS?.[plan.key] || {};
+  const configuredProviders = [];
+
+  if (paymentSummary) {
+    paymentSummary.textContent = `${plan.label} - ${plan.price}`;
+  }
+
+  paymentLinks.forEach((link) => {
+    const provider = link.dataset.paymentProvider;
+    const url = configuredLinks[provider];
+    const isConfigured = Boolean(url);
+    link.href = isConfigured ? url : "#";
+    link.setAttribute("data-disabled", String(!isConfigured));
+    link.classList.toggle("disabled", !isConfigured);
+    link.target = isConfigured ? "_blank" : "";
+    link.rel = isConfigured ? "noopener" : "";
+    if (isConfigured) configuredProviders.push(provider === "paypal" ? "PayPal" : "Stripe");
+  });
+
+  if (paymentNote) {
+    paymentNote.textContent = configuredProviders.length
+      ? `Pago disponible con ${configuredProviders.join(" y ")}. El dinero ira a la cuenta conectada en esa plataforma.`
+      : "Pagos pendientes: pega tus enlaces reales de PayPal y Stripe en assets/payments.js.";
+  }
+}
+
+paymentLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (link.dataset.disabled === "true") {
+      event.preventDefault();
+      if (paymentNote) {
+        paymentNote.textContent = "Este boton aun no cobra. Falta colocar el enlace real de pago.";
+      }
     }
   });
 });
@@ -230,6 +302,8 @@ function unlockSalesAccess(data = {}) {
 if (localStorage.getItem("100dias_access_requested") === "true") {
   unlockSalesAccess();
 }
+
+updatePaymentLinks();
 
 document.querySelectorAll("[data-step]").forEach((button) => {
   button.addEventListener("click", () => {

@@ -810,6 +810,40 @@ footer p {
   font-weight: 950;
 }
 
+.payment-box {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(240, 207, 122, 0.36);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(214, 184, 114, 0.08);
+}
+
+.payment-box span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.payment-box strong {
+  color: var(--gold-strong);
+  font-size: 20px;
+}
+
+.payment-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.button.disabled,
+.button[data-disabled="true"] {
+  opacity: 0.52;
+  cursor: not-allowed;
+}
+
 .registration-section .activation-complete {
   margin-top: 18px;
 }
@@ -899,6 +933,10 @@ footer p {
 
   .final-cta {
     grid-template-columns: 1fr auto;
+  }
+
+  .payment-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

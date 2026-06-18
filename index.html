@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -34,7 +34,7 @@
           <p class="welcome-statement">Control. Fortaleza. Direccion.</p>
           <p class="lead">
             La mayoria de las personas vive reaccionando. 100 Dias: El Metodo
-            fue diseñado para recuperar control, desarrollar fortaleza y
+            fue diseÃ±ado para recuperar control, desarrollar fortaleza y
             construir una vida dirigida.
           </p>
           <div class="hero-actions">
@@ -136,6 +136,13 @@
           <h2>Elige tu acceso.</h2>
         </div>
         <div class="phase-grid plans-grid">
+          <article class="featured-plan">
+            <span>Grupo Alpha</span>
+            <h3>Acceso Alpha</h3>
+            <p class="price">USD 9</p>
+            <p>Acceso de validacion por 14 dias para probar el Metodo con seguimiento inicial.</p>
+            <a class="button primary" href="#registro" data-plan="Alpha">Elegir Alpha</a>
+          </article>
           <article>
             <span>Plan I</span>
             <h3>El Metodo</h3>
@@ -178,20 +185,32 @@
           <label>
             Plan
             <select name="plan" required>
+              <option value="Alpha">Grupo Alpha - USD 9</option>
               <option value="El Metodo">El Metodo - USD 29</option>
               <option value="El Metodo + Sistema">El Metodo + Sistema - USD 79</option>
               <option value="El Metodo Premium">El Metodo Premium - USD 297</option>
             </select>
           </label>
-          <button class="button primary" type="submit">Comenzar el metodo</button>
-          <p class="form-note" id="formNote">Tu acceso sera activado despues de completar el proceso de inscripcion.</p>
+          <div class="payment-box">
+            <div>
+              <span>Pago seleccionado</span>
+              <strong data-payment-summary>Grupo Alpha - USD 9</strong>
+            </div>
+            <div class="payment-actions">
+              <a class="button primary payment-link" href="#" data-payment-provider="paypal" data-disabled="true">Pagar con PayPal</a>
+              <a class="button secondary payment-link" href="#" data-payment-provider="stripe" data-disabled="true">Pagar con Stripe</a>
+            </div>
+            <p class="form-note" data-payment-note>Configura tus enlaces reales en `assets/payments.js` para activar los pagos.</p>
+          </div>
+          <button class="button secondary" type="submit">Registrar interes sin pagar</button>
+          <p class="form-note" id="formNote">Despues del pago, el acceso se confirma manualmente durante el Alpha.</p>
         </form>
         <div class="activation-complete locked" id="accessArea" hidden>
           <strong>Solicitud registrada.</strong>
           <span class="access-message">Tu acceso inicial al Metodo esta listo.</span>
           <div class="hero-actions access-links" hidden>
             <a class="button primary" href="acceso.html">Entrar al acceso del participante</a>
-            <a class="button secondary" href="public/downloads/README.txt">Ver nota de entrega</a>
+            <a class="button secondary" href="public/downloads/README.txt">Leer Metodo Oficial</a>
           </div>
         </div>
       </section>
@@ -203,7 +222,7 @@
         </div>
         <div class="resource-list">
           <div><strong>Cuanto tiempo requiere por dia?</strong><span>Entre 15 y 30 minutos.</span></div>
-          <div><strong>Que pasa si fallo un dia?</strong><span>Continúas al siguiente. El metodo no exige perfeccion.</span></div>
+          <div><strong>Que pasa si fallo un dia?</strong><span>ContinÃºas al siguiente. El metodo no exige perfeccion.</span></div>
           <div><strong>Necesito experiencia previa?</strong><span>No. Solo disposicion para ejecutar.</span></div>
           <div><strong>Esta basado en estoicismo?</strong><span>Si, aplicado de forma practica.</span></div>
         </div>
@@ -223,6 +242,7 @@
       <p>100 Dias: El Metodo. Dominio Personal = Control + Fortaleza + Direccion.</p>
     </footer>
 
+    <script src="assets/payments.js"></script>
     <script src="assets/app.js"></script>
   </body>
 </html>
