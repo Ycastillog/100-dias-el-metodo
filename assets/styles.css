@@ -731,6 +731,40 @@ footer p {
   gap: 10px;
 }
 
+.alpha-banner {
+  max-width: 620px;
+  display: grid;
+  gap: 8px;
+  border: 1px solid rgba(240, 207, 122, 0.5);
+  border-left: 4px solid var(--gold-strong);
+  border-radius: 8px;
+  padding: 16px;
+  background:
+    linear-gradient(90deg, rgba(214, 184, 114, 0.18), rgba(255, 255, 255, 0.03)),
+    rgba(23, 22, 18, 0.9);
+}
+
+.alpha-banner span,
+.social-proof-strip span,
+.social-engine-grid span {
+  color: var(--gold-strong);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.alpha-banner strong {
+  color: var(--text);
+  font-size: clamp(22px, 5vw, 34px);
+  line-height: 1.08;
+}
+
+.alpha-banner p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .authority-strip {
   display: grid;
   gap: 1px;
@@ -751,11 +785,35 @@ footer p {
   text-transform: uppercase;
 }
 
+.social-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border-bottom: 1px solid var(--line);
+  background: var(--line);
+}
+
+.social-proof-strip div {
+  min-height: 96px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 16px;
+  background: rgba(16, 16, 14, 0.96);
+}
+
+.social-proof-strip strong {
+  color: var(--text);
+  font-size: clamp(22px, 6vw, 34px);
+  line-height: 1;
+}
+
 .audience-section,
 .plans-section,
 .registration-section,
 .faq-section,
-.recommendations-section {
+.recommendations-section,
+.social-engine-section {
   padding: 44px 16px;
 }
 
@@ -895,6 +953,36 @@ footer p {
   font-size: 13px;
 }
 
+.social-engine-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.social-engine-grid article {
+  min-height: 190px;
+  display: grid;
+  align-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(214, 184, 114, 0.1), rgba(255, 255, 255, 0.025)),
+    rgba(23, 22, 18, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.social-engine-grid h3 {
+  color: var(--gold-strong);
+  font-size: 26px;
+}
+
+.social-engine-grid p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .registration-section .activation-complete {
   margin-top: 18px;
 }
@@ -940,11 +1028,16 @@ footer p {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .social-proof-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .activation-grid,
   .dashboard-grid,
   .phase-grid,
   .resource-grid,
   .recommendation-grid,
+  .social-engine-grid,
   .audience-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
