@@ -754,7 +754,8 @@ footer p {
 .audience-section,
 .plans-section,
 .registration-section,
-.faq-section {
+.faq-section,
+.recommendations-section {
   padding: 44px 16px;
 }
 
@@ -844,6 +845,56 @@ footer p {
   cursor: not-allowed;
 }
 
+.recommendation-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.recommendation-grid a {
+  min-height: 190px;
+  display: grid;
+  align-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(214, 184, 114, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(23, 22, 18, 0.9);
+  box-shadow: var(--shadow);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.recommendation-grid a:hover {
+  border-color: rgba(240, 207, 122, 0.72);
+  transform: translateY(-1px);
+}
+
+.recommendation-grid span {
+  color: var(--gold-strong);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.recommendation-grid strong {
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.14;
+}
+
+.recommendation-grid p,
+.affiliate-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.affiliate-note {
+  margin-top: 14px;
+  font-size: 13px;
+}
+
 .registration-section .activation-complete {
   margin-top: 18px;
 }
@@ -870,6 +921,7 @@ footer p {
   .phases-section,
   .kit-section,
   .resources-section,
+  .recommendations-section,
   .audience-section,
   .plans-section,
   .registration-section,
@@ -892,6 +944,7 @@ footer p {
   .dashboard-grid,
   .phase-grid,
   .resource-grid,
+  .recommendation-grid,
   .audience-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -943,7 +996,8 @@ footer p {
 @media (min-width: 1040px) {
   .activation-grid,
   .phase-grid,
-  .resource-grid {
+  .resource-grid,
+  .recommendation-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 

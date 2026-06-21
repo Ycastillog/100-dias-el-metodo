@@ -211,6 +211,7 @@ const accessLinks = accessArea?.querySelector(".access-links");
 const paymentSummary = document.querySelector("[data-payment-summary]");
 const paymentNote = document.querySelector("[data-payment-note]");
 const paymentLinks = document.querySelectorAll("[data-payment-provider]");
+const externalLinks = document.querySelectorAll("[data-external-link]");
 
 document.querySelectorAll("[data-plan]").forEach((button) => {
   button.addEventListener("click", () => {
@@ -304,6 +305,32 @@ if (localStorage.getItem("100dias_access_requested") === "true") {
 }
 
 updatePaymentLinks();
+updateExternalLinks();
+
+function updateExternalLinks() {
+  externalLinks.forEach((link) => {
+    const key = link.dataset.externalLink;
+    const url = window.AFFILIATE_LINKS?.[key];
+    const isConfigured = Boolean(url);
+    link.href = isConfigured ? url : "#";
+    link.target = isConfigured ? "_blank" : "";
+    link.rel = isConfigured ? "sponsored noopener" : "";
+    link.dataset.disabled = String(!isConfigured);
+    link.classList.toggle("disabled", !isConfigured);
+  });
+}
+
+externalLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (link.dataset.disabled === "true") {
+      event.preventDefault();
+      const note = link.closest("section")?.querySelector("[data-affiliate-note]");
+      if (note) {
+        note.textContent = "Enlace pendiente: agrega tu link de Amazon, Spotify o YouTube en assets/affiliate-links.js.";
+      }
+    }
+  });
+});
 
 document.querySelectorAll("[data-step]").forEach((button) => {
   button.addEventListener("click", () => {
