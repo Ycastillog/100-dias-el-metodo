@@ -8,10 +8,14 @@
       name="description"
       content="Experiencia digital de 100 Dias: El Metodo. Activacion, Dia 0, avance diario, revisiones y recursos organizados."
     />
+    <meta property="og:title" content="Acceso | 100 Dias: El Metodo" />
+    <meta property="og:description" content="Plataforma del participante para ejecutar Dia 0, Dia 1 y volver al marco." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="%23070706"/><text x="32" y="40" text-anchor="middle" font-size="26" font-family="Arial" font-weight="900" fill="%23f0cf7a">100</text></svg>' />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
-  <body>
+  <body class="access-page">
     <header class="app-header">
       <a class="brand" href="#bienvenida" aria-label="100 Dias: El Metodo">
         <span>100</span>
@@ -46,10 +50,19 @@
           <a class="button primary" href="#activacion">Iniciar el metodo</a>
         </div>
 
-        <aside class="welcome-panel">
-          <span class="panel-label">Dominio personal</span>
-          <strong>Control + Fortaleza + Direccion</strong>
-          <p>Una plataforma para ejecutar el siguiente dia, no para acumular archivos.</p>
+        <aside class="welcome-panel access-preview" aria-label="Vista previa del avance del participante">
+          <div class="access-preview-image">
+            <img src="assets/product-dashboard.png" alt="Vista previa del dashboard de avance" />
+          </div>
+          <div class="access-preview-content">
+            <span class="panel-label">Dominio personal</span>
+            <strong>Control + Fortaleza + Direccion</strong>
+            <p>Una plataforma para ejecutar el siguiente dia, no para acumular archivos.</p>
+            <div class="access-mini-progress" aria-label="Progreso visual de ejemplo">
+              <span>Dia 1 activo</span>
+              <div><i></i></div>
+            </div>
+          </div>
         </aside>
       </section>
 
@@ -283,30 +296,30 @@
           <h2>Todo organizado como sistema, no como archivos sueltos.</h2>
         </div>
         <div class="resource-grid">
-          <a href="public/downloads/README.txt">
+          <div>
             <span>Metodo Oficial</span>
             <strong>Leer primero</strong>
-          </a>
-          <a href="public/downloads/README.txt">
+          </div>
+          <div>
             <span>Documento Maestro</span>
             <strong>Marco fundacional</strong>
-          </a>
-          <a href="public/downloads/README.txt">
+          </div>
+          <div>
             <span>Manual del Participante</span>
             <strong>Guia personal</strong>
-          </a>
-          <a href="public/downloads/README.txt">
+          </div>
+          <div>
             <span>Sistema de Avance</span>
             <strong>Seguimiento editable</strong>
-          </a>
-          <a href="public/downloads/README.txt">
+          </div>
+          <div>
             <span>Programa Dia a Dia</span>
             <strong>100 registros</strong>
-          </a>
-          <a href="public/downloads/README.txt">
+          </div>
+          <div>
             <span>Manual del Facilitador</span>
             <strong>Uso futuro guiado</strong>
-          </a>
+          </div>
         </div>
       </section>
 
@@ -380,9 +393,11 @@
 
     <footer>
       <p>100 Dias: El Metodo. Todo responde a una pregunta: ayuda al usuario a ejecutar el siguiente dia?</p>
+      <p><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Terminos</a></p>
     </footer>
 
     <script src="assets/affiliate-links.js"></script>
+    <script src="assets/site-config.js"></script>
     <script src="assets/app.js"></script>
   </body>
 </html>

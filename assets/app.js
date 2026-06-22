@@ -1,5 +1,6 @@
 const STORAGE_KEY = "100dias_participant_state_v1";
 const LEADS_KEY = "100dias_sales_leads_v1";
+const EVENTS_KEY = "100dias_events_v1";
 const PLAN_DETAILS = {
   Alpha: {
     key: "alpha",
@@ -213,6 +214,51 @@ const paymentNote = document.querySelector("[data-payment-note]");
 const paymentLinks = document.querySelectorAll("[data-payment-provider]");
 const externalLinks = document.querySelectorAll("[data-external-link]");
 
+function getStoredArray(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function trackEvent(name, details = {}) {
+  const event = {
+    name,
+    details,
+    path: window.location.pathname,
+    createdAt: new Date().toISOString(),
+  };
+  const events = getStoredArray(EVENTS_KEY);
+  events.push(event);
+  localStorage.setItem(EVENTS_KEY, JSON.stringify(events.slice(-200)));
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: name, ...details });
+
+  if (window.SITE_CONFIG?.analyticsDebug) {
+    console.info("[100dias:event]", event);
+  }
+}
+
+function getAttribution() {
+  const params = new URLSearchParams(window.location.search);
+  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "gclid"];
+  return Object.fromEntries(keys.map((key) => [key, params.get(key) || ""]).filter(([, value]) => value));
+}
+
+function getConfiguredWhatsappUrl(data) {
+  const number = window.SITE_CONFIG?.whatsappNumber;
+  if (!number) return "";
+  const message = [
+    "Hola, quiero entrar al Grupo Alpha de 100 Dias.",
+    `Nombre: ${data.name || ""}`,
+    `Email: ${data.email || ""}`,
+    `Objetivo: ${data.goal || ""}`,
+  ].join("\n");
+  return `https://wa.me/${String(number).replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
+}
+
 document.querySelectorAll("[data-plan]").forEach((button) => {
   button.addEventListener("click", () => {
     if (planSelect) {
@@ -259,28 +305,98 @@ function updatePaymentLinks() {
 
 paymentLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
+    const plan = getSelectedPlan();
     if (link.dataset.disabled === "true") {
       event.preventDefault();
+      trackEvent("payment_missing_link", {
+        provider: link.dataset.paymentProvider,
+        plan: plan.key,
+      });
       if (paymentNote) {
         paymentNote.textContent = "Este boton aun no cobra. Falta colocar el enlace real de pago.";
       }
+      return;
     }
+
+    trackEvent("payment_click", {
+      provider: link.dataset.paymentProvider,
+      plan: plan.key,
+      price: plan.price,
+    });
   });
 });
 
-leadForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const data = Object.fromEntries(new FormData(event.currentTarget).entries());
-  const leads = JSON.parse(localStorage.getItem(LEADS_KEY) || "[]");
-  leads.push({
-    ...data,
-    createdAt: new Date().toISOString(),
+async function sendLead(data) {
+  const endpoint = window.SITE_CONFIG?.leadEndpoint;
+  if (!endpoint) {
+    return { status: "local" };
+  }
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   });
+
+  if (!response.ok) {
+    throw new Error("No se pudo enviar el lead al endpoint configurado.");
+  }
+
+  return { status: "sent" };
+}
+
+leadForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const submitButton = event.currentTarget.querySelector("button[type='submit']");
+  const plan = getSelectedPlan();
+  const data = {
+    ...Object.fromEntries(new FormData(event.currentTarget).entries()),
+    planKey: plan.key,
+    planLabel: plan.label,
+    planPrice: plan.price,
+    source: "landing",
+    attribution: getAttribution(),
+    createdAt: new Date().toISOString(),
+  };
+  const leads = getStoredArray(LEADS_KEY);
+  leads.push(data);
   localStorage.setItem(LEADS_KEY, JSON.stringify(leads));
   localStorage.setItem("100dias_access_requested", "true");
-  event.currentTarget.reset();
-  unlockSalesAccess(data);
-  setText("#formNote", "Inscripcion registrada. Tu acceso inicial ha sido activado.");
+  trackEvent("lead_registered", {
+    plan: plan.key,
+    price: plan.price,
+    hasEndpoint: Boolean(window.SITE_CONFIG?.leadEndpoint),
+  });
+
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.textContent = "Registrando...";
+  }
+
+  try {
+    const result = await sendLead(data);
+    event.currentTarget.reset();
+    unlockSalesAccess(data);
+    setText(
+      "#formNote",
+      result.status === "sent"
+        ? "Inscripcion registrada y enviada. Tu acceso inicial ha sido activado."
+        : "Inscripcion registrada en este navegador. Tu acceso inicial ha sido activado."
+    );
+    if (window.SITE_CONFIG?.redirectAfterLead) {
+      window.location.href = window.SITE_CONFIG.redirectAfterLead;
+    }
+  } catch {
+    unlockSalesAccess(data);
+    setText("#formNote", "Inscripcion guardada localmente. No se pudo enviar al endpoint externo; revisa assets/site-config.js.");
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = "Registrar interes";
+    }
+  }
 });
 
 function escapeHtml(value) {
@@ -298,6 +414,17 @@ function unlockSalesAccess(data = {}) {
   accessArea.classList.remove("locked");
   accessMessage.innerHTML = `Acceso inicial activado${data.name ? ` para ${escapeHtml(data.name)}` : ""}. Entra al espacio del participante y ejecuta el Dia 1.`;
   accessLinks.hidden = false;
+  const whatsappUrl = getConfiguredWhatsappUrl(data);
+  if (whatsappUrl && !accessLinks.querySelector("[data-whatsapp-link]")) {
+    const link = document.createElement("a");
+    link.className = "button secondary";
+    link.href = whatsappUrl;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.dataset.whatsappLink = "true";
+    link.textContent = "Confirmar por WhatsApp";
+    accessLinks.appendChild(link);
+  }
 }
 
 if (localStorage.getItem("100dias_access_requested") === "true") {
@@ -324,11 +451,19 @@ externalLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     if (link.dataset.disabled === "true") {
       event.preventDefault();
+      trackEvent("affiliate_missing_link", {
+        key: link.dataset.externalLink,
+      });
       const note = link.closest("section")?.querySelector("[data-affiliate-note]");
       if (note) {
         note.textContent = "Enlace pendiente: agrega tu link de Amazon, Spotify o YouTube en assets/affiliate-links.js.";
       }
+      return;
     }
+
+    trackEvent("affiliate_click", {
+      key: link.dataset.externalLink,
+    });
   });
 });
 
@@ -338,6 +473,10 @@ document.querySelectorAll("[data-step]").forEach((button) => {
     state.activation[step] = !state.activation[step];
     state.lastActivity = `Volviste al marco: ${todayLabel()}`;
     saveState();
+    trackEvent("activation_step_toggled", {
+      step,
+      value: state.activation[step],
+    });
     renderAll();
   });
 });
@@ -348,6 +487,7 @@ document.querySelector("#dayZeroForm")?.addEventListener("submit", (event) => {
   state.activation.day0 = true;
   state.lastActivity = `Decision inicial confirmada: ${todayLabel()}`;
   saveState();
+  trackEvent("day0_completed");
   renderAll();
   setText("#dayZeroNote", "Decision confirmada. Ya tienes punto de partida.");
 });
@@ -364,6 +504,10 @@ document.querySelectorAll("[data-state]").forEach((button) => {
     if (day === "1") state.activation.day1 = true;
     state.lastActivity = `Dia ${day}: volviste al marco`;
     saveState();
+    trackEvent("day_recorded", {
+      day,
+      state: button.dataset.state,
+    });
     renderAll();
   });
 });
@@ -383,6 +527,7 @@ document.querySelector("#weeklyReviewForm")?.addEventListener("submit", (event) 
   });
   state.lastActivity = `Revision semanal: volviste al marco`;
   saveState();
+  trackEvent("weekly_review_saved");
   event.currentTarget.reset();
   renderAll();
   setText("#reviewNote", "Revision guardada. Sostén lo que funciono y vuelve al marco.");

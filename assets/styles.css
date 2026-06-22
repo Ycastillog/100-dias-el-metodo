@@ -256,6 +256,34 @@ h3 {
   padding: 18px;
 }
 
+.access-preview {
+  overflow: hidden;
+  padding: 0;
+  background:
+    linear-gradient(180deg, rgba(214, 184, 114, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(23, 22, 18, 0.92);
+}
+
+.access-preview-image {
+  height: 250px;
+  border-bottom: 1px solid var(--line);
+  background: #070706;
+}
+
+.access-preview-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.access-preview-content {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+}
+
 .welcome-panel strong {
   color: var(--gold-strong);
   font-size: 28px;
@@ -266,6 +294,34 @@ h3 {
   margin: 0;
   color: var(--muted);
   line-height: 1.55;
+}
+
+.access-mini-progress {
+  display: grid;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.access-mini-progress span {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.access-mini-progress div {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.access-mini-progress i {
+  display: block;
+  width: 38%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold), var(--green));
 }
 
 .section-band {
@@ -374,6 +430,7 @@ label {
 }
 
 input,
+select,
 textarea {
   width: 100%;
   border: 1px solid var(--line);
@@ -381,6 +438,9 @@ textarea {
   padding: 13px 14px;
   color: var(--text);
   background: rgba(5, 5, 5, 0.66);
+}
+
+textarea {
   resize: vertical;
 }
 
@@ -419,6 +479,29 @@ textarea {
   margin: 0;
   color: var(--muted);
   font-size: 13px;
+}
+
+.legal-page {
+  min-height: 70vh;
+}
+
+.legal-content {
+  display: grid;
+  gap: 18px;
+  max-width: 860px;
+  margin: 0 auto;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.legal-content h2 {
+  margin: 18px 0 0;
+  color: var(--gold-strong);
+  font-size: 20px;
+}
+
+.legal-content p {
+  margin: 0;
 }
 
 .mobile-dashboard {
@@ -647,7 +730,8 @@ textarea {
   color: var(--text);
 }
 
-.resource-grid a {
+.resource-grid a,
+.resource-grid div {
   display: grid;
   gap: 8px;
   min-height: 118px;
@@ -709,19 +793,109 @@ footer p {
 }
 
 .sales-hero {
-  min-height: calc(100svh - 65px);
+  min-height: calc(94svh - 65px);
   display: grid;
   align-content: center;
   gap: 26px;
   padding: 54px 16px;
   background:
-    linear-gradient(90deg, rgba(7, 7, 6, 0.95), rgba(7, 7, 6, 0.78)),
-    radial-gradient(circle at 78% 22%, rgba(214, 184, 114, 0.2), transparent 24rem);
+    linear-gradient(90deg, rgba(7, 7, 6, 0.96), rgba(7, 7, 6, 0.68)),
+    linear-gradient(180deg, rgba(214, 184, 114, 0.16), rgba(47, 191, 113, 0.06)),
+    #070706;
 }
 
 .sales-copy {
   display: grid;
   gap: 18px;
+}
+
+.hero-visual {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.mockup-stack {
+  position: relative;
+  min-height: 390px;
+  isolation: isolate;
+}
+
+.mockup-stack::before {
+  content: "";
+  position: absolute;
+  inset: 28px 34px 36px 22px;
+  border: 1px solid rgba(240, 207, 122, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(214, 184, 114, 0.18), rgba(47, 191, 113, 0.08)),
+    rgba(12, 12, 10, 0.9);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.66);
+}
+
+.mockup-main,
+.mockup-card {
+  position: absolute;
+  border: 1px solid rgba(240, 207, 122, 0.26);
+  border-radius: 8px;
+  background: #070706;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.58);
+  object-fit: cover;
+}
+
+.mockup-main {
+  inset: 0 auto auto 34px;
+  z-index: 1;
+  width: min(68%, 340px);
+  height: 360px;
+  object-position: top center;
+}
+
+.mockup-card {
+  z-index: 2;
+  width: min(52%, 260px);
+  height: 170px;
+}
+
+.mockup-card-top {
+  top: 44px;
+  right: 0;
+  object-position: top center;
+}
+
+.mockup-card-bottom {
+  right: 28px;
+  bottom: 0;
+  object-position: 50% 30%;
+}
+
+.hero-proof-card {
+  display: grid;
+  gap: 8px;
+  border: 1px solid rgba(47, 191, 113, 0.38);
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(9, 24, 16, 0.86);
+  box-shadow: var(--shadow);
+}
+
+.hero-proof-card span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.hero-proof-card strong {
+  color: var(--text);
+  font-size: clamp(20px, 4vw, 30px);
+  line-height: 1.12;
+}
+
+.hero-proof-card p {
+  margin: 0;
+  color: #c7d8cd;
+  line-height: 1.5;
 }
 
 .hero-actions,
@@ -808,6 +982,75 @@ footer p {
   line-height: 1;
 }
 
+.visual-system-section {
+  padding: 44px 16px;
+  background:
+    linear-gradient(180deg, rgba(47, 191, 113, 0.07), rgba(214, 184, 114, 0.05)),
+    #070706;
+}
+
+.visual-flow-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.visual-flow-grid article {
+  position: relative;
+  height: 360px;
+  min-height: 330px;
+  overflow: hidden;
+  border: 1px solid rgba(240, 207, 122, 0.24);
+  border-radius: 8px;
+  background: rgba(23, 22, 18, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.visual-flow-grid img {
+  width: 100%;
+  height: 100%;
+  min-height: 330px;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0.72;
+}
+
+.visual-flow-grid article::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 58%;
+  background: linear-gradient(180deg, transparent, rgba(7, 7, 6, 0.96));
+}
+
+.visual-flow-grid span,
+.visual-flow-grid strong {
+  position: absolute;
+  z-index: 1;
+  left: 18px;
+}
+
+.visual-flow-grid span {
+  bottom: 58px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #07130c;
+  background: var(--green);
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.visual-flow-grid strong {
+  right: 18px;
+  bottom: 20px;
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1.05;
+}
+
 .audience-section,
 .plans-section,
 .registration-section,
@@ -867,6 +1110,13 @@ footer p {
   color: var(--gold-strong);
   font-size: 34px;
   font-weight: 950;
+}
+
+.plan-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .payment-box {
@@ -1002,6 +1252,7 @@ footer p {
 
   .welcome-screen,
   .sales-hero,
+  .visual-system-section,
   .activation-section,
   .dashboard-section,
   .daily-section,
@@ -1020,8 +1271,25 @@ footer p {
 
   .welcome-screen,
   .sales-hero {
-    grid-template-columns: minmax(0, 1fr) 360px;
+    grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
     align-items: center;
+  }
+
+  .access-page .welcome-screen {
+    min-height: calc(92svh - 65px);
+    padding-block: 48px;
+  }
+
+  .access-page .welcome-copy {
+    gap: 14px;
+  }
+
+  .access-page .welcome-copy h1 {
+    font-size: clamp(52px, 6vw, 78px);
+  }
+
+  .sales-hero {
+    padding-block: 50px;
   }
 
   .authority-strip {
@@ -1036,6 +1304,7 @@ footer p {
   .dashboard-grid,
   .phase-grid,
   .resource-grid,
+  .visual-flow-grid,
   .recommendation-grid,
   .social-engine-grid,
   .audience-grid {
@@ -1090,6 +1359,7 @@ footer p {
   .activation-grid,
   .phase-grid,
   .resource-grid,
+  .visual-flow-grid,
   .recommendation-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1112,16 +1382,91 @@ footer p {
 }
 
 @media (max-width: 430px) {
+  .sales-hero {
+    min-height: auto;
+    gap: 16px;
+    padding-top: 28px;
+    padding-bottom: 26px;
+  }
+
+  .sales-copy {
+    gap: 12px;
+  }
+
+  .sales-copy h1 {
+    font-size: 38px;
+    line-height: 0.96;
+  }
+
+  .welcome-statement {
+    font-size: 18px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .alpha-banner,
+  .hero-proof-card {
+    padding: 12px;
+  }
+
+  .alpha-banner strong,
+  .hero-proof-card strong {
+    font-size: 21px;
+  }
+
+  .sales-hero .button {
+    min-height: 46px;
+    padding-inline: 14px;
+  }
+
   .reset-progress {
     max-width: 120px;
     font-size: 12px;
+  }
+
+  .access-page .welcome-screen {
+    min-height: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .access-page .welcome-copy {
+    gap: 12px;
+  }
+
+  .access-page .welcome-copy h1 {
+    font-size: 38px;
+    line-height: 0.96;
+  }
+
+  .access-preview-image {
+    height: 150px;
   }
 
   .principle-row {
     grid-template-columns: 1fr;
   }
 
+  .access-page .principle-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .access-page .principle-row span {
+    min-height: 42px;
+    font-size: 10px;
+  }
+
+  .access-page .access-preview-content p {
+    display: none;
+  }
+
   .day-map {
     gap: 4px;
+  }
+
+  .mockup-stack {
+    display: none;
   }
 }
