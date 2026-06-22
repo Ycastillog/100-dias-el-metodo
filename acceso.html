@@ -1,0 +1,403 @@
+﻿<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>100 Dias: El Metodo | Plataforma del Participante</title>
+    <meta
+      name="description"
+      content="Experiencia digital de 100 Dias: El Metodo. Activacion, Dia 0, avance diario, revisiones y recursos organizados."
+    />
+    <meta property="og:title" content="Acceso | 100 Dias: El Metodo" />
+    <meta property="og:description" content="Plataforma del participante para ejecutar Dia 0, Dia 1 y volver al marco." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="%23070706"/><text x="32" y="40" text-anchor="middle" font-size="26" font-family="Arial" font-weight="900" fill="%23f0cf7a">100</text></svg>' />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body class="access-page">
+    <header class="app-header">
+      <a class="brand" href="#bienvenida" aria-label="100 Dias: El Metodo">
+        <span>100</span>
+        <strong>Dias</strong>
+      </a>
+      <nav aria-label="Principal">
+        <a href="#activacion">Activacion</a>
+        <a href="#dashboard">Avance</a>
+        <a href="#dia">Hoy</a>
+        <a href="#kit">Kit</a>
+      </nav>
+      <button class="ghost reset-progress" type="button">Reiniciar progreso</button>
+    </header>
+
+    <main>
+      <section class="welcome-screen" id="bienvenida">
+        <div class="welcome-copy">
+          <p class="eyebrow">Acceso del participante</p>
+          <h1>Bienvenido a <span>100 Dias: El Metodo</span></h1>
+          <p class="welcome-statement">
+            Has tomado una decision que la mayoria nunca toma.
+          </p>
+          <div class="principle-row" aria-label="Pilares del metodo">
+            <span>Control</span>
+            <span>Fortaleza</span>
+            <span>Direccion</span>
+          </div>
+          <p class="lead">
+            Tu objetivo no es completar 100 dias hoy. Tu objetivo es completar
+            el Dia 1.
+          </p>
+          <a class="button primary" href="#activacion">Iniciar el metodo</a>
+        </div>
+
+        <aside class="welcome-panel access-preview" aria-label="Vista previa del avance del participante">
+          <div class="access-preview-image">
+            <img src="assets/product-dashboard.png" alt="Vista previa del dashboard de avance" />
+          </div>
+          <div class="access-preview-content">
+            <span class="panel-label">Dominio personal</span>
+            <strong>Control + Fortaleza + Direccion</strong>
+            <p>Una plataforma para ejecutar el siguiente dia, no para acumular archivos.</p>
+            <div class="access-mini-progress" aria-label="Progreso visual de ejemplo">
+              <span>Dia 1 activo</span>
+              <div><i></i></div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="activation-section" id="activacion">
+        <div class="section-head">
+          <p class="eyebrow">Centro de activacion</p>
+          <h2>Antes del Dia 1, prepara el marco.</h2>
+          <p>
+            La activacion convierte la compra en sistema: leer, completar Dia 0,
+            configurar avance y comenzar.
+          </p>
+        </div>
+
+        <div class="activation-grid">
+          <article class="activation-card" data-step-card="method">
+            <span class="step-number">01</span>
+            <div>
+              <h3>Leer Metodo Oficial</h3>
+              <p>Comprende la filosofia sin cambiar la formula.</p>
+            </div>
+            <button class="status-toggle" type="button" data-step="method">Pendiente</button>
+          </article>
+          <article class="activation-card" data-step-card="day0">
+            <span class="step-number">02</span>
+            <div>
+              <h3>Completar Dia 0</h3>
+              <p>Define punto de partida, friccion y compromiso.</p>
+            </div>
+            <button class="status-toggle" type="button" data-step="day0">Pendiente</button>
+          </article>
+          <article class="activation-card" data-step-card="system">
+            <span class="step-number">03</span>
+            <div>
+              <h3>Configurar Sistema de Avance</h3>
+              <p>Activa seguimiento visual para no depender del animo.</p>
+            </div>
+            <button class="status-toggle" type="button" data-step="system">Pendiente</button>
+          </article>
+          <article class="activation-card" data-step-card="day1">
+            <span class="step-number">04</span>
+            <div>
+              <h3>Comenzar Dia 1</h3>
+              <p>El metodo empieza cuando ejecutas una accion real.</p>
+            </div>
+            <button class="status-toggle" type="button" data-step="day1">Pendiente</button>
+          </article>
+        </div>
+
+        <div class="activation-complete" data-activation-complete hidden>
+          <strong>Activacion completada</strong>
+          <span>Bienvenido al Metodo.</span>
+          <a class="button primary" href="#dashboard">Ir a mi avance</a>
+        </div>
+      </section>
+
+      <section class="day-zero section-band" id="dia0">
+        <div class="section-head">
+          <p class="eyebrow">Dia 0</p>
+          <h2>Tu decision.</h2>
+          <p>
+            Antes de ejecutar, define por que estas aqui. El Dia 0 no es un
+            formulario: es el compromiso que evita que el metodo dependa del
+            animo.
+          </p>
+        </div>
+        <div class="decision-statement">
+          <span>Declaracion inicial</span>
+          <strong>Estoy aqui para recuperar control y volver al marco cuando aparezca la incomodidad.</strong>
+        </div>
+        <form class="day-zero-form" id="dayZeroForm">
+          <label>
+            Por que estas aqui?
+            <textarea name="control" rows="3" placeholder="Ejemplo: necesito recuperar control sobre mis mananas, mi telefono o mis decisiones."></textarea>
+          </label>
+          <label>
+            Que patron quieres romper?
+            <textarea name="pattern" rows="3" placeholder="Ejemplo: abandonar cuando pierdo un dia."></textarea>
+          </label>
+          <label>
+            Que regla no vas a negociar?
+            <input name="minimumAction" type="text" placeholder="Ejemplo: registrar el dia antes de dormir, incluso si fue parcial." />
+          </label>
+          <button class="button secondary" type="submit">Confirmar mi decision</button>
+          <p class="form-note" id="dayZeroNote">Tu decision queda guardada en este navegador.</p>
+        </form>
+      </section>
+
+      <section class="dashboard-section" id="dashboard">
+        <div class="mobile-dashboard">
+          <p class="dynamic-phrase" data-dynamic-phrase>Bienvenido de nuevo.</p>
+          <div>
+            <span>Dia actual</span>
+            <strong data-current-day>1</strong>
+          </div>
+          <div>
+            <span>Completado</span>
+            <strong data-percent>0%</strong>
+          </div>
+          <a class="button primary" href="#dia">Continuar</a>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="mission-card">
+            <p class="eyebrow">Dashboard del participante</p>
+            <h2>Ejecuta el siguiente dia.</h2>
+            <dl class="stats-list">
+              <div>
+                <dt>Fase actual</dt>
+                <dd data-current-phase>Control</dd>
+              </div>
+              <div>
+                <dt>Dias consecutivos</dt>
+                <dd data-streak>0 dias</dd>
+              </div>
+              <div>
+                <dt>Ultimo regreso al marco</dt>
+                <dd data-last-activity>Sin registros</dd>
+              </div>
+              <div>
+                <dt>Proxima accion</dt>
+                <dd>Completar el registro de hoy</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="progress-card">
+            <div class="progress-head">
+              <span>Dia 0</span>
+              <strong data-progress-label>0 de 100</strong>
+            </div>
+            <div class="progress-bar" aria-label="Progreso de 100 dias">
+              <span data-progress-fill></span>
+            </div>
+            <div class="phase-rail">
+              <span>Control</span>
+              <span>Fortaleza</span>
+              <span>Direccion</span>
+            </div>
+            <div class="day-map" data-day-map aria-label="Mapa de avance"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="daily-section section-band" id="dia">
+        <div class="section-head compact">
+          <p class="eyebrow">Experiencia dia a dia</p>
+          <h2 data-daily-title>Dia 1</h2>
+          <p>
+            Cada dia tiene principio, pregunta, accion y reflexion. El sistema
+            existe para ayudarte a volver al marco.
+          </p>
+        </div>
+
+        <article class="daily-card">
+          <div class="daily-block">
+            <span>Principio</span>
+            <p data-daily-principle>Controla la primera decision del dia.</p>
+          </div>
+          <div class="daily-block">
+            <span>Pregunta</span>
+            <p data-daily-question>Que parte de este dia depende de mi?</p>
+          </div>
+          <div class="daily-block">
+            <span>Accion</span>
+            <p data-daily-action>Completa una accion pequena antes de consumir distraccion.</p>
+          </div>
+          <label class="reflection-field">
+            Reflexion
+            <textarea id="dailyReflection" rows="5" placeholder="Registra que hiciste, que evitaste y que aprendiste."></textarea>
+          </label>
+          <div class="state-actions" aria-label="Estado del dia">
+            <button class="day-state complete" type="button" data-state="complete">Marcar como completado</button>
+            <button class="day-state partial" type="button" data-state="partial">Parcial</button>
+            <button class="day-state missed" type="button" data-state="missed">Perdido</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="weekly-section" id="revision">
+        <div class="section-head">
+          <p class="eyebrow">Revision semanal</p>
+          <h2>Automaticamente cada 7 dias.</h2>
+          <p>
+            La revision no castiga. Detecta patrones y decide que sostener la
+            proxima semana.
+          </p>
+        </div>
+        <form class="review-form" id="weeklyReviewForm">
+          <label>Que completaste?<textarea name="completed" rows="3"></textarea></label>
+          <label>Que evitaste?<textarea name="avoided" rows="3"></textarea></label>
+          <label>Que patron aparecio?<textarea name="pattern" rows="3"></textarea></label>
+          <label>Que sostendras la proxima semana?<textarea name="next" rows="3"></textarea></label>
+          <button class="button secondary" type="submit">Guardar revision</button>
+          <p class="form-note" id="reviewNote">La proxima revision se activa al llegar al siguiente multiplo de 7.</p>
+        </form>
+      </section>
+
+      <section class="phases-section section-band" id="fases">
+        <div class="section-head">
+          <p class="eyebrow">Pagina de fases</p>
+          <h2>El metodo mantiene sus tres pilares.</h2>
+        </div>
+        <div class="phase-grid">
+          <article>
+            <span>Dias 1-30</span>
+            <h3>Control</h3>
+            <p><strong>Objetivo:</strong> ordenar cuerpo, mente y entorno.</p>
+            <p><strong>Resultados:</strong> menos caos, mas enfoque, mas cumplimiento.</p>
+            <p><strong>Que esperar:</strong> resistencia inicial y necesidad de simplificar.</p>
+          </article>
+          <article>
+            <span>Dias 31-60</span>
+            <h3>Fortaleza</h3>
+            <p><strong>Objetivo:</strong> sostener accion bajo incomodidad.</p>
+            <p><strong>Resultados:</strong> mas tolerancia, menos reaccion, mas firmeza.</p>
+            <p><strong>Que esperar:</strong> dias sin ganas donde el marco importa mas.</p>
+          </article>
+          <article>
+            <span>Dias 61-100</span>
+            <h3>Direccion</h3>
+            <p><strong>Objetivo:</strong> decidir con claridad y vivir con intencion.</p>
+            <p><strong>Resultados:</strong> coherencia, prioridades claras y rumbo propio.</p>
+            <p><strong>Que esperar:</strong> integracion del metodo en decisiones reales.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="kit-section" id="kit">
+        <div class="section-head">
+          <p class="eyebrow">Kit de bienvenida digital</p>
+          <h2>Todo organizado como sistema, no como archivos sueltos.</h2>
+        </div>
+        <div class="resource-grid">
+          <a href="public/downloads/100_DIAS_EL_METODO_OFICIAL.pdf">
+            <span>Metodo Oficial</span>
+            <strong>Leer primero</strong>
+          </a>
+          <a href="public/downloads/100_DIAS_DOCUMENTO_MAESTRO.docx">
+            <span>Documento Maestro</span>
+            <strong>Marco fundacional</strong>
+          </a>
+          <a href="public/downloads/100_DIAS_MANUAL_DEL_PARTICIPANTE.docx">
+            <span>Manual del Participante</span>
+            <strong>Guia personal</strong>
+          </a>
+          <a href="public/downloads/100_DIAS_SISTEMA_DE_SEGUIMIENTO.xlsx">
+            <span>Sistema de Avance</span>
+            <strong>Seguimiento editable</strong>
+          </a>
+          <a href="public/downloads/100_DIAS_PROGRAMA_DIA_A_DIA.docx">
+            <span>Programa Dia a Dia</span>
+            <strong>100 registros</strong>
+          </a>
+          <a href="public/downloads/100_DIAS_MANUAL_DEL_FACILITADOR.docx">
+            <span>Manual del Facilitador</span>
+            <strong>Uso futuro guiado</strong>
+          </a>
+        </div>
+      </section>
+
+      <section class="resources-section section-band" id="recursos">
+        <div class="section-head">
+          <p class="eyebrow">Centro de recursos</p>
+          <h2>Biblioteca del sistema.</h2>
+        </div>
+        <div class="resource-list">
+          <div><strong>Marco Fundacional</strong><span>Por que existe el metodo.</span></div>
+          <div><strong>Metodo Oficial</strong><span>La filosofia y la formula.</span></div>
+          <div><strong>Sistema de Implementacion</strong><span>Como ejecutar sin depender de motivacion.</span></div>
+          <div><strong>Sistema de Avance</strong><span>Estados, racha y revisiones.</span></div>
+          <div><strong>Documentacion</strong><span>Archivos descargables y version editable.</span></div>
+        </div>
+      </section>
+
+      <section class="recommendations-section" id="biblioteca-externa">
+        <div class="section-head">
+          <p class="eyebrow">Biblioteca externa</p>
+          <h2>Recursos para reforzar el Metodo.</h2>
+          <p>Lecturas y audios recomendados para acompanar el proceso sin reemplazar la ejecucion diaria.</p>
+        </div>
+        <div class="recommendation-grid">
+          <a href="#" data-external-link="meditaciones">
+            <span>Control</span>
+            <strong>Meditaciones</strong>
+            <p>Marco Aurelio. Claridad interna y dominio de la respuesta.</p>
+          </a>
+          <a href="#" data-external-link="manual_epicteto">
+            <span>Control</span>
+            <strong>Manual de Epicteto</strong>
+            <p>Lo que depende de ti, lo que no, y como actuar con firmeza.</p>
+          </a>
+          <a href="#" data-external-link="cartas_lucilio">
+            <span>Fortaleza</span>
+            <strong>Cartas a Lucilio</strong>
+            <p>Seneca sobre tiempo, caracter, incomodidad y vida practica.</p>
+          </a>
+          <a href="#" data-external-link="obstaculo_camino">
+            <span>Fortaleza</span>
+            <strong>El obstaculo es el camino</strong>
+            <p>Convertir friccion en entrenamiento de caracter.</p>
+          </a>
+          <a href="#" data-external-link="spotify_reflexiones">
+            <span>Audio diario</span>
+            <strong>Reflexiones de 100 Dias</strong>
+            <p>Audios cortos para escuchar antes de registrar el dia.</p>
+          </a>
+          <a href="#" data-external-link="spotify_ganadores">
+            <span>Audio premium</span>
+            <strong>Estoicismo para ganadores</strong>
+            <p>Serie sugerida para disciplina, enfoque y regreso al marco.</p>
+          </a>
+        </div>
+        <p class="affiliate-note" data-affiliate-note>Algunos enlaces pueden ser afiliados. Como asociado, se pueden recibir ingresos por compras calificadas.</p>
+      </section>
+
+      <section class="future-section">
+        <div>
+          <p class="eyebrow">Preparado para futuro</p>
+          <h2>Emails, metricas y testimonios reales.</h2>
+        </div>
+        <ul>
+          <li>Secuencia futura: compra, bienvenida, Dia 1, Dia 7, Dia 30, Dia 60, Dia 100.</li>
+          <li>Metricas preparadas: Dia 0, 1, 7, 14, 30, 60 y 100.</li>
+          <li>Testimonios en espera: solo cambios observados, frases reales e historias reales.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>100 Dias: El Metodo. Todo responde a una pregunta: ayuda al usuario a ejecutar el siguiente dia?</p>
+      <p><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Terminos</a></p>
+    </footer>
+
+    <script src="assets/affiliate-links.js"></script>
+    <script src="assets/site-config.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

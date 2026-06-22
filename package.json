@@ -1,0 +1,10 @@
+{
+  "name": "100-dias-el-metodo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma de acceso y validacion para 100 Dias: El Metodo.",
+  "scripts": {
+    "start": "powershell -ExecutionPolicy Bypass -File .\\run-server.ps1",
+    "preview": "powershell -ExecutionPolicy Bypass -File .\\run-server.ps1"
+  }
+}

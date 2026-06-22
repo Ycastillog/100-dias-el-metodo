@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ycastillog.github.io/100-dias-el-metodo/sitemap.xml
