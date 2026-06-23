@@ -211,6 +211,7 @@ const accessMessage = accessArea?.querySelector(".access-message");
 const accessLinks = accessArea?.querySelector(".access-links");
 const paymentSummary = document.querySelector("[data-payment-summary]");
 const paymentNote = document.querySelector("[data-payment-note]");
+const paymentActions = document.querySelector("[data-payment-actions]");
 const paymentLinks = document.querySelectorAll("[data-payment-provider]");
 const externalLinks = document.querySelectorAll("[data-external-link]");
 
@@ -288,7 +289,11 @@ function updatePaymentLinks() {
     const provider = link.dataset.paymentProvider;
     const url = configuredLinks[provider];
     const isConfigured = Boolean(url);
-    link.href = isConfigured ? url : "#";
+    if (isConfigured) {
+      link.href = url;
+    } else {
+      link.removeAttribute("href");
+    }
     link.setAttribute("data-disabled", String(!isConfigured));
     link.classList.toggle("disabled", !isConfigured);
     link.target = isConfigured ? "_blank" : "";
@@ -296,10 +301,14 @@ function updatePaymentLinks() {
     if (isConfigured) configuredProviders.push(provider === "paypal" ? "PayPal" : "Stripe");
   });
 
+  if (paymentActions) {
+    paymentActions.hidden = configuredProviders.length === 0;
+  }
+
   if (paymentNote) {
     paymentNote.textContent = configuredProviders.length
       ? `Pago disponible con ${configuredProviders.join(" y ")}. El dinero ira a la cuenta conectada en esa plataforma.`
-      : "Pagos pendientes: pega tus enlaces reales de PayPal y Stripe en assets/payments.js.";
+      : "Reserva tu cupo Alpha. El pago se confirma por el canal oficial mientras activamos el cobro automatico.";
   }
 }
 
@@ -313,7 +322,7 @@ paymentLinks.forEach((link) => {
         plan: plan.key,
       });
       if (paymentNote) {
-        paymentNote.textContent = "Este boton aun no cobra. Falta colocar el enlace real de pago.";
+        paymentNote.textContent = "Pago automatico pendiente. Registra tu interes y confirmaremos el siguiente paso por el canal oficial.";
       }
       return;
     }
@@ -382,19 +391,18 @@ leadForm?.addEventListener("submit", async (event) => {
     setText(
       "#formNote",
       result.status === "sent"
-        ? "Inscripcion registrada y enviada. Tu acceso inicial ha sido activado."
-        : "Inscripcion registrada en este navegador. Tu acceso inicial ha sido activado."
+        ? "Solicitud enviada. Tu acceso inicial queda listo para continuar con Dia 0 y Dia 1."
+        : "Solicitud guardada en este navegador. Tu acceso inicial queda listo para continuar con Dia 0 y Dia 1."
     );
-    if (window.SITE_CONFIG?.redirectAfterLead) {
-      window.location.href = window.SITE_CONFIG.redirectAfterLead;
-    }
+    window.location.href = window.SITE_CONFIG?.redirectAfterLead || "gracias.html";
   } catch {
     unlockSalesAccess(data);
-    setText("#formNote", "Inscripcion guardada localmente. No se pudo enviar al endpoint externo; revisa assets/site-config.js.");
+    setText("#formNote", "Solicitud guardada localmente. Si aun no conectaste el formulario externo, confirma el cupo por el canal oficial.");
+    window.location.href = window.SITE_CONFIG?.redirectAfterLead || "gracias.html";
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
-      submitButton.textContent = "Registrar interes";
+      submitButton.textContent = "Reservar cupo Alpha";
     }
   }
 });

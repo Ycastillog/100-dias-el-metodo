@@ -393,24 +393,24 @@
           </label>
           <div class="payment-box">
             <div>
-              <span>Pago seleccionado</span>
+              <span>Solicitud seleccionada</span>
               <strong data-payment-summary>Grupo Alpha - USD 9</strong>
             </div>
-            <div class="payment-actions">
-              <a class="button primary payment-link" href="#" data-payment-provider="paypal" data-disabled="true">Pagar con PayPal</a>
-              <a class="button secondary payment-link" href="#" data-payment-provider="stripe" data-disabled="true">Pagar con Stripe</a>
+            <div class="payment-actions" data-payment-actions hidden>
+              <a class="button primary payment-link" data-payment-provider="paypal" data-disabled="true">Pagar con PayPal</a>
+              <a class="button secondary payment-link" data-payment-provider="stripe" data-disabled="true">Pagar con Stripe</a>
             </div>
-            <p class="form-note" data-payment-note>Configura tus enlaces reales en `assets/payments.js` para activar los pagos.</p>
+            <p class="form-note" data-payment-note>Reserva tu cupo Alpha. El pago se confirma por el canal oficial mientras activamos el cobro automatico.</p>
           </div>
-          <button class="button secondary" type="submit">Registrar interes</button>
-          <p class="form-note" id="formNote">Despues del pago, el acceso se confirma manualmente durante el Alpha. Si aun no hay link de pago activo, este registro queda como lead local o se envia al endpoint configurado.</p>
+          <button class="button primary" type="submit">Reservar cupo Alpha</button>
+          <p class="form-note" id="formNote">Al registrarte, guardamos tu solicitud y te llevamos al siguiente paso. Durante Alpha el acceso se puede confirmar manualmente para cuidar la experiencia de los primeros participantes.</p>
         </form>
         <div class="activation-complete locked" id="accessArea" hidden>
           <strong>Solicitud registrada.</strong>
           <span class="access-message">Tu acceso inicial al Metodo esta listo.</span>
           <div class="hero-actions access-links" hidden>
             <a class="button primary" href="acceso.html">Entrar al acceso del participante</a>
-            <a class="button secondary" href="public/downloads/100_DIAS_EL_METODO_OFICIAL.pdf">Leer Metodo Oficial</a>
+            <a class="button secondary" href="acceso.html#kit">Ver kit del participante</a>
           </div>
         </div>
       </section>
