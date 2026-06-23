@@ -109,6 +109,7 @@ main {
 }
 
 .welcome-screen,
+.section-band,
 .activation-section,
 .dashboard-section,
 .daily-section,
@@ -116,6 +117,8 @@ main {
 .phases-section,
 .kit-section,
 .resources-section,
+.conversion-section,
+.social-engine-section,
 .future-section,
 .day-zero {
   padding: 44px 16px;
@@ -1393,6 +1396,7 @@ footer p {
 
   .welcome-screen,
   .sales-hero,
+  .section-band,
   .visual-system-section,
   .activation-section,
   .dashboard-section,
@@ -1401,6 +1405,8 @@ footer p {
   .phases-section,
   .kit-section,
   .resources-section,
+  .conversion-section,
+  .social-engine-section,
   .recommendations-section,
   .audience-section,
   .plans-section,
