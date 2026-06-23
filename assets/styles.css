@@ -19,6 +19,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -831,6 +835,56 @@ footer p {
   gap: 18px;
 }
 
+.hero-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-text {
+  max-width: 680px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.hero-panel {
+  display: grid;
+  gap: 10px;
+  align-content: end;
+  min-height: 260px;
+  border: 1px solid rgba(240, 207, 122, 0.28);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(47, 191, 113, 0.16), transparent 38%),
+    rgba(23, 22, 18, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.hero-panel span {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.hero-panel strong {
+  color: var(--gold-strong);
+  font-size: clamp(24px, 4vw, 42px);
+  line-height: 1.08;
+}
+
+.hero-panel p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.thank-you-hero {
+  grid-template-columns: 1fr;
+}
+
 .hero-visual {
   display: grid;
   gap: 14px;
@@ -1360,6 +1414,10 @@ footer p {
   .sales-hero {
     grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
     align-items: center;
+  }
+
+  .thank-you-hero {
+    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.72fr);
   }
 
   .access-page .welcome-screen {
