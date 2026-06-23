@@ -130,6 +130,11 @@ Recursos secundarios:
 
 Archivos:
 
+- `CONTENT_COMMAND_CENTER.md`
+- `alpha_14_day_publish_plan.csv`
+- `week_1_content_pack.md`
+- `upload_checklist.md`
+- `content_metrics_dashboard.csv`
 - `affiliate_library.md`
 - `audio_series_plan.md`
 - `benchmark_negocio_fantasma.md`
@@ -177,3 +182,11 @@ Cuando tengamos los enlaces reales de PayPal y Stripe:
 5. Registrar interesado.
 6. Confirmar pago.
 7. Dar acceso.
+
+## Para empezar hoy
+
+1. Abrir `CONTENT_COMMAND_CENTER.md`.
+2. Publicar Dia 1 desde `week_1_content_pack.md`.
+3. Registrar la URL y resultados en `content_metrics_dashboard.csv`.
+4. Responder comentarios con `dm_scripts.md`.
+5. Seguir el calendario `alpha_14_day_publish_plan.csv`.

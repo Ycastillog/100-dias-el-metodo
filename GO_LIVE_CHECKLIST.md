@@ -25,8 +25,9 @@ Estado: listo visualmente para iniciar Alpha cuando se conecten pagos y captura 
 ## 4. Trafico
 
 - Crear Instagram, TikTok y Facebook.
-- Publicar desde `social/content_calendar_alpha.csv`.
-- Usar `social/scripts_reels_tiktok.md` para videos cortos.
+- Publicar desde `social/alpha_14_day_publish_plan.csv`.
+- Empezar con `social/week_1_content_pack.md`.
+- Usar `social/upload_checklist.md` antes de subir cada pieza.
 - Usar `social/dm_scripts.md` para responder interesados.
 
 ## 5. Medicion
@@ -40,6 +41,10 @@ Medir diariamente:
 - Dia 0 completado.
 - Dia 1 completado.
 - Dia 7 completado.
+
+Archivo de medicion:
+
+- `social/content_metrics_dashboard.csv`
 
 ## 6. Regla de decision
 

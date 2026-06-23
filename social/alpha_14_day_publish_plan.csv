@@ -1,0 +1,29 @@
+day,priority,platform,format,content_file,topic,hook,cta,asset_needed,status
+1,Alta,TikTok/Reels,Video,week_1_content_pack.md,No necesitas motivacion,"Si empiezas muchas cosas y no terminas ninguna, este video es para ti.",Comenta CONTROL,Video vertical simple,Pendiente
+1,Media,Instagram,Story,week_1_content_pack.md,Encuesta inicial,"Sientes que estas reaccionando mas de lo que estas dirigiendo?",Vota en la encuesta,Fondo texto,Pendiente
+2,Alta,TikTok/Reels,Video,week_1_content_pack.md,Vivir reaccionando,"La mayoria no vive. Reacciona.",Comenta CONTROL,Video vertical simple,Pendiente
+2,Media,Facebook,Post largo,week_1_content_pack.md,Invitacion Alpha,"Busco 10 personas para probar 100 Dias: El Metodo.",Escribeme CONTROL,Texto largo,Pendiente
+3,Alta,Instagram,Carrusel,week_1_content_pack.md,Formula oficial,"Dominio Personal = Control + Fortaleza + Direccion.",Comenta CONTROL,Carrusel 7 slides,Pendiente
+3,Alta,TikTok/Reels,Video,week_1_content_pack.md,Dia 1,"No pienses en 100 dias. Piensa en el Dia 1.",Comenta DIA1,Video vertical simple,Pendiente
+4,Media,Instagram,Story,week_1_content_pack.md,Caja de preguntas,"Que patron quieres romper?",Responde la caja,Fondo texto,Pendiente
+4,Alta,TikTok/Reels,Video,week_1_content_pack.md,Fallar un dia,"Fallar un dia no destruye el Metodo. No volver si lo destruye.",Comenta VOLVER,Video vertical simple,Pendiente
+5,Alta,Facebook,Post largo,week_1_content_pack.md,Problema profundo,"El problema no es que no sepas que hacer.",Entra al Alpha,Texto largo,Pendiente
+5,Alta,TikTok/Reels,Video,week_1_content_pack.md,Regla no negociable,"Tu vida cambia cuando dejas de negociar con todo.",Comenta CONTROL,Video vertical simple,Pendiente
+6,Media,Instagram,Carrusel,week_1_content_pack.md,Para quien es,"Este Metodo no es para todo el mundo.",Comparte y comenta CONTROL,Carrusel 7 slides,Pendiente
+6,Alta,TikTok/Reels,Video,week_1_content_pack.md,Control,"Control no es tener todo perfecto. Es volver al marco.",Comenta CONTROL,Video vertical simple,Pendiente
+7,Alta,TikTok/Reels,Video,week_1_content_pack.md,Dia 7,"El KPI no es emocion. Es llegar a Dia 7.",Comenta DIA7,Video vertical simple,Pendiente
+7,Media,Instagram,Story,week_1_content_pack.md,Resumen semana,"Si hoy fuera Dia 1, que accion harias?",Responde la story,Fondo texto,Pendiente
+8,Alta,TikTok/Reels,Video,scripts_reels_tiktok.md,Improvisacion,"No estas atrasado. Estas improvisando demasiado.",Comenta CONTROL,Video vertical simple,Pendiente
+8,Media,Facebook,Post largo,social_launch_playbook.md,Invitacion directa,"Abrimos cupos Alpha para 10 personas.",Reserva tu cupo,Texto largo,Pendiente
+9,Alta,Instagram,Carrusel,carousels_instagram.md,Volver al marco,"La disciplina real no es no fallar.",Guarda este post,Carrusel,Pendiente
+9,Alta,TikTok/Reels,Video,scripts_reels_tiktok.md,Volver,"El error no es caer. Es no volver.",Comenta VOLVER,Video vertical simple,Pendiente
+10,Alta,TikTok/Reels,Video,scripts_reels_tiktok.md,Estructura diaria,"Una estructura diaria vale mas que otra meta grande.",Comenta CONTROL,Video vertical simple,Pendiente
+10,Media,Instagram,Story,dm_scripts.md,DM abierto,"Quieres que te envie la ruta Alpha?",Responde SI,Fondo texto,Pendiente
+11,Alta,Facebook,Post largo,social_launch_playbook.md,Objeciones,"No necesitas estar listo para empezar.",Reserva tu cupo,Texto largo,Pendiente
+11,Alta,TikTok/Reels,Video,scripts_reels_tiktok.md,Dia 0,"Antes de Dia 1 necesitas una decision.",Comenta DIA0,Video vertical simple,Pendiente
+12,Alta,Instagram,Carrusel,carousels_instagram.md,Sistema,"Pago -> Acceso -> Dia 0 -> Dia 1 -> Dia 7.",Comenta CONTROL,Carrusel,Pendiente
+12,Alta,TikTok/Reels,Video,scripts_reels_tiktok.md,USD 9 Alpha,"No estas comprando motivacion. Estas entrando a una prueba.",Reserva Alpha,Video vertical simple,Pendiente
+13,Alta,TikTok/Reels,Video,scripts_reels_tiktok.md,Ultimos cupos,"Si sigues esperando sentirte listo, vas a seguir igual.",Comenta CONTROL,Video vertical simple,Pendiente
+13,Media,Instagram,Story,dm_scripts.md,Ultima llamada,"Quedan cupos Alpha. Quieres entrar?",Responde CONTROL,Fondo texto,Pendiente
+14,Alta,TikTok/Reels,Video,week_1_content_pack.md,Cierre Alpha,"100 dias van a pasar. La pregunta es si vas a ejecutar Dia 1.",Reserva tu cupo,Video vertical simple,Pendiente
+14,Alta,Facebook,Post largo,social_launch_playbook.md,Cierre,"Cierro esta primera ronda Alpha.",Enviar DM CONTROL,Texto largo,Pendiente
