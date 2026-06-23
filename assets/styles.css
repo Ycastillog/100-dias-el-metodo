@@ -1088,14 +1088,18 @@ footer p {
 .authority-strip {
   display: grid;
   gap: 1px;
+  padding: 0 16px;
   border-block: 1px solid var(--line);
-  background: var(--line);
+  background:
+    linear-gradient(90deg, rgba(214, 184, 114, 0.05), rgba(47, 191, 113, 0.04)),
+    #070706;
 }
 
 .authority-strip span {
   min-height: 58px;
   display: grid;
   place-items: center;
+  border-inline: 1px solid rgba(214, 184, 114, 0.1);
   padding: 12px 16px;
   color: var(--gold-strong);
   background: #090908;
@@ -1108,9 +1112,12 @@ footer p {
 .social-proof-strip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
+  gap: 12px;
+  padding: 16px;
   border-bottom: 1px solid var(--line);
-  background: var(--line);
+  background:
+    linear-gradient(90deg, rgba(214, 184, 114, 0.05), rgba(47, 191, 113, 0.04)),
+    #070706;
 }
 
 .social-proof-strip div {
@@ -1118,6 +1125,8 @@ footer p {
   display: grid;
   align-content: center;
   gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
   padding: 16px;
   background: rgba(16, 16, 14, 0.96);
 }
@@ -1397,6 +1406,8 @@ footer p {
   .welcome-screen,
   .sales-hero,
   .section-band,
+  .authority-strip,
+  .social-proof-strip,
   .visual-system-section,
   .activation-section,
   .dashboard-section,
@@ -1445,10 +1456,12 @@ footer p {
 
   .authority-strip {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-inline: clamp(32px, 6vw, 88px);
   }
 
   .social-proof-strip {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-inline: clamp(32px, 6vw, 88px);
   }
 
   .activation-grid,
