@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#070706"/>
+  <rect x="48" y="48" width="984" height="1824" rx="28" fill="#0d0d0b" stroke="#4a3d20" stroke-width="3"/>
+  <circle cx="905" cy="180" r="220" fill="#31c878" opacity="0.12"/>
+  <circle cx="180" cy="1510" r="320" fill="#f0cf7a" opacity="0.09"/>
+  <text x="88" y="148" fill="#f0cf7a" font-family="Arial, sans-serif" font-size="42" font-weight="900">100 DIAS</text>
+  <text x="88" y="650" fill="#f7f0df" font-family="Arial, sans-serif" font-size="112" font-weight="900">NO TE FALTA</text>
+  <text x="88" y="780" fill="#f0cf7a" font-family="Arial, sans-serif" font-size="112" font-weight="900">MOTIVACION</text>
+  <text x="88" y="920" fill="#f7f0df" font-family="Arial, sans-serif" font-size="82" font-weight="900">TE FALTA</text>
+  <text x="88" y="1020" fill="#31c878" font-family="Arial, sans-serif" font-size="82" font-weight="900">ESTRUCTURA</text>
+  <rect x="88" y="1590" width="460" height="92" rx="18" fill="#f0cf7a"/>
+  <text x="118" y="1650" fill="#07130c" font-family="Arial, sans-serif" font-size="36" font-weight="900">COMENTA CONTROL</text>
+  <text x="88" y="1760" fill="#cfc5b1" font-family="Arial, sans-serif" font-size="34" font-weight="700">Grupo Alpha - USD 9</text>
+</svg>

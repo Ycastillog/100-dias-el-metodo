@@ -53,6 +53,9 @@ Domingo: resumen, prueba social y llamada a entrar.
 
 - Reels/TikTok: `week_1_content_pack.md`
 - Calendario Alpha: `alpha_14_day_publish_plan.csv`
+- Sistema visual: `VISUAL_ASSET_SYSTEM.md`
+- Cola de imagenes: `visual_asset_queue.csv`
+- Plantillas editables: `templates/`
 - Respuestas DM: `dm_scripts.md`
 - Carruseles: `carousels_instagram.md`
 - Captions/bios: `bios_y_captions.md`

@@ -1,0 +1,11 @@
+id,priority,format,size,title,text_on_image,usage,source_content,status
+VIS-001,Alta,Reel cover,1080x1920,No necesitas motivacion,"No te falta motivacion. Te falta estructura.",Dia 1 Reel,week_1_content_pack.md,Pendiente
+VIS-002,Alta,Reel cover,1080x1920,La mayoria reacciona,"La mayoria no vive. Reacciona.",Dia 2 Reel,week_1_content_pack.md,Pendiente
+VIS-003,Alta,Reel cover,1080x1920,Dia 1,"No pienses en 100 dias. Piensa en Dia 1.",Dia 3 Reel,week_1_content_pack.md,Pendiente
+VIS-004,Alta,Story,1080x1920,Encuesta control,"Estas reaccionando mas de lo que diriges?",Dia 1 Story,alpha_14_day_publish_plan.csv,Pendiente
+VIS-005,Alta,Carrusel cover,1080x1350,Formula Metodo,"Control + Fortaleza + Direccion",Dia 3 Carrusel,week_1_content_pack.md,Pendiente
+VIS-006,Alta,Post,1200x630,Oferta Alpha,"10 cupos - 14 dias - USD 9",Post venta Alpha,social_launch_playbook.md,Pendiente
+VIS-007,Alta,Story,1080x1920,Ruta Alpha,"Pago -> Acceso -> Dia 0 -> Dia 1 -> Dia 7",Story confianza,CONTENT_COMMAND_CENTER.md,Pendiente
+VIS-008,Media,Reel cover,1080x1920,Volver,"Fallar no destruye el Metodo. No volver si.",Dia 4 Reel,week_1_content_pack.md,Pendiente
+VIS-009,Media,Reel cover,1080x1920,KPI Dia 7,"El KPI real es Dia 7.",Dia 7 Reel,week_1_content_pack.md,Pendiente
+VIS-010,Media,Carrusel cover,1080x1350,No es para todos,"Este Metodo no es para todo el mundo.",Dia 6 Carrusel,week_1_content_pack.md,Pendiente

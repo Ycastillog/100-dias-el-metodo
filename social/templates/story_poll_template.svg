@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#070706"/>
+  <rect x="60" y="60" width="960" height="1800" rx="32" fill="#10100e" stroke="#4a3d20" stroke-width="3"/>
+  <text x="96" y="160" fill="#f0cf7a" font-family="Arial, sans-serif" font-size="40" font-weight="900">100 DIAS: EL METODO</text>
+  <text x="96" y="550" fill="#f7f0df" font-family="Arial, sans-serif" font-size="88" font-weight="900">ESTAS</text>
+  <text x="96" y="660" fill="#f7f0df" font-family="Arial, sans-serif" font-size="88" font-weight="900">REACCIONANDO</text>
+  <text x="96" y="770" fill="#f0cf7a" font-family="Arial, sans-serif" font-size="88" font-weight="900">MAS DE LO QUE</text>
+  <text x="96" y="880" fill="#31c878" font-family="Arial, sans-serif" font-size="88" font-weight="900">DIRIGES?</text>
+  <rect x="96" y="1110" width="888" height="110" rx="24" fill="#f0cf7a"/>
+  <text x="138" y="1180" fill="#07130c" font-family="Arial, sans-serif" font-size="42" font-weight="900">SI, NECESITO CONTROL</text>
+  <rect x="96" y="1260" width="888" height="110" rx="24" fill="none" stroke="#4a3d20" stroke-width="3"/>
+  <text x="138" y="1330" fill="#f7f0df" font-family="Arial, sans-serif" font-size="42" font-weight="900">NO, ESTOY CLARO</text>
+  <text x="96" y="1700" fill="#cfc5b1" font-family="Arial, sans-serif" font-size="34" font-weight="700">Responde CONTROL para entrar al Alpha.</text>
+</svg>

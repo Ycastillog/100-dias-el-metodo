@@ -135,6 +135,9 @@ Archivos:
 - `week_1_content_pack.md`
 - `upload_checklist.md`
 - `content_metrics_dashboard.csv`
+- `VISUAL_ASSET_SYSTEM.md`
+- `visual_asset_queue.csv`
+- `templates/`
 - `affiliate_library.md`
 - `audio_series_plan.md`
 - `benchmark_negocio_fantasma.md`
