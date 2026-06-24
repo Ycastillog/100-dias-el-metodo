@@ -596,6 +596,64 @@ textarea {
   gap: 14px;
 }
 
+.today-training-card {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(47, 191, 113, 0.38);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(47, 191, 113, 0.16), transparent 42%),
+    linear-gradient(90deg, rgba(214, 184, 114, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(9, 24, 16, 0.86);
+  box-shadow: var(--shadow);
+}
+
+.today-training-card div {
+  min-width: 0;
+}
+
+.today-training-card span,
+.daily-identity-card span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.today-training-card strong,
+.daily-identity-card strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--gold-strong);
+  font-size: clamp(28px, 5vw, 46px);
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+
+.today-training-card p,
+.daily-identity-card p,
+.progress-note,
+.dashboard-guidance {
+  margin: 0;
+  color: #d6e6db;
+  line-height: 1.55;
+}
+
+.dashboard-guidance {
+  border-top: 1px solid rgba(47, 191, 113, 0.22);
+  padding-top: 12px;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.progress-note {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .mission-card,
 .progress-card,
 .daily-card {
@@ -696,6 +754,7 @@ textarea {
 }
 
 .daily-guide-card,
+.daily-identity-card,
 .companion-note {
   border: 1px solid rgba(47, 191, 113, 0.38);
   border-radius: 8px;
@@ -708,6 +767,15 @@ textarea {
 .daily-guide-card {
   display: grid;
   gap: 8px;
+}
+
+.daily-identity-card {
+  display: grid;
+  gap: 8px;
+}
+
+.daily-identity-card b {
+  color: var(--gold-strong);
 }
 
 .daily-guide-card span {
@@ -724,6 +792,7 @@ textarea {
 }
 
 .daily-guide-card p,
+.daily-identity-card p,
 .companion-note {
   margin: 0;
   color: #d6e6db;
@@ -1732,6 +1801,14 @@ footer p {
 
   .dashboard-grid {
     grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .today-training-card {
+    grid-template-columns: 0.78fr 1fr;
+  }
+
+  .today-training-card .dashboard-guidance {
+    grid-column: 1 / -1;
   }
 
   .resource-list {

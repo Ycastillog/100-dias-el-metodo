@@ -24,6 +24,68 @@ const PLAN_DETAILS = {
   },
 };
 
+const dayNarratives = [
+  "Recuperar el control",
+  "La primera victoria",
+  "La primera resistencia",
+  "Romper el piloto automatico",
+  "Cumplir aunque nadie mire",
+  "La incomodidad aparece",
+  "Primera revision",
+  "Volver sin drama",
+  "Proteger una prioridad",
+  "Cumplir tu palabra",
+  "Ordenar lo esencial",
+  "Elegir antes de reaccionar",
+  "Sostener lo pequeno",
+  "Cerrar el primer ciclo",
+];
+
+function getDayTheme(day, phase) {
+  return dayNarratives[day - 1] || (
+    phase === "Control" ? "Volver al control" :
+    phase === "Fortaleza" ? "Sostener bajo incomodidad" :
+    "Vivir con direccion"
+  );
+}
+
+function getIdentityStage(day) {
+  if (day <= 7) {
+    return {
+      name: "Explorador",
+      line: "Estas descubriendo que puedes volver al marco sin esperar sentirte perfecto.",
+    };
+  }
+  if (day <= 21) {
+    return {
+      name: "Constructor",
+      line: "Estas construyendo evidencia diaria de que cumples lo que dices.",
+    };
+  }
+  if (day <= 45) {
+    return {
+      name: "Resistente",
+      line: "Estas aprendiendo a sostener accion cuando aparece incomodidad.",
+    };
+  }
+  if (day <= 70) {
+    return {
+      name: "Constante",
+      line: "Estas dejando de depender del animo y empezando a depender de tu marco.",
+    };
+  }
+  if (day <= 99) {
+    return {
+      name: "Dirigido",
+      line: "Estas tomando decisiones con mas claridad y menos reaccion.",
+    };
+  }
+  return {
+    name: "Dominio Personal",
+    line: "Estas integrando Control, Fortaleza y Direccion como identidad.",
+  };
+}
+
 const dailyContent = Array.from({ length: 100 }, (_, index) => {
   const day = index + 1;
   const phase =
@@ -64,6 +126,7 @@ const dailyContent = Array.from({ length: 100 }, (_, index) => {
   return {
     day,
     phase,
+    theme: getDayTheme(day, phase),
     ...phaseContent[phase],
   };
 });
@@ -180,10 +243,16 @@ function renderDashboard() {
   const percent = Math.round((completed / 100) * 100);
   const currentDay = getCurrentDay();
   const phase = getPhase(currentDay);
+  const identity = getIdentityStage(currentDay);
+  const theme = getDayTheme(currentDay, phase);
 
   setText("[data-current-day]", String(currentDay));
   setText("[data-percent]", `${percent}%`);
   setText("[data-current-phase]", phase);
+  setText("[data-training-phase]", phase);
+  setText("[data-training-theme]", theme);
+  setText("[data-identity-stage]", identity.name);
+  setText("[data-identity-line]", identity.line);
   setText("[data-streak]", `${getStreak()} dias`);
   setText("[data-last-activity]", state.lastActivity || "Aun no has vuelto al marco");
   setText("[data-progress-label]", `${completed} de 100`);
@@ -195,7 +264,10 @@ function renderDashboard() {
 
 function renderDaily(day = getCurrentDay()) {
   const content = dailyContent[day - 1] || dailyContent[0];
-  setText("[data-daily-title]", `Dia ${content.day}`);
+  const identity = getIdentityStage(content.day);
+  setText("[data-daily-title]", `Dia ${content.day}: ${content.theme}`);
+  setText("[data-daily-theme]", content.theme);
+  setText("[data-daily-identity]", identity.name);
   setText("[data-daily-guide-name]", content.guideName);
   setText("[data-daily-guide]", content.guide);
   setText("[data-daily-principle]", content.principle);

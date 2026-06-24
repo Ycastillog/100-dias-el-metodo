@@ -79,6 +79,41 @@ Hoy tienes diario.
 Hoy vuelves al marco.
 ```
 
+## Capa de identidad
+
+La V2 no debe hacer que el participante sienta "estoy haciendo dias".
+
+Debe hacerlo sentir:
+
+```text
+Estoy atravesando etapas.
+Estoy construyendo una identidad.
+Soy una persona que cumple lo que dice.
+```
+
+Etapas narrativas:
+
+- Explorador: descubre que puede volver.
+- Constructor: acumula evidencia.
+- Resistente: sostiene accion bajo incomodidad.
+- Constante: deja de depender del animo.
+- Dirigido: decide con claridad.
+- Dominio Personal: integra Control, Fortaleza y Direccion.
+
+Arriba del dashboard debe aparecer siempre:
+
+```text
+Hoy estas entrenando: CONTROL
+Lo importante no es terminar rapido.
+Lo importante es volver manana.
+```
+
+El porcentaje no debe regalar progreso:
+
+- Completo: suma al porcentaje.
+- Parcial: mantiene racha, pero no suma al porcentaje.
+- Perdido: no suma y rompe racha.
+
 ## Rutina diaria
 
 ### Manana
