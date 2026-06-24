@@ -136,6 +136,26 @@ Crear estos assets primero:
 
 ## Formulas visuales que convencen
 
+### Formula 0: Mini tutorial
+
+```text
+Si abandonas, haz esto:
+
+1. Nombra el patron
+2. Elige 10 minutos
+3. Ejecuta y registra
+
+Comenta CONTROL
+```
+
+Uso:
+
+- Reels educativos.
+- Carruseles.
+- Stories con pasos.
+
+Esta formula debe ser la mas usada, porque primero entrega valor y luego vende.
+
 ### Formula 1: Dolor + mecanismo
 
 ```text

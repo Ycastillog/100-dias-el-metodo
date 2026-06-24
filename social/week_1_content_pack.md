@@ -22,17 +22,25 @@ No usar fondos bonitos sin mecanismo.
 
 **Guion:**
 
-No siempre te falta motivacion.
+Si empiezas muchas cosas y no terminas ninguna, prueba esto hoy.
 
-A veces te falta una estructura para volver cuando el animo desaparece.
+Paso 1: escribe el patron que mas repites.
 
-Empiezas fuerte, te emocionas, haces planes, pero cuando llega el cansancio vuelves al mismo patron.
+Puede ser abandonar, procrastinar, reaccionar o improvisar.
 
-100 Dias: El Metodo no empieza pidiendote cambiar toda tu vida.
+Paso 2: elige una sola accion que puedas terminar en 10 minutos.
 
-Empieza con una sola accion: ejecutar el Dia 1.
+No algo perfecto. Algo ejecutable.
 
-Porque si puedes volver al marco manana, ya no dependes tanto de sentirte listo.
+Paso 3: hazla y registrala.
+
+Ese registro es tu Dia 1.
+
+Esto es lo que hacemos dentro de 100 Dias: El Metodo.
+
+No compras motivacion. Entras a una estructura para volver.
+
+El Grupo Alpha dura 14 dias, tiene 10 cupos y cuesta USD 9.
 
 **CTA:** Comenta CONTROL y te envio el acceso Alpha.
 
@@ -48,23 +56,25 @@ No necesitas otra promesa grande. Necesitas una forma de volver cuando el animo 
 
 **Guion:**
 
-Reaccionas al telefono.
+3 pasos para dejar de vivir reaccionando.
 
-Reaccionas al cansancio.
+Paso 1: antes de tocar el telefono, escribe una prioridad.
 
-Reaccionas a lo urgente.
+Paso 2: convierte esa prioridad en una accion de 10 minutos.
 
-Reaccionas al animo.
+Paso 3: hazla antes de consumir contenido.
 
-Y despues te preguntas por que no avanzas.
+Eso no arregla toda tu vida.
 
-El problema no es que no tengas metas.
+Pero te devuelve direccion.
 
-El problema es que no tienes un marco diario para dirigir tu energia.
+La mayoria no necesita mas ideas.
 
-Control no es tener una vida perfecta.
+Necesita un marco diario para ejecutar.
 
-Control es decidir la siguiente accion aunque el dia no este perfecto.
+Eso es lo que trabajamos en el Grupo Alpha de 100 Dias: El Metodo.
+
+14 dias. 10 cupos. USD 9.
 
 **CTA:** Comenta CONTROL.
 
@@ -100,25 +110,27 @@ Control, Fortaleza y Direccion no son palabras bonitas. Son tres practicas para 
 
 **Guion:**
 
-Tu mente abandona cuando el cambio se ve enorme.
+Si piensas en cambiar toda tu vida, vas a abandonar antes de empezar.
 
-Por eso muchas metas mueren antes de empezar.
+Hazlo asi:
 
-100 dias puede sonar mucho.
+Paso 1: elige una accion pequena para hoy.
 
-Pero Dia 1 es concreto.
+Paso 2: ponle hora.
 
-Una accion.
+Paso 3: ejecutala aunque sea imperfecta.
 
-Una decision.
+Paso 4: marca Dia 1.
 
-Un registro.
+Eso es todo.
 
-Una evidencia de que no vas a seguir esperando sentirte perfecto.
+Dia 1 no es pequeno.
 
-El Metodo no te pide resolver toda tu vida hoy.
+Dia 1 es evidencia.
 
-Te pide ejecutar el siguiente dia.
+Dentro de 100 Dias: El Metodo usamos Dia 0, Dia 1 y Dia 7 para medir si estas volviendo al marco.
+
+Si quieres hacerlo con estructura, entra al Alpha.
 
 **CTA:** Comenta DIA1.
 
@@ -157,13 +169,21 @@ Pero la disciplina real no es perfeccion.
 
 Es regresar al marco despues de cansancio, distraccion o incomodidad.
 
+Haz esto cuando falles:
+
+Paso 1: no te insultes.
+
+Paso 2: escribe que rompio el ritmo.
+
+Paso 3: define la accion minima de regreso.
+
+Paso 4: vuelves al marco.
+
 Por eso en 100 Dias medimos algo simple:
 
-Volviste?
+Volviste? Ejecutaste? Registraste?
 
-Ejecutaste?
-
-Registraste?
+Si quieres practicarlo por 14 dias, entra al Grupo Alpha.
 
 **CTA:** Comenta VOLVER.
 
@@ -182,6 +202,16 @@ Saben que deben sostener una accion diaria.
 Pero saber no siempre produce ejecucion.
 
 El punto debil suele aparecer cuando baja el animo.
+
+Prueba esto hoy:
+
+Paso 1: escribe una sola cosa que estas evitando.
+
+Paso 2: conviertela en una accion de 10 minutos.
+
+Paso 3: ejecutala antes de consumir mas contenido.
+
+Paso 4: registrala.
 
 Por eso cree 100 Dias: El Metodo.
 
@@ -235,16 +265,18 @@ Comprar un curso no es una prueba.
 
 Guardar contenido no es una prueba.
 
-La prueba es volver.
+Haz esta prueba:
 
-Dia 0: decides.
+Dia 0: decides que patron vas a romper.
 
-Dia 1: ejecutas.
+Dia 1: ejecutas una accion pequena.
 
-Dia 7: vemos si el sistema aguanta vida real.
+Dia 7: revisas si volviste al marco.
 
 Por eso el Grupo Alpha de 100 Dias no empieza vendiendo fantasia.
 
 Empieza midiendo comportamiento.
+
+Si quieres hacerlo paso a paso conmigo, comenta DIA7.
 
 **CTA:** Comenta DIA7 si quieres entrar.

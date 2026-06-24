@@ -16,9 +16,11 @@ Existe para convencer a alguien de que:
 Cada pieza debe tener 4 partes:
 
 1. Dolor real: que problema siente ahora.
-2. Mecanismo: que regla del Metodo lo resuelve.
-3. Prueba visual: contador, checklist, ruta, cupos o captura legible.
-4. CTA: una palabra o accion clara.
+2. Mini paso a paso: que puede hacer hoy.
+3. Mecanismo: que regla del Metodo lo resuelve.
+4. Prueba visual: contador, checklist, ruta, cupos o captura legible.
+5. Venta final: el Alpha como continuacion natural.
+6. CTA: una palabra o accion clara.
 
 Antes de publicar, responder:
 
@@ -94,6 +96,7 @@ Domingo: resumen, prueba social y llamada a entrar.
 - Investigacion competitiva: `COMPETITIVE_CONTENT_RESEARCH.md`
 - Playbook de conversion: `CONVERSION_CONTENT_PLAYBOOK.md`
 - Matriz de angulos: `persuasion_angle_matrix.csv`
+- Scripts paso a paso: `step_by_step_sales_scripts.md`
 - Reels/TikTok: `week_1_content_pack.md`
 - Calendario Alpha: `alpha_14_day_publish_plan.csv`
 - Sistema visual: `VISUAL_ASSET_SYSTEM.md`

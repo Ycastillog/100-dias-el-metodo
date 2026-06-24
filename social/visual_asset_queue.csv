@@ -15,3 +15,7 @@ VIS-013,Alta,Story,1080x1920,CTA Control,"Comenta CONTROL y te envio la ruta",Ca
 VIS-014,Alta,Post,1200x630,Alpha Oferta,"10 cupos / 14 dias / USD 9",Post conversion Alpha,CONVERSION_CONTENT_PLAYBOOK.md,Pendiente
 VIS-015,Media,Carrusel slide,1080x1350,No teoria,"Guardar contenido no es avanzar.",Carrusel objecion,COMPETITIVE_CONTENT_RESEARCH.md,Pendiente
 VIS-016,Media,Reel cover,1080x1920,Facturar estructura,"Si quieres facturar deja de improvisar.",Reel negocio con estructura,persuasion_angle_matrix.csv,Pendiente
+VIS-017,Alta,Reel cover,1080x1920,Tutorial abandonar,"Si abandonas rapido: 1 nombra / 2 ejecuta / 3 registra",Reel paso a paso,step_by_step_sales_scripts.md,Pendiente
+VIS-018,Alta,Carrusel,1080x1350,3 pasos reaccionando,"3 pasos para dejar de vivir reaccionando",Carrusel tutorial,step_by_step_sales_scripts.md,Pendiente
+VIS-019,Alta,Story,1080x1920,Fallaste ayer,"Fallaste ayer? Vuelve asi: identifica / baja / ejecuta",Story tutorial,step_by_step_sales_scripts.md,Pendiente
+VIS-020,Alta,Reel cover,1080x1920,Venta Alpha final,"Aprende el paso 1 gratis. Haz el sistema completo en Alpha.",Reel venta final,CONVERSION_CONTENT_PLAYBOOK.md,Pendiente
