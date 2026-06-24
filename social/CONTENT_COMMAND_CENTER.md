@@ -2,6 +2,30 @@
 
 Objetivo inmediato: conseguir 10 interesados reales, 3 pagos Alpha y 3 personas ejecutando Dia 1.
 
+## Regla nueva
+
+El contenido no existe para verse bonito.
+
+Existe para convencer a alguien de que:
+
+- esta cansado de improvisar;
+- necesita una regla simple;
+- puede probar el Metodo en pequeno;
+- debe comentar o entrar hoy.
+
+Cada pieza debe tener 4 partes:
+
+1. Dolor real: que problema siente ahora.
+2. Mecanismo: que regla del Metodo lo resuelve.
+3. Prueba visual: contador, checklist, ruta, cupos o captura legible.
+4. CTA: una palabra o accion clara.
+
+Antes de publicar, responder:
+
+- Que objecion rompe?
+- Que imagen prueba que esto es real?
+- Que palabra debe comentar?
+
 ## Oferta que se comunica
 
 Grupo Alpha de 14 dias.
@@ -12,6 +36,22 @@ Grupo Alpha de 14 dias.
 - Promesa seria: recuperar control con estructura diaria
 
 No prometer ingresos, cambios magicos ni resultados garantizados.
+
+## Posicionamiento
+
+100 Dias: El Metodo no se vende como motivacion.
+
+Se vende como una prueba corta de ejecucion:
+
+- Dia 0: decides.
+- Dia 1: ejecutas.
+- Dia 7: vemos si volviste.
+
+La frase base:
+
+```text
+No te falta motivacion. Te falta estructura para volver.
+```
 
 ## Rutina diaria
 
@@ -51,6 +91,9 @@ Domingo: resumen, prueba social y llamada a entrar.
 
 ## Piezas principales
 
+- Investigacion competitiva: `COMPETITIVE_CONTENT_RESEARCH.md`
+- Playbook de conversion: `CONVERSION_CONTENT_PLAYBOOK.md`
+- Matriz de angulos: `persuasion_angle_matrix.csv`
 - Reels/TikTok: `week_1_content_pack.md`
 - Calendario Alpha: `alpha_14_day_publish_plan.csv`
 - Sistema visual: `VISUAL_ASSET_SYSTEM.md`
@@ -65,6 +108,8 @@ Domingo: resumen, prueba social y llamada a entrar.
 
 - Comenta CONTROL y te envio el acceso Alpha.
 - Escribeme DIA1 si quieres empezar por el siguiente paso.
+- Comenta VOLVER si quieres la regla para no abandonar.
+- Comenta DIA7 si quieres medir tu primera semana.
 - Entra al Grupo Alpha por USD 9.
 - Reserva tu cupo Alpha.
 

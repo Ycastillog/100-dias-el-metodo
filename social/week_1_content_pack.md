@@ -2,9 +2,23 @@
 
 Paquete listo para publicar durante la primera semana de contenido.
 
+## Regla visual de la semana
+
+Cada pieza debe mostrar una prueba visual del Metodo:
+
+- contador de dia;
+- checklist de accion;
+- barra Dia 0 -> Dia 7;
+- cupos Alpha;
+- CTA con palabra clave.
+
+No usar fondos bonitos sin mecanismo.
+
 ## Dia 1 - Reel/TikTok
 
 **Hook en pantalla:** Si empiezas muchas cosas y no terminas ninguna, mira esto.
+
+**Visual:** Contador "DIA 1/100", checklist "Decidir / Ejecutar / Registrar" y CTA "Comenta CONTROL".
 
 **Guion:**
 
@@ -29,6 +43,8 @@ No necesitas otra promesa grande. Necesitas una forma de volver cuando el animo 
 ## Dia 2 - Reel/TikTok
 
 **Hook en pantalla:** La mayoria no vive. Reacciona.
+
+**Visual:** Pantalla dividida "Reaccionar" vs "Dirigir" con 3 bullets cortos.
 
 **Guion:**
 
@@ -56,6 +72,8 @@ Control es decidir la siguiente accion aunque el dia no este perfecto.
 
 **Titulo:** Dominio Personal = Control + Fortaleza + Direccion
 
+**Visual:** Carrusel de texto grande con un slide de prueba: "Dia 0 -> Dia 1 -> Dia 7".
+
 **Slide 1:** No necesitas una personalidad nueva. Necesitas estructura.
 
 **Slide 2:** Control: dejar de reaccionar a todo.
@@ -77,6 +95,8 @@ Control, Fortaleza y Direccion no son palabras bonitas. Son tres practicas para 
 ## Dia 3 - Reel/TikTok
 
 **Hook en pantalla:** No pienses en 100 dias. Piensa en Dia 1.
+
+**Visual:** Numero gigante "Dia 1" y una barra casi vacia de progreso.
 
 **Guion:**
 
@@ -106,6 +126,8 @@ Te pide ejecutar el siguiente dia.
 
 **Story 1:** Pregunta: Que patron quieres romper?
 
+**Visual:** Encuesta oscura con cuatro botones grandes.
+
 Opciones:
 
 - Abandonar
@@ -120,6 +142,8 @@ Opciones:
 ## Dia 4 - Reel/TikTok
 
 **Hook en pantalla:** Fallar un dia no destruye el Metodo.
+
+**Visual:** Loop simple "Fallo -> Vuelvo -> Registro" y CTA "Comenta VOLVER".
 
 **Guion:**
 
@@ -146,6 +170,8 @@ Registraste?
 ## Dia 5 - Facebook Post Largo
 
 **Hook:** El problema no es que no sepas que hacer.
+
+**Visual:** Card horizontal "10 cupos / 14 dias / USD 9" con ruta debajo.
 
 Muchas personas ya saben lo que deberian hacer.
 
@@ -179,6 +205,8 @@ Si quieres entrar, escribeme CONTROL.
 
 **Titulo:** Este Metodo no es para todo el mundo
 
+**Visual:** Contraste "No es para..." y "Si es para..." con ultimo slide de cupos.
+
 **Slide 1:** Este Metodo no es para todo el mundo.
 
 **Slide 2:** No es para quien busca motivacion rapida.
@@ -196,6 +224,8 @@ Si quieres entrar, escribeme CONTROL.
 ## Dia 7 - Reel/TikTok
 
 **Hook en pantalla:** El KPI no es emocion. Es llegar a Dia 7.
+
+**Visual:** Barra de progreso Dia 0 -> Dia 7 marcada en verde.
 
 **Guion:**
 

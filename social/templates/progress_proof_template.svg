@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#050705"/>
+  <rect x="54" y="54" width="972" height="1812" rx="34" fill="#0a100b" stroke="#d6a93a" stroke-opacity=".35"/>
+  <text x="84" y="142" fill="#f2c94c" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800">100 DIAS: EL METODO</text>
+  <text x="84" y="330" fill="#f7f2e7" font-family="Arial, Helvetica, sans-serif" font-size="86" font-weight="900">DIA 1/100</text>
+  <text x="84" y="440" fill="#f7f2e7" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900">No te falta</text>
+  <text x="84" y="528" fill="#f2c94c" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900">motivacion.</text>
+  <text x="84" y="616" fill="#f7f2e7" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900">Te falta estructura.</text>
+  <rect x="84" y="738" width="912" height="34" rx="17" fill="#18231b"/>
+  <rect x="84" y="738" width="192" height="34" rx="17" fill="#19c67a"/>
+  <text x="84" y="848" fill="#d8ccb5" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">PROGRESO REAL</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800">
+    <rect x="84" y="914" width="912" height="132" rx="18" fill="#0f1510" stroke="#d6a93a" stroke-opacity=".3"/>
+    <text x="138" y="995" fill="#f7f2e7">01  Decidir</text>
+    <rect x="84" y="1080" width="912" height="132" rx="18" fill="#0f1510" stroke="#d6a93a" stroke-opacity=".3"/>
+    <text x="138" y="1161" fill="#f7f2e7">02  Ejecutar</text>
+    <rect x="84" y="1246" width="912" height="132" rx="18" fill="#0f1510" stroke="#d6a93a" stroke-opacity=".3"/>
+    <text x="138" y="1327" fill="#f7f2e7">03  Registrar</text>
+  </g>
+  <rect x="84" y="1540" width="912" height="168" rx="28" fill="#19c67a"/>
+  <text x="540" y="1644" text-anchor="middle" fill="#041006" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="900">COMENTA CONTROL</text>
+  <text x="84" y="1790" fill="#d8ccb5" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Dia 0 decide. Dia 1 ejecuta. Dia 7 mide.</text>
+</svg>

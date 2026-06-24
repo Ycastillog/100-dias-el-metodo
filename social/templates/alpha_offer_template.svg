@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#050705"/>
+  <rect x="38" y="38" width="1124" height="554" rx="26" fill="#0a100b" stroke="#d6a93a" stroke-opacity=".42"/>
+  <text x="70" y="104" fill="#f2c94c" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="900">GRUPO ALPHA</text>
+  <text x="70" y="205" fill="#f7f2e7" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900">10 cupos.</text>
+  <text x="70" y="292" fill="#f7f2e7" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900">14 dias.</text>
+  <text x="70" y="379" fill="#19c67a" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900">USD 9.</text>
+  <rect x="668" y="96" width="420" height="354" rx="22" fill="#0f1510" stroke="#d6a93a" stroke-opacity=".32"/>
+  <text x="700" y="160" fill="#f2c94c" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">RUTA MEDIBLE</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800" fill="#f7f2e7">
+    <text x="700" y="225">Pago</text>
+    <text x="700" y="282">Acceso</text>
+    <text x="700" y="339">Dia 0</text>
+    <text x="700" y="396">Dia 1</text>
+  </g>
+  <text x="902" y="396" fill="#19c67a" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">Dia 7</text>
+  <text x="70" y="520" fill="#d8ccb5" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">No compras motivacion. Entras a una prueba de ejecucion.</text>
+  <text x="70" y="562" fill="#f2c94c" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">Comenta CONTROL para entrar.</text>
+</svg>
