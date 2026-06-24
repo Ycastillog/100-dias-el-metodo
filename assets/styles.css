@@ -263,6 +263,8 @@ h3 {
 .welcome-panel {
   display: grid;
   gap: 10px;
+  min-width: 0;
+  max-width: 100%;
   padding: 18px;
 }
 
@@ -693,6 +695,41 @@ textarea {
   gap: 14px;
 }
 
+.daily-guide-card,
+.companion-note {
+  border: 1px solid rgba(47, 191, 113, 0.38);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(47, 191, 113, 0.16), transparent 42%),
+    rgba(9, 24, 16, 0.86);
+}
+
+.daily-guide-card {
+  display: grid;
+  gap: 8px;
+}
+
+.daily-guide-card span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.daily-guide-card strong {
+  color: var(--gold-strong);
+  font-size: clamp(24px, 5vw, 38px);
+  line-height: 1.08;
+}
+
+.daily-guide-card p,
+.companion-note {
+  margin: 0;
+  color: #d6e6db;
+  line-height: 1.55;
+}
+
 .daily-block {
   display: grid;
   gap: 6px;
@@ -700,6 +737,13 @@ textarea {
   border: 1px solid rgba(214, 184, 114, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.03);
+}
+
+.assigned-task {
+  border-color: rgba(240, 207, 122, 0.42);
+  background:
+    linear-gradient(90deg, rgba(214, 184, 114, 0.14), rgba(255, 255, 255, 0.03)),
+    rgba(23, 22, 18, 0.92);
 }
 
 .daily-block p {
@@ -1229,18 +1273,24 @@ footer p {
 .recommendations-section,
 .social-engine-section,
 .pathways-section,
-.connector-section {
+.connector-section,
+.guided-experience-section,
+.mentor-section {
   padding: 44px 16px;
 }
 
 .pathway-grid,
-.connector-grid {
+.connector-grid,
+.experience-grid,
+.mentor-grid {
   display: grid;
   gap: 12px;
 }
 
 .pathway-grid article,
-.connector-grid div {
+.connector-grid div,
+.experience-grid article,
+.mentor-grid article {
   display: grid;
   gap: 12px;
   border: 1px solid var(--line);
@@ -1300,6 +1350,12 @@ footer p {
   align-content: space-between;
 }
 
+.experience-grid article,
+.mentor-grid article {
+  min-height: 210px;
+  align-content: space-between;
+}
+
 .connector-grid strong {
   color: var(--text);
   font-size: 24px;
@@ -1316,6 +1372,29 @@ footer p {
   padding: 18px;
   background: rgba(9, 24, 16, 0.86);
   box-shadow: var(--shadow);
+}
+
+.experience-grid span,
+.mentor-grid span {
+  color: var(--gold-strong);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.experience-grid h3,
+.mentor-grid h3 {
+  color: var(--gold-strong);
+  font-size: 26px;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.experience-grid p,
+.mentor-grid p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .audience-grid {
@@ -1530,6 +1609,8 @@ footer p {
   .faq-section,
   .pathways-section,
   .connector-section,
+  .guided-experience-section,
+  .mentor-section,
   .day-zero {
     padding: 70px clamp(32px, 6vw, 88px);
   }
@@ -1580,7 +1661,9 @@ footer p {
   .social-engine-grid,
   .audience-grid,
   .pathway-grid,
-  .connector-grid {
+  .connector-grid,
+  .experience-grid,
+  .mentor-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1638,7 +1721,8 @@ footer p {
   .resource-grid,
   .visual-flow-grid,
   .recommendation-grid,
-  .pathway-grid {
+  .pathway-grid,
+  .mentor-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -1756,6 +1840,30 @@ footer p {
 }
 
 @media (max-width: 760px) {
+  .access-page .welcome-copy,
+  .access-page .welcome-panel,
+  .access-page .lead,
+  .access-preview-content {
+    width: min(100%, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+  }
+
+  .reset-progress {
+    display: none;
+  }
+
+  .access-page .principle-row {
+    grid-template-columns: 1fr;
+  }
+
+  .access-page .access-preview-image {
+    display: none;
+  }
+
+  .access-preview {
+    overflow: hidden;
+  }
+
   .product-showcase {
     display: none;
   }

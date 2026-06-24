@@ -24,6 +24,7 @@
       <nav aria-label="Principal">
         <a href="#activacion">Activacion</a>
         <a href="#dashboard">Avance</a>
+        <a href="#guia">Guia</a>
         <a href="#dia">Hoy</a>
         <a href="#kit">Kit</a>
       </nav>
@@ -36,7 +37,7 @@
           <p class="eyebrow">Acceso del participante</p>
           <h1>Bienvenido a <span>100 Dias: El Metodo</span></h1>
           <p class="welcome-statement">
-            Has tomado una decision que la mayoria nunca toma.
+            No entras solo a una plataforma. Entras a una experiencia guiada.
           </p>
           <div class="principle-row" aria-label="Pilares del metodo">
             <span>Control</span>
@@ -45,7 +46,7 @@
           </div>
           <p class="lead">
             Tu objetivo no es completar 100 dias hoy. Tu objetivo es completar
-            el Dia 1.
+            el Dia 1 con claridad, compania y una tarea concreta.
           </p>
           <a class="button primary" href="#activacion">Iniciar el metodo</a>
         </div>
@@ -66,7 +67,7 @@
           <div class="access-preview-content">
             <span class="panel-label">Dominio personal</span>
             <strong>Control + Fortaleza + Direccion</strong>
-            <p>Una plataforma para ejecutar el siguiente dia, no para acumular archivos.</p>
+            <p>Una plataforma para sentirte guiado: tarea diaria, diario, avance y regreso al marco.</p>
             <div class="access-mini-progress" aria-label="Progreso visual de ejemplo">
               <span>Dia 1 activo</span>
               <div><i></i></div>
@@ -124,6 +125,31 @@
           <strong>Activacion completada</strong>
           <span>Bienvenido al Metodo.</span>
           <a class="button primary" href="#dashboard">Ir a mi avance</a>
+        </div>
+      </section>
+
+      <section class="mentor-section section-band" id="guia">
+        <div class="section-head">
+          <p class="eyebrow">Acompanamiento</p>
+          <h2>Guiado por una voz, no por una lista fria.</h2>
+          <p>El Metodo toma inspiracion de Marco Aurelio, Seneca y Epicteto para convertir filosofia en accion diaria: observar, decidir, ejecutar y escribir.</p>
+        </div>
+        <div class="mentor-grid">
+          <article>
+            <span>Control</span>
+            <h3>Marco Aurelio</h3>
+            <p>Te recuerda volver a lo que depende de ti: tu juicio, tu accion y tu respuesta.</p>
+          </article>
+          <article>
+            <span>Fortaleza</span>
+            <h3>Seneca</h3>
+            <p>Te acompana cuando aparece incomodidad, cansancio o miedo a perder el ritmo.</p>
+          </article>
+          <article>
+            <span>Direccion</span>
+            <h3>Epicteto</h3>
+            <p>Te ayuda a elegir con claridad y soltar lo que no controlas.</p>
+          </article>
         </div>
       </section>
 
@@ -226,6 +252,11 @@
         </div>
 
         <article class="daily-card">
+          <div class="daily-guide-card">
+            <span>Tu guia de hoy</span>
+            <strong data-daily-guide-name>Marco Aurelio</strong>
+            <p data-daily-guide>Vuelve a lo que depende de ti.</p>
+          </div>
           <div class="daily-block">
             <span>Principio</span>
             <p data-daily-principle>Controla la primera decision del dia.</p>
@@ -238,10 +269,15 @@
             <span>Accion</span>
             <p data-daily-action>Completa una accion pequena antes de consumir distraccion.</p>
           </div>
+          <div class="daily-block assigned-task">
+            <span>Tarea asignada</span>
+            <p data-daily-task>Elige una accion de 10 minutos, ejecutala y registrala antes de dormir.</p>
+          </div>
           <label class="reflection-field">
-            Reflexion
-            <textarea id="dailyReflection" rows="5" placeholder="Registra que hiciste, que evitaste y que aprendiste."></textarea>
+            Diario del dia
+            <textarea id="dailyReflection" rows="6" placeholder="Hoy hice... Hoy senti... Hoy vuelvo al marco porque..."></textarea>
           </label>
+          <p class="companion-note" data-daily-companion>No necesitas hacerlo perfecto. Necesitas volver con honestidad.</p>
           <div class="state-actions" aria-label="Estado del dia">
             <button class="day-state complete" type="button" data-state="complete">Marcar como completado</button>
             <button class="day-state partial" type="button" data-state="partial">Parcial</button>

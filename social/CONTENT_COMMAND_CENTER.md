@@ -48,11 +48,35 @@ Se vende como una prueba corta de ejecucion:
 - Dia 0: decides.
 - Dia 1: ejecutas.
 - Dia 7: vemos si volviste.
+- Diario: escribes lo que paso.
+- Guia: una voz practica te acompana.
 
 La frase base:
 
 ```text
 No te falta motivacion. Te falta estructura para volver.
+```
+
+## Experiencia que se debe comunicar
+
+El Alpha no debe sentirse como "te doy una tarea y ya".
+
+Debe sentirse asi:
+
+- alguien te recibe;
+- tienes una tarea asignada;
+- escribes en tu diario;
+- ves tu avance;
+- si fallas, no te castigan: vuelves al marco;
+- la filosofia de Marco Aurelio, Seneca y Epicteto aparece como guia practica, no como clase larga.
+
+Angulo visual:
+
+```text
+Hoy tienes guia.
+Hoy tienes tarea.
+Hoy tienes diario.
+Hoy vuelves al marco.
 ```
 
 ## Rutina diaria

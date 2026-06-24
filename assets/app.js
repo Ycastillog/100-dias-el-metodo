@@ -33,19 +33,31 @@ const dailyContent = Array.from({ length: 100 }, (_, index) => {
 
   const phaseContent = {
     Control: {
+      guideName: "Marco Aurelio",
+      guide: "Vuelve a lo que depende de ti: tu juicio, tu accion y tu respuesta.",
       principle: "Controla una decision antes de buscar motivacion.",
       question: "Que parte de este dia depende directamente de mi?",
       action: "Ejecuta una accion pequena que reduzca caos antes de consumir distraccion.",
+      task: "Elige una accion de 10 minutos que reduzca caos y hazla antes de consumir distraccion.",
+      companion: "No tienes que dominar todo el dia. Solo vuelve a una decision que si depende de ti.",
     },
     Fortaleza: {
+      guideName: "Seneca",
+      guide: "La incomodidad no es enemiga; es el lugar donde se entrena el caracter.",
       principle: "La incomodidad no decide por ti.",
       question: "Que impulso debo observar sin obedecer automaticamente?",
-      action: "Sostén una accion necesaria aunque no tengas ganas de hacerla.",
+      action: "Sosten una accion necesaria aunque no tengas ganas de hacerla.",
+      task: "Haz una accion necesaria aunque el animo no te acompane y escribe que resistencia aparecio.",
+      companion: "Si hoy pesa, no estas fallando. Estas entrenando volver sin negociar con el cansancio.",
     },
     Direccion: {
+      guideName: "Epicteto",
+      guide: "No todo esta bajo tu control. Tu tarea es elegir bien donde pones tu energia.",
       principle: "Una vida dirigida se construye con decisiones repetidas.",
       question: "Que decision de hoy me acerca a la persona que estoy construyendo?",
-      action: "Elige una prioridad concreta y protégela antes de responder al ruido externo.",
+      action: "Elige una prioridad concreta y protegela antes de responder al ruido externo.",
+      task: "Define una prioridad, elimina una distraccion y protege un bloque corto para avanzar.",
+      companion: "Tu direccion no aparece de golpe. Se construye cuando eliges una prioridad y la cuidas.",
     },
   };
 
@@ -184,9 +196,13 @@ function renderDashboard() {
 function renderDaily(day = getCurrentDay()) {
   const content = dailyContent[day - 1] || dailyContent[0];
   setText("[data-daily-title]", `Dia ${content.day}`);
+  setText("[data-daily-guide-name]", content.guideName);
+  setText("[data-daily-guide]", content.guide);
   setText("[data-daily-principle]", content.principle);
   setText("[data-daily-question]", content.question);
   setText("[data-daily-action]", content.action);
+  setText("[data-daily-task]", content.task);
+  setText("[data-daily-companion]", content.companion);
 
   const reflection = document.querySelector("#dailyReflection");
   if (reflection) {
@@ -538,7 +554,7 @@ document.querySelector("#weeklyReviewForm")?.addEventListener("submit", (event) 
   trackEvent("weekly_review_saved");
   event.currentTarget.reset();
   renderAll();
-  setText("#reviewNote", "Revision guardada. Sostén lo que funciono y vuelve al marco.");
+  setText("#reviewNote", "Revision guardada. Sosten lo que funciono y vuelve al marco.");
 });
 
 document.querySelector(".reset-progress")?.addEventListener("click", () => {
