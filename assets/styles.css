@@ -25,9 +25,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
+  width: 100%;
+  overflow-x: hidden;
   margin: 0;
   color: var(--text);
   background:
@@ -836,6 +839,8 @@ footer p {
 .sales-copy {
   display: grid;
   gap: 18px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .hero-copy {
@@ -892,6 +897,7 @@ footer p {
   display: grid;
   gap: 14px;
   min-width: 0;
+  max-width: 100%;
 }
 
 .product-showcase {
@@ -1018,6 +1024,7 @@ footer p {
 .hero-proof-card {
   display: grid;
   gap: 8px;
+  min-width: 0;
   border: 1px solid rgba(47, 191, 113, 0.38);
   border-radius: 8px;
   padding: 16px;
@@ -1036,6 +1043,7 @@ footer p {
   color: var(--text);
   font-size: clamp(20px, 4vw, 30px);
   line-height: 1.12;
+  overflow-wrap: anywhere;
 }
 
 .hero-proof-card p {
@@ -1219,8 +1227,95 @@ footer p {
 .registration-section,
 .faq-section,
 .recommendations-section,
-.social-engine-section {
+.social-engine-section,
+.pathways-section,
+.connector-section {
   padding: 44px 16px;
+}
+
+.pathway-grid,
+.connector-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.pathway-grid article,
+.connector-grid div {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(214, 184, 114, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(23, 22, 18, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.pathway-grid article {
+  align-content: start;
+  min-height: 420px;
+}
+
+.pathway-grid span,
+.connector-grid span {
+  color: var(--gold-strong);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.pathway-grid h3 {
+  color: var(--gold-strong);
+  font-size: 26px;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.pathway-grid p,
+.connector-grid p,
+.connector-cta p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.pathway-grid ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+  color: #e8dec9;
+  line-height: 1.45;
+}
+
+.pathway-grid strong {
+  margin-top: auto;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.connector-grid div {
+  min-height: 180px;
+  align-content: space-between;
+}
+
+.connector-grid strong {
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1.12;
+}
+
+.connector-cta {
+  display: grid;
+  gap: 14px;
+  align-items: center;
+  margin-top: 14px;
+  border: 1px solid rgba(47, 191, 113, 0.38);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(9, 24, 16, 0.86);
+  box-shadow: var(--shadow);
 }
 
 .audience-grid {
@@ -1433,6 +1528,8 @@ footer p {
   .plans-section,
   .registration-section,
   .faq-section,
+  .pathways-section,
+  .connector-section,
   .day-zero {
     padding: 70px clamp(32px, 6vw, 88px);
   }
@@ -1481,7 +1578,9 @@ footer p {
   .visual-flow-grid,
   .recommendation-grid,
   .social-engine-grid,
-  .audience-grid {
+  .audience-grid,
+  .pathway-grid,
+  .connector-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1524,6 +1623,10 @@ footer p {
     grid-template-columns: 1fr auto;
   }
 
+  .connector-cta {
+    grid-template-columns: 1fr auto;
+  }
+
   .payment-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1534,7 +1637,8 @@ footer p {
   .phase-grid,
   .resource-grid,
   .visual-flow-grid,
-  .recommendation-grid {
+  .recommendation-grid,
+  .pathway-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -1591,8 +1695,14 @@ footer p {
   }
 
   .sales-hero .button {
+    width: 100%;
+    flex: 1 1 100%;
     min-height: 46px;
     padding-inline: 14px;
+  }
+
+  .hero-actions {
+    width: 100%;
   }
 
   .reset-progress {
@@ -1642,5 +1752,16 @@ footer p {
 
   .product-showcase {
     display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .product-showcase {
+    display: none;
+  }
+
+  .hero-actions .button {
+    flex: 1 1 100%;
+    width: 100%;
   }
 }

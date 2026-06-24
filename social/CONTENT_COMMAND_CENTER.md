@@ -94,6 +94,7 @@ Domingo: resumen, prueba social y llamada a entrar.
 ## Piezas principales
 
 - Investigacion competitiva: `COMPETITIVE_CONTENT_RESEARCH.md`
+- Investigacion de conexion: `CONNECTION_RESEARCH_IMPLEMENTATION.md`
 - Playbook de conversion: `CONVERSION_CONTENT_PLAYBOOK.md`
 - Matriz de angulos: `persuasion_angle_matrix.csv`
 - Scripts paso a paso: `step_by_step_sales_scripts.md`
