@@ -249,6 +249,7 @@ function renderDashboard() {
   setText("[data-current-day]", String(currentDay));
   setText("[data-percent]", `${percent}%`);
   setText("[data-current-phase]", phase);
+  setText("[data-current-state]", `Entrenando ${phase}`);
   setText("[data-training-phase]", phase);
   setText("[data-training-theme]", theme);
   setText("[data-identity-stage]", identity.name);
