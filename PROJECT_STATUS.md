@@ -6,7 +6,17 @@
 
 ## Estado
 
-VALIDACION
+PRODUCTO LISTO PARA VALIDACION ALPHA
+
+## Estado de negocio
+
+- Producto: LISTO
+- Metodo: LISTO
+- Sistema: LISTO
+- Experiencia: LISTA
+- Operacion: PENDIENTE
+- Mercado: PENDIENTE
+- Validacion: EN CURSO
 
 ## Fecha de cierre de construccion
 
@@ -18,9 +28,32 @@ NO AGREGAR NUEVOS MODULOS DEL METODO HASTA TERMINAR EL ALPHA.
 
 Solo se permiten ajustes operativos para que la venta, el acceso y la experiencia del participante funcionen correctamente.
 
+Cada hora adicional de desarrollo debe justificarse con una observacion real de usuario.
+
+No confundir ausencia de funciones con ausencia de valor.
+
 ## Proxima accion
 
 Conseguir 10 usuarios reales para el Grupo Alpha.
+
+## Roadmap empresarial
+
+1. Usuario descubre el metodo.
+2. Usuario compra.
+3. Usuario entra.
+4. Usuario ejecuta Dia 1.
+5. Usuario vuelve Dia 2.
+6. Usuario llega Dia 7.
+7. Usuario recomienda el metodo.
+8. Usuario compra la continuacion.
+
+## Olas de validacion
+
+- Primera ola: 10 usuarios.
+- Segunda ola: 30 usuarios.
+- Tercera ola: 100 usuarios.
+
+No invertir en anuncios hasta tener senales basicas de retencion, conversion, permanencia y valor percibido.
 
 ## Flujo operativo
 
