@@ -302,6 +302,9 @@ const paymentNote = document.querySelector("[data-payment-note]");
 const paymentActions = document.querySelector("[data-payment-actions]");
 const paymentLinks = document.querySelectorAll("[data-payment-provider]");
 const externalLinks = document.querySelectorAll("[data-external-link]");
+const resetModal = document.querySelector("#resetModal");
+const resetCancel = document.querySelector("[data-reset-cancel]");
+const resetConfirm = document.querySelector("[data-reset-confirm]");
 
 function getStoredArray(key) {
   try {
@@ -629,12 +632,28 @@ document.querySelector("#weeklyReviewForm")?.addEventListener("submit", (event) 
   setText("#reviewNote", "Revision guardada. Sosten lo que funciono y vuelve al marco.");
 });
 
+function closeResetModal() {
+  if (resetModal) resetModal.hidden = true;
+}
+
 document.querySelector(".reset-progress")?.addEventListener("click", () => {
-  const confirmed = window.confirm("Esto reinicia tu progreso guardado en este navegador. Continuar?");
-  if (!confirmed) return;
+  if (resetModal) {
+    resetModal.hidden = false;
+    resetCancel?.focus();
+  }
+});
+
+resetCancel?.addEventListener("click", closeResetModal);
+
+resetModal?.addEventListener("click", (event) => {
+  if (event.target === resetModal) closeResetModal();
+});
+
+resetConfirm?.addEventListener("click", () => {
   state = { ...defaultState, activation: { ...defaultState.activation }, days: {}, reviews: [] };
   localStorage.removeItem(STORAGE_KEY);
   renderAll();
+  closeResetModal();
 });
 
 renderAll();

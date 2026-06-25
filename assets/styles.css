@@ -111,6 +111,10 @@ main {
   overflow: hidden;
 }
 
+section[id] {
+  scroll-margin-top: 82px;
+}
+
 .welcome-screen,
 .section-band,
 .activation-section,
@@ -847,6 +851,40 @@ textarea {
   background: var(--red);
 }
 
+.app-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.modal-panel {
+  width: min(100%, 560px);
+  display: grid;
+  gap: 14px;
+  border: 1px solid rgba(240, 207, 122, 0.42);
+  border-radius: 8px;
+  padding: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(47, 191, 113, 0.15), transparent 42%),
+    #11100d;
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.72);
+}
+
+.modal-panel h2 {
+  font-size: clamp(28px, 5vw, 42px);
+}
+
+.modal-panel p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .weekly-section {
   background:
     linear-gradient(180deg, rgba(214, 184, 114, 0.08), rgba(255, 255, 255, 0.02)),
@@ -1265,6 +1303,53 @@ footer p {
     #070706;
 }
 
+.identity-promise-section,
+.first-week-section {
+  padding: 44px 16px;
+}
+
+.identity-ladder,
+.week-path {
+  display: grid;
+  gap: 12px;
+}
+
+.identity-ladder div,
+.week-path div {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  background:
+    linear-gradient(180deg, rgba(214, 184, 114, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(23, 22, 18, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.identity-ladder span,
+.week-path span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.identity-ladder strong,
+.week-path strong {
+  color: var(--gold-strong);
+  font-size: 22px;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.identity-ladder p,
+.week-path p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .visual-system-section .section-head {
   max-width: 760px;
   margin-bottom: 18px;
@@ -1525,6 +1610,15 @@ footer p {
   font-weight: 800;
 }
 
+.plan-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: #e8dec9;
+  line-height: 1.45;
+}
+
 .payment-box {
   display: grid;
   gap: 12px;
@@ -1671,6 +1765,8 @@ footer p {
   .resources-section,
   .conversion-section,
   .social-engine-section,
+  .identity-promise-section,
+  .first-week-section,
   .recommendations-section,
   .audience-section,
   .plans-section,
@@ -1681,7 +1777,7 @@ footer p {
   .guided-experience-section,
   .mentor-section,
   .day-zero {
-    padding: 70px clamp(32px, 6vw, 88px);
+    padding: 58px clamp(32px, 6vw, 88px);
   }
 
   .welcome-screen,
@@ -1726,6 +1822,8 @@ footer p {
   .phase-grid,
   .resource-grid,
   .visual-flow-grid,
+  .identity-ladder,
+  .week-path,
   .recommendation-grid,
   .social-engine-grid,
   .audience-grid,
@@ -1791,8 +1889,18 @@ footer p {
   .visual-flow-grid,
   .recommendation-grid,
   .pathway-grid,
-  .mentor-grid {
+  .mentor-grid,
+  .identity-ladder {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .week-path {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .week-path div {
+    min-height: 220px;
+    align-content: space-between;
   }
 
   .activation-card:nth-child(4) {
