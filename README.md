@@ -4,13 +4,23 @@
 
 Version: 1.0
 
-Estado: VALIDACION
+Estado: PRODUCTO LISTO PARA VALIDACION ALPHA
 
-Fecha de cierre de construccion: 16/06/2026
+Fecha de cierre de construccion: 24/06/2026
 
 Regla: NO AGREGAR NUEVOS MODULOS DEL METODO HASTA TERMINAR EL ALPHA.
 
 Repositorio de la V1.0 cerrada de **100 Dias: El Metodo**, un sistema de dominio personal actualmente en fase de validacion Alpha.
+
+## Punto de partida operativo
+
+Abrir primero:
+
+```text
+ALPHA_LAUNCH_READY.md
+```
+
+Ese archivo resume que esta listo, que falta conectar y cual es la primera accion real.
 
 ## Que incluye
 
@@ -24,6 +34,8 @@ Repositorio de la V1.0 cerrada de **100 Dias: El Metodo**, un sistema de dominio
 - Archivos descargables en `public/downloads`.
 - Kit de validacion Alpha en `validation`.
 - Sistema social y contenidos Alpha en `social`.
+- Manifiesto del fundador en `MANIFIESTO_DEL_FUNDADOR.md`.
+- Centro operativo Alpha en `ALPHA_LAUNCH_READY.md`.
 - Biblioteca recomendada y audios complementarios configurables.
 - Estado operativo visible en `PROJECT_STATUS.md`.
 
@@ -75,6 +87,12 @@ Hay una plantilla lista para Google Sheets en:
 automation/google_sheets_leads_apps_script.js
 ```
 
+La guia de conexion de pagos y registro esta en:
+
+```text
+automation/SETUP_PAGOS_REGISTRO.md
+```
+
 El sitio guarda eventos locales y envia eventos a `window.dataLayer` si luego se instala Google Tag Manager.
 
 `assets/site-config.js` tambien permite configurar:
@@ -116,3 +134,10 @@ Pregunta clave cuando alguien abandona:
 ```text
 Que paso el dia que dejaste de volver?
 ```
+
+Archivos operativos principales:
+
+- `validation/03_TRACKING_ALPHA.csv`
+- `validation/ALPHA_COMMAND_CENTER.md`
+- `validation/ALPHA_MENSAJES_OPERATIVOS.md`
+- `validation/ALPHA_OFERTA_CONTINUACION.md`
