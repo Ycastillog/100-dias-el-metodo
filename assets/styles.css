@@ -487,10 +487,39 @@ textarea {
   padding: 16px;
 }
 
+.ceremony-note,
 .decision-statement {
   display: grid;
   gap: 8px;
   margin-bottom: 14px;
+}
+
+.ceremony-note {
+  border: 1px solid rgba(47, 191, 113, 0.36);
+  border-radius: 8px;
+  padding: 16px;
+  background:
+    radial-gradient(circle at top right, rgba(47, 191, 113, 0.14), transparent 42%),
+    rgba(9, 24, 16, 0.72);
+  box-shadow: var(--shadow);
+}
+
+.ceremony-note span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.ceremony-note p {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 850;
+  line-height: 1.22;
+}
+
+.decision-statement {
   border-left: 3px solid var(--gold-strong);
   border-radius: 8px;
   padding: 18px;
@@ -588,7 +617,8 @@ textarea {
 
 .mobile-dashboard strong {
   color: var(--text);
-  font-size: 28px;
+  font-size: clamp(22px, 4vw, 28px);
+  line-height: 1.08;
 }
 
 .mobile-dashboard .button {
@@ -1072,14 +1102,36 @@ footer p {
 }
 
 .product-preview-head {
-  min-height: 140px;
-  align-content: end;
+  min-height: 150px;
+  align-content: space-between;
   border: 1px solid rgba(240, 207, 122, 0.2);
   border-radius: 8px;
   padding: 18px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(7, 7, 6, 0.92)),
     repeating-linear-gradient(90deg, rgba(240, 207, 122, 0.04) 0 1px, transparent 1px 72px);
+}
+
+.live-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.live-row em {
+  display: inline-grid;
+  min-height: 28px;
+  place-items: center;
+  border: 1px solid rgba(47, 191, 113, 0.45);
+  border-radius: 999px;
+  padding: 0 12px;
+  color: #8ef0b8;
+  background: rgba(47, 191, 113, 0.11);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 950;
+  text-transform: uppercase;
 }
 
 .product-preview-head span,
@@ -1095,6 +1147,12 @@ footer p {
   color: var(--gold-strong);
   font-size: clamp(32px, 5vw, 58px);
   line-height: 0.98;
+}
+
+.product-preview-head p {
+  margin: 0;
+  color: var(--text);
+  font-weight: 850;
 }
 
 .product-preview-grid {
@@ -1201,6 +1259,31 @@ footer p {
   margin: 0;
   color: #c7d8cd;
   line-height: 1.5;
+}
+
+.next-five-block {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(240, 207, 122, 0.28);
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.next-five-block span {
+  color: var(--gold-strong);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.next-five-block ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+  color: #e8dec9;
+  line-height: 1.45;
 }
 
 .hero-actions,
@@ -1844,7 +1927,7 @@ footer p {
   }
 
   .mobile-dashboard {
-    grid-template-columns: 1.4fr 1fr 1fr auto;
+    grid-template-columns: 1.25fr 1fr 1fr 1fr auto;
   }
 
   .dynamic-phrase,
