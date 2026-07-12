@@ -475,9 +475,9 @@
 
       <section class="plans-section section-band" id="planes">
         <div class="section-head">
-          <p class="eyebrow">Alpha</p>
-          <h2>Entra al Grupo Alpha.</h2>
-          <p>Ahora mismo solo estamos validando una oferta: 14 dias, 10 personas, USD 9. Los planes futuros quedan en espera hasta tener datos reales.</p>
+          <p class="eyebrow">Planes activos</p>
+          <h2>Elige como quieres entrar.</h2>
+          <p>El Grupo Alpha sigue siendo la entrada recomendada para validar el metodo contigo. Si quieres ir directo al Metodo completo o al sistema avanzado, los pagos ya estan activos.</p>
         </div>
         <div class="phase-grid plans-grid">
           <article class="featured-plan">
@@ -494,25 +494,25 @@
             <a class="button primary" href="#registro" data-plan="Alpha">Entrar al Alpha</a>
           </article>
           <article>
-            <span>Proximo</span>
+            <span>Activo</span>
             <h3>El Metodo</h3>
             <p class="price">USD 29</p>
             <p>Metodo Oficial, Programa completo y acceso inmediato.</p>
-            <p class="plan-note">Se abre despues de validar el Alpha.</p>
+            <a class="button secondary" href="#registro" data-plan="El Metodo">Elegir Metodo</a>
           </article>
           <article>
-            <span>Proximo</span>
+            <span>Activo</span>
             <h3>El Metodo + Sistema</h3>
             <p class="price">USD 79</p>
             <p>Todo lo anterior, Sistema de Avance, workbook y plantillas.</p>
-            <p class="plan-note">No disponible durante la validacion.</p>
+            <a class="button secondary" href="#registro" data-plan="El Metodo + Sistema">Elegir Sistema</a>
           </article>
           <article>
-            <span>Futuro</span>
+            <span>Activo</span>
             <h3>El Metodo Premium</h3>
             <p class="price">USD 297</p>
-            <p>Posible version con acompanamiento, solo si el Alpha demuestra traccion real.</p>
-            <p class="plan-note">No vender antes de validar.</p>
+            <p>Version premium para quien quiere una experiencia mas completa y cercana.</p>
+            <a class="button secondary" href="#registro" data-plan="El Metodo Premium">Elegir Premium</a>
           </article>
         </div>
       </section>
@@ -520,8 +520,8 @@
       <section class="registration-section" id="registro">
         <div class="section-head">
           <p class="eyebrow">Acceso</p>
-          <h2>Reserva tu cupo Alpha.</h2>
-          <p>Estas entrando a una validacion cuidada: pocos participantes, seguimiento cercano y una meta clara, demostrar comportamiento real.</p>
+          <h2>Reserva tu acceso.</h2>
+          <p>Elige el plan que mejor encaje contigo. La meta sigue siendo la misma: entrar, ejecutar Dia 1 y volver al marco.</p>
         </div>
         <form class="day-zero-form" id="leadForm">
           <label>
@@ -549,6 +549,9 @@
             Plan
             <select name="plan" required>
               <option value="Alpha">Grupo Alpha - USD 9</option>
+              <option value="El Metodo">El Metodo - USD 29</option>
+              <option value="El Metodo + Sistema">El Metodo + Sistema - USD 79</option>
+              <option value="El Metodo Premium">El Metodo Premium - USD 297</option>
             </select>
           </label>
           <div class="payment-box">
@@ -562,8 +565,8 @@
             </div>
             <p class="form-note" data-payment-note>Reserva tu cupo Alpha. El pago se confirma por el canal oficial mientras activamos el cobro automatico.</p>
           </div>
-          <button class="button primary" type="submit">Reservar cupo Alpha</button>
-          <p class="form-note" id="formNote">Al registrarte, guardamos tu solicitud y te llevamos al siguiente paso. Durante Alpha el acceso se puede confirmar manualmente para cuidar la experiencia de los primeros participantes.</p>
+          <button class="button primary" type="submit">Registrar acceso</button>
+          <p class="form-note" id="formNote">Al registrarte, guardamos tu solicitud y te llevamos al siguiente paso. Si pagas por PayPal o Stripe, conserva la confirmacion para activar tu acceso.</p>
         </form>
         <div class="activation-complete locked" id="accessArea" hidden>
           <strong>Solicitud registrada.</strong>

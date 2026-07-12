@@ -352,9 +352,10 @@ function getConfiguredWhatsappUrl(data) {
   const number = window.SITE_CONFIG?.whatsappNumber;
   if (!number) return "";
   const message = [
-    "Hola, quiero entrar al Grupo Alpha de 100 Dias.",
+    "Hola, quiero entrar a 100 Dias: El Metodo.",
     `Nombre: ${data.name || ""}`,
     `Email: ${data.email || ""}`,
+    `Plan: ${data.planLabel || data.plan || ""}`,
     `Objetivo: ${data.goal || ""}`,
   ].join("\n");
   return `https://wa.me/${String(number).replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
@@ -546,7 +547,7 @@ leadForm?.addEventListener("submit", async (event) => {
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
-      submitButton.textContent = "Reservar cupo Alpha";
+      submitButton.textContent = "Registrar acceso";
     }
   }
 });
