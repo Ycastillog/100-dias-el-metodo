@@ -4,6 +4,12 @@
 
 Conseguir 10 usuarios reales para probar si una persona puede entrar, completar Dia 0, ejecutar Dia 1, volver Dia 2 y llegar a Dia 7.
 
+## North Star Metric
+
+Usuarios que llegan al Dia 7 y deciden continuar voluntariamente.
+
+El Dia 7 demuestra ejecucion. La decision de continuar demuestra valor percibido.
+
 ## Regla de etapa
 
 No crear nuevas funciones antes de observar usuarios reales.
@@ -31,6 +37,18 @@ Revisar cada noche:
 8. Que duda se repitio?
 9. Que no debo construir todavia?
 10. Cual es la proxima accion de manana?
+
+Metas iniciales:
+
+| Metrica | Meta |
+| --- | ---: |
+| Nuevos leads | 10/dia |
+| Conversaciones iniciadas | 10/dia |
+| Pagos Alpha | 1-2/dia |
+| Dia 0 completado | 80% o mas |
+| Dia 1 completado | 70% o mas |
+| Dia 7 alcanzado | 40% o mas |
+| Solicitan continuar | 30% o mas |
 
 ## Estados del participante
 

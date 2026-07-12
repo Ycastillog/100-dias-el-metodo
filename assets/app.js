@@ -438,7 +438,7 @@ function updatePaymentLinks() {
   if (paymentNote) {
     paymentNote.textContent = configuredProviders.length
       ? `Pago disponible con ${configuredProviders.join(" y ")}. El dinero ira a la cuenta conectada en esa plataforma.`
-      : "Reserva tu cupo Alpha. El pago se confirma por el canal oficial mientras activamos el cobro automatico.";
+      : "Registra tu acceso. Si un enlace no aparece, confirmaremos el siguiente paso por el canal oficial.";
   }
 }
 

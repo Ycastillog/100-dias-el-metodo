@@ -1,0 +1,11 @@
+metrica,meta_inicial,valor_actual,frecuencia,fuente,decision_si_falla,notas
+Nuevos leads,10 por dia,,Diaria,Leads/DMs,Mejorar contenido y CTA,
+Conversaciones iniciadas,10 por dia,,Diaria,DMs/comentarios,Abrir conversaciones manuales,
+Pagos Alpha,1-2 por dia,,Diaria,PayPal/Stripe,Revisar oferta y confianza,
+Pago a acceso en 24h,85%,,Diaria,Tracking Alpha,Corregir entrega y comunicacion,
+Acceso a Dia 0 en 24h,75%,,Diaria,Eventos/Tracking,Mejorar activacion,
+Dia 0 a Dia 1 en 24h,60%,,Diaria,Eventos/Tracking,Mejorar puente a accion,
+Pago a Dia 7,40%,,Semanal,Tracking Alpha,Mejorar seguimiento,
+Dia 7 a continuacion,30%,,Semanal,Tracking Alpha,Revisar valor percibido,
+Frase real del dia,1 por dia,,Diaria,Check-ins,Copiar lenguaje del usuario,
+Friccion repetida,5 usuarios,,Semanal,Soporte/Tracking,Autorizar mejora solo con evidencia,

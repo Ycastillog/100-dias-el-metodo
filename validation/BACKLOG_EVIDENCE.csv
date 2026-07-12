@@ -1,0 +1,6 @@
+id,fecha,tipo,etapa_embudo,evidencia,usuarios_afectados,decision,estado,proxima_accion
+E001,,Hipotesis,Pago -> Acceso,Automatizar entrega despues del pago,,Validar con primeros pagos,Pendiente,Conectar Google Sheets o Airtable
+E002,,Hipotesis,Acceso -> Dia 0,Medir si la persona entiende que hacer en los primeros 5 minutos,,Observar primeros 10 usuarios,Pendiente,Registrar dudas textuales
+E003,,Hipotesis,Dia 0 -> Dia 1,Medir si la accion diaria se siente demasiado parecida entre dias,,Observar retencion Dia 1-Dia 3,Pendiente,No desarrollar hasta tener abandono real
+E004,,Hipotesis,Contenido -> Registro,Validar que la narrativa control + fortaleza + direccion convierte mejor que frases de motivacion,,Probar 14 dias de contenido,Pendiente,Publicar plan social
+E005,,Sueno,V2,IA comunidad app ranking insignias,,No tocar durante Alpha,Congelado,Revisar despues del informe Alpha

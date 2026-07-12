@@ -32,6 +32,10 @@ Cada hora adicional de desarrollo debe justificarse con una observacion real de 
 
 No confundir ausencia de funciones con ausencia de valor.
 
+Documento operativo principal: `OPERATING_SYSTEM.md`.
+
+North Star Metric: usuarios que llegan al Dia 7 y deciden continuar voluntariamente.
+
 ## Proxima accion
 
 Conectar Google Sheets y GA4. PayPal y Stripe ya estan activos para USD 9, USD 29, USD 79 y USD 297. Luego conseguir los primeros usuarios reales.

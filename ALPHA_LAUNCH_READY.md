@@ -14,6 +14,9 @@ Este archivo resume lo que ya esta listo para iniciar validacion real.
 
 ## Operacion creada
 
+- Operating System: `OPERATING_SYSTEM.md`
+- Dashboard fundador: `validation/FOUNDER_DASHBOARD.csv`
+- Backlog de evidencia: `validation/BACKLOG_EVIDENCE.csv`
 - Tracking Alpha: `validation/03_TRACKING_ALPHA.csv`
 - Centro de mando: `validation/ALPHA_COMMAND_CENTER.md`
 - Mensajes operativos: `validation/ALPHA_MENSAJES_OPERATIVOS.md`
