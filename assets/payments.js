@@ -1,6 +1,6 @@
 window.PAYMENT_LINKS = {
   alpha: {
-    paypal: "",
+    paypal: "https://www.paypal.com/ncp/payment/G7AQ5QDEHHDG4",
     stripe: "",
   },
   metodo: {
