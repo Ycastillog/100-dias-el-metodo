@@ -34,7 +34,7 @@ No confundir ausencia de funciones con ausencia de valor.
 
 ## Proxima accion
 
-Conectar Stripe, PayPal, Google Sheets y GA4. Luego conseguir 10 usuarios reales para el Grupo Alpha.
+Conectar Google Sheets y GA4. PayPal y Stripe ya estan activos para USD 9, USD 29, USD 79 y USD 297. Luego conseguir los primeros usuarios reales.
 
 ## Roadmap empresarial
 

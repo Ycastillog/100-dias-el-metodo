@@ -4,10 +4,9 @@ Estado: producto listo para Alpha. Lo pendiente es conectar cuentas externas y e
 
 ## 1. Conexiones obligatorias antes de trafico pago
 
-- Crear Stripe Payment Link de USD 9.
-- Crear PayPal link de USD 9 como respaldo.
-- Configurar retorno a `https://ycastillog.github.io/100-dias-el-metodo/gracias.html?payment=success`.
-- Pegar enlaces en `assets/payments.js`.
+- Confirmar que PayPal esta activo para USD 9, USD 29, USD 79 y USD 297.
+- Confirmar que Stripe esta activo para USD 9, USD 29, USD 79 y USD 297.
+- Confirmar que todos los enlaces estan en `assets/payments.js`.
 - Crear Google Sheet y publicar `automation/google_sheets_leads_apps_script.js`.
 - Pegar la URL del Web App en `leadEndpoint` y `eventEndpoint`.
 - Crear GA4 y pegar `gaMeasurementId`.
@@ -58,7 +57,7 @@ Canales:
 
 Mensaje central:
 
-`No necesitas motivacion. Necesitas estructura diaria para volver al marco. Estoy abriendo 10 cupos Alpha de 100 Dias por USD 9. La meta no es ver contenido: es llegar al Dia 7.`
+`No necesitas motivacion. Necesitas estructura diaria para volver al marco. Estoy abriendo el acceso a 100 Dias: El Metodo. Puedes entrar por Alpha USD 9 o elegir una version completa. La meta no es ver contenido: es llegar al Dia 7.`
 
 ## 5. Metricas de decision Dia 7
 

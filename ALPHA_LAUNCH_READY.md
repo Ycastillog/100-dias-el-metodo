@@ -31,11 +31,14 @@ Este archivo resume lo que ya esta listo para iniciar validacion real.
 - Playbook social: `social/social_launch_playbook.md`
 - Sistema visual: `social/VISUAL_ASSET_SYSTEM.md`
 
+## Pagos
+
+- PayPal activo para USD 9, USD 29, USD 79 y USD 297.
+- Stripe activo para USD 9, USD 29, USD 79 y USD 297.
+- Links pegados en `assets/payments.js`.
+
 ## Pendiente externo
 
-- Crear link PayPal USD 9.
-- Crear Stripe Payment Link USD 9.
-- Pegar links en `assets/payments.js`.
 - Crear Google Sheet o Airtable.
 - Pegar endpoint en `assets/site-config.js` como `leadEndpoint` y `eventEndpoint`.
 - Crear GA4 y pegar `gaMeasurementId`.

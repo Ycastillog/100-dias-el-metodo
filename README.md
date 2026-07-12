@@ -72,9 +72,11 @@ No agregar nuevos modulos, comunidad, certificaciones ni conceptos hasta complet
 
 Para activar cobros reales:
 
-1. Crear link PayPal Alpha de USD 9.
-2. Crear Stripe Payment Link Alpha de USD 9.
+1. Crear links PayPal para Alpha, Metodo, Sistema y Premium.
+2. Crear Stripe Payment Links para Alpha, Metodo, Sistema y Premium.
 3. Pegarlos en `assets/payments.js`.
+
+Estado actual: PayPal y Stripe estan configurados para USD 9, USD 29, USD 79 y USD 297.
 
 Para recibir leads y eventos fuera del navegador:
 
