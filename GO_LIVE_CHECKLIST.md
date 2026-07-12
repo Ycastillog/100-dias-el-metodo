@@ -1,56 +1,83 @@
 # Go Live Checklist - 100 Dias: El Metodo
 
-Estado: listo visualmente para iniciar Alpha cuando se conecten pagos y captura de leads.
+Estado: producto listo para Alpha. Lo pendiente es conectar cuentas externas y ejecutar la primera ola.
 
-## 1. Pagos
+## 1. Conexiones obligatorias antes de trafico pago
 
-- Crear link PayPal de USD 9 para Grupo Alpha.
-- Crear Stripe Payment Link de USD 9 para Grupo Alpha.
-- Pegar ambos enlaces en `assets/payments.js`.
-- Probar que los botones abran PayPal y Stripe en una pestana nueva.
+- Crear Stripe Payment Link de USD 9.
+- Crear PayPal link de USD 9 como respaldo.
+- Configurar retorno a `https://ycastillog.github.io/100-dias-el-metodo/gracias.html?payment=success`.
+- Pegar enlaces en `assets/payments.js`.
+- Crear Google Sheet y publicar `automation/google_sheets_leads_apps_script.js`.
+- Pegar la URL del Web App en `leadEndpoint` y `eventEndpoint`.
+- Crear GA4 y pegar `gaMeasurementId`.
+- Pegar WhatsApp oficial si se usara confirmacion manual.
 
-## 2. Leads
+## 2. Flujo que debe funcionar
 
-- Crear Google Sheet o Airtable para registros.
-- Publicar el Apps Script incluido en `automation/google_sheets_leads_apps_script.js`.
-- Pegar la URL en `assets/site-config.js` como `leadEndpoint`.
-- Probar un registro real y confirmar que llega a la hoja.
+Ruta unica del Alpha:
 
-## 3. Confirmacion Alpha
+`Origen -> Landing -> Registro -> Pago -> Gracias -> Acceso -> Dia 0 -> Dia 1 -> Dia 7`
 
-- Definir canal oficial de confirmacion: WhatsApp, email o DM.
-- Pegar el enlace de WhatsApp en `assets/site-config.js` si se usara ese canal.
-- Crear mensaje fijo para confirmar pago y enviar acceso.
+Eventos que deben medirse:
 
-## 4. Trafico
+- `page_view`
+- `lead_registered`
+- `payment_click`
+- `access_view`
+- `day0_submit`
+- `daily_status_submit`
+- `day1_submit`
+- `day7_submit`
+- `weekly_review_submit`
 
-- Crear Instagram, TikTok y Facebook.
-- Publicar desde `social/alpha_14_day_publish_plan.csv`.
-- Empezar con `social/week_1_content_pack.md`.
-- Usar `social/upload_checklist.md` antes de subir cada pieza.
-- Usar `social/dm_scripts.md` para responder interesados.
+## 3. Prueba antes de publicar
 
-## 5. Medicion
+- Abrir landing con `?utm_source=instagram&utm_medium=organic&utm_campaign=alpha_test`.
+- Registrar un usuario de prueba.
+- Confirmar fila en `Leads`.
+- Confirmar eventos en `Events`.
+- Confirmar que `acceso.html` directo muestra pantalla Alpha.
+- Confirmar que `acceso.html?alpha=1` permite entrar.
+- Completar Dia 0.
+- Marcar Dia 1 como completado.
+- Simular hasta Dia 7 y guardar revision semanal.
+- Revisar visualmente landing, gracias y acceso en movil y desktop.
 
-Medir diariamente:
+## 4. Primera ola
 
-- Visitas a landing.
-- Registros.
-- Pagos.
-- Entradas a acceso.
-- Dia 0 completado.
-- Dia 1 completado.
-- Dia 7 completado.
+Objetivo: 10 usuarios Alpha.
 
-Archivo de medicion:
+Canales:
 
-- `social/content_metrics_dashboard.csv`
+- Instagram Reels.
+- TikTok.
+- Facebook.
+- DMs manuales.
+- Contactos cercanos con perfil adecuado.
 
-## 6. Regla de decision
+Mensaje central:
 
-No crear mas producto hasta tener evidencia Alpha:
+`No necesitas motivacion. Necesitas estructura diaria para volver al marco. Estoy abriendo 10 cupos Alpha de 100 Dias por USD 9. La meta no es ver contenido: es llegar al Dia 7.`
 
-- 10 usuarios interesados.
-- 3 pagos reales.
-- 3 personas completando Dia 1.
-- 1 persona llegando a Dia 7.
+## 5. Metricas de decision Dia 7
+
+- Pago -> Acceso en 24h: meta minima 85%.
+- Acceso -> Dia 0 en 24h: meta minima 75%.
+- Dia 0 -> Dia 1 en 24h: meta minima 60%.
+- Pago -> Dia 7: meta minima 40%.
+
+Decision:
+
+- Menos de 25% llega a Dia 7: no escalar; corregir puente pago -> Dia 1.
+- 25% a 39% llega a Dia 7: mejorar onboarding y recordatorios.
+- 40% a 59% llega a Dia 7: pasar a 30 usuarios.
+- 60% o mas llega a Dia 7: pasar a 100 usuarios y evaluar persistencia V2.
+
+## 6. Regla de producto
+
+No crear nuevas funciones porque se ven interesantes.
+
+La siguiente mejora debe responder a una friccion observada entre:
+
+`Pago -> Acceso -> Dia 0 -> Dia 1 -> Dia 7`

@@ -19,6 +19,8 @@ Este archivo resume lo que ya esta listo para iniciar validacion real.
 - Mensajes operativos: `validation/ALPHA_MENSAJES_OPERATIVOS.md`
 - Oferta de continuacion: `validation/ALPHA_OFERTA_CONTINUACION.md`
 - Setup pagos/registro: `automation/SETUP_PAGOS_REGISTRO.md`
+- Operacion 10 usuarios: `validation/ALPHA_OPERACION_10_USUARIOS.md`
+- Eventos Alpha: `payment_click`, `access_view`, `day0_submit`, `daily_status_submit`, `day1_submit`, `day7_submit`, `weekly_review_submit`
 
 ## Contenido ya disponible
 
@@ -35,7 +37,8 @@ Este archivo resume lo que ya esta listo para iniciar validacion real.
 - Crear Stripe Payment Link USD 9.
 - Pegar links en `assets/payments.js`.
 - Crear Google Sheet o Airtable.
-- Pegar endpoint en `assets/site-config.js`.
+- Pegar endpoint en `assets/site-config.js` como `leadEndpoint` y `eventEndpoint`.
+- Crear GA4 y pegar `gaMeasurementId`.
 - Crear cuentas sociales o usar cuentas actuales.
 
 ## Primera accion real

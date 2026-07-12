@@ -138,6 +138,34 @@ section[id] {
   gap: 22px;
 }
 
+.access-locked main > :not(.access-gate) {
+  display: none !important;
+}
+
+.access-gate {
+  min-height: calc(100svh - 65px);
+  display: grid;
+  align-items: center;
+  padding: 54px 16px;
+  background:
+    linear-gradient(90deg, rgba(7, 7, 6, 0.96), rgba(7, 7, 6, 0.74)),
+    radial-gradient(circle at top right, rgba(214, 184, 114, 0.16), transparent 34rem),
+    #070706;
+}
+
+.access-gate > div {
+  max-width: 760px;
+  display: grid;
+  gap: 18px;
+}
+
+.access-gate p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
 .welcome-copy {
   display: grid;
   gap: 18px;
@@ -1834,6 +1862,7 @@ footer p {
   }
 
   .welcome-screen,
+  .access-gate,
   .sales-hero,
   .section-band,
   .authority-strip,

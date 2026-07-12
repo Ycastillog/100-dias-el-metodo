@@ -68,10 +68,12 @@ http://127.0.0.1:4290/
 1. Abrir la landing.
 2. Elegir un plan.
 3. Registrar nombre y email.
-4. Entrar al acceso del participante.
-5. Completar Dia 0.
-6. Marcar Dia 1 como completado.
-7. Descargar el Metodo Oficial.
+4. Confirmar que `gracias.html` abre correctamente.
+5. Confirmar que `acceso.html` directo muestra pantalla Alpha.
+6. Entrar al acceso del participante con `acceso.html?alpha=1`.
+7. Completar Dia 0.
+8. Marcar Dia 1 como completado.
+9. Confirmar eventos en Google Sheets o GA4.
 
 ## Activar pagos reales
 
@@ -116,13 +118,19 @@ Ejemplo:
 ```js
 window.SITE_CONFIG = {
   leadEndpoint: "https://TU_ENDPOINT_DE_GOOGLE_SHEETS_O_ZAPIER",
-  redirectAfterLead: "",
+  eventEndpoint: "https://TU_ENDPOINT_DE_GOOGLE_SHEETS_O_ZAPIER",
+  redirectAfterLead: "gracias.html?payment=manual",
+  contactEmail: "",
   whatsappNumber: "",
+  gaMeasurementId: "G-XXXXXXXXXX",
+  alphaAccessParam: "alpha",
+  alphaAccessValue: "1",
+  accessGateEnabled: true,
   analyticsDebug: false,
 };
 ```
 
-El endpoint debe aceptar `POST` con JSON.
+El endpoint debe aceptar `POST` con JSON. El Apps Script incluido crea `Leads` y `Events`.
 
 ## Paginas necesarias para anuncios
 

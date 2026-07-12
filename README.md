@@ -54,7 +54,7 @@ http://127.0.0.1:4289
 Acceso del participante:
 
 ```text
-http://127.0.0.1:4289/acceso.html
+http://127.0.0.1:4289/acceso.html?alpha=1
 ```
 
 ## Siguiente accion real
@@ -76,10 +76,12 @@ Para activar cobros reales:
 2. Crear Stripe Payment Link Alpha de USD 9.
 3. Pegarlos en `assets/payments.js`.
 
-Para recibir leads fuera del navegador:
+Para recibir leads y eventos fuera del navegador:
 
-1. Crear un endpoint en Google Sheets, Airtable, Make, Zapier o Apps Script.
+1. Crear un endpoint en Google Sheets con el Apps Script incluido.
 2. Pegar la URL en `assets/site-config.js` como `leadEndpoint`.
+3. Pegar la misma URL en `eventEndpoint`.
+4. Crear GA4 y pegar el ID en `gaMeasurementId`.
 
 Hay una plantilla lista para Google Sheets en:
 
@@ -93,12 +95,15 @@ La guia de conexion de pagos y registro esta en:
 automation/SETUP_PAGOS_REGISTRO.md
 ```
 
-El sitio guarda eventos locales y envia eventos a `window.dataLayer` si luego se instala Google Tag Manager.
+El sitio guarda eventos locales, envia eventos a Google Sheets si `eventEndpoint` esta configurado y dispara GA4 si `gaMeasurementId` existe.
 
 `assets/site-config.js` tambien permite configurar:
 
 - `redirectAfterLead`: URL opcional despues del registro.
+- `eventEndpoint`: URL para enviar eventos operativos.
 - `whatsappNumber`: numero opcional para mostrar confirmacion por WhatsApp.
+- `gaMeasurementId`: ID de GA4.
+- `accessGateEnabled`: activa la proteccion suave del acceso.
 - `analyticsDebug`: modo de depuracion de eventos en consola.
 
 Para anuncios, mantener publicas las paginas:

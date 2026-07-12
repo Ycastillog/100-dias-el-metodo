@@ -69,13 +69,21 @@ Revisar cada noche:
 
 ## Criterios de decision
 
-### Continuar sin cambios
+### Metricas minimas
 
-- Usuarios entienden que hacer.
-- Al menos 7 de 10 llegan a Dia 7.
-- Al menos 5 de 10 reportan mas control.
+- Pago -> acceso en 24h: 85% o mas.
+- Acceso -> Dia 0 en 24h: 75% o mas.
+- Dia 0 -> Dia 1 en 24h: 60% o mas.
+- Pago -> Dia 7: 40% o mas.
 
-### Ajustar operacion
+### Decision Dia 7
+
+- Menos de 25% llega a Dia 7: congelar escala y corregir puente pago -> Dia 1.
+- 25% a 39% llega a Dia 7: mejorar onboarding y recordatorios.
+- 40% a 59% llega a Dia 7: pasar a cohorte de 30 usuarios.
+- 60% o mas llega a Dia 7: pasar a 100 usuarios y evaluar persistencia V2.
+
+### Ajustar operacion si
 
 - Pagan pero no entran.
 - Entran pero no completan Dia 0.
@@ -88,4 +96,3 @@ Solo si el mismo problema aparece en 5 usuarios o mas.
 ## Pregunta central
 
 Cuantas personas volvieron manana?
-

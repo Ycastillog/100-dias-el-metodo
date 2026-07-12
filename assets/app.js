@@ -316,8 +316,12 @@ function getStoredArray(key) {
 }
 
 function trackEvent(name, details = {}) {
+  if (window.AlphaOps?.trackEvent) {
+    return window.AlphaOps.trackEvent(name, details);
+  }
+
   const event = {
-    name,
+    eventName: name,
     details,
     path: window.location.pathname,
     createdAt: new Date().toISOString(),
@@ -335,6 +339,10 @@ function trackEvent(name, details = {}) {
 }
 
 function getAttribution() {
+  if (window.AlphaOps?.getAttribution) {
+    return window.AlphaOps.getAttribution();
+  }
+
   const params = new URLSearchParams(window.location.search);
   const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "gclid"];
   return Object.fromEntries(keys.map((key) => [key, params.get(key) || ""]).filter(([, value]) => value));
@@ -350,6 +358,28 @@ function getConfiguredWhatsappUrl(data) {
     `Objetivo: ${data.goal || ""}`,
   ].join("\n");
   return `https://wa.me/${String(number).replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
+}
+
+function buildLeadPayload(source = "landing") {
+  const plan = getSelectedPlan();
+  const formData = leadForm ? Object.fromEntries(new FormData(leadForm).entries()) : {};
+  return {
+    recordType: "lead",
+    ...formData,
+    userKey: window.AlphaOps?.getUserKey?.() || "",
+    planKey: plan.key,
+    planLabel: plan.label,
+    planPrice: plan.price,
+    source,
+    attribution: getAttribution(),
+    createdAt: new Date().toISOString(),
+  };
+}
+
+function storeLeadLocally(data) {
+  const leads = getStoredArray(LEADS_KEY);
+  leads.push(data);
+  localStorage.setItem(LEADS_KEY, JSON.stringify(leads.slice(-100)));
 }
 
 document.querySelectorAll("[data-plan]").forEach((button) => {
@@ -379,8 +409,15 @@ function updatePaymentLinks() {
 
   paymentLinks.forEach((link) => {
     const provider = link.dataset.paymentProvider;
-    const url = configuredLinks[provider];
-    const isConfigured = Boolean(url);
+    const baseUrl = configuredLinks[provider];
+    const url = window.AlphaOps?.appendTrackingToUrl
+      ? window.AlphaOps.appendTrackingToUrl(baseUrl, {
+          provider,
+          plan: plan.key,
+          price: plan.price,
+        })
+      : baseUrl;
+    const isConfigured = Boolean(baseUrl);
     if (isConfigured) {
       link.href = url;
     } else {
@@ -419,6 +456,23 @@ paymentLinks.forEach((link) => {
       return;
     }
 
+    if (leadForm && !leadForm.checkValidity()) {
+      event.preventDefault();
+      leadForm.reportValidity();
+      trackEvent("payment_blocked_incomplete_form", {
+        provider: link.dataset.paymentProvider,
+        plan: plan.key,
+      });
+      if (paymentNote) {
+        paymentNote.textContent = "Completa primero nombre, email y objetivo para poder reconciliar tu pago con tu acceso.";
+      }
+      return;
+    }
+
+    const checkoutLead = buildLeadPayload("checkout_started");
+    storeLeadLocally(checkoutLead);
+    sendLead(checkoutLead).catch(() => {});
+
     trackEvent("payment_click", {
       provider: link.dataset.paymentProvider,
       plan: plan.key,
@@ -433,13 +487,19 @@ async function sendLead(data) {
     return { status: "local" };
   }
 
+  const isGoogleScript = endpoint.includes("script.google");
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "text/plain;charset=utf-8",
     },
     body: JSON.stringify(data),
+    mode: isGoogleScript ? "no-cors" : "cors",
   });
+
+  if (isGoogleScript || response.type === "opaque") {
+    return { status: "sent" };
+  }
 
   if (!response.ok) {
     throw new Error("No se pudo enviar el lead al endpoint configurado.");
@@ -452,23 +512,15 @@ leadForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const submitButton = event.currentTarget.querySelector("button[type='submit']");
   const plan = getSelectedPlan();
-  const data = {
-    ...Object.fromEntries(new FormData(event.currentTarget).entries()),
-    planKey: plan.key,
-    planLabel: plan.label,
-    planPrice: plan.price,
-    source: "landing",
-    attribution: getAttribution(),
-    createdAt: new Date().toISOString(),
-  };
-  const leads = getStoredArray(LEADS_KEY);
-  leads.push(data);
-  localStorage.setItem(LEADS_KEY, JSON.stringify(leads));
+  const data = buildLeadPayload("landing");
+  storeLeadLocally(data);
   localStorage.setItem("100dias_access_requested", "true");
+  window.AlphaOps?.markAccessGranted?.("lead_registered");
   trackEvent("lead_registered", {
     plan: plan.key,
     price: plan.price,
     hasEndpoint: Boolean(window.SITE_CONFIG?.leadEndpoint),
+    user_key: data.userKey,
   });
 
   if (submitButton) {
@@ -510,6 +562,7 @@ function escapeHtml(value) {
 
 function unlockSalesAccess(data = {}) {
   if (!accessArea || !accessMessage || !accessLinks) return;
+  window.AlphaOps?.markAccessGranted?.("sales_access_unlocked");
   accessArea.hidden = false;
   accessArea.classList.remove("locked");
   accessMessage.innerHTML = `Acceso inicial activado${data.name ? ` para ${escapeHtml(data.name)}` : ""}. Entra al espacio del participante y ejecuta el Dia 1.`;
@@ -531,8 +584,23 @@ if (localStorage.getItem("100dias_access_requested") === "true") {
   unlockSalesAccess();
 }
 
+function enforceAccessGate() {
+  const gate = document.querySelector("[data-access-gate]");
+  if (!gate) return;
+
+  const gateEnabled = window.SITE_CONFIG?.accessGateEnabled !== false;
+  const hasAccess = !gateEnabled || Boolean(window.AlphaOps?.hasAccess?.());
+
+  gate.hidden = hasAccess;
+  document.body.classList.toggle("access-locked", !hasAccess);
+  trackEvent(hasAccess ? "access_view" : "access_gate_view", {
+    has_access: hasAccess,
+  });
+}
+
 updatePaymentLinks();
 updateExternalLinks();
+enforceAccessGate();
 
 function updateExternalLinks() {
   externalLinks.forEach((link) => {
@@ -587,7 +655,11 @@ document.querySelector("#dayZeroForm")?.addEventListener("submit", (event) => {
   state.activation.day0 = true;
   state.lastActivity = `Decision inicial confirmada: ${todayLabel()}`;
   saveState();
-  trackEvent("day0_completed");
+  trackEvent("day0_submit", {
+    has_control: Boolean(state.dayZero.control),
+    has_pattern: Boolean(state.dayZero.pattern),
+    has_minimum_action: Boolean(state.dayZero.minimumAction),
+  });
   renderAll();
   setText("#dayZeroNote", "Decision confirmada. Ya tienes punto de partida.");
 });
@@ -604,10 +676,20 @@ document.querySelectorAll("[data-state]").forEach((button) => {
     if (day === "1") state.activation.day1 = true;
     state.lastActivity = `Dia ${day}: volviste al marco`;
     saveState();
-    trackEvent("day_recorded", {
+    const dayNumber = Number(day);
+    const status = button.dataset.state;
+    trackEvent("daily_status_submit", {
       day,
-      state: button.dataset.state,
+      day_number: dayNumber,
+      state: status,
+      phase: getPhase(dayNumber),
     });
+    if (day === "1") {
+      trackEvent("day1_submit", { state: status });
+    }
+    if (day === "7") {
+      trackEvent("day7_submit", { state: status });
+    }
     renderAll();
   });
 });
@@ -627,7 +709,9 @@ document.querySelector("#weeklyReviewForm")?.addEventListener("submit", (event) 
   });
   state.lastActivity = `Revision semanal: volviste al marco`;
   saveState();
-  trackEvent("weekly_review_saved");
+  trackEvent("weekly_review_submit", {
+    review_count: state.reviews.length,
+  });
   event.currentTarget.reset();
   renderAll();
   setText("#reviewNote", "Revision guardada. Sosten lo que funciono y vuelve al marco.");

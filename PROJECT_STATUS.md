@@ -14,8 +14,8 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Metodo: LISTO
 - Sistema: LISTO
 - Experiencia: LISTA
-- Operacion: PENDIENTE
-- Mercado: PENDIENTE
+- Operacion: PREPARADA / PENDIENTE DE CUENTAS EXTERNAS
+- Mercado: PENDIENTE DE PRIMERA OLA
 - Validacion: EN CURSO
 
 ## Fecha de cierre de construccion
@@ -34,7 +34,7 @@ No confundir ausencia de funciones con ausencia de valor.
 
 ## Proxima accion
 
-Conseguir 10 usuarios reales para el Grupo Alpha.
+Conectar Stripe, PayPal, Google Sheets y GA4. Luego conseguir 10 usuarios reales para el Grupo Alpha.
 
 ## Roadmap empresarial
 
@@ -61,6 +61,8 @@ No invertir en anuncios hasta tener senales basicas de retencion, conversion, pe
 - Acceso del participante: acceso.html
 - Entregables del metodo: public/downloads
 - Seguimiento local: navegador del participante
+- Eventos preparados: payment_click, access_view, day0_submit, daily_status_submit, day1_submit, day7_submit, weekly_review_submit
+- Acceso Alpha: acceso.html?alpha=1
 
 ## Objetivo del Alpha
 
