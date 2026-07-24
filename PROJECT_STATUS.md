@@ -13,6 +13,7 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Producto: LISTO
 - Metodo: LISTO
 - Sistema: LISTO
+- Programa y niveles de entrega: DEFINIDOS
 - Experiencia: LISTA
 - Operacion: COMPRA ACTIVA / VALIDACION DE PAGO MANUAL
 - Mercado: PROGRAMA DE EMBAJADORES PREPARADO / PENDIENTE DE PRIMERA COHORTE
@@ -60,6 +61,8 @@ Conectar Google Sheets y GA4. PayPal y Stripe ya estan activos para USD 9, USD 2
 No invertir en anuncios hasta tener senales basicas de retencion, conversion, permanencia y valor percibido.
 
 ## Flujo operativo
+
+La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y los limites de Alpha, Metodo, Sistema y Premium estan definidos en `validation/06_ENTREGA_PLANES.md`.
 
 - Landing de venta: index.html
 - Acceso del participante: acceso.html

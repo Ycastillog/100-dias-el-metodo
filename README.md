@@ -24,6 +24,8 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 
 ## Que incluye
 
+- Programa canonico, recorrido e identidad en `PROGRAMA_100_DIAS.md`.
+- Operacion exacta de los cuatro planes en `validation/06_ENTREGA_PLANES.md`.
 - Landing de venta en `index.html`.
 - Programa publico de creadores en `embajadores.html`.
 - Terminos de creadores en `terminos-embajadores.html`.
