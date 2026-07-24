@@ -14,7 +14,7 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Metodo: LISTO
 - Sistema: LISTO
 - Experiencia: LISTA
-- Operacion: PREPARADA / PENDIENTE DE CUENTAS EXTERNAS
+- Operacion: COMPRA ACTIVA / VALIDACION DE PAGO MANUAL
 - Mercado: PROGRAMA DE EMBAJADORES PREPARADO / PENDIENTE DE PRIMERA COHORTE
 - Validacion: EN CURSO
 
@@ -38,7 +38,7 @@ North Star Metric: usuarios que llegan al Dia 7 y deciden continuar voluntariame
 
 ## Proxima accion
 
-Conectar Google Sheets y GA4. PayPal y Stripe ya estan activos para USD 9, USD 29, USD 79 y USD 297. Luego seleccionar 10 participantes Alpha y 10 creadores para la primera cohorte de Embajadores del Dia 1.
+Conectar Google Sheets y GA4. PayPal y Stripe ya estan activos para USD 9, USD 29, USD 79 y USD 297. Durante Alpha, validar cada pago antes de enviar el acceso privado. Luego seleccionar 10 participantes Alpha y 10 creadores para la primera cohorte de Embajadores del Dia 1.
 
 ## Roadmap empresarial
 
@@ -66,7 +66,8 @@ No invertir en anuncios hasta tener senales basicas de retencion, conversion, pe
 - Entregables del metodo: public/downloads
 - Seguimiento local: navegador del participante
 - Eventos preparados: payment_click, access_view, day0_submit, daily_status_submit, day1_submit, day7_submit, weekly_review_submit
-- Acceso Alpha: acceso.html?alpha=1
+- Acceso Alpha: enlace privado enviado solo despues de validar el pago
+- Seguridad actual: bloqueo estatico de conveniencia; la automatizacion real requiere webhook y backend
 - Programa de creadores: embajadores.html
 - Comision: 25% por compra atribuida
 - Ventana de click: 30 dias

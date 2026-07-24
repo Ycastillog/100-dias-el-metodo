@@ -245,6 +245,7 @@ function renderDashboard() {
   const phase = getPhase(currentDay);
   const identity = getIdentityStage(currentDay);
   const theme = getDayTheme(currentDay, phase);
+  const streak = getStreak();
 
   setText("[data-current-day]", String(currentDay));
   setText("[data-percent]", `${percent}%`);
@@ -254,13 +255,15 @@ function renderDashboard() {
   setText("[data-training-theme]", theme);
   setText("[data-identity-stage]", identity.name);
   setText("[data-identity-line]", identity.line);
-  setText("[data-streak]", `${getStreak()} dias`);
+  setText("[data-streak]", `${streak} ${streak === 1 ? "dia" : "dias"}`);
   setText("[data-last-activity]", state.lastActivity || "Aun no has vuelto al marco");
   setText("[data-progress-label]", `${completed} de 100`);
   setText("[data-dynamic-phrase]", completed > 0 ? "Vuelve al marco." : "El Dia 1 decide el inicio.");
 
   const fill = document.querySelector("[data-progress-fill]");
   if (fill) fill.style.width = `${percent}%`;
+  const progressBar = document.querySelector("[data-progress-bar]");
+  if (progressBar) progressBar.setAttribute("aria-valuenow", String(percent));
 }
 
 function renderDaily(day = getCurrentDay()) {
@@ -295,9 +298,7 @@ let state = loadState();
 
 const leadForm = document.querySelector("#leadForm");
 const planSelect = leadForm?.querySelector("select[name='plan']");
-const accessArea = document.querySelector("#accessArea");
-const accessMessage = accessArea?.querySelector(".access-message");
-const accessLinks = accessArea?.querySelector(".access-links");
+const paymentBox = document.querySelector("[data-payment-box]");
 const paymentSummary = document.querySelector("[data-payment-summary]");
 const paymentNote = document.querySelector("[data-payment-note]");
 const paymentActions = document.querySelector("[data-payment-actions]");
@@ -381,19 +382,6 @@ function renderReferralArrival() {
   });
 }
 
-function getConfiguredWhatsappUrl(data) {
-  const number = window.SITE_CONFIG?.whatsappNumber;
-  if (!number) return "";
-  const message = [
-    "Hola, quiero entrar a 100 Dias: El Metodo.",
-    `Nombre: ${data.name || ""}`,
-    `Email: ${data.email || ""}`,
-    `Plan: ${data.planLabel || data.plan || ""}`,
-    `Objetivo: ${data.goal || ""}`,
-  ].join("\n");
-  return `https://wa.me/${String(number).replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
-}
-
 function buildLeadPayload(source = "landing") {
   const plan = getSelectedPlan();
   const formData = leadForm ? Object.fromEntries(new FormData(leadForm).entries()) : {};
@@ -470,8 +458,8 @@ function updatePaymentLinks() {
 
   if (paymentNote) {
     paymentNote.textContent = configuredProviders.length
-      ? `Pago disponible con ${configuredProviders.join(" y ")}. El dinero ira a la cuenta conectada en esa plataforma.`
-      : "Registra tu acceso. Si un enlace no aparece, confirmaremos el siguiente paso por el canal oficial.";
+      ? `Pago disponible con ${configuredProviders.join(" y ")}. Seras dirigido a la plataforma elegida para completar la compra.`
+      : "Completa tus datos. Si un enlace no aparece, confirmaremos el siguiente paso por el canal oficial.";
   }
 }
 
@@ -506,6 +494,15 @@ paymentLinks.forEach((link) => {
     const checkoutLead = buildLeadPayload("checkout_started");
     storeLeadLocally(checkoutLead);
     sendLead(checkoutLead).catch(() => {});
+    localStorage.setItem(
+      "100dias_checkout_intent_v1",
+      JSON.stringify({
+        provider: link.dataset.paymentProvider,
+        plan: plan.key,
+        price: plan.price,
+        createdAt: new Date().toISOString(),
+      })
+    );
 
     trackEvent("payment_click", {
       provider: link.dataset.paymentProvider,
@@ -548,8 +545,6 @@ leadForm?.addEventListener("submit", async (event) => {
   const plan = getSelectedPlan();
   const data = buildLeadPayload("landing");
   storeLeadLocally(data);
-  localStorage.setItem("100dias_access_requested", "true");
-  window.AlphaOps?.markAccessGranted?.("lead_registered");
   trackEvent("lead_registered", {
     plan: plan.key,
     price: plan.price,
@@ -564,59 +559,34 @@ leadForm?.addEventListener("submit", async (event) => {
 
   try {
     const result = await sendLead(data);
-    event.currentTarget.reset();
-    unlockSalesAccess(data);
     setText(
       "#formNote",
       result.status === "sent"
-        ? "Solicitud enviada. Tu acceso inicial queda listo para continuar con Dia 0 y Dia 1."
-        : "Solicitud guardada en este navegador. Tu acceso inicial queda listo para continuar con Dia 0 y Dia 1."
+        ? "Datos recibidos. Elige PayPal o Stripe para completar la compra. El acceso se habilita despues de validar el pago."
+        : "Datos guardados en este navegador. Elige PayPal o Stripe para completar la compra y conserva la confirmacion."
     );
-    window.location.href = window.SITE_CONFIG?.redirectAfterLead || "gracias.html";
   } catch {
-    unlockSalesAccess(data);
-    setText("#formNote", "Solicitud guardada localmente. Si aun no conectaste el formulario externo, confirma el cupo por el canal oficial.");
-    window.location.href = window.SITE_CONFIG?.redirectAfterLead || "gracias.html";
+    setText(
+      "#formNote",
+      "Datos guardados localmente. Puedes continuar al pago; conserva la confirmacion para que podamos validar tu acceso."
+    );
   } finally {
+    if (paymentBox) {
+      paymentBox.hidden = false;
+      paymentBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      paymentBox.focus({ preventScroll: true });
+    }
+    trackEvent("checkout_ready", {
+      plan: plan.key,
+      price: plan.price,
+      hasEndpoint: Boolean(window.SITE_CONFIG?.leadEndpoint),
+    });
     if (submitButton) {
       submitButton.disabled = false;
-      submitButton.textContent = "Registrar acceso";
+      submitButton.textContent = "Actualizar datos de compra";
     }
   }
 });
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function unlockSalesAccess(data = {}) {
-  if (!accessArea || !accessMessage || !accessLinks) return;
-  window.AlphaOps?.markAccessGranted?.("sales_access_unlocked");
-  accessArea.hidden = false;
-  accessArea.classList.remove("locked");
-  accessMessage.innerHTML = `Acceso inicial activado${data.name ? ` para ${escapeHtml(data.name)}` : ""}. Entra al espacio del participante y ejecuta el Dia 1.`;
-  accessLinks.hidden = false;
-  const whatsappUrl = getConfiguredWhatsappUrl(data);
-  if (whatsappUrl && !accessLinks.querySelector("[data-whatsapp-link]")) {
-    const link = document.createElement("a");
-    link.className = "button secondary";
-    link.href = whatsappUrl;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.dataset.whatsappLink = "true";
-    link.textContent = "Confirmar por WhatsApp";
-    accessLinks.appendChild(link);
-  }
-}
-
-if (localStorage.getItem("100dias_access_requested") === "true") {
-  unlockSalesAccess();
-}
 
 function enforceAccessGate() {
   const gate = document.querySelector("[data-access-gate]");

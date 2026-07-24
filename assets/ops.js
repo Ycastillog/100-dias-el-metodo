@@ -2,7 +2,7 @@
   const EVENT_KEY = "100dias_events_v1";
   const USER_KEY = "100dias_user_key_v1";
   const ATTRIBUTION_KEY = "100dias_attribution_v1";
-  const ACCESS_KEY = "100dias_access_requested";
+  const ACCESS_KEY = "100dias_access_granted_v2";
   const SESSION_KEY = "100dias_session_id_v1";
   const DAY_MS = 24 * 60 * 60 * 1000;
   const CAMPAIGN_WINDOW_MS = 30 * DAY_MS;
@@ -251,11 +251,7 @@
     const params = getQuery();
     const paramName = config.alphaAccessParam || "alpha";
     const paramValue = config.alphaAccessValue || "1";
-    const hasToken =
-      params.get(paramName) === paramValue ||
-      params.get("access") === "alpha" ||
-      params.get("payment") === "success" ||
-      params.get("paid") === "1";
+    const hasToken = params.get(paramName) === paramValue;
 
     if (hasToken) {
       markAccessGranted("access_link");
@@ -336,9 +332,6 @@
 
   ready(() => {
     const pageType = getPageType();
-    if (pageType === "thank_you") {
-      markAccessGranted("thank_you_page");
-    }
     trackEvent("page_view", { page_type: pageType });
   });
 })();

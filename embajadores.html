@@ -52,7 +52,7 @@
         />
         <div class="ambassador-hero-shade" aria-hidden="true"></div>
         <div class="ambassador-hero-content">
-          <p class="eyebrow">Programa privado · primera cohorte</p>
+          <p class="eyebrow">Programa privado | primera cohorte</p>
           <h1>Embajadores <span>del Dia 1</span></h1>
           <p class="ambassador-promise">
             Convierte tu experiencia real en contenido que conecta y genera.
@@ -65,10 +65,10 @@
             <a class="button primary" href="#solicitud" data-ambassador-cta="hero">Quiero ser embajador</a>
             <a class="button secondary" href="#beneficios">Ver mis beneficios</a>
           </div>
-          <div class="ambassador-hero-facts" aria-label="Condiciones principales">
-            <div><strong>25%</strong><span>por cada compra elegible</span></div>
-            <div><strong>60 dias</strong><span>en ascensos elegibles</span></div>
-            <div><strong>14 dias</strong><span>de contenido guiado</span></div>
+          <div class="ambassador-hero-facts" role="list" aria-label="Condiciones principales">
+            <div role="listitem"><strong>25%</strong><span>por cada compra elegible</span></div>
+            <div role="listitem"><strong>60 dias</strong><span>en ascensos elegibles</span></div>
+            <div role="listitem"><strong>14 dias</strong><span>de contenido guiado</span></div>
           </div>
           <p class="affiliate-disclosure">
             Programa afiliado: los embajadores reciben una comision por las compras
@@ -217,7 +217,7 @@
           </p>
         </div>
         <div class="commission-workspace">
-          <div class="commission-controls" aria-label="Simulador de comisiones">
+          <div class="commission-controls" role="group" aria-label="Simulador de comisiones">
             <label>
               Plan
               <select id="commissionPlan">
@@ -227,8 +227,8 @@
                 <option value="premium">Premium - USD 297</option>
               </select>
             </label>
-            <label>
-              Compras confirmadas
+            <div class="commission-sales-control">
+              <label for="commissionSales">Compras confirmadas</label>
               <div class="sales-stepper">
                 <button type="button" data-sales-step="-1" aria-label="Restar una compra">-</button>
                 <input
@@ -242,7 +242,7 @@
                 />
                 <button type="button" data-sales-step="1" aria-label="Sumar una compra">+</button>
               </div>
-            </label>
+            </div>
           </div>
           <div class="commission-results" aria-live="polite">
             <div>

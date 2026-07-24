@@ -1501,11 +1501,11 @@ footer p {
 
 .visual-flow-grid img {
   width: 100%;
-  height: 208px;
+  height: 230px;
   display: block;
   object-fit: cover;
   object-position: top center;
-  opacity: 0.86;
+  opacity: 0.94;
 }
 
 .visual-flow-grid article::after {
@@ -1710,9 +1710,30 @@ footer p {
 }
 
 .plans-grid article {
+  height: 100%;
   display: grid;
   align-content: start;
   gap: 14px;
+}
+
+.plans-grid article > span {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid rgba(240, 207, 122, 0.28);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: var(--gold-strong);
+  background: rgba(240, 207, 122, 0.07);
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.plans-grid article .button {
+  width: 100%;
+  margin-top: auto;
 }
 
 .featured-plan {
@@ -1745,11 +1766,16 @@ footer p {
 
 .payment-box {
   display: grid;
-  gap: 12px;
-  border: 1px solid rgba(240, 207, 122, 0.36);
+  gap: 14px;
+  border: 1px solid rgba(47, 191, 113, 0.52);
   border-radius: 8px;
-  padding: 14px;
-  background: rgba(214, 184, 114, 0.08);
+  padding: 18px;
+  background: rgba(9, 24, 16, 0.78);
+  outline: none;
+}
+
+.payment-box:focus-visible {
+  box-shadow: 0 0 0 3px rgba(47, 191, 113, 0.2);
 }
 
 .payment-box span {
@@ -1762,8 +1788,9 @@ footer p {
 }
 
 .payment-box strong {
-  color: var(--gold-strong);
-  font-size: 20px;
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1.15;
 }
 
 .payment-actions {
@@ -1775,6 +1802,126 @@ footer p {
 .button[data-disabled="true"] {
   opacity: 0.52;
   cursor: not-allowed;
+}
+
+.registration-section {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #0b0b09;
+}
+
+.registration-layout,
+.registration-intro,
+.purchase-steps,
+.sales-lead-form,
+.lead-form-grid,
+.form-stage {
+  display: grid;
+}
+
+.registration-layout {
+  gap: 24px;
+}
+
+.registration-intro {
+  align-content: start;
+  gap: 18px;
+}
+
+.registration-intro .section-head {
+  margin-bottom: 0;
+}
+
+.purchase-steps {
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--line);
+}
+
+.purchase-steps div {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 4px 12px;
+  padding: 16px;
+  background: #12110e;
+}
+
+.purchase-steps span {
+  grid-row: 1 / 3;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #07130c;
+  background: var(--green);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.purchase-steps strong {
+  align-self: end;
+  color: var(--text);
+  font-size: 17px;
+}
+
+.purchase-steps p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.checkout-assurance {
+  margin: 0;
+  border-left: 3px solid var(--green);
+  padding: 12px 14px;
+  color: #c7d8cd;
+  background: rgba(47, 191, 113, 0.08);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sales-lead-form {
+  align-content: start;
+  gap: 16px;
+  padding: 20px;
+}
+
+.lead-form-grid {
+  gap: 14px;
+}
+
+.form-stage {
+  gap: 5px;
+}
+
+.form-stage span {
+  color: #8ef0b8;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.form-stage strong {
+  color: var(--text);
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+.checkout-continue {
+  width: 100%;
+}
+
+.payment-disclosure {
+  margin: 0;
+  border-top: 1px solid rgba(47, 191, 113, 0.28);
+  padding-top: 12px;
+  color: #b9c9bf;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .recommendation-grid {
@@ -2083,6 +2230,14 @@ footer p {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .lead-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lead-form-grid .field-wide {
+    grid-column: 1 / -1;
+  }
+
   .ambassador-invite-section {
     min-height: 620px;
     padding: 72px clamp(32px, 6vw, 88px);
@@ -2109,6 +2264,10 @@ footer p {
   .mentor-grid,
   .identity-ladder {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .week-path {
@@ -2142,6 +2301,18 @@ footer p {
 
   .audience-grid .resource-list {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1180px) {
+  .plans-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .registration-layout {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    align-items: start;
+    gap: 30px;
   }
 }
 

@@ -58,8 +58,12 @@ http://127.0.0.1:4289
 Acceso del participante:
 
 ```text
-http://127.0.0.1:4289/acceso.html?alpha=1
+http://127.0.0.1:4289/acceso.html
 ```
+
+La entrada privada se entrega solo despues de validar el pago. El bloqueo actual
+es una capa de conveniencia para el Alpha; la proteccion comercial definitiva
+requiere autenticacion y verificacion de pago en un backend.
 
 ## Siguiente accion real
 

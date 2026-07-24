@@ -17,9 +17,9 @@ Estado: producto listo para Alpha. Lo pendiente es conectar cuentas externas y e
 
 ## 2. Flujo que debe funcionar
 
-Ruta unica del Alpha:
+Ruta del Alpha:
 
-`Origen -> Landing -> Registro -> Pago -> Gracias -> Acceso -> Dia 0 -> Dia 1 -> Dia 7`
+`Origen -> Landing -> Datos -> Pago -> Validacion -> Acceso privado -> Dia 0 -> Dia 1 -> Dia 7`
 
 Eventos que deben medirse:
 
@@ -43,8 +43,10 @@ Eventos que deben medirse:
 - Registrar un usuario de prueba.
 - Confirmar fila en `Leads`.
 - Confirmar eventos en `Events`.
-- Confirmar que `acceso.html` directo muestra pantalla Alpha.
-- Confirmar que `acceso.html?alpha=1` permite entrar.
+- Confirmar que enviar el formulario solo revela el pago y no concede acceso.
+- Confirmar que `gracias.html` no concede acceso.
+- Confirmar que `acceso.html` directo muestra el bloqueo.
+- Confirmar que el enlace privado Alpha permite entrar despues de validar el pago.
 - Completar Dia 0.
 - Marcar Dia 1 como completado.
 - Simular hasta Dia 7 y guardar revision semanal.
