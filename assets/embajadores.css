@@ -333,13 +333,19 @@
   gap: 16px;
 }
 
-.commission-controls label {
+.commission-controls label,
+.commission-sales-control {
   display: grid;
   gap: 8px;
   color: var(--gold-strong);
   font-size: 0.78rem;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.commission-sales-control label {
+  color: inherit;
+  font: inherit;
 }
 
 .commission-controls select,

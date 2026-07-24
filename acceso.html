@@ -37,12 +37,12 @@
           <p class="eyebrow">Acceso Alpha</p>
           <h1>Este espacio es para participantes.</h1>
           <p>
-            Si ya pagaste o recibiste el enlace Alpha, entra desde el enlace de confirmacion.
-            Si todavia no reservaste tu cupo, comienza en la landing.
+            Si ya recibiste tu entrada privada, abre este espacio desde ese mismo enlace.
+            Si todavia no compraste, elige tu plan y completa el pago desde la landing.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="index.html#registro">Reservar cupo Alpha</a>
-            <a class="button secondary" href="gracias.html">Ya tengo confirmacion</a>
+            <a class="button primary" href="index.html#registro">Elegir mi acceso</a>
+            <a class="button secondary" href="index.html#confianza">Como funciona</a>
           </div>
         </div>
       </section>
@@ -54,10 +54,10 @@
           <p class="welcome-statement">
             No entras solo a una plataforma. Entras a una experiencia guiada.
           </p>
-          <div class="principle-row" aria-label="Pilares del metodo">
-            <span>Control</span>
-            <span>Fortaleza</span>
-            <span>Direccion</span>
+          <div class="principle-row" role="list" aria-label="Pilares del metodo">
+            <span role="listitem">Control</span>
+            <span role="listitem">Fortaleza</span>
+            <span role="listitem">Direccion</span>
           </div>
           <p class="lead">
             Tu objetivo no es completar 100 dias hoy. Tu objetivo es completar
@@ -83,7 +83,7 @@
             <span class="panel-label">Dominio personal</span>
             <strong>Control + Fortaleza + Direccion</strong>
             <p>Una plataforma para sentirte guiado: tarea diaria, diario, avance y regreso al marco.</p>
-            <div class="access-mini-progress" aria-label="Progreso visual de ejemplo">
+            <div class="access-mini-progress" role="progressbar" aria-label="Progreso visual de ejemplo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="38">
               <span>Dia 1 activo</span>
               <div><i></i></div>
             </div>
@@ -265,7 +265,7 @@
               <span>Dia 0</span>
               <strong data-progress-label>0 de 100</strong>
             </div>
-            <div class="progress-bar" aria-label="Progreso de 100 dias">
+            <div class="progress-bar" data-progress-bar role="progressbar" aria-label="Progreso de 100 dias" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
               <span data-progress-fill></span>
             </div>
             <div class="phase-rail">
@@ -274,7 +274,7 @@
               <span>Direccion</span>
             </div>
             <p class="progress-note">Los dias parciales sostienen tu racha, pero no suman al porcentaje. No castiga, pero tampoco regala progreso.</p>
-            <div class="day-map" data-day-map aria-label="Mapa de avance"></div>
+            <div class="day-map" data-day-map role="grid" aria-label="Mapa de avance"></div>
           </article>
         </div>
       </section>
@@ -333,7 +333,7 @@
             <textarea id="dailyReflection" rows="6" placeholder="Hoy hice... Hoy senti... Hoy vuelvo al marco porque..."></textarea>
           </label>
           <p class="companion-note" data-daily-companion>No necesitas hacerlo perfecto. Necesitas volver con honestidad.</p>
-          <div class="state-actions" aria-label="Estado del dia">
+          <div class="state-actions" role="group" aria-label="Estado del dia">
             <button class="day-state complete" type="button" data-state="complete">Marcar como completado</button>
             <button class="day-state partial" type="button" data-state="partial">Parcial</button>
             <button class="day-state missed" type="button" data-state="missed">Perdido</button>
