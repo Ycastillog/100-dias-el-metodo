@@ -1369,6 +1369,36 @@ footer p {
   line-height: 1.45;
 }
 
+.launch-facts {
+  max-width: 620px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(214, 184, 114, 0.34);
+  border-bottom: 1px solid rgba(214, 184, 114, 0.34);
+}
+
+.launch-facts span {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+  padding: 11px 10px;
+  border-right: 1px solid rgba(214, 184, 114, 0.2);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 850;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.launch-facts span:last-child {
+  border-right: 0;
+}
+
+.launch-facts strong {
+  color: var(--green);
+  font-size: 16px;
+}
+
 .authority-strip {
   display: grid;
   gap: 1px;
@@ -2676,6 +2706,15 @@ footer p {
   .alpha-banner,
   .hero-proof-card {
     padding: 12px;
+  }
+
+  .launch-facts span {
+    padding-inline: 5px;
+    font-size: 9px;
+  }
+
+  .launch-facts strong {
+    font-size: 14px;
   }
 
   .alpha-banner strong,

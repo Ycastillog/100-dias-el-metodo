@@ -186,7 +186,7 @@ Si produce registro pero no pago, ajustar confianza y enlace de pago.
 
 ## Proxima automatizacion
 
-Cuando tengamos los enlaces reales de PayPal y Stripe:
+PayPal y Stripe ya tienen enlaces reales para los cuatro planes. El flujo operativo actual es:
 
 1. Publicar contenido.
 2. Capturar comentario CONTROL.
@@ -195,6 +195,20 @@ Cuando tengamos los enlaces reales de PayPal y Stripe:
 5. Registrar interesado.
 6. Confirmar pago.
 7. Dar acceso.
+
+## Paquete de lanzamiento
+
+La carpeta independiente `../contenido-redes-lanzamiento` contiene el material que se utiliza para publicar:
+
+- calendario de 14 dias;
+- guiones de Reels y TikTok;
+- captions y respuestas;
+- plan de grabacion;
+- tracker de publicacion;
+- artes exportados en 9:16 y 4:5;
+- tarjeta social de la landing.
+
+Para salir, abrir primero `../contenido-redes-lanzamiento/README_EMPIEZA_AQUI.md`.
 
 ## Para empezar hoy
 

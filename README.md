@@ -38,6 +38,7 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Archivos descargables en `public/downloads`.
 - Kit de validacion Alpha en `validation`.
 - Sistema social y contenidos Alpha en `social`.
+- Paquete listo para publicar en `contenido-redes-lanzamiento`.
 - Manifiesto del fundador en `MANIFIESTO_DEL_FUNDADOR.md`.
 - Centro operativo Alpha en `ALPHA_LAUNCH_READY.md`.
 - Biblioteca recomendada y audios complementarios configurables.
