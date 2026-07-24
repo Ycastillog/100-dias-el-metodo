@@ -20,7 +20,7 @@ Fecha: 23 de julio de 2026
 
 Se probaron los recorridos en:
 
-- Movil: 390 x 844 px.
+- Movil: 320 x 700 px y 390 x 844 px.
 - Tablet y anchos intermedios: 768 y 960 px.
 - Escritorio: 1440 x 900 px.
 
@@ -34,10 +34,11 @@ Resultados:
 - Todos los campos y botones tienen nombre accesible.
 - Tabla de comisiones legible completa en movil.
 - Formulario apilado correctamente en movil.
+- Mensajes publicos centrados solo en beneficios y comisiones del embajador.
 
 Las capturas de evidencia estan en:
 
-`outputs/embajadores-dia-1/audit`
+`outputs/embajadores-dia-1/audit-global`
 
 ## Resultados funcionales
 
@@ -47,11 +48,11 @@ Caso probado:
 
 - Plan Premium: USD 297.
 - Compras atribuidas: 3.
-- Venta bruta: USD 891.00.
-- Comision del creador: USD 222.75.
-- Parte de la marca antes de costos: USD 668.25.
+- Comision por compra: USD 74.25.
+- Comision total del creador: USD 222.75.
 
 El calculo corresponde al 25%.
+La interfaz publica no muestra ingresos ni margenes internos de la marca.
 
 ### Solicitud
 

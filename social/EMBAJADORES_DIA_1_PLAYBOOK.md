@@ -21,15 +21,16 @@ Dia 0, ejecuta Dia 1 y documenta una historia honesta de transformacion.
 - Enlace y codigo personal.
 - Acceso al Metodo para vivirlo antes de recomendar.
 - Campana guiada de 14 dias.
-- Kit visual, guiones, CTA y respuestas.
+- Guiones, hooks, captions, CTA y respuestas.
 - Reporte de ventas, reembolsos, comisiones y pagos.
+- Pago mensual sin minimo durante la primera cohorte.
 
-| Plan | Precio | 25% embajador | 100 Dias antes de costos |
+| Plan | 1 compra | 5 compras | 10 compras |
 | --- | ---: | ---: | ---: |
-| Alpha | USD 9 | USD 2.25 | USD 6.75 |
-| El Metodo | USD 29 | USD 7.25 | USD 21.75 |
-| Metodo + Sistema | USD 79 | USD 19.75 | USD 59.25 |
-| Premium | USD 297 | USD 74.25 | USD 222.75 |
+| Alpha | USD 2.25 | USD 11.25 | USD 22.50 |
+| El Metodo | USD 7.25 | USD 36.25 | USD 72.50 |
+| Metodo + Sistema | USD 19.75 | USD 98.75 | USD 197.50 |
+| Premium | USD 74.25 | USD 371.25 | USD 742.50 |
 
 ## Metrica principal
 

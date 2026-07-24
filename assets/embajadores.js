@@ -35,13 +35,13 @@
   function updateCommission() {
     const plan = plans[planSelect?.value] || plans.sistema;
     const sales = normalizedSales();
-    const gross = plan.price * sales;
-    const commission = gross * COMMISSION_RATE;
+    const commissionPerSale = plan.price * COMMISSION_RATE;
+    const commission = commissionPerSale * sales;
 
     if (salesInput) salesInput.value = String(sales);
-    setText("[data-gross-sales]", formatUsd(gross));
+    setText("[data-simulated-sales]", String(sales));
+    setText("[data-commission-per-sale]", formatUsd(commissionPerSale));
     setText("[data-creator-commission]", formatUsd(commission));
-    setText("[data-brand-share]", formatUsd(gross - commission));
   }
 
   function readStoredApplications() {

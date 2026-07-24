@@ -15,7 +15,7 @@
     if (kicker) kicker.textContent = "Solicitud enviada";
     if (statusText) {
       statusText.textContent =
-        "Tu informacion llego al equipo. Revisaremos encaje, credibilidad y disposicion para vivir el Metodo.";
+        "Tu informacion llego al equipo. Si eres seleccionado, recibiras acceso, contenido guiado, enlace personal y acompanamiento.";
     }
   } else {
     if (kicker) kicker.textContent = "Solicitud guardada";
