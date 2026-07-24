@@ -4,6 +4,9 @@
   const ATTRIBUTION_KEY = "100dias_attribution_v1";
   const ACCESS_KEY = "100dias_access_requested";
   const SESSION_KEY = "100dias_session_id_v1";
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const CAMPAIGN_WINDOW_MS = 30 * DAY_MS;
+  const AFFILIATE_WINDOW_MS = 60 * DAY_MS;
 
   const config = window.SITE_CONFIG || {};
   const utmKeys = [
@@ -15,6 +18,7 @@
     "fbclid",
     "gclid",
   ];
+  const affiliateKeys = ["ref", "affiliate", "affiliate_code", "creator", "coupon"];
 
   function safeJsonRead(key, fallback) {
     try {
@@ -61,21 +65,80 @@
 
   function getCurrentAttribution() {
     const params = getQuery();
+    const allKeys = [...utmKeys, ...affiliateKeys];
     return Object.fromEntries(
-      utmKeys
-        .map((key) => [key, params.get(key) || ""])
+      allKeys
+        .map((key) => [key, normalizedAttributionValue(key, params.get(key) || "")])
         .filter(([, value]) => value)
     );
   }
 
+  function normalizedAttributionValue(key, value) {
+    const trimmed = String(value || "").trim().slice(0, 150);
+    if (!affiliateKeys.includes(key)) return trimmed;
+    return trimmed
+      .toLowerCase()
+      .replace(/^@/, "")
+      .replace(/[^a-z0-9_-]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 64);
+  }
+
   function getAttribution() {
-    const stored = safeJsonRead(ATTRIBUTION_KEY, {});
+    const now = Date.now();
+    const storedRaw = safeJsonRead(ATTRIBUTION_KEY, {});
     const current = getCurrentAttribution();
-    const merged = { ...stored, ...current };
-    if (Object.keys(current).length) {
-      localStorage.setItem(ATTRIBUTION_KEY, JSON.stringify(merged));
+    const legacyRecord = storedRaw.campaign || storedRaw.affiliate ? {} : storedRaw;
+    const storedCampaign =
+      storedRaw.campaignExpiresAt > now ? storedRaw.campaign || {} : legacyRecord;
+    const storedAffiliate =
+      storedRaw.affiliateExpiresAt > now ? storedRaw.affiliate || {} : {};
+    const currentCampaign = Object.fromEntries(
+      utmKeys.map((key) => [key, current[key]]).filter(([, value]) => value)
+    );
+    const currentAffiliate = Object.fromEntries(
+      affiliateKeys.map((key) => [key, current[key]]).filter(([, value]) => value)
+    );
+
+    const hasExplicitCode = Boolean(currentAffiliate.affiliate_code || currentAffiliate.coupon);
+    const storedHasExplicitCode = Boolean(storedAffiliate.affiliate_code || storedAffiliate.coupon);
+    const shouldReplaceAffiliate =
+      hasExplicitCode || (Object.keys(currentAffiliate).length > 0 && !storedHasExplicitCode);
+
+    const campaign = Object.keys(currentCampaign).length ? currentCampaign : storedCampaign;
+    const affiliate = shouldReplaceAffiliate ? currentAffiliate : storedAffiliate;
+    const campaignExpiresAt = Object.keys(currentCampaign).length
+      ? now + CAMPAIGN_WINDOW_MS
+      : storedRaw.campaignExpiresAt || now + CAMPAIGN_WINDOW_MS;
+    const affiliateExpiresAt = shouldReplaceAffiliate
+      ? now + AFFILIATE_WINDOW_MS
+      : storedRaw.affiliateExpiresAt || 0;
+
+    if (
+      Object.keys(currentCampaign).length ||
+      Object.keys(currentAffiliate).length ||
+      Object.keys(legacyRecord).length
+    ) {
+      localStorage.setItem(
+        ATTRIBUTION_KEY,
+        JSON.stringify({
+          campaign,
+          campaignExpiresAt,
+          affiliate,
+          affiliateExpiresAt,
+        })
+      );
     }
-    return merged;
+
+    return {
+      ...campaign,
+      ...affiliate,
+      ...(Object.keys(affiliate).length
+        ? {
+            affiliate_expires_at: new Date(affiliateExpiresAt).toISOString(),
+          }
+        : {}),
+    };
   }
 
   function readEvents() {
@@ -207,11 +270,43 @@
     try {
       const parsed = new URL(url, window.location.href);
       const attribution = getAttribution();
-      Object.entries({
+      const affiliateId =
+        attribution.affiliate_code ||
+        attribution.coupon ||
+        attribution.ref ||
+        attribution.affiliate ||
+        attribution.creator ||
+        "";
+      const campaignParams = Object.fromEntries(
+        utmKeys
+          .filter((key) => !["fbclid", "gclid"].includes(key))
+          .map((key) => [key, attribution[key]])
+          .filter(([, value]) => value)
+      );
+
+      if (affiliateId) {
+        campaignParams.utm_source = campaignParams.utm_source || affiliateId;
+        campaignParams.utm_medium = campaignParams.utm_medium || "affiliate";
+        campaignParams.utm_campaign = campaignParams.utm_campaign || "embajadores_dia1";
+        campaignParams.utm_content = campaignParams.utm_content || affiliateId;
+      }
+
+      let trackingParams = {
         user_key: getUserKey(),
         ...attribution,
         ...params,
-      }).forEach(([key, value]) => {
+      };
+
+      if (parsed.hostname === "buy.stripe.com") {
+        trackingParams = {
+          client_reference_id: getUserKey().replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 200),
+          ...campaignParams,
+        };
+      } else if (parsed.hostname.endsWith("paypal.com")) {
+        trackingParams = campaignParams;
+      }
+
+      Object.entries(trackingParams).forEach(([key, value]) => {
         if (value && !parsed.searchParams.has(key)) {
           parsed.searchParams.set(key, value);
         }

@@ -25,6 +25,8 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 ## Que incluye
 
 - Landing de venta en `index.html`.
+- Programa publico de creadores en `embajadores.html`.
+- Terminos de creadores en `terminos-embajadores.html`.
 - Plataforma del participante en `acceso.html`.
 - Estilos en `assets/styles.css`.
 - Captura local de interes, activacion y avance en `assets/app.js`.
@@ -38,6 +40,8 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Centro operativo Alpha en `ALPHA_LAUNCH_READY.md`.
 - Biblioteca recomendada y audios complementarios configurables.
 - Estado operativo visible en `PROJECT_STATUS.md`.
+- Atribucion afiliada persistente y UTMs en `assets/ops.js`.
+- Control financiero de embajadores en `outputs/embajadores-dia-1/EMBAJADORES_CONTROL.xlsx`.
 
 ## Ejecutar localmente
 
@@ -125,6 +129,28 @@ La carpeta `social` contiene:
 - Tracker de publicaciones.
 - Biblioteca afiliada de libros estoicos.
 - Plan de audios "Estoicismo para ganadores".
+- Playbook `Embajadores del Dia 1`.
+- Campana de 14 dias para creadores.
+
+## Embajadores del Dia 1
+
+Primera cohorte: 10 creadores.
+
+Oferta:
+
+- 25% de cada compra atribuida.
+- 30 dias de atribucion por enlace.
+- 60 dias para ascensos de plan.
+- Experiencia obligatoria: Dia 0 y Dia 1 antes de recomendar.
+
+Archivos principales:
+
+- `embajadores.html`
+- `terminos-embajadores.html`
+- `social/EMBAJADORES_DIA_1_PLAYBOOK.md`
+- `social/embajadores_14_day_campaign.csv`
+- `validation/EMBAJADORES_PIPELINE.csv`
+- `outputs/embajadores-dia-1/EMBAJADORES_CONTROL.xlsx`
 
 ## Validacion Alpha
 

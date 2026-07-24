@@ -10,7 +10,7 @@ La plataforma ya tiene preparado:
 - Captura de UTMs: `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`.
 - Eventos locales y remotos: `payment_click`, `access_view`, `day0_submit`, `daily_status_submit`, `day1_submit`, `day7_submit`, `weekly_review_submit`.
 - Proteccion suave del acceso con `acceso.html?alpha=1`.
-- Google Apps Script preparado para dos pestanas: `Leads` y `Events`.
+- Google Apps Script preparado para tres pestanas: `Leads`, `Events` y `Ambassador Applications`.
 
 ## 1. PayPal
 

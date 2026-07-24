@@ -12,6 +12,9 @@ Incluye:
 
 - `index.html`: landing de venta.
 - `acceso.html`: plataforma del participante.
+- `embajadores.html`: programa publico de creadores.
+- `gracias-embajador.html`: confirmacion de solicitud.
+- `terminos-embajadores.html`: reglas de comision y contenido.
 - `assets`: estilos y logica.
 - `public/downloads`: entregables del Metodo.
 - `_redirects`: soporte basico para Netlify.
@@ -74,6 +77,9 @@ http://127.0.0.1:4290/
 7. Completar Dia 0.
 8. Marcar Dia 1 como completado.
 9. Confirmar eventos en Google Sheets o GA4.
+10. Abrir `embajadores.html` y enviar una solicitud de prueba.
+11. Confirmar la fila en `Ambassador Applications`.
+12. Abrir la landing con `?ref=qa_creador` y verificar la atribucion.
 
 ## Activar pagos reales
 
@@ -130,7 +136,7 @@ window.SITE_CONFIG = {
 };
 ```
 
-El endpoint debe aceptar `POST` con JSON. El Apps Script incluido crea `Leads` y `Events`.
+El endpoint debe aceptar `POST` con JSON. El Apps Script incluido crea `Leads`, `Events` y `Ambassador Applications`.
 
 ## Paginas necesarias para anuncios
 
@@ -139,6 +145,28 @@ Mantener publicas estas rutas:
 ```text
 privacidad.html
 terminos.html
+terminos-embajadores.html
 ```
 
 Ayudan a que la landing sea mas confiable para usuarios y plataformas de anuncios.
+
+## Publicar el programa de embajadores
+
+La pagina usa:
+
+```text
+embajadores.html
+assets/embajadores.css
+assets/embajadores.js
+assets/embajadores-gracias.js
+assets/embajadores-dia1-hero.png
+terminos-embajadores.html
+```
+
+Formato de enlace:
+
+```text
+https://ycastillog.github.io/100-dias-el-metodo/?ref=ID_CREADOR&utm_source=ID_CREADOR&utm_medium=affiliate&utm_campaign=embajadores_dia1
+```
+
+Stripe recibe UTMs y `client_reference_id`. PayPal recibe UTMs cuando las acepta, pero la reconciliacion principal debe cruzar el lead registrado con el email y la confirmacion del proveedor.

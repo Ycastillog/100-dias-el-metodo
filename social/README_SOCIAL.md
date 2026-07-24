@@ -1,5 +1,15 @@
 # Sistema Social - 100 Dias: El Metodo
 
+## Canal de creadores
+
+`Embajadores del Dia 1` convierte la experiencia real de un creador en un canal
+medible de adquisicion:
+
+- estrategia y reglas: `EMBAJADORES_DIA_1_PLAYBOOK.md`;
+- campana operativa: `embajadores_14_day_campaign.csv`;
+- pipeline: `../validation/EMBAJADORES_PIPELINE.csv`;
+- control financiero: `../outputs/embajadores-dia-1/EMBAJADORES_CONTROL.xlsx`.
+
 ## Objetivo
 
 Conseguir los primeros 10 usuarios reales para el Grupo Alpha.

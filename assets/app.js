@@ -306,6 +306,7 @@ const externalLinks = document.querySelectorAll("[data-external-link]");
 const resetModal = document.querySelector("#resetModal");
 const resetCancel = document.querySelector("[data-reset-cancel]");
 const resetConfirm = document.querySelector("[data-reset-confirm]");
+const referralArrival = document.querySelector("[data-referral-arrival]");
 
 function getStoredArray(key) {
   try {
@@ -344,8 +345,40 @@ function getAttribution() {
   }
 
   const params = new URLSearchParams(window.location.search);
-  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "gclid"];
+  const keys = [
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "gclid",
+    "ref",
+    "affiliate",
+    "affiliate_code",
+    "creator",
+    "coupon",
+  ];
   return Object.fromEntries(keys.map((key) => [key, params.get(key) || ""]).filter(([, value]) => value));
+}
+
+function renderReferralArrival() {
+  if (!referralArrival) return;
+  const attribution = getAttribution();
+  const affiliateId =
+    attribution.affiliate_code ||
+    attribution.coupon ||
+    attribution.ref ||
+    attribution.affiliate ||
+    attribution.creator ||
+    "";
+  if (!affiliateId) return;
+
+  referralArrival.hidden = false;
+  referralArrival.textContent = `Invitacion de ${affiliateId}`;
+  trackEvent("affiliate_landing_view", {
+    affiliate_id: affiliateId,
+  });
 }
 
 function getConfiguredWhatsappUrl(data) {
@@ -602,6 +635,7 @@ function enforceAccessGate() {
 updatePaymentLinks();
 updateExternalLinks();
 enforceAccessGate();
+renderReferralArrival();
 
 function updateExternalLinks() {
   externalLinks.forEach((link) => {

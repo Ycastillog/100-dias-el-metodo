@@ -44,6 +44,23 @@ El Dia 7 demuestra ejecucion. La decision de continuar demuestra valor percibido
 | Pago -> Dia 7 | 40% o mas | Si falla, mejorar seguimiento. |
 | Dia 7 -> continuar | 30% o mas | Si falla, revisar valor percibido. |
 
+## Canal Embajadores del Dia 1
+
+La adquisicion por creadores se mide hasta comportamiento, no solo hasta venta.
+
+| Metrica | Meta de primera cohorte | Decision |
+| --- | ---: | --- |
+| Creadores seleccionados | 10 | Mantener cohorte pequena. |
+| Creadores activos | 7 | Si falla, revisar seleccion y onboarding. |
+| Creadores con venta | 5 | Si falla, revisar historia, enlace y oferta. |
+| Visita afiliada -> compra | 3% o mas | Si falla, revisar ajuste audiencia-oferta. |
+| Comprador afiliado -> Dia 1 | 65% o mas | Si falla, mejorar activacion. |
+| Comprador afiliado -> Dia 7 | 35% o mas | Si falla, no escalar el canal. |
+| Ventas atribuibles | 95% o mas | Si falla, corregir tracking y conciliacion. |
+
+Comision: 25% del importe elegible. Ventana de click: 30 dias. Ascensos:
+60 dias para el embajador original.
+
 ## Cadencia semanal
 
 ### Lunes
@@ -106,4 +123,3 @@ Lo que el usuario dice importa, pero lo que hace pesa mas. Si una persona dice q
 - 100 usuarios: validar canal, retencion y coste de adquisicion.
 
 No escalar anuncios hasta tener senales de ejecucion, continuidad y valor percibido.
-

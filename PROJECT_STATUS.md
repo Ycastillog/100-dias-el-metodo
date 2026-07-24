@@ -15,7 +15,7 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Sistema: LISTO
 - Experiencia: LISTA
 - Operacion: PREPARADA / PENDIENTE DE CUENTAS EXTERNAS
-- Mercado: PENDIENTE DE PRIMERA OLA
+- Mercado: PROGRAMA DE EMBAJADORES PREPARADO / PENDIENTE DE PRIMERA COHORTE
 - Validacion: EN CURSO
 
 ## Fecha de cierre de construccion
@@ -38,7 +38,7 @@ North Star Metric: usuarios que llegan al Dia 7 y deciden continuar voluntariame
 
 ## Proxima accion
 
-Conectar Google Sheets y GA4. PayPal y Stripe ya estan activos para USD 9, USD 29, USD 79 y USD 297. Luego conseguir los primeros usuarios reales.
+Conectar Google Sheets y GA4. PayPal y Stripe ya estan activos para USD 9, USD 29, USD 79 y USD 297. Luego seleccionar 10 participantes Alpha y 10 creadores para la primera cohorte de Embajadores del Dia 1.
 
 ## Roadmap empresarial
 
@@ -67,6 +67,12 @@ No invertir en anuncios hasta tener senales basicas de retencion, conversion, pe
 - Seguimiento local: navegador del participante
 - Eventos preparados: payment_click, access_view, day0_submit, daily_status_submit, day1_submit, day7_submit, weekly_review_submit
 - Acceso Alpha: acceso.html?alpha=1
+- Programa de creadores: embajadores.html
+- Comision: 25% por compra atribuida
+- Ventana de click: 30 dias
+- Ventana de ascenso: 60 dias
+- Control financiero: outputs/embajadores-dia-1/EMBAJADORES_CONTROL.xlsx
+- Eventos de creadores: affiliate_landing_view, ambassador_cta_click, ambassador_application_submit, ambassador_thank_you_view
 
 ## Objetivo del Alpha
 
