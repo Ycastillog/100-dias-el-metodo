@@ -199,12 +199,23 @@
 
 .ambassador-role-grid article,
 .ambassador-kit-grid > div {
+  position: relative;
   min-height: 180px;
   display: grid;
   align-content: space-between;
   gap: 12px;
   padding: 20px;
   background: #151410;
+}
+
+.ambassador-kit-grid > div {
+  border-top: 3px solid rgba(47, 191, 113, 0.78);
+  background: #101a13;
+}
+
+.ambassador-kit-grid > div:nth-child(even) {
+  border-top-color: rgba(240, 207, 122, 0.82);
+  background: #171612;
 }
 
 .ambassador-role-grid article > span,
@@ -221,10 +232,31 @@
   font-size: 1.45rem;
 }
 
+.ambassador-kit-grid strong b {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--green);
+  font-size: 1.85rem;
+  font-style: normal;
+  line-height: 1;
+}
+
+.ambassador-kit-grid > div:nth-child(even) strong b {
+  color: var(--gold-strong);
+}
+
 .ambassador-role-grid p,
 .ambassador-kit-grid p {
   margin: 0;
   color: var(--muted);
+  line-height: 1.5;
+}
+
+.ambassador-benefit-note {
+  max-width: 900px;
+  margin: 18px 0 0;
+  color: #93a098;
+  font-size: 0.78rem;
   line-height: 1.5;
 }
 
@@ -435,9 +467,13 @@
   border-bottom: 0;
 }
 
-.commission-table td:nth-child(3) {
+.commission-table td:nth-child(n + 2) {
   color: var(--green);
   font-weight: 900;
+}
+
+.commission-table td:last-child {
+  background: rgba(47, 191, 113, 0.08);
 }
 
 .campaign-timeline {
@@ -1133,5 +1169,9 @@
     font-size: 0.64rem;
     font-weight: 900;
     text-transform: uppercase;
+  }
+
+  .commission-table td:not(:first-child) {
+    font-size: 0.86rem;
   }
 }
