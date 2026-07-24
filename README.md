@@ -30,6 +30,7 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Programa publico de creadores en `embajadores.html`.
 - Terminos de creadores en `terminos-embajadores.html`.
 - Plataforma del participante en `acceso.html`.
+- Experiencia Alpha con contenido y tarea distintos para cada uno de los primeros 14 dias.
 - Estilos en `assets/styles.css`.
 - Captura local de interes, activacion y avance en `assets/app.js`.
 - Configuracion publica de leads y analitica en `assets/site-config.js`.
@@ -38,7 +39,7 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Archivos descargables en `public/downloads`.
 - Kit de validacion Alpha en `validation`.
 - Sistema social y contenidos Alpha en `social`.
-- Paquete listo para publicar en `contenido-redes-lanzamiento`.
+- Campana completa de 14 dias y 25 artes exportados en `contenido-redes-lanzamiento`.
 - Manifiesto del fundador en `MANIFIESTO_DEL_FUNDADOR.md`.
 - Centro operativo Alpha en `ALPHA_LAUNCH_READY.md`.
 - Biblioteca recomendada y audios complementarios configurables.

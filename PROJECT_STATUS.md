@@ -17,7 +17,7 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Experiencia: LISTA
 - Operacion: COMPRA ACTIVA / VALIDACION DE PAGO MANUAL
 - Mercado: PROGRAMA DE EMBAJADORES PREPARADO / PENDIENTE DE PRIMERA COHORTE
-- Contenido de lanzamiento: 14 DIAS PREPARADOS / PRIMERAS PIEZAS EXPORTADAS
+- Contenido de lanzamiento: 14 DIAS LISTOS / 25 PIEZAS VISUALES EXPORTADAS
 - Validacion: EN CURSO
 
 ## Fecha de cierre de construccion
@@ -71,6 +71,7 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 - Seguimiento local: navegador del participante
 - Eventos preparados: payment_click, access_view, day0_submit, daily_status_submit, day1_submit, day7_submit, weekly_review_submit
 - Acceso Alpha: enlace privado enviado solo despues de validar el pago
+- Recorrido Alpha: 14 dias con guia, principio, pregunta, accion, tarea y acompanamiento propios
 - Seguridad actual: bloqueo estatico de conveniencia; la automatizacion real requiere webhook y backend
 - Programa de creadores: embajadores.html
 - Comision: 25% por compra atribuida

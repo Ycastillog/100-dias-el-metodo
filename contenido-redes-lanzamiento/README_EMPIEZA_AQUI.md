@@ -41,6 +41,8 @@ No se promete una transformacion automatica. Se invita a probar el sistema con e
 - `01_reel_estructura.png`
 - `02_story_patron.png`
 - `05_reel_volver.png`
+- `08_producto_01.png` a `08_producto_03.png`.
+- `13_pago_01.png` a `13_pago_04.png`.
 
 Se usan como portada, primer frame o apoyo dentro de Reels, TikTok y Stories.
 
@@ -48,12 +50,16 @@ Se usan como portada, primer frame o apoyo dentro de Reels, TikTok y Stories.
 
 - `03_carrusel_01.png` a `03_carrusel_07.png`.
 - `04_post_alpha.png`.
+- `09_una_meta_01.png` a `09_una_meta_05.png`.
+- `11_caso_uso.png`.
 
 ### Tarjeta para compartir la landing
 
 - `og-100-dias.png`.
 
 La misma tarjeta se publica en `assets/og-100-dias.png` para WhatsApp, Facebook, X y otras vistas previas.
+
+La campana completa de 14 dias tiene guion, caption y arte asignado. Las piezas de video utilizan estas imagenes como portada o apoyo y se graban con `PLAN_DE_GRABACION.md`.
 
 ## Regla creativa
 

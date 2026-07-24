@@ -102,6 +102,108 @@ Dia 7: revisaste.
 
 Comenta `DIA7` para vivir la prueba Alpha.
 
+## Dia 8
+
+Esto es lo que recibe una persona dentro del Metodo:
+
+1. Un principio para entender que esta entrenando.
+2. Una pregunta que conecta el dia con su conducta.
+3. Una tarea concreta de 10 a 15 minutos.
+4. Un diario para registrar la evidencia.
+5. Un estado honesto: completado, parcial o perdido.
+
+No tiene que adivinar que hacer manana.
+
+Escribe `CONTROL` y te muestro como entrar.
+
+## Dia 9
+
+Intentar cambiar todo es otra forma de abandonar.
+
+Hazlo asi:
+
+1. Elige una sola area.
+2. Reduce la meta a una accion observable.
+3. Asegurate de que pueda hacerse tambien en un dia dificil.
+4. Registra lo que ocurrio sin maquillarlo.
+
+Una meta. Una accion. Un registro.
+
+Guarda el carrusel y comenta `CONTROL`.
+
+## Dia 10
+
+Parcial no significa fracaso.
+
+En 100 Dias:
+
+- Completado suma progreso y sostiene la racha.
+- Parcial sostiene la racha, pero no suma progreso.
+- Perdido registra la verdad y define que debes corregir.
+
+El sistema no castiga, pero tampoco regala avance.
+
+Escribe `DIA1` para conocer la primera tarea.
+
+## Dia 11
+
+Pensar puede sentirse como progreso.
+
+Planificar tambien.
+
+Guardar contenido tambien.
+
+Pero la pregunta que cambia el dia es mas simple:
+
+Que hiciste hoy que puedes registrar?
+
+Convierte una idea pendiente en una accion de 10 minutos.
+
+Comenta `CONTROL` si necesitas una estructura para repetirlo.
+
+## Dia 12
+
+El mismo Metodo puede aplicarse a distintas areas:
+
+- Disciplina: cumplir una accion aunque baje el animo.
+- Salud: sostener un habito base sin empezar de forma extrema.
+- Finanzas: registrar, revisar y decidir antes de gastar.
+- Negocio: proteger una accion diaria que produzca avance visible.
+
+No intentes trabajar las cuatro.
+
+Escribe cual seria tu unica meta.
+
+## Dia 13
+
+Que pasa despues de pagar?
+
+1. Eliges tu plan y pagas por PayPal o Stripe.
+2. Validamos la transaccion.
+3. Recibes el acceso privado por el dato de contacto registrado.
+4. Completas Dia 0.
+5. Ejecutas Dia 1 y comienzas a producir evidencia.
+
+El formulario no cobra ni abre acceso automaticamente.
+
+Envia `PREGUNTA` por DM si quieres aclarar algo antes de entrar.
+
+## Dia 14
+
+No estoy buscando espectadores.
+
+Estoy buscando 10 personas dispuestas a:
+
+- tomar una decision en Dia 0;
+- ejecutar una accion real en Dia 1;
+- registrar con honestidad;
+- volver hasta Dia 7;
+- completar la prueba de 14 dias.
+
+El Grupo Alpha cuesta USD 9.
+
+Entra desde el enlace del perfil.
+
 ## Respuesta a CONTROL
 
 Gracias por escribir CONTROL.
