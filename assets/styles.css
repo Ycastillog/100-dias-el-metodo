@@ -1321,6 +1321,19 @@ footer p {
   gap: 10px;
 }
 
+.referral-arrival {
+  width: fit-content;
+  margin: 0;
+  border: 1px solid rgba(47, 191, 113, 0.55);
+  border-radius: 999px;
+  padding: 7px 11px;
+  color: #9fe3bb;
+  background: rgba(47, 191, 113, 0.1);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .alpha-banner {
   max-width: 620px;
   display: grid;
@@ -1844,6 +1857,87 @@ footer p {
   line-height: 1.5;
 }
 
+.ambassador-invite-section {
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  padding: 54px 16px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  isolation: isolate;
+}
+
+.ambassador-invite-section > img,
+.ambassador-invite-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ambassador-invite-section > img {
+  z-index: -3;
+  object-fit: cover;
+  object-position: 67% center;
+}
+
+.ambassador-invite-overlay {
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.98), rgba(5, 5, 5, 0.82) 46%, rgba(5, 5, 5, 0.18)),
+    linear-gradient(0deg, rgba(5, 5, 5, 0.92), transparent 62%);
+}
+
+.ambassador-invite-section > div:last-child {
+  width: min(100%, 720px);
+  display: grid;
+  gap: 16px;
+}
+
+.ambassador-invite-section h2 {
+  font-size: 2.65rem;
+}
+
+.ambassador-invite-section p:not(.eyebrow) {
+  max-width: 650px;
+  margin: 0;
+  color: #ddd4c4;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.ambassador-invite-section .button {
+  width: fit-content;
+}
+
+.ambassador-invite-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(240, 207, 122, 0.36);
+  border-bottom: 1px solid rgba(240, 207, 122, 0.36);
+}
+
+.ambassador-invite-facts span {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 12px 10px;
+  border-right: 1px solid rgba(240, 207, 122, 0.22);
+  color: #d1c7b7;
+  font-size: 0.78rem;
+}
+
+.ambassador-invite-facts span:last-child {
+  border-right: 0;
+}
+
+.ambassador-invite-facts strong {
+  color: var(--green);
+  font-size: 1.05rem;
+}
+
 .registration-section .activation-complete {
   margin-top: 18px;
 }
@@ -1855,10 +1949,6 @@ footer p {
 @media (min-width: 760px) {
   .app-header {
     padding-inline: 32px;
-  }
-
-  nav {
-    display: flex;
   }
 
   .welcome-screen,
@@ -1991,6 +2081,21 @@ footer p {
 
   .payment-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ambassador-invite-section {
+    min-height: 620px;
+    padding: 72px clamp(32px, 6vw, 88px);
+  }
+
+  .ambassador-invite-section h2 {
+    font-size: 3.7rem;
+  }
+}
+
+@media (min-width: 960px) {
+  nav {
+    display: flex;
   }
 }
 
@@ -2168,5 +2273,39 @@ footer p {
   .hero-actions .button {
     flex: 1 1 100%;
     width: 100%;
+  }
+
+  .ambassador-invite-section {
+    min-height: 650px;
+    padding-top: 210px;
+  }
+
+  .ambassador-invite-section > img {
+    object-position: 72% top;
+  }
+
+  .ambassador-invite-overlay {
+    background:
+      linear-gradient(0deg, rgba(5, 5, 5, 1), rgba(5, 5, 5, 0.9) 53%, rgba(5, 5, 5, 0.18)),
+      linear-gradient(90deg, rgba(5, 5, 5, 0.4), rgba(5, 5, 5, 0.08));
+  }
+
+  .ambassador-invite-section .button {
+    width: 100%;
+  }
+
+  .ambassador-invite-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .ambassador-invite-facts span {
+    grid-template-columns: 90px minmax(0, 1fr);
+    align-items: center;
+    border-right: 0;
+    border-bottom: 1px solid rgba(240, 207, 122, 0.18);
+  }
+
+  .ambassador-invite-facts span:last-child {
+    border-bottom: 0;
   }
 }
