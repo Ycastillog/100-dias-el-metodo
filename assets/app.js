@@ -2,6 +2,15 @@ const STORAGE_KEY = "100dias_participant_state_v1";
 const LEADS_KEY = "100dias_sales_leads_v1";
 const EVENTS_KEY = "100dias_events_v1";
 const REMINDER_KEY = "100dias_reminders_v1";
+const BACKUP_META_KEY = "100dias_backup_meta_v1";
+const VALID_DAY_STATES = new Set(["complete", "partial", "missed"]);
+const LIFE_AREA_LABELS = {
+  mentalidad: "Mentalidad y disciplina",
+  bienestar: "Salud y bienestar",
+  profesional: "Trabajo, profesion o negocio",
+  finanzas: "Finanzas personales",
+  relaciones: "Relaciones y vida cotidiana",
+};
 const PLAN_DETAILS = {
   Alpha: {
     key: "alpha",
@@ -580,6 +589,7 @@ const dailyContent = Array.from({ length: 100 }, (_, index) => {
 });
 
 const defaultState = {
+  schemaVersion: 2,
   activation: {
     method: false,
     day0: false,
@@ -592,14 +602,89 @@ const defaultState = {
   lastActivity: "",
 };
 
+function cleanText(value, maxLength = 10000) {
+  return typeof value === "string" ? value.slice(0, maxLength) : "";
+}
+
+function normalizeDayZero(value) {
+  const source = value && typeof value === "object" ? value : {};
+  return {
+    lifeArea: LIFE_AREA_LABELS[source.lifeArea] ? source.lifeArea : "",
+    goal: cleanText(source.goal, 180),
+    control: cleanText(source.control, 600),
+    cue: cleanText(source.cue, 120),
+    place: cleanText(source.place, 120),
+    minimumAction: cleanText(source.minimumAction, 180),
+    rescueAction: cleanText(source.rescueAction, 180),
+    pattern: cleanText(source.pattern, 500),
+  };
+}
+
+function normalizeDayEntry(value) {
+  const source = value && typeof value === "object" ? value : {};
+  const normalized = {
+    intention: cleanText(source.intention, 180),
+    reflection: cleanText(source.reflection, 10000),
+    returns: Math.max(0, Math.min(999, Number(source.returns) || 0)),
+    startedAt: cleanText(source.startedAt, 40),
+    recordedOn: cleanText(source.recordedOn, 10),
+    updatedAt: cleanText(source.updatedAt, 40),
+  };
+  if (VALID_DAY_STATES.has(source.state)) normalized.state = source.state;
+  return normalized;
+}
+
+function normalizeReview(value, index) {
+  const source = value && typeof value === "object" ? value : {};
+  const inferredDay = Math.min((index + 1) * 7, 100);
+  const reviewDay = Math.max(1, Math.min(100, Number(source.reviewDay) || inferredDay));
+  return {
+    reviewDay,
+    completed: cleanText(source.completed, 3000),
+    avoided: cleanText(source.avoided, 3000),
+    pattern: cleanText(source.pattern, 3000),
+    next: cleanText(source.next, 3000),
+    createdAt: cleanText(source.createdAt, 40),
+  };
+}
+
+function normalizeState(value) {
+  const source = value && typeof value === "object" ? value : {};
+  const activationSource = source.activation && typeof source.activation === "object"
+    ? source.activation
+    : {};
+  const daysSource = source.days && typeof source.days === "object" ? source.days : {};
+  const days = {};
+
+  Object.entries(daysSource).forEach(([key, entry]) => {
+    const day = Number(key);
+    if (Number.isInteger(day) && day >= 1 && day <= 100) {
+      days[String(day)] = normalizeDayEntry(entry);
+    }
+  });
+
+  return {
+    schemaVersion: 2,
+    activation: {
+      method: Boolean(activationSource.method),
+      day0: Boolean(activationSource.day0),
+      system: Boolean(activationSource.system),
+      day1: Boolean(activationSource.day1),
+    },
+    dayZero: normalizeDayZero(source.dayZero),
+    days,
+    reviews: Array.isArray(source.reviews)
+      ? source.reviews.slice(0, 100).map(normalizeReview)
+      : [],
+    lastActivity: cleanText(source.lastActivity, 300),
+  };
+}
+
 function loadState() {
   try {
-    return {
-      ...defaultState,
-      ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"),
-    };
+    return normalizeState(JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"));
   } catch {
-    return { ...defaultState };
+    return normalizeState(defaultState);
   }
 }
 
@@ -620,9 +705,10 @@ function getCompletedCount() {
 }
 
 function getRecordedDays() {
-  return Object.keys(state.days)
-    .map(Number)
-    .filter((day) => day >= 1 && day <= 100)
+  return Object.entries(state.days)
+    .filter(([, entry]) => VALID_DAY_STATES.has(entry?.state))
+    .map(([day]) => Number(day))
+    .filter((day) => Number.isInteger(day) && day >= 1 && day <= 100)
     .sort((a, b) => a - b);
 }
 
@@ -637,17 +723,115 @@ function getPhase(day) {
   return dailyContent[day - 1]?.phase || "Control";
 }
 
+function getRecordDate(entry) {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(entry?.recordedOn || "")) {
+    return entry.recordedOn;
+  }
+  if (!entry?.updatedAt) return "";
+  const updatedAt = new Date(entry.updatedAt);
+  return Number.isNaN(updatedAt.getTime()) ? "" : localDateKey(updatedAt);
+}
+
+function shiftDateKey(dateKey, delta) {
+  const [year, month, day] = dateKey.split("-").map(Number);
+  const date = new Date(year, month - 1, day, 12, 0, 0, 0);
+  date.setDate(date.getDate() + delta);
+  return localDateKey(date);
+}
+
 function getStreak() {
+  const today = localDateKey();
+  const statusByDate = new Map();
+
+  Object.values(state.days).forEach((entry) => {
+    if (!VALID_DAY_STATES.has(entry?.state)) return;
+    const date = getRecordDate(entry);
+    if (!date) return;
+    const previous = statusByDate.get(date);
+    const active = entry.state === "complete" || entry.state === "partial";
+    statusByDate.set(date, previous === true ? true : active);
+  });
+
+  if (statusByDate.has(today) && !statusByDate.get(today)) return 0;
+  let cursor = statusByDate.get(today) ? today : shiftDateKey(today, -1);
   let streak = 0;
-  for (let day = 100; day >= 1; day -= 1) {
-    const status = state.days[String(day)]?.state;
-    if (status === "complete" || status === "partial") {
-      streak += 1;
-    } else if (streak > 0) {
-      break;
-    }
+  while (statusByDate.get(cursor)) {
+    streak += 1;
+    cursor = shiftDateKey(cursor, -1);
   }
   return streak;
+}
+
+function getActiveDaysLast7() {
+  const today = localDateKey();
+  const activeDates = new Set();
+  Object.values(state.days).forEach((entry) => {
+    if (entry?.state !== "complete" && entry?.state !== "partial") return;
+    const date = getRecordDate(entry);
+    if (date) activeDates.add(date);
+  });
+
+  let active = 0;
+  for (let offset = 0; offset < 7; offset += 1) {
+    if (activeDates.has(shiftDateKey(today, -offset))) active += 1;
+  }
+  return active;
+}
+
+function getReturnCount() {
+  return Object.values(state.days).reduce(
+    (total, entry) => total + Math.max(0, Number(entry?.returns) || 0),
+    0
+  );
+}
+
+function getMaxRecordedDay() {
+  const recorded = getRecordedDays();
+  return recorded.length ? Math.max(...recorded) : 0;
+}
+
+function isJourneyComplete() {
+  return VALID_DAY_STATES.has(state.days["100"]?.state);
+}
+
+function isCadenceWaiting(day = getCurrentDay()) {
+  if (isJourneyComplete()) return false;
+  const maxDay = getMaxRecordedDay();
+  if (!maxDay || day !== maxDay + 1) return false;
+  return getRecordDate(state.days[String(maxDay)]) === localDateKey();
+}
+
+function getReviewMilestones() {
+  return [...Array.from({ length: 14 }, (_, index) => (index + 1) * 7), 100];
+}
+
+function getDueReviewDay() {
+  const maxDay = getMaxRecordedDay();
+  const reviewed = new Set(state.reviews.map((review) => Number(review.reviewDay)));
+  return getReviewMilestones().find(
+    (milestone) => milestone <= maxDay && !reviewed.has(milestone)
+  ) || 0;
+}
+
+function getNextReviewDay() {
+  const maxDay = getMaxRecordedDay();
+  return getReviewMilestones().find((milestone) => milestone > maxDay) || 100;
+}
+
+function getLifeAreaLabel() {
+  return LIFE_AREA_LABELS[state.dayZero.lifeArea] || "Completa tu Dia 0";
+}
+
+function buildPersonalIfThen(dayZero) {
+  const { cue, place, minimumAction } = dayZero;
+  if (!cue || !place || !minimumAction) {
+    return "Cuando completes tu Dia 0, tu rutina personal aparecera aqui.";
+  }
+  return `Cuando ${cue}, ${place}, hare esto: ${minimumAction}`;
+}
+
+function getPersonalIfThen() {
+  return buildPersonalIfThen(state.dayZero);
 }
 
 function setText(selector, value) {
@@ -673,22 +857,73 @@ function renderActivation() {
   }
 }
 
+function renderDayZero() {
+  const form = document.querySelector("#dayZeroForm");
+  if (!form) return;
+  if (form.dataset.hydrated !== "true") {
+    Object.entries(state.dayZero).forEach(([name, value]) => {
+      const field = form.elements.namedItem(name);
+      if (field) field.value = value;
+    });
+    form.dataset.hydrated = "true";
+  }
+  renderPactPreview();
+}
+
+function renderPactPreview() {
+  const form = document.querySelector("#dayZeroForm");
+  if (!form) return;
+  const draft = normalizeDayZero(
+    Object.fromEntries(new FormData(form).entries())
+  );
+  const hasPlan = draft.cue && draft.place && draft.minimumAction;
+  setText(
+    "[data-ifthen-preview]",
+    hasPlan
+      ? buildPersonalIfThen(draft)
+      : "Cuando aparezca tu senal, en tu lugar elegido, haras una accion minima. Si el dia se complica, ejecutaras tu version de 2 minutos."
+  );
+}
+
+function renderPersonalSystem() {
+  setText("[data-personal-area]", getLifeAreaLabel());
+  setText(
+    "[data-personal-goal]",
+    state.dayZero.goal || "Define una direccion que puedas practicar cada dia."
+  );
+  setText("[data-personal-ifthen]", getPersonalIfThen());
+  setText(
+    "[data-personal-rescue]",
+    state.dayZero.rescueAction ||
+      "Una accion de 2 minutos para no convertir un dia dificil en abandono."
+  );
+}
+
 function renderDayMap() {
   const map = document.querySelector("[data-day-map]");
   if (!map) return;
   const currentDay = getCurrentDay();
+  const waiting = isCadenceWaiting(currentDay);
 
   map.innerHTML = dailyContent
     .map(({ day }) => {
       const status = state.days[String(day)]?.state || "";
       const isCurrent = day === currentDay;
       const isLocked = day > currentDay;
+      const isWaiting = isCurrent && waiting;
+      const statusLabels = {
+        complete: "completado",
+        partial: "parcial",
+        missed: "perdido",
+      };
       const label = isLocked
         ? `Dia ${day}: bloqueado hasta avanzar`
+        : isWaiting
+          ? `Dia ${day}: disponible manana`
         : status
-          ? `Dia ${day}: ${status}`
+          ? `Dia ${day}: ${statusLabels[status]}`
           : `Dia ${day}: pendiente`;
-      return `<button class="day-dot ${status} ${isCurrent ? "current" : ""} ${isLocked ? "locked" : ""}" type="button" data-map-day="${day}" aria-label="${label}" ${isCurrent ? 'aria-current="step"' : ""} ${isLocked ? "disabled" : ""}></button>`;
+      return `<button class="day-dot ${status} ${isCurrent ? "current" : ""} ${isLocked ? "locked" : ""} ${isWaiting ? "waiting" : ""}" type="button" data-map-day="${day}" aria-label="${label}" ${isCurrent ? 'aria-current="step"' : ""} ${isLocked || isWaiting ? "disabled" : ""}></button>`;
     })
     .join("");
 }
@@ -701,6 +936,20 @@ function renderDashboard() {
   const identity = getIdentityStage(currentDay);
   const theme = getDayTheme(currentDay, phase);
   const streak = getStreak();
+  const weeklyActive = getActiveDaysLast7();
+  const waiting = isCadenceWaiting(currentDay);
+  const currentEntry = state.days[String(currentDay)] || {};
+  let nextAction = `Comenzar el ritual del Dia ${currentDay}`;
+
+  if (!state.activation.day0) {
+    nextAction = "Completar tu pacto del Dia 0";
+  } else if (isJourneyComplete()) {
+    nextAction = "Cerrar el recorrido y descargar tu diario";
+  } else if (waiting) {
+    nextAction = `Volver manana para abrir el Dia ${currentDay}`;
+  } else if (currentEntry.startedAt) {
+    nextAction = `Cerrar y registrar el Dia ${currentDay}`;
+  }
 
   setText("[data-current-day]", String(currentDay));
   setText("[data-percent]", `${percent}%`);
@@ -712,14 +961,87 @@ function renderDashboard() {
   setText("[data-identity-stage]", identity.name);
   setText("[data-identity-line]", identity.line);
   setText("[data-streak]", `${streak} ${streak === 1 ? "dia" : "dias"}`);
+  setText("[data-weekly-active]", `${weeklyActive} de 7`);
+  setText("[data-return-count]", String(getReturnCount()));
   setText("[data-last-activity]", state.lastActivity || "Aun no has vuelto al marco");
+  setText("[data-next-action]", nextAction);
   setText("[data-progress-label]", `${completed} de 100`);
-  setText("[data-dynamic-phrase]", completed > 0 ? "Vuelve al marco." : "El Dia 1 decide el inicio.");
+  setText(
+    "[data-dynamic-phrase]",
+    waiting
+      ? "Lo de hoy ya esta registrado. Vuelve manana."
+      : completed > 0
+        ? "Vuelve al marco."
+        : "El Dia 1 decide el inicio."
+  );
 
   const fill = document.querySelector("[data-progress-fill]");
   if (fill) fill.style.width = `${percent}%`;
   const progressBar = document.querySelector("[data-progress-bar]");
   if (progressBar) progressBar.setAttribute("aria-valuenow", String(percent));
+}
+
+function renderDailyRitual(day) {
+  const entry = state.days[String(day)] || {};
+  const finalized = VALID_DAY_STATES.has(entry.state);
+  const currentDay = getCurrentDay();
+  const waiting = day === currentDay && isCadenceWaiting(day);
+  const canBegin =
+    state.activation.day0 && day === currentDay && !waiting && !finalized;
+  const statusLabels = {
+    complete: "Dia cerrado: completado",
+    partial: "Dia cerrado: parcial",
+    missed: "Dia cerrado: perdido",
+  };
+
+  let availability = "Disponible para comenzar";
+  let note = "Comienza cuando aparezca tu senal cotidiana.";
+  if (!state.activation.day0) {
+    availability = "Primero confirma tu pacto";
+    note = "Completa el Dia 0 para conectar esta practica con tu vida real.";
+  } else if (finalized) {
+    availability = statusLabels[entry.state];
+    note = "Este registro ya forma parte de tu evidencia.";
+  } else if (waiting) {
+    availability = `El Dia ${day} abre manana`;
+    note = "Una jornada por fecha protege la practica. Lo de hoy ya esta hecho.";
+  } else if (entry.startedAt) {
+    availability = "Ritual en marcha";
+    note = "Ejecuta tu minimo, escribe evidencia y cierra el dia con honestidad.";
+  }
+
+  setText("[data-daily-availability]", availability);
+  setText(
+    "[data-daily-cue]",
+    state.activation.day0
+      ? getPersonalIfThen()
+      : "Tu senal personal aparecera aqui despues de completar el Dia 0."
+  );
+  setText(
+    "[data-rescue-action]",
+    state.dayZero.rescueAction || "dos minutos honestos"
+  );
+  setText("[data-ritual-note]", note);
+
+  const intention = document.querySelector("#dailyIntention");
+  if (intention) {
+    intention.dataset.day = String(day);
+    intention.value = entry.intention || "";
+    intention.disabled = !canBegin;
+  }
+
+  const startButton = document.querySelector("[data-start-ritual]");
+  const returnButton = document.querySelector("[data-return-now]");
+  if (startButton) {
+    startButton.disabled = !canBegin;
+    startButton.textContent = entry.startedAt
+      ? "Ritual iniciado"
+      : "Comenzar mi ritual";
+  }
+  if (returnButton) returnButton.disabled = !canBegin;
+
+  const returnProtocol = document.querySelector("[data-return-protocol]");
+  if (returnProtocol) returnProtocol.hidden = !(Number(entry.returns) > 0);
 }
 
 function renderDaily(day = getCurrentDay()) {
@@ -741,7 +1063,68 @@ function renderDaily(day = getCurrentDay()) {
   if (reflection) {
     reflection.dataset.day = String(content.day);
     reflection.value = state.days[String(content.day)]?.reflection || "";
+    reflection.disabled =
+      !state.activation.day0 ||
+      (content.day === getCurrentDay() && isCadenceWaiting(content.day));
   }
+
+  const entry = state.days[String(content.day)] || {};
+  const inaccessible =
+    !state.activation.day0 ||
+    content.day > getCurrentDay() ||
+    (content.day === getCurrentDay() && isCadenceWaiting(content.day));
+  document.querySelectorAll("[data-state]").forEach((button) => {
+    button.disabled = inaccessible;
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.state === entry.state)
+    );
+  });
+  renderDailyRitual(content.day);
+}
+
+function renderWeeklyReview() {
+  const form = document.querySelector("#weeklyReviewForm");
+  if (!form) return;
+  const dueDay = getDueReviewDay();
+  const maxDay = getMaxRecordedDay();
+  const nextDay = getNextReviewDay();
+  const controls = form.querySelectorAll("textarea, button[type='submit']");
+  const hiddenDay = form.elements.namedItem("reviewDay");
+
+  controls.forEach((control) => {
+    control.disabled = !dueDay;
+  });
+  if (hiddenDay) hiddenDay.value = dueDay ? String(dueDay) : "";
+
+  if (dueDay) {
+    setText("[data-review-heading]", `Revision del Dia ${dueDay}.`);
+    setText("[data-review-title]", `Tu revision del Dia ${dueDay} esta lista`);
+    setText(
+      "[data-review-copy]",
+      "Ya existe evidencia suficiente. Observa el patron y decide una regla concreta para continuar."
+    );
+    setText("#reviewNote", "Responde con honestidad. Esta revision no cambia tu porcentaje.");
+  } else if (isJourneyComplete()) {
+    setText("[data-review-heading]", "Recorrido revisado.");
+    setText("[data-review-title]", "Tus revisiones estan al dia");
+    setText(
+      "[data-review-copy]",
+      "Descarga tu diario y conserva la evidencia de los 100 dias."
+    );
+    setText("#reviewNote", "No hay revisiones pendientes.");
+  } else {
+    setText("[data-review-heading]", "Revision cada 7 dias.");
+    setText("[data-review-title]", `Proxima revision: Dia ${nextDay}`);
+    setText(
+      "[data-review-copy]",
+      maxDay
+        ? `Has registrado hasta el Dia ${maxDay}. El formulario se abre al cerrar el Dia ${nextDay}.`
+        : "Completa el recorrido diario. El formulario se habilitara cuando exista evidencia que revisar."
+    );
+    setText("#reviewNote", `Se habilitara al cerrar el Dia ${nextDay}.`);
+  }
+  form.classList.toggle("is-disabled", !dueDay);
 }
 
 const DEFAULT_REMINDER_SETTINGS = {
@@ -751,12 +1134,27 @@ const DEFAULT_REMINDER_SETTINGS = {
   lastShownDate: "",
 };
 
+let deferredInstallPrompt = null;
+
+function normalizeReminderSettings(value) {
+  const source = value && typeof value === "object" ? value : {};
+  return {
+    time: /^\d{2}:\d{2}$/.test(source.time || "")
+      ? source.time
+      : DEFAULT_REMINDER_SETTINGS.time,
+    duration: Number(source.duration) === 100 ? 100 : 14,
+    browserEnabled: Boolean(source.browserEnabled),
+    lastShownDate: /^\d{4}-\d{2}-\d{2}$/.test(source.lastShownDate || "")
+      ? source.lastShownDate
+      : "",
+  };
+}
+
 function loadReminderSettings() {
   try {
-    return {
-      ...DEFAULT_REMINDER_SETTINGS,
-      ...JSON.parse(localStorage.getItem(REMINDER_KEY) || "{}"),
-    };
+    return normalizeReminderSettings(
+      JSON.parse(localStorage.getItem(REMINDER_KEY) || "{}")
+    );
   } catch {
     return { ...DEFAULT_REMINDER_SETTINGS };
   }
@@ -775,11 +1173,9 @@ function localDateKey(date = new Date()) {
 
 function hasRecordToday() {
   const today = localDateKey();
-  return Object.values(state.days).some((entry) => {
-    if (!entry?.updatedAt) return false;
-    const updatedAt = new Date(entry.updatedAt);
-    return !Number.isNaN(updatedAt.getTime()) && localDateKey(updatedAt) === today;
-  });
+  return Object.values(state.days).some(
+    (entry) => VALID_DAY_STATES.has(entry?.state) && getRecordDate(entry) === today
+  );
 }
 
 function renderReminderCenter() {
@@ -847,7 +1243,9 @@ async function showReminderNotification(isTest = false) {
   const title = isTest ? "Aviso de prueba listo" : `Dia ${day}: ${content.theme}`;
   const body = isTest
     ? `Tu recordatorio diario funcionara a las ${reminderSettings.time}.`
-    : content.task;
+    : state.dayZero.minimumAction
+      ? `Tu minimo de hoy: ${state.dayZero.minimumAction}`
+      : content.task;
   const options = {
     body,
     icon: "assets/icon-100-dias-192.png",
@@ -964,7 +1362,7 @@ function calendarStartDate(time) {
   const [hour, minute] = time.split(":").map(Number);
   const now = new Date();
   const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0);
-  if (start <= now) start.setDate(start.getDate() + 1);
+  if (isCadenceWaiting() || start <= now) start.setDate(start.getDate() + 1);
   return start;
 }
 
@@ -988,13 +1386,16 @@ function downloadReminderCalendar() {
     const content = dailyContent[day - 1] || dailyContent[0];
     const eventDate = new Date(firstDate);
     eventDate.setDate(firstDate.getDate() + day - currentDay);
+    const personalPlan = state.dayZero.minimumAction
+      ? `Mi minimo: ${state.dayZero.minimumAction}\nMi regreso: ${state.dayZero.rescueAction || "dos minutos honestos"}\n`
+      : "";
     lines.push(
       "BEGIN:VEVENT",
       `UID:100-dias-${generatedAt}-${day}@elmetodo`,
       `DTSTAMP:${generatedAt}`,
       `DTSTART:${calendarDateValue(eventDate)}`,
       `SUMMARY:${escapeCalendarText(`100 Dias - Dia ${day}: ${content.theme}`)}`,
-      `DESCRIPTION:${escapeCalendarText(`Tarea: ${content.task}\nEntra, ejecuta y registra con honestidad.`)}`,
+      `DESCRIPTION:${escapeCalendarText(`${personalPlan}Tarea del Metodo: ${content.task}\nEntra, ejecuta y registra con honestidad.`)}`,
       `URL:${accessUrl}`,
       "STATUS:CONFIRMED",
       "TRANSP:TRANSPARENT",
@@ -1046,12 +1447,252 @@ async function maybeShowDueReminder() {
   }
 }
 
+function downloadFile(content, type, filename) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function formatJournalDate(entry) {
+  const date = getRecordDate(entry);
+  return date || "Fecha no disponible";
+}
+
+function buildJournalText() {
+  const statusLabels = {
+    complete: "Completado",
+    partial: "Parcial",
+    missed: "Perdido",
+  };
+  const lines = [
+    "100 DIAS: EL METODO",
+    "DIARIO PERSONAL",
+    `Exportado: ${new Date().toLocaleString("es-DO")}`,
+    "",
+    "MI PACTO DE 100 DIAS",
+    `Area: ${getLifeAreaLabel()}`,
+    `Direccion: ${state.dayZero.goal || "Sin definir"}`,
+    `Por que importa: ${state.dayZero.control || "Sin definir"}`,
+    `Plan si-entonces: ${getPersonalIfThen()}`,
+    `Minimo de regreso: ${state.dayZero.rescueAction || "Sin definir"}`,
+    `Patron que estoy rompiendo: ${state.dayZero.pattern || "Sin definir"}`,
+    "",
+    "EVIDENCIA DIARIA",
+  ];
+
+  getRecordedDays().forEach((day) => {
+    const entry = state.days[String(day)];
+    const content = dailyContent[day - 1] || dailyContent[0];
+    lines.push(
+      "",
+      `DIA ${day}: ${content.theme}`,
+      `Fecha: ${formatJournalDate(entry)}`,
+      `Estado: ${statusLabels[entry.state]}`,
+      `Intencion: ${entry.intention || "Sin registrar"}`,
+      `Regresos al marco: ${Number(entry.returns) || 0}`,
+      `Diario: ${entry.reflection || "Sin reflexion escrita"}`
+    );
+  });
+
+  lines.push("", "REVISIONES");
+  if (!state.reviews.length) {
+    lines.push("Aun no hay revisiones guardadas.");
+  } else {
+    [...state.reviews]
+      .sort((a, b) => a.reviewDay - b.reviewDay)
+      .forEach((review) => {
+        lines.push(
+          "",
+          `REVISION DEL DIA ${review.reviewDay}`,
+          `Complete: ${review.completed || "Sin respuesta"}`,
+          `Evite: ${review.avoided || "Sin respuesta"}`,
+          `Patron: ${review.pattern || "Sin respuesta"}`,
+          `Sostendre: ${review.next || "Sin respuesta"}`
+        );
+      });
+  }
+
+  lines.push(
+    "",
+    "CIERRE",
+    "Este archivo contiene evidencia personal. Guardalo en un lugar privado.",
+    ""
+  );
+  return lines.join("\r\n");
+}
+
+function downloadJournal() {
+  downloadFile(
+    buildJournalText(),
+    "text/plain;charset=utf-8",
+    `100_DIAS_MI_DIARIO_${localDateKey()}.txt`
+  );
+  trackEvent("journal_download", {
+    recorded_days: getRecordedDays().length,
+    review_count: state.reviews.length,
+  });
+  setText(
+    "[data-data-note]",
+    "Diario descargado. Contiene tu pacto, evidencia diaria y revisiones."
+  );
+}
+
+function exportBackup() {
+  const exportedAt = new Date().toISOString();
+  const backup = {
+    schemaVersion: 2,
+    product: "100 Dias: El Metodo",
+    exportedAt,
+    state: normalizeState(state),
+    reminderSettings: normalizeReminderSettings(reminderSettings),
+  };
+  downloadFile(
+    `${JSON.stringify(backup, null, 2)}\n`,
+    "application/json;charset=utf-8",
+    `100_DIAS_COPIA_SEGURIDAD_${localDateKey()}.json`
+  );
+  localStorage.setItem(
+    BACKUP_META_KEY,
+    JSON.stringify({ lastExportedAt: exportedAt })
+  );
+  trackEvent("backup_export", {
+    recorded_days: getRecordedDays().length,
+  });
+  renderDataControl();
+  setText(
+    "[data-data-note]",
+    "Copia creada. Guardala en un lugar privado para restaurar tu recorrido en otro dispositivo."
+  );
+}
+
+async function importBackup(file) {
+  const note = document.querySelector("[data-data-note]");
+  try {
+    if (file.size > 3_000_000) {
+      throw new Error("La copia supera el limite de 3 MB.");
+    }
+    const parsed = JSON.parse(await file.text());
+    const importedState =
+      parsed?.state && typeof parsed.state === "object"
+        ? parsed.state
+        : parsed?.days && parsed?.activation
+          ? parsed
+          : null;
+    if (!importedState) {
+      throw new Error("El archivo no contiene un recorrido valido.");
+    }
+
+    state = normalizeState(importedState);
+    reminderSettings = normalizeReminderSettings(parsed.reminderSettings);
+    saveState();
+    saveReminderSettings();
+    localStorage.setItem(
+      BACKUP_META_KEY,
+      JSON.stringify({ lastImportedAt: new Date().toISOString() })
+    );
+    const dayZeroForm = document.querySelector("#dayZeroForm");
+    if (dayZeroForm) dayZeroForm.dataset.hydrated = "false";
+    renderAll();
+    trackEvent("backup_import", {
+      recorded_days: getRecordedDays().length,
+    });
+    if (note) {
+      const reviewCount = state.reviews.length;
+      note.textContent = `Copia restaurada: ${getRecordedDays().length} dias y ${reviewCount} ${reviewCount === 1 ? "revision disponible" : "revisiones disponibles"}.`;
+    }
+  } catch (error) {
+    if (note) {
+      note.textContent =
+        error instanceof Error
+          ? `No se pudo restaurar: ${error.message}`
+          : "No se pudo restaurar esta copia.";
+    }
+  }
+}
+
+function isStandaloneApp() {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true
+  );
+}
+
+function renderDataControl() {
+  if (!document.querySelector(".data-control-section")) return;
+  const online = navigator.onLine;
+  setText("[data-connectivity-status]", online ? "En linea" : "Modo sin conexion");
+  setText(
+    "[data-connectivity-copy]",
+    online
+      ? "Tus cambios se guardan de inmediato en este dispositivo."
+      : "Puedes continuar tu practica. Los cambios siguen guardandose en este dispositivo."
+  );
+  setText(
+    "[data-data-summary]",
+    `${getRecordedDays().length} ${getRecordedDays().length === 1 ? "dia registrado" : "dias registrados"}`
+  );
+
+  const installButton = document.querySelector("[data-install-app]");
+  if (installButton) {
+    installButton.hidden = !deferredInstallPrompt || isStandaloneApp();
+  }
+
+  let backupMeta = {};
+  try {
+    backupMeta = JSON.parse(localStorage.getItem(BACKUP_META_KEY) || "{}");
+  } catch {
+    backupMeta = {};
+  }
+  const backupDate = backupMeta.lastExportedAt || backupMeta.lastImportedAt;
+  setText(
+    "[data-storage-status]",
+    backupDate
+      ? `Ultima copia o restauracion: ${new Date(backupDate).toLocaleDateString("es-DO")}.`
+      : "Todavia no has creado una copia de seguridad."
+  );
+
+  if (navigator.storage?.persisted) {
+    navigator.storage
+      .persisted()
+      .then((persisted) => {
+        if (persisted) {
+          setText(
+            "[data-storage-status]",
+            backupDate
+              ? `Almacenamiento protegido. Ultima copia: ${new Date(backupDate).toLocaleDateString("es-DO")}.`
+              : "Almacenamiento protegido. Crea tambien una copia para cambiar de dispositivo."
+          );
+        }
+      })
+      .catch(() => {});
+  }
+}
+
+async function requestPersistentStorage() {
+  if (!navigator.storage?.persist) return false;
+  try {
+    return await navigator.storage.persist();
+  } catch {
+    return false;
+  }
+}
+
 function renderAll() {
+  renderDayZero();
   renderActivation();
+  renderPersonalSystem();
   renderDayMap();
   renderDashboard();
   renderDaily();
+  renderWeeklyReview();
   renderReminderCenter();
+  renderDataControl();
 }
 
 let state = loadState();
@@ -1415,34 +2056,134 @@ document.querySelectorAll("[data-step]").forEach((button) => {
   });
 });
 
+document.querySelector("#dayZeroForm")?.addEventListener("input", renderPactPreview);
+
 document.querySelector("#dayZeroForm")?.addEventListener("submit", (event) => {
   event.preventDefault();
-  state.dayZero = Object.fromEntries(new FormData(event.currentTarget).entries());
+  state.dayZero = normalizeDayZero(
+    Object.fromEntries(new FormData(event.currentTarget).entries())
+  );
   state.activation.day0 = true;
   state.lastActivity = `Decision inicial confirmada: ${todayLabel()}`;
   saveState();
   trackEvent("day0_submit", {
+    life_area: state.dayZero.lifeArea,
     has_control: Boolean(state.dayZero.control),
     has_pattern: Boolean(state.dayZero.pattern),
     has_minimum_action: Boolean(state.dayZero.minimumAction),
+    has_cue: Boolean(state.dayZero.cue),
+    has_rescue_action: Boolean(state.dayZero.rescueAction),
+  });
+  requestPersistentStorage().then(renderDataControl);
+  renderAll();
+  setText(
+    "#dayZeroNote",
+    "Pacto confirmado. Tu senal, accion minima y regreso ya acompanaran el recorrido."
+  );
+});
+
+function getSelectedDailyDay() {
+  return Number(
+    document.querySelector("#dailyReflection")?.dataset.day || getCurrentDay()
+  );
+}
+
+function canUseDailyRitual(day) {
+  return (
+    state.activation.day0 &&
+    day === getCurrentDay() &&
+    !isCadenceWaiting(day) &&
+    !VALID_DAY_STATES.has(state.days[String(day)]?.state)
+  );
+}
+
+document.querySelector("[data-start-ritual]")?.addEventListener("click", () => {
+  const day = getSelectedDailyDay();
+  if (!canUseDailyRitual(day)) return;
+  const key = String(day);
+  const existing = state.days[key] || {};
+  const intention = cleanText(
+    document.querySelector("#dailyIntention")?.value,
+    180
+  );
+  state.days[key] = normalizeDayEntry({
+    ...existing,
+    intention,
+    startedAt: existing.startedAt || new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  });
+  state.lastActivity = `Dia ${day}: ritual iniciado`;
+  saveState();
+  trackEvent("daily_ritual_started", {
+    day,
+    phase: getPhase(day),
+    has_intention: Boolean(intention),
   });
   renderAll();
-  setText("#dayZeroNote", "Decision confirmada. Ya tienes punto de partida.");
+  setText(
+    "[data-ritual-note]",
+    "Ritual iniciado. Ejecuta tu minimo y vuelve para cerrar con evidencia."
+  );
+});
+
+document.querySelector("[data-return-now]")?.addEventListener("click", () => {
+  const day = getSelectedDailyDay();
+  if (!canUseDailyRitual(day)) return;
+  const key = String(day);
+  const existing = state.days[key] || {};
+  const intention = cleanText(
+    document.querySelector("#dailyIntention")?.value,
+    180
+  );
+  state.days[key] = normalizeDayEntry({
+    ...existing,
+    intention,
+    returns: (Number(existing.returns) || 0) + 1,
+    startedAt: existing.startedAt || new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  });
+  state.lastActivity = `Dia ${day}: elegiste volver`;
+  saveState();
+  trackEvent("return_protocol_used", {
+    day,
+    phase: getPhase(day),
+    return_count: state.days[key].returns,
+  });
+  renderAll();
+  setText(
+    "[data-ritual-note]",
+    "Regreso registrado. Haz ahora tu version minima antes de volver a negociar."
+  );
 });
 
 document.querySelectorAll("[data-state]").forEach((button) => {
   button.addEventListener("click", () => {
     const reflection = document.querySelector("#dailyReflection");
-    const day = reflection?.dataset.day || String(getCurrentDay());
-    state.days[day] = {
+    const dayNumber = Number(reflection?.dataset.day || getCurrentDay());
+    if (
+      !state.activation.day0 ||
+      dayNumber > getCurrentDay() ||
+      (dayNumber === getCurrentDay() && isCadenceWaiting(dayNumber))
+    ) {
+      return;
+    }
+    const day = String(dayNumber);
+    const existing = state.days[day] || {};
+    state.days[day] = normalizeDayEntry({
+      ...existing,
       state: button.dataset.state,
-      reflection: reflection?.value || "",
+      intention:
+        document.querySelector("#dailyIntention")?.value ||
+        existing.intention ||
+        "",
+      reflection: reflection?.value || existing.reflection || "",
+      startedAt: existing.startedAt || new Date().toISOString(),
+      recordedOn: existing.recordedOn || localDateKey(),
       updatedAt: new Date().toISOString(),
-    };
+    });
     if (day === "1") state.activation.day1 = true;
     state.lastActivity = `Dia ${day}: volviste al marco`;
     saveState();
-    const dayNumber = Number(day);
     const status = button.dataset.state;
     trackEvent("daily_status_submit", {
       day,
@@ -1471,18 +2212,29 @@ document.querySelector("[data-day-map]")?.addEventListener("click", (event) => {
 
 document.querySelector("#weeklyReviewForm")?.addEventListener("submit", (event) => {
   event.preventDefault();
-  state.reviews.push({
-    ...Object.fromEntries(new FormData(event.currentTarget).entries()),
+  const dueDay = getDueReviewDay();
+  const formData = Object.fromEntries(new FormData(event.currentTarget).entries());
+  if (!dueDay || Number(formData.reviewDay) !== dueDay) {
+    renderWeeklyReview();
+    return;
+  }
+  state.reviews.push(normalizeReview({
+    ...formData,
+    reviewDay: dueDay,
     createdAt: new Date().toISOString(),
-  });
-  state.lastActivity = `Revision semanal: volviste al marco`;
+  }, state.reviews.length));
+  state.lastActivity = `Revision del Dia ${dueDay}: direccion renovada`;
   saveState();
   trackEvent("weekly_review_submit", {
     review_count: state.reviews.length,
+    review_day: dueDay,
   });
   event.currentTarget.reset();
   renderAll();
-  setText("#reviewNote", "Revision guardada. Sosten lo que funciono y vuelve al marco.");
+  setText(
+    "#reviewNote",
+    "Revision guardada. Tu siguiente regla ya forma parte del recorrido."
+  );
 });
 
 function closeResetModal() {
@@ -1503,8 +2255,14 @@ resetModal?.addEventListener("click", (event) => {
 });
 
 resetConfirm?.addEventListener("click", () => {
-  state = { ...defaultState, activation: { ...defaultState.activation }, days: {}, reviews: [] };
+  state = normalizeState(defaultState);
   localStorage.removeItem(STORAGE_KEY);
+  const dayZeroForm = document.querySelector("#dayZeroForm");
+  if (dayZeroForm) {
+    dayZeroForm.reset();
+    dayZeroForm.dataset.hydrated = "false";
+  }
+  trackEvent("participant_progress_reset");
   renderAll();
   closeResetModal();
 });
@@ -1531,10 +2289,55 @@ document.querySelector("#reminderDuration")?.addEventListener("change", (event) 
 document.querySelector("[data-browser-reminder]")?.addEventListener("click", toggleBrowserReminder);
 document.querySelector("[data-test-reminder]")?.addEventListener("click", testBrowserReminder);
 document.querySelector("[data-calendar-reminder]")?.addEventListener("click", downloadReminderCalendar);
+document.querySelector("[data-download-journal]")?.addEventListener("click", downloadJournal);
+document.querySelector("[data-export-backup]")?.addEventListener("click", exportBackup);
+document.querySelector("[data-import-trigger]")?.addEventListener("click", () => {
+  const input = document.querySelector("[data-import-backup]");
+  if (!input) return;
+  input.value = "";
+  input.click();
+});
+document.querySelector("[data-import-backup]")?.addEventListener("change", (event) => {
+  const [file] = event.currentTarget.files || [];
+  if (file) importBackup(file);
+});
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  renderDataControl();
+});
+
+document.querySelector("[data-install-app]")?.addEventListener("click", async () => {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const choice = await deferredInstallPrompt.userChoice;
+  trackEvent("app_install_prompt", {
+    outcome: choice.outcome,
+  });
+  deferredInstallPrompt = null;
+  renderDataControl();
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  trackEvent("app_installed");
+  renderDataControl();
+  setText(
+    "[data-data-note]",
+    "Aplicacion instalada. Puedes abrir tu recorrido desde la pantalla de inicio."
+  );
+});
+
+window.addEventListener("online", renderDataControl);
+window.addEventListener("offline", renderDataControl);
 
 renderAll();
 
+registerReminderWorker().then(() => {
+  if (document.querySelector("[data-reminder-center]")) maybeShowDueReminder();
+});
+
 if (document.querySelector("[data-reminder-center]")) {
-  registerReminderWorker().then(maybeShowDueReminder);
   window.setInterval(maybeShowDueReminder, 60_000);
 }
