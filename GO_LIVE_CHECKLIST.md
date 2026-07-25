@@ -50,6 +50,12 @@ Eventos que deben medirse:
 - Completar Dia 0.
 - Marcar Dia 1 como completado.
 - Simular hasta Dia 7 y guardar revision semanal.
+- Abrir los Dias 15, 30, 45, 60, 75, 90 y 100 y confirmar que tema y tarea son distintos.
+- Confirmar que un participante nuevo solo puede abrir el Dia 1 y que cada registro desbloquea un dia adicional.
+- Elegir una hora en `Recordatorios` y probar el aviso del navegador.
+- Descargar el calendario hasta el Dia 14 y confirmar que contiene un evento por cada dia pendiente.
+- Confirmar que cada evento del calendario incluye tema, tarea, enlace y alarma.
+- Instalar la experiencia desde un navegador compatible y volver a abrirla en modo aplicacion.
 - Revisar visualmente landing, gracias y acceso en movil y desktop.
 - Abrir `embajadores.html` en movil y desktop.
 - Probar el simulador de comisiones en los cuatro planes.

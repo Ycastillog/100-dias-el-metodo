@@ -695,6 +695,16 @@ textarea {
   text-transform: uppercase;
 }
 
+.journey-arc {
+  display: block;
+  margin-top: 5px;
+  color: #8ef0b8;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
 .today-training-card p,
 .daily-identity-card p,
 .progress-note,
@@ -799,6 +809,17 @@ textarea {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.day-dot.current {
+  border-color: var(--gold-strong);
+  outline: 2px solid rgba(240, 207, 122, 0.2);
+  outline-offset: 1px;
+}
+
+.day-dot.locked {
+  opacity: 0.34;
+  cursor: not-allowed;
+}
+
 .day-dot.complete {
   background: var(--green);
 }
@@ -809,6 +830,88 @@ textarea {
 
 .day-dot.missed {
   background: var(--red);
+}
+
+.reminder-section {
+  border-top: 1px solid rgba(47, 191, 113, 0.26);
+  border-bottom: 1px solid rgba(47, 191, 113, 0.26);
+  background:
+    linear-gradient(105deg, rgba(8, 29, 18, 0.92), rgba(14, 14, 12, 0.96) 58%),
+    #070706;
+}
+
+.reminder-panel {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+  border: 1px solid rgba(47, 191, 113, 0.42);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(47, 191, 113, 0.08), transparent 48%),
+    rgba(8, 10, 8, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.reminder-status {
+  display: grid;
+  gap: 6px;
+  border-left: 3px solid var(--green);
+  padding: 4px 0 4px 14px;
+}
+
+.reminder-status span,
+.reminder-capabilities span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.reminder-status strong {
+  color: var(--text);
+  font-size: clamp(21px, 4vw, 30px);
+  line-height: 1.1;
+}
+
+.reminder-status p,
+.reminder-capabilities p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.reminder-controls,
+.reminder-capabilities,
+.reminder-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.reminder-controls input,
+.reminder-controls select {
+  min-height: 50px;
+}
+
+.reminder-capabilities {
+  border-top: 1px solid rgba(214, 184, 114, 0.18);
+  border-bottom: 1px solid rgba(214, 184, 114, 0.18);
+}
+
+.reminder-capabilities div {
+  display: grid;
+  gap: 6px;
+  padding: 14px 0;
+}
+
+.reminder-capabilities div + div {
+  border-top: 1px solid rgba(214, 184, 114, 0.18);
+}
+
+.reminder-actions .button,
+.reminder-actions .ghost {
+  width: 100%;
+  min-height: 52px;
 }
 
 .daily-card {
@@ -2573,6 +2676,33 @@ footer p {
 
   .state-actions {
     grid-template-columns: 1.4fr 1fr 1fr;
+  }
+
+  .reminder-controls,
+  .reminder-capabilities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reminder-capabilities div {
+    padding: 16px;
+  }
+
+  .reminder-capabilities div:first-child {
+    padding-left: 0;
+  }
+
+  .reminder-capabilities div:last-child {
+    border-top: 0;
+    border-left: 1px solid rgba(214, 184, 114, 0.18);
+  }
+
+  .reminder-actions {
+    grid-template-columns: minmax(220px, 1fr) minmax(250px, 1fr) auto;
+  }
+
+  .reminder-actions .ghost {
+    width: auto;
+    min-width: 130px;
   }
 
   .future-section {

@@ -30,7 +30,11 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Programa publico de creadores en `embajadores.html`.
 - Terminos de creadores en `terminos-embajadores.html`.
 - Plataforma del participante en `acceso.html`.
-- Experiencia Alpha con contenido y tarea distintos para cada uno de los primeros 14 dias.
+- Recorrido completo con tema, objetivo y tarea diferenciados para cada dia hasta el Dia 100.
+- Rutas internas de transformacion para que el participante atraviese etapas, no solo acumule dias.
+- Avance secuencial: dias futuros visibles y bloqueados hasta completar el recorrido anterior.
+- Centro de recordatorios con calendario del dispositivo y avisos del navegador.
+- Soporte instalable mediante `manifest.webmanifest` y `sw.js`.
 - Estilos en `assets/styles.css`.
 - Captura local de interes, activacion y avance en `assets/app.js`.
 - Configuracion publica de leads y analitica en `assets/site-config.js`.
@@ -44,6 +48,7 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Centro operativo Alpha en `ALPHA_LAUNCH_READY.md`.
 - Biblioteca recomendada y audios complementarios configurables.
 - Estado operativo visible en `PROJECT_STATUS.md`.
+- Especificacion de recordatorios en `automation/NOTIFICACIONES_100_DIAS.md`.
 - Atribucion afiliada persistente y UTMs en `assets/ops.js`.
 - Control financiero de embajadores en `outputs/embajadores-dia-1/EMBAJADORES_CONTROL.xlsx`.
 
@@ -109,7 +114,7 @@ La guia de conexion de pagos y registro esta en:
 automation/SETUP_PAGOS_REGISTRO.md
 ```
 
-El sitio guarda eventos locales, envia eventos a Google Sheets si `eventEndpoint` esta configurado y dispara GA4 si `gaMeasurementId` existe.
+El sitio guarda eventos locales, envia eventos a Google Sheets si `eventEndpoint` esta configurado y dispara GA4 si `gaMeasurementId` existe. Tambien registra la configuracion, prueba y descarga de recordatorios.
 
 `assets/site-config.js` tambien permite configurar:
 
@@ -119,6 +124,20 @@ El sitio guarda eventos locales, envia eventos a Google Sheets si `eventEndpoint
 - `gaMeasurementId`: ID de GA4.
 - `accessGateEnabled`: activa la proteccion suave del acceso.
 - `analyticsDebug`: modo de depuracion de eventos en consola.
+
+## Acompanamiento y recordatorios
+
+En `acceso.html#recordatorios` el participante puede:
+
+1. Elegir una hora diaria.
+2. Preparar eventos hasta el Dia 14 o el Dia 100.
+3. Importar un calendario con titulo y tarea propios para cada dia.
+4. Activar y probar un aviso del navegador.
+
+El calendario sigue funcionando con la pagina cerrada despues de importarlo. El
+aviso del navegador de esta version funciona mientras la plataforma esta
+abierta. Correo, WhatsApp y push remoto requieren backend, identidad y
+consentimiento; no se presentan como funciones activas.
 
 Para anuncios, mantener publicas las paginas:
 

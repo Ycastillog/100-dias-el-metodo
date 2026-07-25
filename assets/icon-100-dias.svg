@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">100 Dias: El Metodo</title>
+  <rect width="512" height="512" rx="72" fill="#070706"/>
+  <rect x="34" y="34" width="444" height="444" rx="46" fill="#171612" stroke="#d6b872" stroke-width="8"/>
+  <text x="256" y="285" text-anchor="middle" fill="#f0cf7a" font-family="Arial, sans-serif" font-size="188" font-weight="900">100</text>
+  <rect x="88" y="342" width="336" height="12" fill="#2fbf71"/>
+  <text x="256" y="411" text-anchor="middle" fill="#f7f1e4" font-family="Arial, sans-serif" font-size="58" font-weight="900">DIAS</text>
+</svg>

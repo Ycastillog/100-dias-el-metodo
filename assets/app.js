@@ -1,6 +1,7 @@
 const STORAGE_KEY = "100dias_participant_state_v1";
 const LEADS_KEY = "100dias_sales_leads_v1";
 const EVENTS_KEY = "100dias_events_v1";
+const REMINDER_KEY = "100dias_reminders_v1";
 const PLAN_DETAILS = {
   Alpha: {
     key: "alpha",
@@ -170,8 +171,323 @@ const alphaDailyContent = [
   },
 ];
 
+const journeyArcs = [
+  {
+    start: 15,
+    name: "Base de Control",
+    days: [
+      ["Ordenar tu entorno", "retirar una fuente visible de caos de tu espacio principal"],
+      ["Recuperar tu atencion", "proteger diez minutos sin telefono ni interrupciones"],
+      ["Dormir con intencion", "definir una accion de cierre que prepare tu descanso"],
+      ["Disenar la manana", "dejar preparada la primera accion del dia siguiente"],
+      ["Planificar menos", "reducir tu lista a una prioridad verificable"],
+      ["Poner un limite", "decir no a una demanda que desplaza tu prioridad"],
+      ["Revisar la base", "medir que condicion facilito cumplir durante esta semana"],
+    ],
+  },
+  {
+    start: 22,
+    name: "Control Sostenible",
+    days: [
+      ["Observar tus impulsos", "registrar el momento exacto en que aparece una distraccion"],
+      ["Dominar el primer clic", "postergar diez minutos la primera distraccion digital"],
+      ["Proteger un bloque", "reservar un espacio breve para tu prioridad antes de responder al ruido"],
+      ["Elegir una meta visible", "convertir una intencion en un resultado que puedas observar hoy"],
+      ["Cerrar una distraccion", "eliminar una interrupcion que dejas abierta por costumbre"],
+      ["Cumplir antes de mejorar", "terminar la version acordada antes de intentar perfeccionarla"],
+      ["Volver despues de una interrupcion", "reiniciar tu accion sin convertir la pausa en abandono"],
+      ["Preparar un dia dificil", "definir el minimo que mantendra tu continuidad cuando baje la energia"],
+      ["Auditar tu Control", "comparar tus decisiones del Dia 1 con la evidencia acumulada"],
+    ],
+  },
+  {
+    start: 31,
+    name: "Entrada a Fortaleza",
+    days: [
+      ["Empezar sin ganas", "iniciar una tarea necesaria antes de sentir motivacion"],
+      ["Tolerar el aburrimiento", "permanecer en una accion simple sin buscar estimulo inmediato"],
+      ["Actuar con incertidumbre", "dar un paso util sin conocer todo el resultado"],
+      ["Recibir la frustracion", "continuar despues de un obstaculo sin descargarlo sobre otra persona"],
+      ["Terminar lo pendiente", "cerrar una tarea que sigue consumiendo energia mental"],
+      ["Pedir ayuda con claridad", "formular una peticion concreta sin entregar tu responsabilidad"],
+      ["Revisar la resistencia", "identificar que incomodidad aparecio antes de tus mejores acciones"],
+    ],
+  },
+  {
+    start: 38,
+    name: "Fortaleza Bajo Presion",
+    days: [
+      ["Sostener con poca energia", "cumplir tu minimo sin exigir rendimiento perfecto"],
+      ["Reparar despues del error", "corregir una consecuencia en lugar de esconder la equivocacion"],
+      ["Postergar la recompensa", "completar la accion importante antes del premio inmediato"],
+      ["Escuchar una critica", "separar la informacion util de tu reaccion defensiva"],
+      ["Poner un limite incomodo", "proteger un compromiso aunque otra persona no lo celebre"],
+      ["Tener una conversacion dificil", "decir con respeto algo que has estado evitando"],
+      ["Terminar bajo presion", "cerrar una accion importante sin abrir nuevas tareas"],
+      ["Auditar la mitad del viaje", "comparar intencion, conducta y evidencia al llegar al Dia 45"],
+    ],
+  },
+  {
+    start: 46,
+    name: "Caracter en Accion",
+    days: [
+      ["Pausar antes del impulso", "crear espacio entre una emocion intensa y tu respuesta"],
+      ["Soltar la comparacion", "volver a tu propia evidencia despues de mirar el avance ajeno"],
+      ["Abandonar el perfeccionismo", "entregar una version util aunque no sea impecable"],
+      ["Continuar sin aplausos", "cumplir una accion que nadie mas necesita ver"],
+      ["Regular la respuesta al estres", "bajar la velocidad antes de decidir bajo tension"],
+      ["Volver despues de perder", "registrar el fallo y ejecutar una accion de regreso"],
+      ["Proteger el minimo", "cumplir una version pequena en vez de desaparecer del proceso"],
+      ["Revisar tu caracter", "nombrar la capacidad que mas has entrenado con incomodidad"],
+    ],
+  },
+  {
+    start: 54,
+    name: "Fortaleza Recuperada",
+    days: [
+      ["Reparar tu palabra", "cumplir o renegociar con honestidad una promesa pendiente"],
+      ["Adaptar sin abandonar", "cambiar el metodo de ejecucion sin cambiar el compromiso"],
+      ["Reducir y repetir", "convertir una accion exigente en una practica sostenible"],
+      ["Descansar sin desconectarte", "recuperar energia sin perder contacto con tu prioridad"],
+      ["Preparar una recaida", "escribir que haras cuando reaparezca tu patron principal"],
+      ["Elegir tu regla mas fuerte", "conservar la regla que produjo mayor continuidad"],
+      ["Cerrar Fortaleza", "medir como respondes ahora frente a cansancio, error e incomodidad"],
+    ],
+  },
+  {
+    start: 61,
+    name: "Entrada a Direccion",
+    days: [
+      ["Definir lo que valoras", "traducir un valor importante en una conducta observable"],
+      ["Elegir la siguiente prioridad", "decidir que merece tus proximos treinta y nueve dias"],
+      ["Aceptar el costo de elegir", "nombrar a que renuncias para proteger una direccion"],
+      ["Eliminar un compromiso", "retirar una obligacion que ya no responde a tu prioridad"],
+      ["Tomar una decision postergada", "cerrar una eleccion que mantiene tu energia dividida"],
+      ["Alinear tu calendario", "dar espacio real a lo que dices que importa"],
+      ["Revisar tu direccion", "comprobar si tus acciones semanales coinciden con tus valores"],
+    ],
+  },
+  {
+    start: 68,
+    name: "Direccion Protegida",
+    days: [
+      ["Decir no con claridad", "rechazar una solicitud sin inventar una explicacion innecesaria"],
+      ["Proteger trabajo profundo", "crear un bloque sin interrupciones para producir avance"],
+      ["Cuidar tus entradas", "reducir informacion que alimenta ruido en lugar de criterio"],
+      ["Terminar antes de empezar", "cerrar una prioridad antes de abrir otra posibilidad"],
+      ["Elegir una oportunidad", "evaluar una opcion segun tu direccion y no solo por entusiasmo"],
+      ["Simplificar compromisos", "reducir actividades que fragmentan tu atencion"],
+      ["Crear un criterio de decision", "definir una regla para elegir con menos reaccion"],
+      ["Auditar tu enfoque", "medir donde fue realmente tu tiempo durante esta etapa"],
+    ],
+  },
+  {
+    start: 76,
+    name: "Identidad Dirigida",
+    days: [
+      ["Elevar un estandar", "definir una conducta que ya no quieres negociar"],
+      ["Decidir desde tu identidad", "actuar como la persona que estas construyendo antes de sentirte lista"],
+      ["Hablar con intencion", "reemplazar una reaccion verbal por una respuesta elegida"],
+      ["Usar el dinero con criterio", "registrar una decision de gasto y comprobar si apoya tu prioridad"],
+      ["Cuidar el cuerpo como responsabilidad", "ejecutar una accion breve que proteja tu energia"],
+      ["Proteger una relacion importante", "dar presencia deliberada a una persona que valoras"],
+      ["Revisar tu identidad", "comparar como te describias al inicio con tu conducta actual"],
+    ],
+  },
+  {
+    start: 83,
+    name: "Sistema Personal",
+    days: [
+      ["Disenar tu inicio del dia", "crear una secuencia breve que reduzca decisiones innecesarias"],
+      ["Disenar tu cierre del dia", "revisar, registrar y preparar la siguiente accion"],
+      ["Crear tu revision semanal", "definir las preguntas que mantendran visible tu evidencia"],
+      ["Formalizar tu regreso", "convertir el protocolo de vuelta en una regla personal"],
+      ["Medir lo que importa", "elegir un indicador que represente conducta y no apariencia"],
+      ["Proteger un limite digital", "definir cuando la tecnologia deja de dirigir tu atencion"],
+      ["Descansar con intencion", "programar recuperacion sin usarla como abandono"],
+      ["Auditar tu sistema", "comprobar que reglas funcionan tambien fuera de un dia perfecto"],
+    ],
+  },
+  {
+    start: 91,
+    name: "Cierre con Evidencia",
+    days: [
+      ["Volver al Dia 0", "comparar tu decision inicial con la persona que ha ejecutado hasta hoy"],
+      ["Identificar tu patron dominante", "nombrar cuando aparece y que respuesta lo debilita"],
+      ["Reconocer tu capacidad", "elegir la habilidad que ahora puedes demostrar con hechos"],
+      ["Confrontar tu punto debil", "definir una proteccion concreta para tu riesgo principal"],
+      ["Elegir tu regla central", "conservar una regla que ordene decisiones futuras"],
+      ["Preparar el proximo dia dificil", "escribir un plan que no dependa de motivacion"],
+      ["Definir continuidad", "elegir que practica seguira despues del Dia 100"],
+      ["Escribir a tu yo futuro", "dejar una instruccion clara para cuando vuelva la incomodidad"],
+      ["Preparar la auditoria final", "reunir evidencia, registros y decisiones del recorrido"],
+    ],
+  },
+  {
+    start: 100,
+    name: "Dominio Personal",
+    days: [
+      ["Cerrar con evidencia", "convertir cien dias de registros en una decision de continuidad"],
+    ],
+  },
+];
+
+const practiceModes = [
+  {
+    guideName: "Marco Aurelio",
+    guide: "Observa el hecho antes de construir una historia sobre el.",
+    principle: "Lo que puedes observar con claridad deja de dirigirte desde la sombra.",
+    question: ({ target }) => `Que ocurre justo antes de intentar ${target}?`,
+    action: ({ target }) => `Observa una senal concreta y luego intenta ${target}.`,
+    task: ({ target }) => `Registra el disparador, ejecuta durante 10 minutos la accion de ${target} y escribe que cambio.`,
+    companion: "Hoy no necesitas resolver el patron completo. Necesitas verlo y responder una vez con intencion.",
+  },
+  {
+    guideName: "Epicteto",
+    guide: "La direccion empieza cuando eliges bien la parte que si te corresponde.",
+    principle: "Una decision definida reduce el espacio de la negociacion interna.",
+    question: ({ target }) => `Que decision depende de mi para poder ${target}?`,
+    action: ({ target }) => `Formula una decision en una sola frase y usala para ${target}.`,
+    task: ({ target }) => `Escribe que haras, cuando lo haras y completa hoy una prueba de ${target}.`,
+    companion: "No necesitas controlar el resultado. Haz completa y honestamente la parte que elegiste.",
+  },
+  {
+    guideName: "Seneca",
+    guide: "La accion sostenible se prepara antes de que llegue el cansancio.",
+    principle: "Reducir con criterio protege la continuidad sin vaciar el compromiso.",
+    question: ({ target }) => `Cual es la version minima que todavia me permite ${target}?`,
+    action: ({ target }) => `Reduce el esfuerzo inicial y comienza ahora a ${target}.`,
+    task: ({ target }) => `Define un minimo de 10 a 15 minutos, usalo para ${target} y registra si fue suficiente para volver.`,
+    companion: "Hacerlo mas pequeno no elimina su valor. Te ayuda a mantener contacto con la persona que estas construyendo.",
+  },
+  {
+    guideName: "Marco Aurelio",
+    guide: "Lo importante necesita un lugar protegido, no solo una buena intencion.",
+    principle: "Aquello que no reservas termina cediendo ante lo inmediato.",
+    question: ({ target }) => `Que debo retirar o limitar para poder ${target}?`,
+    action: ({ target }) => `Protege un bloque breve dedicado solamente a ${target}.`,
+    task: ({ target }) => `Silencia una interrupcion, reserva 15 minutos y utiliza ese bloque para ${target}.`,
+    companion: "Proteger esta accion es una forma concreta de decir que tu direccion tambien merece espacio.",
+  },
+  {
+    guideName: "Seneca",
+    guide: "La incomodidad no siempre anuncia peligro; muchas veces anuncia practica.",
+    principle: "Puedes sentir resistencia sin entregarle la decision.",
+    question: ({ target }) => `Que incomodidad aparece cuando intento ${target}?`,
+    action: ({ target }) => `Permite que la incomodidad este presente mientras intentas ${target}.`,
+    task: ({ target }) => `Nombra la resistencia, comienza sin discutir con ella y trabaja en ${target} durante 10 minutos.`,
+    companion: "No estas fallando porque hoy pese. Estas aprendiendo a actuar sin exigir que el animo te acompanhe.",
+  },
+  {
+    guideName: "Epicteto",
+    guide: "El caracter se vuelve visible en aquello que decides terminar.",
+    principle: "Cerrar una accion libera atencion y fortalece tu palabra.",
+    question: ({ target }) => `Que falta exactamente para considerar completa la accion de ${target}?`,
+    action: ({ target }) => `Elimina pasos innecesarios y termina una evidencia de ${target}.`,
+    task: ({ target }) => `Define el punto de cierre, completa hoy la accion de ${target} y registra el resultado verificable.`,
+    companion: "No abras otra promesa antes de reconocer lo que ya puedes cerrar con dignidad.",
+  },
+  {
+    guideName: "Marco Aurelio",
+    guide: "La experiencia se convierte en sabiduria solamente cuando la revisas.",
+    principle: "Revisar no es castigarte; es decidir con mejor evidencia.",
+    question: ({ target }) => `Que me enseno esta semana sobre mi capacidad para ${target}?`,
+    action: ({ target }) => `Compara lo que dijiste con lo que hiciste al intentar ${target}.`,
+    task: ({ target }) => `Revisa tus ultimos registros, identifica un patron y decide un ajuste para continuar con ${target}.`,
+    companion: "La semana no tiene que verse perfecta para ensenarte exactamente que necesitas proteger.",
+  },
+];
+
+const milestoneDailyContent = {
+  30: {
+    guideName: "Marco Aurelio",
+    guide: "Treinta dias de evidencia pesan mas que una promesa pronunciada una sola vez.",
+    principle: "Control no es dominarlo todo; es gobernar mejor tu siguiente respuesta.",
+    question: "Que decision controlo hoy con mas claridad que en el Dia 1?",
+    action: "Revisa tus registros de Control y elige la regla que llevaras a Fortaleza.",
+    task: "Cuenta completados, parciales y perdidos; identifica tu mayor disparador y escribe tu regla para los Dias 31 a 60.",
+    companion: "No necesitas salir invulnerable de esta fase. Sal con una respuesta mas consciente y repetible.",
+  },
+  45: {
+    guideName: "Seneca",
+    guide: "La mitad del camino revela si tu estructura resiste la vida real.",
+    principle: "La fortaleza se mide por tu capacidad de volver bajo presion.",
+    question: "Que tipo de incomodidad ya no decide por mi como antes?",
+    action: "Compara tu mejor semana con la mas dificil y encuentra la regla que sostuvo ambas.",
+    task: "Escribe tres pruebas de Fortaleza, una resistencia recurrente y el ajuste que usaras durante los proximos 15 dias.",
+    companion: "Llegar a la mitad no significa que todo sea facil. Significa que ya tienes evidencia para no empezar de cero.",
+  },
+  60: {
+    guideName: "Seneca",
+    guide: "Fortaleza es permanecer fiel a tu direccion sin negar que existen cansancio y error.",
+    principle: "Lo que recuperas despues de caer se convierte en capacidad.",
+    question: "Como respondo ahora cuando fallo, me canso o pierdo ritmo?",
+    action: "Cierra la fase identificando tu protocolo personal de regreso.",
+    task: "Resume que te derriba, que te ayuda a volver y que minimo mantendra tu continuidad en Direccion.",
+    companion: "No llevas perfeccion a la siguiente fase. Llevas una forma mas madura de regresar.",
+  },
+  75: {
+    guideName: "Epicteto",
+    guide: "Elegir una direccion tambien significa aceptar las oportunidades que dejaras pasar.",
+    principle: "Una prioridad real organiza tanto tus si como tus no.",
+    question: "Que he dejado de hacer para proteger lo que verdaderamente importa?",
+    action: "Audita tu calendario y corrige una incoherencia entre valor y tiempo.",
+    task: "Identifica donde fueron tus ultimos 7 dias, elimina un compromiso menor y protege el siguiente bloque de direccion.",
+    companion: "La claridad no aparece por tener mas opciones. Aparece cuando eliges que merece continuidad.",
+  },
+  90: {
+    guideName: "Marco Aurelio",
+    guide: "Un sistema personal sirve cuando puedes usarlo sin depender del entusiasmo inicial.",
+    principle: "Integrar significa saber decidir, ejecutar, registrar y volver por cuenta propia.",
+    question: "Que parte del Metodo ya funciona como una regla personal?",
+    action: "Prueba tu sistema completo en una decision real de hoy.",
+    task: "Usa tu secuencia: observa, decide, ejecuta, registra y revisa. Escribe que parte necesita fortalecerse antes del Dia 100.",
+    companion: "Los ultimos diez dias no son una carrera. Son una oportunidad para comprobar que el sistema ya te pertenece.",
+  },
+  100: {
+    guideName: "Epicteto",
+    guide: "La evidencia final no es un numero; es la relacion nueva entre tu palabra y tu conducta.",
+    principle: "Dominio Personal es poder dirigirte, sostenerte y volver.",
+    question: "Que puedo demostrar ahora sobre mi conducta que no podia demostrar en el Dia 0?",
+    action: "Convierte los cien dias en una decision explicita de continuidad.",
+    task: "Realiza tu auditoria final: resume la meta, la evidencia, el patron, la regla mas fuerte y el sistema que mantendras desde manana.",
+    companion: "No llegaste para convertirte en una persona perfecta. Llegaste para ser alguien que sabe volver y puede confiar mas en su palabra.",
+  },
+};
+
+function getJourneyFocus(day) {
+  const arc = journeyArcs.find(({ start, days }) => day >= start && day < start + days.length);
+  if (!arc) return null;
+  const [theme, target] = arc.days[day - arc.start];
+  return { arc: arc.name, theme, target };
+}
+
+function getJourneyArcName(day) {
+  if (day <= 7) return "Activacion de Control";
+  if (day <= 14) return "Evidencia Inicial";
+  return getJourneyFocus(day)?.arc || "Dominio Personal";
+}
+
+function getJourneyDayContent(day) {
+  const focus = getJourneyFocus(day);
+  if (!focus) return {};
+  const mode = practiceModes[(day - 15) % practiceModes.length];
+  return {
+    guideName: mode.guideName,
+    guide: mode.guide,
+    principle: mode.principle,
+    question: mode.question(focus),
+    action: mode.action(focus),
+    task: mode.task(focus),
+    companion: mode.companion,
+    journeyArc: focus.arc,
+    ...(milestoneDailyContent[day] || {}),
+  };
+}
+
 function getDayTheme(day, phase) {
-  return dayNarratives[day - 1] || (
+  const journeyFocus = getJourneyFocus(day);
+  return dayNarratives[day - 1] || journeyFocus?.theme || (
     phase === "Control" ? "Volver al control" :
     phase === "Fortaleza" ? "Sostener bajo incomodidad" :
     "Vivir con direccion"
@@ -256,7 +572,9 @@ const dailyContent = Array.from({ length: 100 }, (_, index) => {
     day,
     phase,
     theme: getDayTheme(day, phase),
+    journeyArc: getJourneyArcName(day),
     ...phaseContent[phase],
+    ...getJourneyDayContent(day),
     ...(alphaDailyContent[day - 1] || {}),
   };
 });
@@ -358,12 +676,19 @@ function renderActivation() {
 function renderDayMap() {
   const map = document.querySelector("[data-day-map]");
   if (!map) return;
+  const currentDay = getCurrentDay();
 
   map.innerHTML = dailyContent
     .map(({ day }) => {
       const status = state.days[String(day)]?.state || "";
-      const label = status ? `Dia ${day}: ${status}` : `Dia ${day}: pendiente`;
-      return `<button class="day-dot ${status}" type="button" data-map-day="${day}" aria-label="${label}"></button>`;
+      const isCurrent = day === currentDay;
+      const isLocked = day > currentDay;
+      const label = isLocked
+        ? `Dia ${day}: bloqueado hasta avanzar`
+        : status
+          ? `Dia ${day}: ${status}`
+          : `Dia ${day}: pendiente`;
+      return `<button class="day-dot ${status} ${isCurrent ? "current" : ""} ${isLocked ? "locked" : ""}" type="button" data-map-day="${day}" aria-label="${label}" ${isCurrent ? 'aria-current="step"' : ""} ${isLocked ? "disabled" : ""}></button>`;
     })
     .join("");
 }
@@ -383,6 +708,7 @@ function renderDashboard() {
   setText("[data-current-state]", `Entrenando ${phase}`);
   setText("[data-training-phase]", phase);
   setText("[data-training-theme]", theme);
+  setText("[data-training-arc]", `Ruta: ${getJourneyArcName(currentDay)}`);
   setText("[data-identity-stage]", identity.name);
   setText("[data-identity-line]", identity.line);
   setText("[data-streak]", `${streak} ${streak === 1 ? "dia" : "dias"}`);
@@ -401,6 +727,7 @@ function renderDaily(day = getCurrentDay()) {
   const identity = getIdentityStage(content.day);
   setText("[data-daily-title]", `Dia ${content.day}: ${content.theme}`);
   setText("[data-daily-theme]", content.theme);
+  setText("[data-daily-arc]", content.journeyArc);
   setText("[data-daily-identity]", identity.name);
   setText("[data-daily-guide-name]", content.guideName);
   setText("[data-daily-guide]", content.guide);
@@ -417,14 +744,318 @@ function renderDaily(day = getCurrentDay()) {
   }
 }
 
+const DEFAULT_REMINDER_SETTINGS = {
+  time: "08:00",
+  duration: 14,
+  browserEnabled: false,
+  lastShownDate: "",
+};
+
+function loadReminderSettings() {
+  try {
+    return {
+      ...DEFAULT_REMINDER_SETTINGS,
+      ...JSON.parse(localStorage.getItem(REMINDER_KEY) || "{}"),
+    };
+  } catch {
+    return { ...DEFAULT_REMINDER_SETTINGS };
+  }
+}
+
+function saveReminderSettings() {
+  localStorage.setItem(REMINDER_KEY, JSON.stringify(reminderSettings));
+}
+
+function localDateKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function hasRecordToday() {
+  const today = localDateKey();
+  return Object.values(state.days).some((entry) => {
+    if (!entry?.updatedAt) return false;
+    const updatedAt = new Date(entry.updatedAt);
+    return !Number.isNaN(updatedAt.getTime()) && localDateKey(updatedAt) === today;
+  });
+}
+
+function renderReminderCenter() {
+  const center = document.querySelector("[data-reminder-center]");
+  if (!center) return;
+
+  const timeInput = center.querySelector("#reminderTime");
+  const durationSelect = center.querySelector("#reminderDuration");
+  const status = center.querySelector("[data-reminder-status]");
+  const statusCopy = center.querySelector("[data-reminder-status-copy]");
+  const browserButton = center.querySelector("[data-browser-reminder]");
+  const calendarButton = center.querySelector("[data-calendar-reminder]");
+  const currentDay = getCurrentDay();
+  const selectedEndDay = Number(reminderSettings.duration) === 100 || currentDay > 14 ? 100 : 14;
+
+  if (timeInput) timeInput.value = reminderSettings.time;
+  if (durationSelect) {
+    if (currentDay > 14 && Number(reminderSettings.duration) === 14) {
+      reminderSettings.duration = 100;
+      saveReminderSettings();
+    }
+    durationSelect.value = String(reminderSettings.duration);
+  }
+
+  if (!("Notification" in window)) {
+    if (status) status.textContent = "Avisos no disponibles";
+    if (statusCopy) statusCopy.textContent = "Usa el calendario del dispositivo para recibir recordatorios con la pagina cerrada.";
+    if (browserButton) browserButton.disabled = true;
+  } else if (Notification.permission === "denied") {
+    if (status) status.textContent = "Permiso bloqueado";
+    if (statusCopy) statusCopy.textContent = "El navegador bloqueo los avisos. Puedes habilitarlos en la configuracion del sitio o usar el calendario.";
+    if (browserButton) browserButton.textContent = "Permiso bloqueado";
+  } else if (reminderSettings.browserEnabled && Notification.permission === "granted") {
+    if (status) status.textContent = `Aviso activo a las ${reminderSettings.time}`;
+    if (statusCopy) statusCopy.textContent = "La plataforma te avisara si esta abierta y todavia no registraste el dia.";
+    if (browserButton) browserButton.textContent = "Desactivar aviso del navegador";
+  } else {
+    if (status) status.textContent = "Aviso del navegador sin activar";
+    if (statusCopy) statusCopy.textContent = "Activalo para recibir un aviso cuando tengas abierta la plataforma.";
+    if (browserButton) browserButton.textContent = "Activar aviso del navegador";
+  }
+
+  if (calendarButton) {
+    calendarButton.textContent = `Agregar hasta el Dia ${selectedEndDay} al calendario`;
+  }
+}
+
+async function registerReminderWorker() {
+  if (!("serviceWorker" in navigator)) return null;
+  try {
+    await navigator.serviceWorker.register("./sw.js");
+    return navigator.serviceWorker.ready;
+  } catch {
+    return null;
+  }
+}
+
+async function showReminderNotification(isTest = false) {
+  if (!("Notification" in window) || Notification.permission !== "granted") {
+    return false;
+  }
+
+  const day = getCurrentDay();
+  const content = dailyContent[day - 1] || dailyContent[0];
+  const title = isTest ? "Aviso de prueba listo" : `Dia ${day}: ${content.theme}`;
+  const body = isTest
+    ? `Tu recordatorio diario funcionara a las ${reminderSettings.time}.`
+    : content.task;
+  const options = {
+    body,
+    icon: "assets/icon-100-dias-192.png",
+    badge: "assets/icon-100-dias-192.png",
+    tag: isTest ? "100-dias-test" : `100-dias-${localDateKey()}`,
+    renotify: false,
+    data: {
+      url: new URL("acceso.html#dia", window.location.href).href,
+    },
+  };
+
+  const registration = await registerReminderWorker();
+  try {
+    if (registration) {
+      await registration.showNotification(title, options);
+    } else {
+      new Notification(title, options);
+    }
+    trackEvent(isTest ? "browser_reminder_test" : "daily_reminder_shown", {
+      day,
+      reminder_time: reminderSettings.time,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function toggleBrowserReminder() {
+  const note = document.querySelector("[data-reminder-note]");
+  if (!("Notification" in window) || !window.isSecureContext) {
+    if (note) note.textContent = "Este navegador no permite avisos aqui. El calendario del dispositivo sigue disponible.";
+    return;
+  }
+
+  if (reminderSettings.browserEnabled && Notification.permission === "granted") {
+    reminderSettings.browserEnabled = false;
+    saveReminderSettings();
+    trackEvent("browser_reminder_disabled");
+    renderReminderCenter();
+    if (note) note.textContent = "Aviso del navegador desactivado. Los eventos que hayas agregado al calendario no cambian.";
+    return;
+  }
+
+  const permission = Notification.permission === "default"
+    ? await Notification.requestPermission()
+    : Notification.permission;
+
+  if (permission !== "granted") {
+    reminderSettings.browserEnabled = false;
+    saveReminderSettings();
+    renderReminderCenter();
+    if (note) note.textContent = "No se concedio permiso. Agrega los recordatorios al calendario para recibirlos con la pagina cerrada.";
+    return;
+  }
+
+  reminderSettings.browserEnabled = true;
+  saveReminderSettings();
+  await registerReminderWorker();
+  trackEvent("browser_reminder_enabled", {
+    reminder_time: reminderSettings.time,
+  });
+  renderReminderCenter();
+  if (note) note.textContent = `Aviso activado a las ${reminderSettings.time}. Puedes probarlo ahora.`;
+}
+
+async function testBrowserReminder() {
+  const note = document.querySelector("[data-reminder-note]");
+  if (!("Notification" in window) || !window.isSecureContext) {
+    if (note) note.textContent = "Este navegador no permite probar avisos aqui. Usa el calendario del dispositivo.";
+    return;
+  }
+
+  const permission = Notification.permission === "default"
+    ? await Notification.requestPermission()
+    : Notification.permission;
+  if (permission !== "granted") {
+    renderReminderCenter();
+    if (note) note.textContent = "El permiso no esta activo. Habilitalo en el navegador o usa el calendario.";
+    return;
+  }
+
+  const shown = await showReminderNotification(true);
+  if (note) {
+    note.textContent = shown
+      ? "Aviso enviado. Revisa las notificaciones de tu dispositivo."
+      : "El navegador no pudo mostrar el aviso. Usa la opcion de calendario.";
+  }
+}
+
+function escapeCalendarText(value) {
+  return String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/\r?\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+
+function foldCalendarLine(line) {
+  const parts = String(line).match(/.{1,72}/g) || [""];
+  return parts.join("\r\n ");
+}
+
+function calendarDateValue(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+  return `${year}${month}${day}T${hour}${minute}00`;
+}
+
+function calendarStartDate(time) {
+  const [hour, minute] = time.split(":").map(Number);
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0);
+  if (start <= now) start.setDate(start.getDate() + 1);
+  return start;
+}
+
+function downloadReminderCalendar() {
+  const currentDay = getCurrentDay();
+  let endDay = Math.min(Number(reminderSettings.duration) || 14, 100);
+  if (endDay < currentDay) endDay = 100;
+  const firstDate = calendarStartDate(reminderSettings.time);
+  const generatedAt = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+  const accessUrl = new URL("acceso.html#dia", window.location.href).href;
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//100 Dias El Metodo//Recordatorios ES//",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "X-WR-CALNAME:100 Dias - El Metodo",
+  ];
+
+  for (let day = currentDay; day <= endDay; day += 1) {
+    const content = dailyContent[day - 1] || dailyContent[0];
+    const eventDate = new Date(firstDate);
+    eventDate.setDate(firstDate.getDate() + day - currentDay);
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:100-dias-${generatedAt}-${day}@elmetodo`,
+      `DTSTAMP:${generatedAt}`,
+      `DTSTART:${calendarDateValue(eventDate)}`,
+      `SUMMARY:${escapeCalendarText(`100 Dias - Dia ${day}: ${content.theme}`)}`,
+      `DESCRIPTION:${escapeCalendarText(`Tarea: ${content.task}\nEntra, ejecuta y registra con honestidad.`)}`,
+      `URL:${accessUrl}`,
+      "STATUS:CONFIRMED",
+      "TRANSP:TRANSPARENT",
+      "BEGIN:VALARM",
+      "TRIGGER:-PT10M",
+      "ACTION:DISPLAY",
+      `DESCRIPTION:${escapeCalendarText(`Dia ${day}: vuelve al marco`)}`,
+      "END:VALARM",
+      "END:VEVENT"
+    );
+  }
+  lines.push("END:VCALENDAR");
+
+  const calendar = lines.map(foldCalendarLine).join("\r\n");
+  const blob = new Blob([calendar], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `100_DIAS_RECORDATORIOS_DIA_${currentDay}_A_${endDay}.ics`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  trackEvent("calendar_reminders_download", {
+    start_day: currentDay,
+    end_day: endDay,
+    reminder_time: reminderSettings.time,
+  });
+  const note = document.querySelector("[data-reminder-note]");
+  if (note) {
+    note.textContent = `Calendario preparado del Dia ${currentDay} al ${endDay}. Abre el archivo descargado y confirma la importacion en tu dispositivo.`;
+  }
+}
+
+async function maybeShowDueReminder() {
+  if (!document.querySelector("[data-reminder-center]")) return;
+  if (!reminderSettings.browserEnabled || !("Notification" in window) || Notification.permission !== "granted") return;
+  if (hasRecordToday() || reminderSettings.lastShownDate === localDateKey()) return;
+
+  const now = new Date();
+  const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+  if (currentTime < reminderSettings.time) return;
+
+  const shown = await showReminderNotification();
+  if (shown) {
+    reminderSettings.lastShownDate = localDateKey();
+    saveReminderSettings();
+  }
+}
+
 function renderAll() {
   renderActivation();
   renderDayMap();
   renderDashboard();
   renderDaily();
+  renderReminderCenter();
 }
 
 let state = loadState();
+let reminderSettings = loadReminderSettings();
 
 const leadForm = document.querySelector("#leadForm");
 const planSelect = leadForm?.querySelector("select[name='plan']");
@@ -832,7 +1463,9 @@ document.querySelectorAll("[data-state]").forEach((button) => {
 document.querySelector("[data-day-map]")?.addEventListener("click", (event) => {
   const target = event.target.closest("[data-map-day]");
   if (!target) return;
-  renderDaily(Number(target.dataset.mapDay));
+  const selectedDay = Number(target.dataset.mapDay);
+  if (selectedDay > getCurrentDay()) return;
+  renderDaily(selectedDay);
   document.querySelector("#dia")?.scrollIntoView({ behavior: "smooth" });
 });
 
@@ -876,4 +1509,32 @@ resetConfirm?.addEventListener("click", () => {
   closeResetModal();
 });
 
+document.querySelector("#reminderTime")?.addEventListener("change", (event) => {
+  reminderSettings.time = event.currentTarget.value || DEFAULT_REMINDER_SETTINGS.time;
+  reminderSettings.lastShownDate = "";
+  saveReminderSettings();
+  trackEvent("reminder_time_changed", {
+    reminder_time: reminderSettings.time,
+  });
+  renderReminderCenter();
+});
+
+document.querySelector("#reminderDuration")?.addEventListener("change", (event) => {
+  reminderSettings.duration = Number(event.currentTarget.value) === 100 ? 100 : 14;
+  saveReminderSettings();
+  trackEvent("reminder_duration_changed", {
+    end_day: reminderSettings.duration,
+  });
+  renderReminderCenter();
+});
+
+document.querySelector("[data-browser-reminder]")?.addEventListener("click", toggleBrowserReminder);
+document.querySelector("[data-test-reminder]")?.addEventListener("click", testBrowserReminder);
+document.querySelector("[data-calendar-reminder]")?.addEventListener("click", downloadReminderCalendar);
+
 renderAll();
+
+if (document.querySelector("[data-reminder-center]")) {
+  registerReminderWorker().then(maybeShowDueReminder);
+  window.setInterval(maybeShowDueReminder, 60_000);
+}

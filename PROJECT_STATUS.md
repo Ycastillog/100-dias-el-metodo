@@ -18,6 +18,8 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Operacion: COMPRA ACTIVA / VALIDACION DE PAGO MANUAL
 - Mercado: PROGRAMA DE EMBAJADORES PREPARADO / PENDIENTE DE PRIMERA COHORTE
 - Contenido de lanzamiento: 14 DIAS LISTOS / 25 PIEZAS VISUALES EXPORTADAS
+- Recorrido del participante: 100 DIAS DIFERENCIADOS / 14 RUTAS INTERNAS
+- Recordatorios: CALENDARIO DEL DISPOSITIVO + AVISO DEL NAVEGADOR LISTOS
 - Validacion: EN CURSO
 
 ## Fecha de cierre de construccion
@@ -69,9 +71,13 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 - Acceso del participante: acceso.html
 - Entregables del metodo: public/downloads
 - Seguimiento local: navegador del participante
-- Eventos preparados: payment_click, access_view, day0_submit, daily_status_submit, day1_submit, day7_submit, weekly_review_submit
+- Eventos preparados: payment_click, access_view, day0_submit, daily_status_submit, day1_submit, day7_submit, weekly_review_submit, browser_reminder_enabled, daily_reminder_shown, calendar_reminders_download
 - Acceso Alpha: enlace privado enviado solo despues de validar el pago
-- Recorrido Alpha: 14 dias con guia, principio, pregunta, accion, tarea y acompanamiento propios
+- Recorrido completo: 100 dias con tema, objetivo, guia, principio, pregunta, accion, tarea y acompanamiento diferenciados
+- Rutas internas: Activacion, Evidencia, Control, Fortaleza, Direccion, Sistema Personal y cierre con evidencia
+- Progresion: dias futuros visibles pero bloqueados para evitar saltos accidentales
+- Recordatorios actuales: archivo de calendario con tareas diarias y aviso local mientras la plataforma esta abierta
+- Especificacion operativa: automation/NOTIFICACIONES_100_DIAS.md
 - Seguridad actual: bloqueo estatico de conveniencia; la automatizacion real requiere webhook y backend
 - Programa de creadores: embajadores.html
 - Comision: 25% por compra atribuida
