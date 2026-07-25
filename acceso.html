@@ -12,7 +12,11 @@
     <meta property="og:description" content="Plataforma del participante para ejecutar Dia 0, Dia 1 y volver al marco." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="%23070706"/><text x="32" y="40" text-anchor="middle" font-size="26" font-family="Arial" font-weight="900" fill="%23f0cf7a">100</text></svg>' />
+    <meta name="theme-color" content="#070706" />
+    <meta name="application-name" content="100 Dias" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon-100-dias.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icon-100-dias-192.png" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body class="access-page">
@@ -24,6 +28,7 @@
       <nav aria-label="Principal">
         <a href="#activacion">Activacion</a>
         <a href="#dashboard">Avance</a>
+        <a href="#recordatorios">Recordatorios</a>
         <a href="#guia">Guia</a>
         <a href="#dia">Hoy</a>
         <a href="#kit">Kit</a>
@@ -208,6 +213,7 @@
         <article class="today-training-card">
           <div>
             <span>Hoy estas entrenando</span>
+            <small class="journey-arc" data-training-arc>Ruta: Activacion de Control</small>
             <strong data-training-phase>Control</strong>
             <p data-training-theme>Recuperar el control</p>
           </div>
@@ -279,6 +285,60 @@
         </div>
       </section>
 
+      <section class="reminder-section section-band" id="recordatorios" data-reminder-center>
+        <div class="section-head compact">
+          <p class="eyebrow">Acompanamiento diario</p>
+          <h2>No dependas de acordarte de volver.</h2>
+          <p>
+            Elige una hora y deja preparado el regreso. El calendario puede avisarte
+            aunque la plataforma este cerrada; el navegador refuerza el aviso cuando
+            tengas este espacio abierto.
+          </p>
+        </div>
+
+        <div class="reminder-panel">
+          <div class="reminder-status">
+            <span>Estado del acompanamiento</span>
+            <strong data-reminder-status>Aviso del navegador sin activar</strong>
+            <p data-reminder-status-copy>Activalo para recibir un aviso cuando tengas abierta la plataforma.</p>
+          </div>
+
+          <div class="reminder-controls">
+            <label>
+              Hora preferida
+              <input id="reminderTime" type="time" value="08:00" />
+            </label>
+            <label>
+              Recorrido a preparar
+              <select id="reminderDuration">
+                <option value="14">Hasta el Dia 14 Alpha</option>
+                <option value="100">Hasta el Dia 100</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="reminder-capabilities">
+            <div>
+              <span>Calendario del dispositivo</span>
+              <p>Descarga eventos diarios con la tarea de cada dia y una alarma 10 minutos antes.</p>
+            </div>
+            <div>
+              <span>Aviso del navegador</span>
+              <p>Te recuerda volver si la plataforma esta abierta y todavia no registraste el dia.</p>
+            </div>
+          </div>
+
+          <div class="reminder-actions">
+            <button class="button primary" type="button" data-browser-reminder>Activar aviso del navegador</button>
+            <button class="button secondary" type="button" data-calendar-reminder>Agregar hasta el Dia 14 al calendario</button>
+            <button class="ghost" type="button" data-test-reminder>Probar aviso</button>
+          </div>
+          <p class="form-note" data-reminder-note>
+            No se envian mensajes ni se comparte tu diario. Tus preferencias quedan guardadas en este navegador.
+          </p>
+        </div>
+      </section>
+
       <div class="app-modal" id="resetModal" hidden role="dialog" aria-modal="true" aria-labelledby="resetTitle">
         <div class="modal-panel">
           <span class="panel-label">Confirmacion</span>
@@ -303,7 +363,8 @@
 
         <article class="daily-card">
           <div class="daily-identity-card">
-            <span>Etapa de hoy</span>
+            <span>Ruta actual</span>
+            <small class="journey-arc" data-daily-arc>Activacion de Control</small>
             <strong data-daily-theme>Recuperar el control</strong>
             <p>Hoy actuas como <b data-daily-identity>Explorador</b>: no buscas perfeccion, buscas evidencia.</p>
           </div>
