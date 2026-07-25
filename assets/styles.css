@@ -2548,6 +2548,366 @@ footer p {
   align-items: center;
 }
 
+.lifestyle-pact-form {
+  gap: 20px;
+}
+
+.lifestyle-pact-form fieldset {
+  min-width: 0;
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.lifestyle-pact-form fieldset + fieldset {
+  border-top: 1px solid rgba(214, 184, 114, 0.2);
+  padding-top: 20px;
+}
+
+.lifestyle-pact-form legend {
+  margin-bottom: 14px;
+  padding: 0;
+  color: #8ef0b8;
+  font-size: 13px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.pact-form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.if-then-preview {
+  display: grid;
+  gap: 6px;
+  border-left: 3px solid var(--green);
+  padding: 4px 0 4px 14px;
+}
+
+.if-then-preview span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.if-then-preview p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.lifestyle-contract {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(214, 184, 114, 0.38);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(110deg, rgba(214, 184, 114, 0.12), rgba(47, 191, 113, 0.06)),
+    rgba(15, 15, 12, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.lifestyle-contract-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lifestyle-contract-head > div {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.lifestyle-contract-head span,
+.personal-plan-grid span,
+.ritual-status span,
+.return-protocol span,
+.review-status span,
+.system-health span,
+.lifestyle-rhythm span {
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.lifestyle-contract-head strong {
+  color: var(--gold-strong);
+  font-size: 16px;
+}
+
+.lifestyle-contract h2 {
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.personal-plan-grid {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid rgba(214, 184, 114, 0.2);
+  padding-top: 14px;
+}
+
+.personal-plan-grid div {
+  display: grid;
+  gap: 6px;
+}
+
+.personal-plan-grid p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.daily-ritual {
+  display: grid;
+  gap: 16px;
+  border-top: 1px solid rgba(47, 191, 113, 0.28);
+  border-bottom: 1px solid rgba(47, 191, 113, 0.28);
+  padding: 18px 0;
+}
+
+.ritual-status {
+  display: grid;
+  gap: 6px;
+  border-left: 3px solid var(--green);
+  padding-left: 14px;
+}
+
+.ritual-status strong {
+  color: var(--gold-strong);
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.ritual-status p,
+.ritual-steps p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.ritual-steps {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(214, 184, 114, 0.18);
+  border-bottom: 1px solid rgba(214, 184, 114, 0.18);
+}
+
+.ritual-steps li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  padding: 13px 0;
+}
+
+.ritual-steps li + li {
+  border-top: 1px solid rgba(214, 184, 114, 0.14);
+}
+
+.ritual-steps li > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(47, 191, 113, 0.5);
+  border-radius: 50%;
+  color: #8ef0b8;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.ritual-steps li > div {
+  display: grid;
+  gap: 4px;
+}
+
+.ritual-steps strong {
+  color: var(--text);
+}
+
+.ritual-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.return-protocol {
+  display: grid;
+  gap: 8px;
+  border-left: 3px solid var(--gold-strong);
+  padding: 4px 0 4px 14px;
+}
+
+.return-protocol strong {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.return-protocol ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.return-protocol b {
+  color: var(--gold-strong);
+}
+
+.day-state[aria-pressed="true"] {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+.day-state:disabled,
+.ritual-actions button:disabled,
+.review-form :disabled {
+  opacity: 0.46;
+  cursor: not-allowed;
+}
+
+.review-status {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 14px;
+  border-left: 3px solid var(--gold-strong);
+  padding: 4px 0 4px 14px;
+}
+
+.review-status strong {
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.review-status p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.data-control-section {
+  border-top: 1px solid rgba(47, 191, 113, 0.24);
+  border-bottom: 1px solid rgba(47, 191, 113, 0.24);
+  background:
+    linear-gradient(105deg, rgba(8, 29, 18, 0.84), rgba(12, 12, 10, 0.95)),
+    #070706;
+}
+
+.data-control-panel {
+  display: grid;
+  gap: 18px;
+  margin-top: 20px;
+  border: 1px solid rgba(47, 191, 113, 0.4);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(7, 10, 8, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.system-health,
+.data-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.system-health {
+  border-top: 1px solid rgba(214, 184, 114, 0.18);
+  border-bottom: 1px solid rgba(214, 184, 114, 0.18);
+}
+
+.system-health > div {
+  display: grid;
+  gap: 6px;
+  padding: 14px 0;
+}
+
+.system-health > div + div {
+  border-top: 1px solid rgba(214, 184, 114, 0.18);
+}
+
+.system-health strong {
+  color: var(--text);
+  font-size: 20px;
+}
+
+.system-health p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.data-actions .button,
+.data-actions .ghost {
+  width: 100%;
+  min-height: 52px;
+}
+
+.lifestyle-section {
+  border-top: 1px solid rgba(47, 191, 113, 0.22);
+  border-bottom: 1px solid rgba(47, 191, 113, 0.22);
+  background:
+    linear-gradient(110deg, rgba(7, 24, 15, 0.88), rgba(18, 17, 14, 0.94)),
+    #070706;
+}
+
+.lifestyle-rhythm {
+  display: grid;
+  margin-top: 22px;
+  border-top: 1px solid rgba(214, 184, 114, 0.24);
+  border-bottom: 1px solid rgba(214, 184, 114, 0.24);
+}
+
+.lifestyle-rhythm > div {
+  display: grid;
+  gap: 8px;
+  padding: 18px 0;
+}
+
+.lifestyle-rhythm > div + div {
+  border-top: 1px solid rgba(214, 184, 114, 0.18);
+}
+
+.lifestyle-rhythm strong {
+  color: var(--gold-strong);
+  font-size: 28px;
+}
+
+.lifestyle-rhythm p,
+.lifestyle-assurance p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.lifestyle-assurance {
+  display: grid;
+  gap: 6px;
+  margin-top: 20px;
+  border-left: 3px solid var(--green);
+  padding: 5px 0 5px 14px;
+}
+
+.lifestyle-assurance strong {
+  color: var(--text);
+  font-size: 20px;
+}
+
 @media (min-width: 760px) {
   .app-header {
     padding-inline: 32px;
@@ -2676,6 +3036,63 @@ footer p {
 
   .state-actions {
     grid-template-columns: 1.4fr 1fr 1fr;
+  }
+
+  .pact-form-grid,
+  .personal-plan-grid,
+  .ritual-actions,
+  .system-health {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lifestyle-contract h2 {
+    font-size: 42px;
+  }
+
+  .ritual-status strong {
+    font-size: 30px;
+  }
+
+  .review-status strong {
+    font-size: 28px;
+  }
+
+  .lifestyle-rhythm strong {
+    font-size: 34px;
+  }
+
+  .system-health > div {
+    padding: 16px;
+  }
+
+  .system-health > div:first-child {
+    padding-left: 0;
+  }
+
+  .system-health > div + div {
+    border-top: 0;
+    border-left: 1px solid rgba(214, 184, 114, 0.18);
+  }
+
+  .data-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lifestyle-rhythm {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lifestyle-rhythm > div {
+    padding: 20px;
+  }
+
+  .lifestyle-rhythm > div:first-child {
+    padding-left: 0;
+  }
+
+  .lifestyle-rhythm > div + div {
+    border-top: 0;
+    border-left: 1px solid rgba(214, 184, 114, 0.18);
   }
 
   .reminder-controls,
@@ -2909,6 +3326,10 @@ footer p {
   }
 
   .product-showcase {
+    display: none;
+  }
+
+  .sales-hero .hero-visual {
     display: none;
   }
 

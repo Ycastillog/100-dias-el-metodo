@@ -20,6 +20,9 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Contenido de lanzamiento: 14 DIAS LISTOS / 25 PIEZAS VISUALES EXPORTADAS
 - Recorrido del participante: 100 DIAS DIFERENCIADOS / 14 RUTAS INTERNAS
 - Recordatorios: CALENDARIO DEL DISPOSITIVO + AVISO DEL NAVEGADOR LISTOS
+- Continuidad diaria: PACTO PERSONAL + RITUAL + PROTOCOLO DE REGRESO LISTOS
+- Cadencia: UNA JORNADA POR FECHA + RACHA CALENDARIO REAL LISTAS
+- Resiliencia: INSTALACION + MODO SIN CONEXION + COPIA Y RESTAURACION LISTOS
 - Validacion: EN CURSO
 
 ## Fecha de cierre de construccion
@@ -71,11 +74,16 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 - Acceso del participante: acceso.html
 - Entregables del metodo: public/downloads
 - Seguimiento local: navegador del participante
-- Eventos preparados: payment_click, access_view, day0_submit, daily_status_submit, day1_submit, day7_submit, weekly_review_submit, browser_reminder_enabled, daily_reminder_shown, calendar_reminders_download
+- Eventos preparados: payment_click, access_view, day0_submit, daily_ritual_started, return_protocol_used, daily_status_submit, day1_submit, day7_submit, weekly_review_submit, browser_reminder_enabled, daily_reminder_shown, calendar_reminders_download, journal_download, backup_export, backup_import, app_installed
 - Acceso Alpha: enlace privado enviado solo despues de validar el pago
 - Recorrido completo: 100 dias con tema, objetivo, guia, principio, pregunta, accion, tarea y acompanamiento diferenciados
 - Rutas internas: Activacion, Evidencia, Control, Fortaleza, Direccion, Sistema Personal y cierre con evidencia
 - Progresion: dias futuros visibles pero bloqueados para evitar saltos accidentales
+- Ritmo diario: cerrar una jornada habilita la siguiente en una nueva fecha calendario
+- Personalizacion: el Dia 0 alimenta senal, accion minima, regreso, dashboard, calendario y avisos
+- Revisiones: se habilitan solo en el hito pendiente y se cierran al guardarse
+- Datos del participante: diario en texto y copia JSON restaurable
+- Modo sin conexion: nucleo de landing y acceso disponible despues de la primera carga
 - Recordatorios actuales: archivo de calendario con tareas diarias y aviso local mientras la plataforma esta abierta
 - Especificacion operativa: automation/NOTIFICACIONES_100_DIAS.md
 - Seguridad actual: bloqueo estatico de conveniencia; la automatizacion real requiere webhook y backend

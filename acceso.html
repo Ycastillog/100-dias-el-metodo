@@ -31,7 +31,7 @@
         <a href="#recordatorios">Recordatorios</a>
         <a href="#guia">Guia</a>
         <a href="#dia">Hoy</a>
-        <a href="#kit">Kit</a>
+        <a href="#mi-sistema">Mi sistema</a>
       </nav>
       <button class="ghost reset-progress" type="button">Reiniciar progreso</button>
     </header>
@@ -191,25 +191,89 @@
           <span>Declaracion inicial</span>
           <strong>Estoy aqui para recuperar control y volver al marco cuando aparezca la incomodidad.</strong>
         </div>
-        <form class="day-zero-form" id="dayZeroForm">
-          <label>
-            Por que estas aqui?
-            <textarea name="control" rows="3" placeholder="Ejemplo: necesito recuperar control sobre mis mananas, mi telefono o mis decisiones."></textarea>
-          </label>
-          <label>
-            Que patron quieres romper?
-            <textarea name="pattern" rows="3" placeholder="Ejemplo: abandonar cuando pierdo un dia."></textarea>
-          </label>
-          <label>
-            Que regla no vas a negociar?
-            <input name="minimumAction" type="text" placeholder="Ejemplo: registrar el dia antes de dormir, incluso si fue parcial." />
-          </label>
-          <button class="button secondary" type="submit">Confirmar mi decision</button>
+        <form class="day-zero-form lifestyle-pact-form" id="dayZeroForm">
+          <fieldset>
+            <legend>1. La direccion que elegiste</legend>
+            <div class="pact-form-grid">
+              <label>
+                Area de tu vida
+                <select name="lifeArea" required>
+                  <option value="">Elige una</option>
+                  <option value="mentalidad">Mentalidad y disciplina</option>
+                  <option value="bienestar">Salud y bienestar</option>
+                  <option value="profesional">Trabajo, profesion o negocio</option>
+                  <option value="finanzas">Finanzas personales</option>
+                  <option value="relaciones">Relaciones y vida cotidiana</option>
+                </select>
+              </label>
+              <label>
+                Que quieres poder demostrar en 100 dias?
+                <input name="goal" type="text" maxlength="180" required placeholder="Ejemplo: puedo trabajar 15 minutos diarios en mi prioridad." />
+              </label>
+            </div>
+            <label>
+              Por que esto importa de verdad?
+              <textarea name="control" rows="3" maxlength="600" required placeholder="Escribe la razon a la que volveras cuando aparezca la incomodidad."></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>2. Tu plan para la vida real</legend>
+            <div class="pact-form-grid">
+              <label>
+                Despues de que senal cotidiana actuaras?
+                <input name="cue" type="text" maxlength="120" required placeholder="Ejemplo: despues de preparar mi cafe." />
+              </label>
+              <label>
+                En que lugar?
+                <input name="place" type="text" maxlength="120" required placeholder="Ejemplo: en mi escritorio." />
+              </label>
+              <label>
+                Cual sera tu accion minima?
+                <input name="minimumAction" type="text" maxlength="180" required placeholder="Ejemplo: trabajar 10 minutos sin abrir redes." />
+              </label>
+              <label>
+                Cual es tu version de regreso de 2 minutos?
+                <input name="rescueAction" type="text" maxlength="180" required placeholder="Ejemplo: abrir el documento y escribir una linea." />
+              </label>
+            </div>
+            <label>
+              Que patron quieres romper?
+              <textarea name="pattern" rows="3" maxlength="500" required placeholder="Ejemplo: abandonar cuando pierdo ritmo o no puedo hacerlo perfecto."></textarea>
+            </label>
+          </fieldset>
+
+          <div class="if-then-preview">
+            <span>Tu formula</span>
+            <p data-ifthen-preview>Cuando aparezca tu senal, en tu lugar elegido, haras una accion minima. Si el dia se complica, ejecutaras tu version de 2 minutos.</p>
+          </div>
+          <button class="button secondary" type="submit">Guardar mi pacto de 100 dias</button>
           <p class="form-note" id="dayZeroNote">Tu decision queda guardada en este navegador.</p>
         </form>
       </section>
 
       <section class="dashboard-section" id="dashboard">
+        <article class="lifestyle-contract" data-lifestyle-contract>
+          <div class="lifestyle-contract-head">
+            <div>
+              <span>Mi sistema personal</span>
+              <strong data-personal-area>Completa tu Dia 0</strong>
+            </div>
+            <a class="ghost" href="#dia0">Editar pacto</a>
+          </div>
+          <h2 data-personal-goal>Define una direccion que puedas practicar cada dia.</h2>
+          <div class="personal-plan-grid">
+            <div>
+              <span>Mi plan si-entonces</span>
+              <p data-personal-ifthen>Cuando complete mi Dia 0, vere aqui la senal que conecta el Metodo con mi rutina.</p>
+            </div>
+            <div>
+              <span>Mi minimo de regreso</span>
+              <p data-personal-rescue>Una accion de 2 minutos para no convertir un dia dificil en abandono.</p>
+            </div>
+          </div>
+        </article>
+
         <article class="today-training-card">
           <div>
             <span>Hoy estas entrenando</span>
@@ -252,16 +316,24 @@
                 <dd data-current-phase>Control</dd>
               </div>
               <div>
-                <dt>Dias consecutivos</dt>
+                <dt>Racha real</dt>
                 <dd data-streak>0 dias</dd>
               </div>
               <div>
-                <dt>Ultimo regreso al marco</dt>
+                <dt>Dias activos, ultimos 7</dt>
+                <dd data-weekly-active>0 de 7</dd>
+              </div>
+              <div>
+                <dt>Regresos al marco</dt>
+                <dd data-return-count>0</dd>
+              </div>
+              <div>
+                <dt>Ultimo movimiento</dt>
                 <dd data-last-activity>Sin registros</dd>
               </div>
               <div>
                 <dt>Proxima accion</dt>
-                <dd>Completar el registro de hoy</dd>
+                <dd data-next-action>Completar tu pacto del Dia 0</dd>
               </div>
             </dl>
           </article>
@@ -280,7 +352,7 @@
               <span>Direccion</span>
             </div>
             <p class="progress-note">Los dias parciales sostienen tu racha, pero no suman al porcentaje. No castiga, pero tampoco regala progreso.</p>
-            <div class="day-map" data-day-map role="grid" aria-label="Mapa de avance"></div>
+            <div class="day-map" data-day-map role="group" aria-label="Mapa de avance"></div>
           </article>
         </div>
       </section>
@@ -368,6 +440,36 @@
             <strong data-daily-theme>Recuperar el control</strong>
             <p>Hoy actuas como <b data-daily-identity>Explorador</b>: no buscas perfeccion, buscas evidencia.</p>
           </div>
+          <div class="daily-ritual" data-daily-ritual>
+            <div class="ritual-status">
+              <span>Ritual de hoy</span>
+              <strong data-daily-availability>Disponible para comenzar</strong>
+              <p data-daily-cue>Tu senal personal aparecera aqui despues de completar el Dia 0.</p>
+            </div>
+            <ol class="ritual-steps">
+              <li><span>1</span><div><strong>Orientar</strong><p>Recuerda que estas construyendo y por que importa.</p></div></li>
+              <li><span>2</span><div><strong>Ejecutar</strong><p>Haz la tarea diaria junto a tu accion minima.</p></div></li>
+              <li><span>3</span><div><strong>Cerrar</strong><p>Escribe evidencia y registra el estado real del dia.</p></div></li>
+            </ol>
+            <label class="daily-intention-field">
+              Que vas a proteger hoy?
+              <input id="dailyIntention" type="text" maxlength="180" placeholder="Ejemplo: 15 minutos de trabajo sin telefono." />
+            </label>
+            <div class="ritual-actions">
+              <button class="button primary" type="button" data-start-ritual>Comenzar mi ritual</button>
+              <button class="button secondary" type="button" data-return-now>Necesito volver ahora</button>
+            </div>
+            <div class="return-protocol" data-return-protocol hidden>
+              <span>Protocolo de regreso</span>
+              <strong>No rescates todo el dia. Recupera la siguiente decision.</strong>
+              <ol>
+                <li>Detente durante 60 segundos.</li>
+                <li>Reduce la accion a tu minimo de regreso: <b data-rescue-action>dos minutos honestos</b>.</li>
+                <li>Empieza antes de volver a negociar.</li>
+              </ol>
+            </div>
+            <p class="form-note" data-ritual-note>Comienza cuando aparezca tu senal cotidiana.</p>
+          </div>
           <div class="daily-guide-card">
             <span>Tu guia de hoy</span>
             <strong data-daily-guide-name>Marco Aurelio</strong>
@@ -405,20 +507,56 @@
       <section class="weekly-section" id="revision">
         <div class="section-head">
           <p class="eyebrow">Revision semanal</p>
-          <h2>Automaticamente cada 7 dias.</h2>
+          <h2 data-review-heading>Revision cada 7 dias.</h2>
           <p>
             La revision no castiga. Detecta patrones y decide que sostener la
             proxima semana.
           </p>
         </div>
+        <div class="review-status" data-review-status>
+          <span>Estado de la revision</span>
+          <strong data-review-title>Primera revision en el Dia 7</strong>
+          <p data-review-copy>Completa el recorrido diario. El formulario se habilitara cuando exista evidencia que revisar.</p>
+        </div>
         <form class="review-form" id="weeklyReviewForm">
-          <label>Que completaste?<textarea name="completed" rows="3"></textarea></label>
-          <label>Que evitaste?<textarea name="avoided" rows="3"></textarea></label>
-          <label>Que patron aparecio?<textarea name="pattern" rows="3"></textarea></label>
-          <label>Que sostendras la proxima semana?<textarea name="next" rows="3"></textarea></label>
+          <input type="hidden" name="reviewDay" value="" />
+          <label>Que completaste?<textarea name="completed" rows="3" required></textarea></label>
+          <label>Que evitaste?<textarea name="avoided" rows="3" required></textarea></label>
+          <label>Que patron aparecio?<textarea name="pattern" rows="3" required></textarea></label>
+          <label>Que sostendras la proxima semana?<textarea name="next" rows="3" required></textarea></label>
           <button class="button secondary" type="submit">Guardar revision</button>
           <p class="form-note" id="reviewNote">La proxima revision se activa al llegar al siguiente multiplo de 7.</p>
         </form>
+      </section>
+
+      <section class="data-control-section section-band" id="mi-sistema">
+        <div class="section-head">
+          <p class="eyebrow">Continuidad real</p>
+          <h2>Tu sistema debe acompanarte, incluso cuando cambia el dispositivo o falla internet.</h2>
+          <p>Tu diario es tuyo. Puedes descargarlo, crear una copia de seguridad y restaurarlo sin compartirlo con terceros.</p>
+        </div>
+        <div class="data-control-panel">
+          <div class="system-health">
+            <div>
+              <span>Conexion</span>
+              <strong data-connectivity-status>Comprobando...</strong>
+              <p data-connectivity-copy>La plataforma prepara su modo diario.</p>
+            </div>
+            <div>
+              <span>Datos en este dispositivo</span>
+              <strong data-data-summary>0 dias registrados</strong>
+              <p data-storage-status>Haz una copia periodica para proteger tu recorrido.</p>
+            </div>
+          </div>
+          <div class="data-actions">
+            <button class="button primary" type="button" data-download-journal>Descargar mi diario</button>
+            <button class="button secondary" type="button" data-export-backup>Crear copia de seguridad</button>
+            <button class="button secondary" type="button" data-import-trigger>Restaurar una copia</button>
+            <button class="ghost" type="button" data-install-app hidden>Instalar como aplicacion</button>
+            <input data-import-backup type="file" accept="application/json,.json" hidden />
+          </div>
+          <p class="form-note" data-data-note aria-live="polite">La copia incluye tu pacto, progreso, diario, revisiones y preferencias de recordatorio.</p>
+        </div>
       </section>
 
       <section class="phases-section section-band" id="fases">

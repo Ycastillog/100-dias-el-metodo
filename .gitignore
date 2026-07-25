@@ -5,6 +5,7 @@ node_modules/
 dist/
 dist-github-pages/
 outputs/
+output/
 public/downloads/
 work/
 .playwright-cli/

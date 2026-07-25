@@ -30,11 +30,17 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Programa publico de creadores en `embajadores.html`.
 - Terminos de creadores en `terminos-embajadores.html`.
 - Plataforma del participante en `acceso.html`.
+- Sistema canonico de continuidad en `SISTEMA_DE_VIDA_DIARIA.md`.
 - Recorrido completo con tema, objetivo y tarea diferenciados para cada dia hasta el Dia 100.
 - Rutas internas de transformacion para que el participante atraviese etapas, no solo acumule dias.
-- Avance secuencial: dias futuros visibles y bloqueados hasta completar el recorrido anterior.
+- Pacto personal con area, meta, senal cotidiana, lugar, accion minima y version de regreso.
+- Ritual diario de orientar, ejecutar, registrar y volver.
+- Avance secuencial de una jornada por fecha calendario.
+- Racha real por fechas y dias activos durante los ultimos siete dias.
+- Revisiones que se habilitan solo al llegar al hito correspondiente.
 - Centro de recordatorios con calendario del dispositivo y avisos del navegador.
-- Soporte instalable mediante `manifest.webmanifest` y `sw.js`.
+- Soporte instalable y nucleo diario sin conexion mediante `manifest.webmanifest` y `sw.js`.
+- Diario descargable, copia de seguridad y restauracion del recorrido.
 - Estilos en `assets/styles.css`.
 - Captura local de interes, activacion y avance en `assets/app.js`.
 - Configuracion publica de leads y analitica en `assets/site-config.js`.
@@ -133,6 +139,14 @@ En `acceso.html#recordatorios` el participante puede:
 2. Preparar eventos hasta el Dia 14 o el Dia 100.
 3. Importar un calendario con titulo y tarea propios para cada dia.
 4. Activar y probar un aviso del navegador.
+
+En `acceso.html#mi-sistema` tambien puede:
+
+1. Ver si esta trabajando en linea o con el nucleo local.
+2. Descargar su diario personal.
+3. Crear una copia de seguridad del recorrido.
+4. Restaurar pacto, dias, revisiones y recordatorios.
+5. Instalar la experiencia cuando el navegador ofrece esa capacidad.
 
 El calendario sigue funcionando con la pagina cerrada despues de importarlo. El
 aviso del navegador de esta version funciona mientras la plataforma esta

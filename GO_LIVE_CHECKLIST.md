@@ -49,13 +49,20 @@ Eventos que deben medirse:
 - Confirmar que el enlace privado Alpha permite entrar despues de validar el pago.
 - Completar Dia 0.
 - Marcar Dia 1 como completado.
+- Confirmar que el Dia 2 queda disponible para la fecha siguiente y no puede cerrarse el mismo dia.
+- Confirmar que la racha usa fechas consecutivas y que un parcial no aumenta el porcentaje.
+- Activar el protocolo de regreso y confirmar que el contador aumenta.
 - Simular hasta Dia 7 y guardar revision semanal.
+- Confirmar que la revision del Dia 7 se bloquea al guardarla y anuncia el Dia 14.
 - Abrir los Dias 15, 30, 45, 60, 75, 90 y 100 y confirmar que tema y tarea son distintos.
 - Confirmar que un participante nuevo solo puede abrir el Dia 1 y que cada registro desbloquea un dia adicional.
 - Elegir una hora en `Recordatorios` y probar el aviso del navegador.
 - Descargar el calendario hasta el Dia 14 y confirmar que contiene un evento por cada dia pendiente.
 - Confirmar que cada evento del calendario incluye tema, tarea, enlace y alarma.
 - Instalar la experiencia desde un navegador compatible y volver a abrirla en modo aplicacion.
+- Cargar una vez, desconectar la red, volver a abrir el acceso y confirmar que el nucleo diario funciona.
+- Descargar el diario y confirmar que contiene pacto, fechas, estados y revisiones.
+- Crear una copia de seguridad, reiniciar el progreso y restaurar la copia.
 - Revisar visualmente landing, gracias y acceso en movil y desktop.
 - Abrir `embajadores.html` en movil y desktop.
 - Probar el simulador de comisiones en los cuatro planes.

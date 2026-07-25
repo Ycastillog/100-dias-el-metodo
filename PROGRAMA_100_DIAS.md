@@ -24,11 +24,12 @@ Al terminar el recorrido, un participante que lo haya ejecutado debe poder mostr
 
 El participante elige:
 
-- Un solo objetivo principal.
+- Un area de vida y un solo objetivo principal.
 - La razon por la que importa.
-- Una accion diaria de 10 a 15 minutos.
-- Una regla personal no negociable.
-- La evidencia que utilizara para saber si ejecuto.
+- Una senal cotidiana y el lugar donde actuara.
+- Una accion minima de 10 a 15 minutos.
+- Una version de regreso de dos minutos.
+- El patron que quiere romper.
 
 ### Dias 1 a 30: Control
 
@@ -74,20 +75,28 @@ sienta que esta repitiendo la misma pantalla durante cien dias.
 
 Cada dia contiene:
 
-1. Capacidad que se esta entrenando.
-2. Principio de filosofia practica.
-3. Pregunta de reflexion.
-4. Tarea asignada de 10 a 15 minutos.
-5. Entrada breve de diario.
-6. Estado real: completado, parcial o perdido.
-7. Proxima accion para volver al marco.
-8. Recordatorio configurable para reducir el olvido.
+1. Senal y plan personal definidos en el Dia 0.
+2. Intencion concreta que se protegera hoy.
+3. Capacidad que se esta entrenando.
+4. Principio de filosofia practica.
+5. Pregunta de reflexion.
+6. Tarea asignada de 10 a 15 minutos.
+7. Protocolo de regreso cuando aparece friccion.
+8. Entrada breve de diario.
+9. Estado real: completado, parcial o perdido.
+10. Proxima accion y recordatorio configurable.
 
 Un dia parcial puede mantener la continuidad, pero no aumenta el progreso completado. Un dia perdido no borra el recorrido; obliga a registrar y volver.
 
 El mapa permite revisar dias ya vividos y ejecutar el dia actual. Los dias
 futuros permanecen visibles, pero bloqueados, para proteger el orden del
 recorrido y evitar saltos accidentales.
+
+Solo se abre una nueva jornada por fecha calendario. La racha usa fechas
+consecutivas reales; no aumenta por completar varias pantallas el mismo dia.
+
+El modelo completo de senal, ritual, regreso, cierre, revisiones y continuidad
+tecnica esta definido en `SISTEMA_DE_VIDA_DIARIA.md`.
 
 ## Sistema de recordatorios
 
@@ -103,6 +112,10 @@ Las preferencias se guardan en el dispositivo. La version estatica no afirma
 enviar mensajes, correos o notificaciones remotas. Esas capacidades requieren
 identidad del participante, consentimiento, backend y programador de envios.
 
+La plataforma tambien puede instalarse y conservar el nucleo diario sin
+conexion despues de la primera carga. El participante puede descargar su diario
+y crear o restaurar una copia de seguridad.
+
 ## Hitos y revisiones
 
 - Dia 1: primera accion ejecutada.
@@ -114,6 +127,9 @@ identidad del participante, consentimiento, backend y programador de envios.
 - Dia 75: proteccion consciente de la Direccion.
 - Dia 90: prueba completa del sistema personal.
 - Dia 100: cierre de Direccion y mapa de continuidad.
+
+El formulario se habilita solo cuando el hito esta pendiente. Una vez guardada
+la revision, se cierra hasta el siguiente multiplo de siete o el Dia 100.
 
 Cada revision responde:
 
