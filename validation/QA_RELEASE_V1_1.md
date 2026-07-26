@@ -55,7 +55,7 @@ practicas, recurso de lectura, recurso audiovisual y nota de seguridad.
 - Todos los recursos solicitados respondieron HTTP 200 en el servidor local.
 - Nueve paginas sin desbordamiento horizontal a 390 px y 1440 px.
 - Navegacion instalada y notificaciones alineadas con `#hoy` y `#sistema`.
-- Cache offline actualizado a `100-dias-shell-v6`.
+- Cache offline actualizado a `100-dias-shell-v7`.
 
 ## Lighthouse
 
