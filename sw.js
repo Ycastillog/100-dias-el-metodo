@@ -1,4 +1,4 @@
-const CACHE_NAME = "100-dias-shell-v6";
+const CACHE_NAME = "100-dias-shell-v7";
 const SHELL_FILES = [
   "./",
   "./index.html",

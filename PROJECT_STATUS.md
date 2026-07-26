@@ -29,7 +29,7 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Guia editorial: AURELIA + CICLO VITAL LISTOS
 - Curriculo integral: 15 MODULOS / 100 DIAS / 5 DIRECCIONES + 4 PRACTICAS LISTOS
 - Biblioteca: 14 RECURSOS INICIALES CON FUENTE Y FUNCION COMPARTIR LISTOS
-- QA de producto: 10 DIAS SIMULADOS / 4,500 COMBINACIONES VERIFICADAS
+- QA de producto: 100 DIAS SIMULADOS / 4,500 COMBINACIONES VERIFICADAS
 - Validacion de mercado: EN CURSO
 
 ## Fecha de cierre de construccion
@@ -112,7 +112,9 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 ## Calidad verificada
 
 - 4,500 combinaciones del programa: 100 dias x 5 direcciones x 3 dosis x 3 niveles de energia.
-- Simulacion de participante durante 10 dias con estados completo, parcial y perdido.
+- Simulacion completa de participante durante 100 fechas consecutivas.
+- 100 jornadas, 100 temas, 15 modulos, 15 revisiones y 4 regresos comprobados.
+- Exportacion del diario y restauracion de la copia con 100 jornadas comprobadas.
 - Protocolo de regreso, racha, revision del Dia 7 e identidad Constructor comprobados.
 - Landing, acceso y biblioteca sin errores de consola ni recursos fallidos.
 - Nueve paginas sin desbordamiento horizontal a 390 px y 1440 px.
@@ -120,6 +122,8 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 - HTML semantico, JavaScript, enlaces locales y cache offline validados.
 
 Reporte: `validation/QA_RELEASE_V1_1.md`.
+
+Recorrido completo: `validation/QA_100_DIAS_COMPLETOS.md`.
 
 ## Objetivo del Alpha
 

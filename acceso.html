@@ -307,7 +307,7 @@
       <section class="dashboard-section" id="dashboard" data-app-view="today">
         <div class="today-command-center">
           <div class="today-command-copy">
-            <p class="eyebrow">Tu espacio de hoy</p>
+            <p class="eyebrow" data-today-label>Tu espacio de hoy</p>
             <h1 data-today-greeting>Volvamos a la siguiente decision.</h1>
             <p data-today-briefing>
               Aurelia preparara una sesion segun tu recorrido, tu energia y el
@@ -320,7 +320,7 @@
             <span role="listitem"><b data-command-focus>Mente</b> Foco</span>
           </div>
           <div class="today-command-actions">
-            <a class="button primary" href="#dia">Abrir sesion de hoy</a>
+            <a class="button primary" href="#dia" data-today-primary-action>Abrir sesion de hoy</a>
             <button class="ghost" type="button" data-speak-guidance>Escuchar a Aurelia</button>
           </div>
           <p class="voice-note" data-voice-note>
@@ -351,17 +351,17 @@
 
         <article class="today-training-card">
           <div>
-            <span>Hoy estas entrenando</span>
+            <span data-training-label>Hoy estas entrenando</span>
             <small class="journey-arc" data-training-arc>Ruta: Activacion de Control</small>
             <strong data-training-phase>Control</strong>
             <p data-training-theme>Recuperar el control</p>
           </div>
           <div>
-            <span>Identidad en construccion</span>
+            <span data-identity-label>Identidad en construccion</span>
             <strong data-identity-stage>Explorador</strong>
             <p data-identity-line>Estas descubriendo que puedes volver al marco sin esperar sentirte perfecto.</p>
           </div>
-          <p class="dashboard-guidance">Lo importante no es terminar rapido. Lo importante es volver manana.</p>
+          <p class="dashboard-guidance" data-dashboard-guidance>Lo importante no es terminar rapido. Lo importante es volver manana.</p>
         </article>
 
         <div class="mobile-dashboard">
@@ -378,13 +378,13 @@
             <span>Completado</span>
             <strong data-percent>0%</strong>
           </div>
-          <a class="button primary" href="#dia">Continuar</a>
+          <a class="button primary" href="#dia" data-dashboard-cta>Continuar</a>
         </div>
 
         <div class="dashboard-grid">
           <article class="mission-card">
             <p class="eyebrow">Dashboard del participante</p>
-            <h2>Ejecuta el siguiente dia.</h2>
+            <h2 data-dashboard-title>Ejecuta el siguiente dia.</h2>
             <dl class="stats-list">
               <div>
                 <dt>Fase actual</dt>
@@ -419,7 +419,7 @@
 
           <article class="progress-card">
             <div class="progress-head">
-              <span>Dia 0</span>
+              <span data-progress-day>Dia 0</span>
               <strong data-progress-label>0 de 100</strong>
             </div>
             <div class="progress-bar" data-progress-bar role="progressbar" aria-label="Progreso de 100 dias" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
