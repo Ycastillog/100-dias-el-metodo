@@ -1312,12 +1312,13 @@ function renderDashboard() {
   const streak = getStreak();
   const weeklyActive = getActiveDaysLast7();
   const waiting = isCadenceWaiting(currentDay);
+  const journeyComplete = isJourneyComplete();
   const currentEntry = state.days[String(currentDay)] || {};
   let nextAction = `Comenzar el ritual del Dia ${currentDay}`;
 
   if (!state.activation.day0) {
     nextAction = "Completar tu pacto del Dia 0";
-  } else if (isJourneyComplete()) {
+  } else if (journeyComplete) {
     nextAction = "Cerrar el recorrido y descargar tu diario";
   } else if (waiting) {
     nextAction = `Volver manana para abrir el Dia ${currentDay}`;
@@ -1328,12 +1329,49 @@ function renderDashboard() {
   setText("[data-current-day]", String(currentDay));
   setText("[data-percent]", `${percent}%`);
   setText("[data-current-phase]", phase);
-  setText("[data-current-state]", `Entrenando ${phase}`);
+  setText(
+    "[data-current-state]",
+    journeyComplete ? "Dominio Personal" : `Entrenando ${phase}`
+  );
   setText("[data-training-phase]", phase);
   setText("[data-training-theme]", theme);
   setText("[data-training-arc]", `Ruta: ${getJourneyArcName(currentDay)}`);
   setText("[data-identity-stage]", identity.name);
   setText("[data-identity-line]", identity.line);
+  setText(
+    "[data-training-label]",
+    journeyComplete ? "Recorrido completado" : "Hoy estas entrenando"
+  );
+  setText(
+    "[data-identity-label]",
+    journeyComplete ? "Identidad integrada" : "Identidad en construccion"
+  );
+  setText(
+    "[data-dashboard-guidance]",
+    journeyComplete
+      ? "Los 100 dias terminan. El sistema que construiste puede continuar."
+      : "Lo importante no es terminar rapido. Lo importante es volver manana."
+  );
+  setText(
+    "[data-dashboard-title]",
+    journeyComplete ? "Cerraste los 100 dias." : "Ejecuta el siguiente dia."
+  );
+  setText(
+    "[data-dashboard-cta]",
+    journeyComplete ? "Ver cierre" : "Continuar"
+  );
+  setText(
+    "[data-today-primary-action]",
+    journeyComplete ? "Ver cierre final" : "Abrir sesion de hoy"
+  );
+  setText(
+    "[data-today-label]",
+    journeyComplete ? "Cierre del recorrido" : "Tu espacio de hoy"
+  );
+  setText(
+    "[data-progress-day]",
+    state.activation.day0 ? `Dia ${currentDay}` : "Dia 0"
+  );
   setText("[data-streak]", `${streak} ${streak === 1 ? "dia" : "dias"}`);
   setText("[data-weekly-active]", `${weeklyActive} de 7`);
   setText("[data-return-count]", String(getReturnCount()));
@@ -1346,7 +1384,9 @@ function renderDashboard() {
   setText("[data-progress-label]", `${completed} de 100`);
   setText(
     "[data-dynamic-phrase]",
-    waiting
+    journeyComplete
+      ? "100 dias con evidencia."
+      : waiting
       ? `La jornada de hoy ya esta cerrada. El Dia ${currentDay} abre manana.`
       : completed > 0
         ? "Vuelve al marco."
@@ -1508,6 +1548,8 @@ function renderLifeProgram(day, entry, inaccessible) {
 function renderDaily(day = getCurrentDay()) {
   const content = dailyContent[day - 1] || dailyContent[0];
   const identity = getIdentityStage(content.day);
+  const entry = state.days[String(content.day)] || {};
+  const finalized = VALID_DAY_STATES.has(entry.state);
   setText("[data-daily-title]", `Dia ${content.day}: ${content.theme}`);
   setText("[data-daily-theme]", content.theme);
   setText("[data-daily-arc]", content.journeyArc);
@@ -1526,12 +1568,13 @@ function renderDaily(day = getCurrentDay()) {
     reflection.value = state.days[String(content.day)]?.reflection || "";
     reflection.disabled =
       !state.activation.day0 ||
+      finalized ||
       (content.day === getCurrentDay() && isCadenceWaiting(content.day));
   }
 
-  const entry = state.days[String(content.day)] || {};
   const inaccessible =
     !state.activation.day0 ||
+    finalized ||
     content.day > getCurrentDay() ||
     (content.day === getCurrentDay() && isCadenceWaiting(content.day));
   document.querySelectorAll("[data-state]").forEach((button) => {
@@ -1548,6 +1591,16 @@ function renderDaily(day = getCurrentDay()) {
     content,
     program
   );
+  if (isJourneyComplete()) {
+    setText(
+      "[data-today-greeting]",
+      "Cerraste los 100 dias. Tu evidencia ya existe."
+    );
+    setText(
+      "[data-today-briefing]",
+      "No necesitas un Dia 101 para demostrarlo. Conserva tu diario, revisa tu sistema y decide que practica sostendras."
+    );
+  }
   renderDailyRitual(content.day);
 }
 
@@ -2780,6 +2833,7 @@ document.querySelectorAll("[data-integral-practice]").forEach((checkbox) => {
     const dayNumber = Number(checkbox.dataset.day || getSelectedDailyDay());
     if (
       !state.activation.day0 ||
+      VALID_DAY_STATES.has(state.days[String(dayNumber)]?.state) ||
       dayNumber > getCurrentDay() ||
       (dayNumber === getCurrentDay() && isCadenceWaiting(dayNumber))
     ) {
@@ -2819,6 +2873,7 @@ document.querySelector("#dailyEvidence")?.addEventListener("change", (event) => 
   const dayNumber = Number(event.currentTarget.dataset.day || getSelectedDailyDay());
   if (
     !state.activation.day0 ||
+    VALID_DAY_STATES.has(state.days[String(dayNumber)]?.state) ||
     dayNumber > getCurrentDay() ||
     (dayNumber === getCurrentDay() && isCadenceWaiting(dayNumber))
   ) {
@@ -2903,15 +2958,16 @@ document.querySelectorAll("[data-state]").forEach((button) => {
     const evidence = document.querySelector("#dailyEvidence");
     const intention = document.querySelector("#dailyIntention");
     const dayNumber = Number(reflection?.dataset.day || getCurrentDay());
+    const day = String(dayNumber);
+    const existing = state.days[day] || {};
     if (
       !state.activation.day0 ||
+      VALID_DAY_STATES.has(existing.state) ||
       dayNumber > getCurrentDay() ||
       (dayNumber === getCurrentDay() && isCadenceWaiting(dayNumber))
     ) {
       return;
     }
-    const day = String(dayNumber);
-    const existing = state.days[day] || {};
     const status = button.dataset.state;
     const intentionValue = cleanText(
       intention?.value || existing.intention || "",
