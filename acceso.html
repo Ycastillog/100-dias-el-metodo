@@ -21,23 +21,24 @@
   </head>
   <body class="access-page">
     <header class="app-header">
-      <a class="brand" href="#bienvenida" aria-label="100 Dias: El Metodo">
+      <a class="brand" href="#hoy" data-app-view-target="today" aria-label="Ir a Hoy en 100 Dias">
         <span>100</span>
         <strong>Dias</strong>
       </a>
-      <nav aria-label="Principal">
-        <a href="#activacion">Activacion</a>
-        <a href="#dashboard">Avance</a>
-        <a href="#recordatorios">Recordatorios</a>
-        <a href="#guia">Guia</a>
-        <a href="#dia">Hoy</a>
+      <div class="app-header-context" aria-live="polite">
+        <span data-header-stage>Explorador</span>
+        <strong data-header-day>Dia 1</strong>
+      </div>
+      <nav class="app-view-nav" aria-label="Secciones de la plataforma">
+        <button type="button" data-app-view-target="today">Hoy</button>
+        <button type="button" data-app-view-target="journey">Camino</button>
+        <button type="button" data-app-view-target="journal">Diario</button>
         <a href="biblioteca.html">Biblioteca</a>
-        <a href="#mi-sistema">Mi sistema</a>
+        <button type="button" data-app-view-target="system">Mi sistema</button>
       </nav>
-      <button class="ghost reset-progress" type="button">Reiniciar progreso</button>
     </header>
 
-    <main>
+    <main data-app-shell>
       <section class="access-gate" data-access-gate hidden>
         <div>
           <p class="eyebrow">Acceso Alpha</p>
@@ -53,7 +54,7 @@
         </div>
       </section>
 
-      <section class="welcome-screen" id="bienvenida">
+      <section class="welcome-screen" id="bienvenida" data-app-view="system">
         <div class="welcome-copy">
           <p class="eyebrow">Acceso del participante</p>
           <h1>Bienvenido a <span>100 Dias: El Metodo</span></h1>
@@ -97,7 +98,7 @@
         </aside>
       </section>
 
-      <section class="activation-section" id="activacion">
+      <section class="activation-section" id="activacion" data-app-view="system">
         <div class="section-head">
           <p class="eyebrow">Centro de activacion</p>
           <h2>Antes del Dia 1, prepara el marco.</h2>
@@ -145,11 +146,11 @@
         <div class="activation-complete" data-activation-complete hidden>
           <strong>Activacion completada</strong>
           <span>Bienvenido al Metodo.</span>
-          <a class="button primary" href="#dashboard">Ir a mi avance</a>
+          <a class="button primary" href="#hoy" data-app-view-target="today">Ir a mi avance</a>
         </div>
       </section>
 
-      <section class="mentor-section section-band" id="guia">
+      <section class="mentor-section section-band" id="guia" data-app-view="system">
         <div class="guide-profile">
           <figure class="guide-portrait">
             <img
@@ -224,7 +225,7 @@
         </div>
       </section>
 
-      <section class="day-zero section-band" id="dia0">
+      <section class="day-zero section-band" id="dia0" data-app-view="system">
         <div class="section-head">
           <p class="eyebrow">Dia 0</p>
           <h2>Tu decision.</h2>
@@ -272,12 +273,12 @@
             <legend>2. Tu plan para la vida real</legend>
             <div class="pact-form-grid">
               <label>
-                Despues de que senal cotidiana actuaras?
-                <input name="cue" type="text" maxlength="120" required placeholder="Ejemplo: despues de preparar mi cafe." />
+                Tu senal cotidiana
+                <input name="cue" type="text" maxlength="120" required placeholder="Ejemplo: preparar mi cafe." />
               </label>
               <label>
-                En que lugar?
-                <input name="place" type="text" maxlength="120" required placeholder="Ejemplo: en mi escritorio." />
+                Lugar que dejaras preparado
+                <input name="place" type="text" maxlength="120" required placeholder="Ejemplo: mi escritorio." />
               </label>
               <label>
                 Cual sera tu accion minima?
@@ -303,14 +304,37 @@
         </form>
       </section>
 
-      <section class="dashboard-section" id="dashboard">
+      <section class="dashboard-section" id="dashboard" data-app-view="today">
+        <div class="today-command-center">
+          <div class="today-command-copy">
+            <p class="eyebrow">Tu espacio de hoy</p>
+            <h1 data-today-greeting>Volvamos a la siguiente decision.</h1>
+            <p data-today-briefing>
+              Aurelia preparara una sesion segun tu recorrido, tu energia y el
+              tiempo que realmente tienes.
+            </p>
+          </div>
+          <div class="today-command-meta" role="list" aria-label="Resumen de la sesion">
+            <span role="listitem"><b data-command-day>Dia 1</b> Jornada</span>
+            <span role="listitem"><b data-command-time>10 min</b> Dosis</span>
+            <span role="listitem"><b data-command-focus>Mente</b> Foco</span>
+          </div>
+          <div class="today-command-actions">
+            <a class="button primary" href="#dia">Abrir sesion de hoy</a>
+            <button class="ghost" type="button" data-speak-guidance>Escuchar a Aurelia</button>
+          </div>
+          <p class="voice-note" data-voice-note>
+            La narracion usa la voz disponible en tu dispositivo y no envia tu informacion.
+          </p>
+        </div>
+
         <article class="lifestyle-contract" data-lifestyle-contract>
           <div class="lifestyle-contract-head">
             <div>
               <span>Mi sistema personal</span>
               <strong data-personal-area>Completa tu Dia 0</strong>
             </div>
-            <a class="ghost" href="#dia0">Editar pacto</a>
+            <a class="ghost" href="#dia0" data-app-view-target="system">Editar pacto</a>
           </div>
           <h2 data-personal-goal>Define una direccion que puedas practicar cada dia.</h2>
           <div class="personal-plan-grid">
@@ -407,12 +431,15 @@
               <span>Direccion</span>
             </div>
             <p class="progress-note">Los dias parciales sostienen tu racha, pero no suman al porcentaje. No castiga, pero tampoco regala progreso.</p>
-            <div class="day-map" data-day-map role="group" aria-label="Mapa de avance"></div>
+            <details class="day-map-disclosure">
+              <summary>Ver mapa completo de 100 dias</summary>
+              <div class="day-map" data-day-map role="group" aria-label="Mapa de avance"></div>
+            </details>
           </article>
         </div>
       </section>
 
-      <section class="reminder-section section-band" id="recordatorios" data-reminder-center>
+      <section class="reminder-section section-band" id="recordatorios" data-reminder-center data-app-view="system">
         <div class="section-head compact">
           <p class="eyebrow">Acompanamiento diario</p>
           <h2>No dependas de acordarte de volver.</h2>
@@ -478,7 +505,7 @@
         </div>
       </div>
 
-      <section class="daily-section section-band" id="dia">
+      <section class="daily-section section-band" id="dia" data-app-view="today">
         <div class="section-head compact">
           <p class="eyebrow">Experiencia dia a dia</p>
           <h2 data-daily-title>Dia 1</h2>
@@ -495,6 +522,32 @@
             <strong data-daily-theme>Recuperar el control</strong>
             <p>Hoy actuas como <b data-daily-identity>Explorador</b>: no buscas perfeccion, buscas evidencia.</p>
           </div>
+          <fieldset class="daily-checkin" data-daily-checkin>
+            <legend>Antes de empezar, dime como llegas.</legend>
+            <div class="checkin-group">
+              <span>Energia disponible</span>
+              <div class="segmented-control" role="group" aria-label="Energia disponible">
+                <button type="button" data-checkin-energy="low">Baja</button>
+                <button type="button" data-checkin-energy="steady">Media</button>
+                <button type="button" data-checkin-energy="high">Alta</button>
+              </div>
+            </div>
+            <div class="checkin-group">
+              <span>Tiempo real</span>
+              <div class="segmented-control" role="group" aria-label="Tiempo disponible">
+                <button type="button" data-checkin-minutes="2">2 min</button>
+                <button type="button" data-checkin-minutes="10">10 min</button>
+                <button type="button" data-checkin-minutes="20">20 min</button>
+              </div>
+            </div>
+            <div class="checkin-prescription">
+              <span>Tu dosis de hoy</span>
+              <strong data-checkin-prescription>10 minutos con una accion principal.</strong>
+              <p data-adaptive-guidance>
+                No necesitas rendir igual todos los dias. Necesitas elegir una version que puedas cumplir hoy.
+              </p>
+            </div>
+          </fieldset>
           <div class="daily-ritual" data-daily-ritual>
             <div class="ritual-status">
               <span>Ritual de hoy</span>
@@ -525,25 +578,30 @@
             </div>
             <p class="form-note" data-ritual-note>Comienza cuando aparezca tu senal cotidiana.</p>
           </div>
-          <div class="daily-guide-card">
-            <span>Mentor historico de hoy</span>
-            <strong data-daily-guide-name>Marco Aurelio</strong>
-            <p data-daily-guide>Vuelve a lo que depende de ti.</p>
-          </div>
-          <div class="daily-block">
-            <span>Principio</span>
-            <p data-daily-principle>Controla la primera decision del dia.</p>
-          </div>
-          <div class="daily-block">
-            <span>Pregunta</span>
-            <p data-daily-question>Que parte de este dia depende de mi?</p>
-          </div>
-          <div class="daily-block">
-            <span>Accion</span>
-            <p data-daily-action>Completa una accion pequena antes de consumir distraccion.</p>
-          </div>
+          <details class="daily-context-disclosure">
+            <summary>Entender por que importa la practica de hoy</summary>
+            <div class="daily-context-grid">
+              <div class="daily-guide-card">
+                <span>Mentor historico de hoy</span>
+                <strong data-daily-guide-name>Marco Aurelio</strong>
+                <p data-daily-guide>Vuelve a lo que depende de ti.</p>
+              </div>
+              <div class="daily-block">
+                <span>Principio</span>
+                <p data-daily-principle>Controla la primera decision del dia.</p>
+              </div>
+              <div class="daily-block">
+                <span>Pregunta</span>
+                <p data-daily-question>Que parte de este dia depende de mi?</p>
+              </div>
+              <div class="daily-block">
+                <span>Accion</span>
+                <p data-daily-action>Completa una accion pequena antes de consumir distraccion.</p>
+              </div>
+            </div>
+          </details>
           <div class="daily-block assigned-task">
-            <span>Tarea asignada</span>
+            <span>Tu mision principal</span>
             <p data-daily-task>Elige una accion de 10 minutos, ejecutala y registrala antes de dormir.</p>
           </div>
 
@@ -570,6 +628,9 @@
                 <span>Aurelia te guia con VITAL</span>
                 <strong data-vital-step>Ver</strong>
                 <p data-aurelia-message>Hoy observa antes de intentar corregirlo todo.</p>
+                <p class="guide-response" data-guide-response>
+                  Empezamos con una version pequena y verificable.
+                </p>
               </div>
             </div>
 
@@ -593,6 +654,7 @@
               <div class="life-practice-item" data-practice="learning">
                 <div class="practice-title">
                   <span>Mente</span>
+                  <button class="practice-expand" type="button" data-practice-toggle="learning" aria-expanded="true">Ocultar</button>
                   <label>
                     <input type="checkbox" data-integral-practice="learning" />
                     Hecho
@@ -609,6 +671,7 @@
               <div class="life-practice-item" data-practice="movement">
                 <div class="practice-title">
                   <span>Cuerpo</span>
+                  <button class="practice-expand" type="button" data-practice-toggle="movement" aria-expanded="false">Ver</button>
                   <label>
                     <input type="checkbox" data-integral-practice="movement" />
                     Hecho
@@ -621,6 +684,7 @@
               <div class="life-practice-item" data-practice="finance">
                 <div class="practice-title">
                   <span>Finanzas</span>
+                  <button class="practice-expand" type="button" data-practice-toggle="finance" aria-expanded="false">Ver</button>
                   <label>
                     <input type="checkbox" data-integral-practice="finance" />
                     Hecho
@@ -633,6 +697,7 @@
               <div class="life-practice-item" data-practice="connection">
                 <div class="practice-title">
                   <span>Vinculos</span>
+                  <button class="practice-expand" type="button" data-practice-toggle="connection" aria-expanded="false">Ver</button>
                   <label>
                     <input type="checkbox" data-integral-practice="connection" />
                     Hecho
@@ -643,17 +708,20 @@
               </div>
             </div>
 
-            <div class="daily-video-resource">
-              <div>
-                <span>Video recomendado</span>
-                <strong data-life-video-title>Los habitos que transforman tu vida</strong>
-                <p data-life-video-action>Mira con una pregunta y extrae una accion.</p>
+            <details class="daily-resource-disclosure">
+              <summary>Recurso para profundizar despues de actuar</summary>
+              <div class="daily-video-resource">
+                <div>
+                  <span>Video recomendado</span>
+                  <strong data-life-video-title>Los habitos que transforman tu vida</strong>
+                  <p data-life-video-action>Mira con una pregunta y extrae una accion.</p>
+                </div>
+                <div class="practice-actions">
+                  <a class="button secondary" href="#" data-life-resource="video" data-life-video-link>Abrir video</a>
+                  <button class="ghost" type="button" data-share-daily-resource="video">Compartir</button>
+                </div>
               </div>
-              <div class="practice-actions">
-                <a class="button secondary" href="#" data-life-resource="video" data-life-video-link>Abrir video</a>
-                <button class="ghost" type="button" data-share-daily-resource="video">Compartir</button>
-              </div>
-            </div>
+            </details>
 
             <label class="daily-evidence-field">
               Que hiciste realmente hoy?
@@ -672,6 +740,9 @@
             <textarea id="dailyReflection" rows="6" placeholder="Hoy descubri... La resistencia aparecio cuando... Manana protegere..."></textarea>
           </label>
           <p class="companion-note" data-daily-companion>No necesitas hacerlo perfecto. Necesitas volver con honestidad.</p>
+          <p class="form-note day-status-note" data-day-status-note aria-live="polite">
+            Para completar, deja una evidencia. Si fue parcial o perdido, registralo con honestidad.
+          </p>
           <div class="state-actions" role="group" aria-label="Estado del dia">
             <button class="day-state complete" type="button" data-state="complete">Marcar como completado</button>
             <button class="day-state partial" type="button" data-state="partial">Parcial</button>
@@ -680,7 +751,31 @@
         </article>
       </section>
 
-      <section class="weekly-section" id="revision">
+      <section class="journey-overview-section" id="camino" data-app-view="journey">
+        <div class="section-head compact">
+          <p class="eyebrow">Tu camino</p>
+          <h1>No estas acumulando dias. Estas atravesando etapas.</h1>
+          <p>
+            Cada modulo entrena una capacidad distinta. Mira donde estas,
+            reconoce lo recorrido y vuelve a la etapa actual.
+          </p>
+        </div>
+        <div class="journey-now">
+          <div>
+            <span>Etapa actual</span>
+            <strong data-journey-current-module>Volver al control</strong>
+            <p data-journey-current-outcome>Observar tu realidad y ejecutar una primera accion verificable.</p>
+          </div>
+          <div>
+            <span>Identidad que entrenas</span>
+            <strong data-journey-identity>Explorador</strong>
+            <p data-journey-position>Dia 1 de 100</p>
+          </div>
+        </div>
+        <div class="module-roadmap" data-module-roadmap></div>
+      </section>
+
+      <section class="weekly-section" id="revision" data-app-view="journey">
         <div class="section-head">
           <p class="eyebrow">Revision semanal</p>
           <h2 data-review-heading>Revision cada 7 dias.</h2>
@@ -705,7 +800,39 @@
         </form>
       </section>
 
-      <section class="data-control-section section-band" id="mi-sistema">
+      <section class="journal-timeline-section section-band" id="diario" data-app-view="journal">
+        <div class="section-head compact">
+          <p class="eyebrow">Tu evidencia</p>
+          <h1>Un diario para reconocerte, no para vigilarte.</h1>
+          <p>
+            Aqui aparecen tus jornadas registradas, lo que hiciste y lo que
+            aprendiste. La informacion permanece en este dispositivo.
+          </p>
+        </div>
+        <div class="journal-summary" role="list" aria-label="Resumen del diario">
+          <div role="listitem"><span>Jornadas</span><strong data-journal-total>0</strong></div>
+          <div role="listitem"><span>Completadas</span><strong data-journal-complete>0</strong></div>
+          <div role="listitem"><span>Regresos</span><strong data-journal-returns>0</strong></div>
+        </div>
+        <div class="journal-toolbar">
+          <div>
+            <span>Historia reciente</span>
+            <strong>Las ultimas jornadas aparecen primero.</strong>
+          </div>
+          <button class="ghost" type="button" data-share-progress>Compartir avance seguro</button>
+        </div>
+        <div class="journal-timeline" data-journal-timeline>
+          <div class="journal-empty">
+            <strong>Tu primera evidencia aparecera aqui.</strong>
+            <p>Completa o registra parcialmente el Dia 1. No necesitas escribir mucho; necesitas escribir algo verdadero.</p>
+          </div>
+        </div>
+        <p class="form-note" data-journal-note aria-live="polite">
+          Al compartir avance solo se usa el numero de jornadas. Nunca se incluye tu diario.
+        </p>
+      </section>
+
+      <section class="data-control-section section-band" id="mi-sistema" data-app-view="journal">
         <div class="section-head">
           <p class="eyebrow">Continuidad real</p>
           <h2>Tu sistema debe acompanarte, incluso cuando cambia el dispositivo o falla internet.</h2>
@@ -735,7 +862,7 @@
         </div>
       </section>
 
-      <section class="phases-section section-band" id="fases">
+      <section class="phases-section section-band" id="fases" data-app-view="journey">
         <div class="section-head">
           <p class="eyebrow">Pagina de fases</p>
           <h2>El metodo mantiene sus tres pilares.</h2>
@@ -765,79 +892,41 @@
         </div>
       </section>
 
-      <section class="kit-section" id="kit">
-        <div class="section-head">
-          <p class="eyebrow">Kit de bienvenida digital</p>
-          <h2>Todo organizado como sistema, no como archivos sueltos.</h2>
+      <section class="system-support-section" id="ayuda" data-app-view="system">
+        <div class="section-head compact">
+          <p class="eyebrow">Herramientas y limites</p>
+          <h2>Lo necesario para sostener el proceso.</h2>
+          <p>Los materiales, tus datos y las acciones sensibles viven en un solo lugar.</p>
         </div>
-        <div class="resource-grid">
+        <div class="system-support-grid">
+          <a href="biblioteca.html">
+            <span>Aprender</span>
+            <strong>Biblioteca integral</strong>
+            <p>Libros, videos y herramientas con fuente y forma de uso.</p>
+          </a>
+          <button type="button" data-app-view-target="journal">
+            <span>Conservar</span>
+            <strong>Diario y copias</strong>
+            <span class="support-copy">Revisa evidencia, exporta tu diario y protege el recorrido.</span>
+          </button>
+          <a href="#recordatorios">
+            <span>Volver</span>
+            <strong>Recordatorios</strong>
+            <p>Configura calendario y avisos del navegador.</p>
+          </a>
+          <a href="privacidad.html">
+            <span>Entender</span>
+            <strong>Privacidad</strong>
+            <p>Conoce que se guarda, donde permanece y que no se comparte.</p>
+          </a>
+        </div>
+        <div class="danger-zone">
           <div>
-            <span>Metodo Oficial</span>
-            <strong>Leer primero</strong>
+            <span>Zona sensible</span>
+            <strong>Reiniciar elimina el progreso de este dispositivo.</strong>
           </div>
-          <div>
-            <span>Documento Maestro</span>
-            <strong>Marco fundacional</strong>
-          </div>
-          <div>
-            <span>Manual del Participante</span>
-            <strong>Guia personal</strong>
-          </div>
-          <div>
-            <span>Sistema de Avance</span>
-            <strong>Seguimiento editable</strong>
-          </div>
-          <div>
-            <span>Programa Dia a Dia</span>
-            <strong>100 registros</strong>
-          </div>
-          <div>
-            <span>Mapa de hitos</span>
-            <strong>Dias 7, 14, 30, 60 y 100</strong>
-          </div>
+          <button class="ghost reset-progress" type="button">Reiniciar progreso</button>
         </div>
-      </section>
-
-      <section class="resources-section section-band" id="recursos">
-        <div class="section-head">
-          <p class="eyebrow">Centro de recursos</p>
-          <h2>Biblioteca del sistema.</h2>
-        </div>
-        <div class="resource-list">
-          <div><strong>Marco Fundacional</strong><span>Por que existe el metodo.</span></div>
-          <div><strong>Metodo Oficial</strong><span>La filosofia y la formula.</span></div>
-          <div><strong>Sistema de Implementacion</strong><span>Como ejecutar sin depender de motivacion.</span></div>
-          <div><strong>Sistema de Avance</strong><span>Estados, racha y revisiones.</span></div>
-          <div><strong>Documentacion</strong><span>Archivos descargables y version editable.</span></div>
-        </div>
-      </section>
-
-      <section class="recommendations-section" id="biblioteca-externa">
-        <div class="section-head">
-          <p class="eyebrow">Biblioteca integral</p>
-          <h2>Libros, videos y guias con una razon para estar aqui.</h2>
-          <p>Cada recurso indica fuente, momento del recorrido y una forma concreta de convertirlo en practica.</p>
-        </div>
-        <div class="recommendation-grid">
-          <a href="biblioteca.html?categoria=lectura"><span>Lecturas</span><strong>Clasicos abiertos</strong><p>Marco Aurelio, Epicteto y Seneca con acceso identificado.</p></a>
-          <a href="biblioteca.html?categoria=movimiento"><span>Cuerpo</span><strong>Movimiento con criterio</strong><p>Guias de la OMS y practicas adaptables a la capacidad.</p></a>
-          <a href="biblioteca.html?categoria=finanzas"><span>Finanzas</span><strong>Orden antes que promesas</strong><p>Herramientas educativas para observar, planificar y decidir.</p></a>
-          <a href="biblioteca.html?categoria=video"><span>Videos</span><strong>Ideas para aplicar</strong><p>Charlas seleccionadas con una pregunta y una accion.</p></a>
-        </div>
-        <a class="button primary" href="biblioteca.html">Abrir biblioteca completa</a>
-      </section>
-
-      <section class="future-section" aria-label="Contrato del participante">
-        <div>
-          <p class="eyebrow">Tu contrato con el proceso</p>
-          <h2>Un objetivo. Una accion. Un registro honesto.</h2>
-        </div>
-        <ul>
-          <li>Ejecuta la accion de hoy antes de intentar perfeccionar todo el sistema.</li>
-          <li>Registra completado, parcial o perdido sin maquillarlo.</li>
-          <li>Revisa tu patron cada 7 dias y ajusta una sola cosa.</li>
-          <li>Si fallas, vuelve al dia siguiente: no conviertas un tropiezo en abandono.</li>
-        </ul>
       </section>
     </main>
 

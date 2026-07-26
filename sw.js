@@ -1,4 +1,4 @@
-const CACHE_NAME = "100-dias-shell-v5";
+const CACHE_NAME = "100-dias-shell-v6";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -98,12 +98,12 @@ self.addEventListener("fetch", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const requestedUrl = event.notification.data?.url || "./acceso.html#dia";
+  const requestedUrl = event.notification.data?.url || "./acceso.html#hoy";
   const targetUrl = new URL(requestedUrl, self.location.origin);
   const safeUrl =
     targetUrl.origin === self.location.origin
       ? targetUrl.href
-      : new URL("./acceso.html#dia", self.location.href).href;
+      : new URL("./acceso.html#hoy", self.location.href).href;
 
   event.waitUntil(
     self.clients

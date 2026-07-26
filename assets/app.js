@@ -4,6 +4,8 @@ const EVENTS_KEY = "100dias_events_v1";
 const REMINDER_KEY = "100dias_reminders_v1";
 const BACKUP_META_KEY = "100dias_backup_meta_v1";
 const VALID_DAY_STATES = new Set(["complete", "partial", "missed"]);
+const VALID_ENERGY_LEVELS = new Set(["low", "steady", "high"]);
+const VALID_SESSION_MINUTES = new Set([2, 10, 20]);
 const INTEGRAL_PRACTICE_KEYS = [
   "learning",
   "movement",
@@ -15,6 +17,17 @@ const INTEGRAL_PRACTICE_LABELS = {
   movement: "Cuerpo",
   finance: "Finanzas",
   connection: "Vinculos",
+};
+const ENERGY_LABELS = {
+  low: "baja",
+  steady: "media",
+  high: "alta",
+};
+const APP_VIEW_HASHES = {
+  today: "hoy",
+  journey: "camino",
+  journal: "diario",
+  system: "sistema",
 };
 const LIFE_AREA_LABELS = {
   mentalidad: "Mentalidad y disciplina",
@@ -601,7 +614,7 @@ const dailyContent = Array.from({ length: 100 }, (_, index) => {
 });
 
 const defaultState = {
-  schemaVersion: 3,
+  schemaVersion: 4,
   activation: {
     method: false,
     day0: false,
@@ -634,6 +647,9 @@ function normalizeDayZero(value) {
 
 function normalizeDayEntry(value) {
   const source = value && typeof value === "object" ? value : {};
+  const checkinSource =
+    source.checkin && typeof source.checkin === "object" ? source.checkin : {};
+  const checkinMinutes = Number(checkinSource.minutes);
   const integralSource =
     source.integral && typeof source.integral === "object"
       ? source.integral
@@ -642,6 +658,15 @@ function normalizeDayEntry(value) {
     intention: cleanText(source.intention, 180),
     evidence: cleanText(source.evidence, 1000),
     reflection: cleanText(source.reflection, 10000),
+    checkin: {
+      energy: VALID_ENERGY_LEVELS.has(checkinSource.energy)
+        ? checkinSource.energy
+        : "steady",
+      minutes: VALID_SESSION_MINUTES.has(checkinMinutes)
+        ? checkinMinutes
+        : 10,
+      updatedAt: cleanText(checkinSource.updatedAt, 40),
+    },
     integral: Object.fromEntries(
       INTEGRAL_PRACTICE_KEYS.map((key) => [key, Boolean(integralSource[key])])
     ),
@@ -684,7 +709,7 @@ function normalizeState(value) {
   });
 
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     activation: {
       method: Boolean(activationSource.method),
       day0: Boolean(activationSource.day0),
@@ -807,7 +832,15 @@ function getReturnCount() {
 
 function getLifeDay(day) {
   if (typeof window.getLifeProgram === "function") {
-    return window.getLifeProgram(day);
+    const checkin = state?.days?.[String(day)]?.checkin || {
+      energy: "steady",
+      minutes: 10,
+    };
+    return window.getLifeProgram(day, {
+      lifeArea: state?.dayZero?.lifeArea || "",
+      energy: checkin.energy,
+      minutes: checkin.minutes,
+    });
   }
   return null;
 }
@@ -867,12 +900,23 @@ function getLifeAreaLabel() {
   return LIFE_AREA_LABELS[state.dayZero.lifeArea] || "Completa tu Dia 0";
 }
 
+function cleanPlanFragment(value, prefixPattern) {
+  return cleanText(value, 180)
+    .trim()
+    .replace(prefixPattern, "")
+    .replace(/[.!?,;:]+$/, "")
+    .trim();
+}
+
 function buildPersonalIfThen(dayZero) {
   const { cue, place, minimumAction } = dayZero;
   if (!cue || !place || !minimumAction) {
     return "Cuando completes tu Dia 0, tu rutina personal aparecera aqui.";
   }
-  return `Cuando ${cue}, ${place}, hare esto: ${minimumAction}`;
+  const cleanCue = cleanPlanFragment(cue, /^despues de\s+/i);
+  const cleanPlace = cleanPlanFragment(place, /^en\s+/i);
+  const cleanAction = cleanPlanFragment(minimumAction, /^(hare|hacer)\s+/i);
+  return `Despues de ${cleanCue}, en ${cleanPlace}, hare: ${cleanAction}.`;
 }
 
 function getPersonalIfThen() {
@@ -942,6 +986,291 @@ function renderPersonalSystem() {
     state.dayZero.rescueAction ||
       "Una accion de 2 minutos para no convertir un dia dificil en abandono."
   );
+}
+
+function getDayCheckin(day) {
+  const checkin = state.days[String(day)]?.checkin || {};
+  return {
+    energy: VALID_ENERGY_LEVELS.has(checkin.energy)
+      ? checkin.energy
+      : "steady",
+    minutes: VALID_SESSION_MINUTES.has(Number(checkin.minutes))
+      ? Number(checkin.minutes)
+      : 10,
+  };
+}
+
+function getAdaptiveGuidance(day, content, program) {
+  const checkin = getDayCheckin(day);
+  const previous = state.days[String(day - 1)] || {};
+  const area = getLifeAreaLabel();
+  const firstName = state.dayZero.goal ? "Tu direccion sigue visible" : "Empecemos";
+  let greeting = day === 1
+    ? "Hoy no tienes que demostrarlo todo."
+    : "Volvamos a la siguiente decision.";
+  let continuity =
+    "No hay un dia anterior que corregir. Solo una primera evidencia que producir.";
+
+  if (previous.state === "complete") {
+    continuity =
+      "Ayer cumpliste. Hoy no necesitas superar esa version; necesitas volver a elegir.";
+    greeting = "Ayer dejaste una prueba. Hoy construimos la siguiente.";
+  } else if (previous.state === "partial") {
+    continuity =
+      "Ayer protegiste la continuidad sin regalarte progreso. Hoy completa una parte concreta.";
+    greeting = "Lo parcial no fue fracaso. Fue informacion.";
+  } else if (previous.state === "missed") {
+    continuity =
+      "Ayer no salio. No vuelves desde cero: vuelves con informacion sobre la friccion.";
+    greeting = "Hoy no reparas toda la semana. Recuperas una decision.";
+  }
+
+  const energyMessage = {
+    low: "Con energia baja, Aurelia reduce la exigencia y protege la version minima.",
+    steady: "Con energia media, trabajaremos una accion principal sin abrir demasiados frentes.",
+    high: "Con energia alta, usa el impulso con criterio y evita convertirlo en una promesa imposible.",
+  }[checkin.energy];
+  const prescription = {
+    2: "2 minutos: ejecuta la version de regreso y deja una sola evidencia.",
+    10: "10 minutos: completa la mision principal y registra lo que ocurrio.",
+    20: "20 minutos: completa la mision, una practica complementaria y el cierre.",
+  }[checkin.minutes];
+  const mission = {
+    2: `Haz tu version de regreso: ${
+      cleanPlanFragment(
+        state.dayZero.rescueAction || "dos minutos honestos",
+        /^(hare|hacer)\s+/i
+      )
+    }. Luego registra una evidencia concreta.`,
+    10: content.task,
+    20: `${content.task} Despues completa una practica de ${
+      (program?.focusLabel || "vida").toLowerCase()
+    } y cierra con evidencia.`,
+  }[checkin.minutes];
+
+  return {
+    greeting,
+    briefing: `${firstName}: ${area}. ${continuity}`,
+    response: `${energyMessage} Tu foco es ${program?.focusLabel || "la siguiente accion"}.`,
+    prescription,
+    mission,
+    speech: `${greeting} ${continuity} ${energyMessage} Tu mision de hoy es: ${mission}`,
+  };
+}
+
+function renderDailyCheckin(day, inaccessible, content, program) {
+  const checkin = getDayCheckin(day);
+  const guidance = getAdaptiveGuidance(day, content, program);
+
+  document.querySelectorAll("[data-checkin-energy]").forEach((button) => {
+    const selected = button.dataset.checkinEnergy === checkin.energy;
+    button.dataset.day = String(day);
+    button.setAttribute("aria-pressed", String(selected));
+    button.disabled = inaccessible;
+  });
+  document.querySelectorAll("[data-checkin-minutes]").forEach((button) => {
+    const selected = Number(button.dataset.checkinMinutes) === checkin.minutes;
+    button.dataset.day = String(day);
+    button.setAttribute("aria-pressed", String(selected));
+    button.disabled = inaccessible;
+  });
+
+  setText("[data-checkin-prescription]", guidance.prescription);
+  setText("[data-daily-task]", guidance.mission);
+  setText("[data-adaptive-guidance]", guidance.response);
+  setText("[data-guide-response]", guidance.response);
+  setText("[data-today-greeting]", guidance.greeting);
+  setText("[data-today-briefing]", guidance.briefing);
+  setText("[data-command-day]", `Dia ${day}`);
+  setText("[data-command-time]", `${checkin.minutes} min`);
+  setText("[data-command-focus]", program?.focusLabel || "Accion");
+  setText("[data-header-day]", `Dia ${day}`);
+  setText("[data-header-stage]", getIdentityStage(day).name);
+}
+
+function getInitialAppView() {
+  const requested = Object.entries(APP_VIEW_HASHES).find(
+    ([, hash]) => window.location.hash === `#${hash}`
+  )?.[0];
+  if (requested) return requested;
+  return state.activation.day0 ? "today" : "system";
+}
+
+function switchAppView(view, options = {}) {
+  if (!Object.prototype.hasOwnProperty.call(APP_VIEW_HASHES, view)) return;
+  const { updateHash = true, scroll = true, track = true } = options;
+  currentAppView = view;
+  document.body.classList.add("app-shell-ready");
+  document.body.classList.toggle("participant-onboarded", state.activation.day0);
+  document.body.classList.toggle(
+    "participant-activated",
+    Object.values(state.activation).every(Boolean)
+  );
+  document.body.dataset.currentAppView = view;
+
+  document.querySelectorAll("[data-app-view]").forEach((section) => {
+    section.hidden = section.dataset.appView !== view;
+  });
+  document.querySelectorAll("[data-app-view-target]").forEach((control) => {
+    const selected = control.dataset.appViewTarget === view;
+    control.setAttribute("aria-current", selected ? "page" : "false");
+  });
+
+  if (updateHash) {
+    history.replaceState(null, "", `#${APP_VIEW_HASHES[view]}`);
+  }
+  if (scroll) window.scrollTo({ top: 0, behavior: "auto" });
+  if (track) trackEvent("participant_view_changed", { view });
+}
+
+function renderAppShell() {
+  if (!currentAppView) currentAppView = getInitialAppView();
+  switchAppView(currentAppView, {
+    updateHash: false,
+    scroll: false,
+    track: false,
+  });
+}
+
+function createTextElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  element.textContent = text;
+  return element;
+}
+
+function renderJournalTimeline() {
+  const timeline = document.querySelector("[data-journal-timeline]");
+  if (!timeline) return;
+  const days = getRecordedDays().sort((a, b) => b - a);
+  setText("[data-journal-total]", String(days.length));
+  setText("[data-journal-complete]", String(getCompletedCount()));
+  setText("[data-journal-returns]", String(getReturnCount()));
+  timeline.innerHTML = "";
+
+  if (!days.length) {
+    const empty = createTextElement("div", "journal-empty", "");
+    empty.append(
+      createTextElement("strong", "", "Tu primera evidencia aparecera aqui."),
+      createTextElement(
+        "p",
+        "",
+        "Registra el Dia 1. No necesitas escribir mucho; necesitas escribir algo verdadero."
+      )
+    );
+    timeline.appendChild(empty);
+    return;
+  }
+
+  days.slice(0, 14).forEach((day) => {
+    const entry = state.days[String(day)];
+    const content = dailyContent[day - 1] || dailyContent[0];
+    const article = createTextElement("article", "journal-entry", "");
+    const head = createTextElement("div", "journal-entry-head", "");
+    const title = createTextElement("div", "", "");
+    title.append(
+      createTextElement("span", "", `Dia ${day}`),
+      createTextElement("strong", "", content.theme)
+    );
+    head.append(
+      title,
+      createTextElement(
+        "b",
+        `journal-status ${entry.state}`,
+        {
+          complete: "Completado",
+          partial: "Parcial",
+          missed: "Perdido",
+        }[entry.state]
+      )
+    );
+
+    const meta = createTextElement("div", "journal-entry-meta", "");
+    meta.append(
+      createTextElement(
+        "span",
+        "",
+        `${entry.checkin?.minutes || 10} min`
+      ),
+      createTextElement(
+        "span",
+        "",
+        `Energia ${ENERGY_LABELS[entry.checkin?.energy] || "media"}`
+      ),
+      createTextElement(
+        "span",
+        "",
+        `${getIntegralPracticeCount(entry)} de 4 practicas`
+      )
+    );
+    article.append(head, meta);
+
+    if (entry.evidence) {
+      const evidence = createTextElement("div", "journal-entry-copy", "");
+      evidence.append(
+        createTextElement("span", "", "Lo que hiciste"),
+        createTextElement("p", "", entry.evidence)
+      );
+      article.appendChild(evidence);
+    }
+    if (entry.reflection) {
+      const reflection = createTextElement("div", "journal-entry-copy", "");
+      reflection.append(
+        createTextElement("span", "", "Lo que aprendiste"),
+        createTextElement("p", "", entry.reflection)
+      );
+      article.appendChild(reflection);
+    }
+    timeline.appendChild(article);
+  });
+
+  setText(
+    "[data-journal-note]",
+    days.length > 14
+      ? `Mostrando las 14 jornadas mas recientes. Descarga tu diario para conservar las ${days.length}.`
+      : "Al compartir avance solo se usa el numero de jornadas. Nunca se incluye tu diario."
+  );
+}
+
+function renderModuleRoadmap() {
+  const roadmap = document.querySelector("[data-module-roadmap]");
+  const modules = Array.isArray(window.LIFE_MODULES)
+    ? window.LIFE_MODULES
+    : [];
+  if (!roadmap || !modules.length) return;
+  const currentDay = getCurrentDay();
+  const maxDay = getMaxRecordedDay();
+  const currentProgram = getLifeDay(currentDay);
+  setText("[data-journey-current-module]", currentProgram?.module || "Volver al control");
+  setText(
+    "[data-journey-current-outcome]",
+    currentProgram?.outcome || "Observar tu realidad y ejecutar una primera accion verificable."
+  );
+  setText("[data-journey-identity]", getIdentityStage(currentDay).name);
+  setText("[data-journey-position]", `Dia ${currentDay} de 100`);
+  roadmap.innerHTML = "";
+
+  modules.forEach((module, index) => {
+    const status = maxDay >= module.end
+      ? "complete"
+      : currentDay >= module.start && currentDay <= module.end
+        ? "current"
+        : "future";
+    const article = createTextElement("article", `module-step ${status}`, "");
+    const marker = createTextElement(
+      "span",
+      "module-marker",
+      String(index + 1).padStart(2, "0")
+    );
+    const copy = createTextElement("div", "", "");
+    copy.append(
+      createTextElement("small", "", `Dias ${module.start}-${module.end}`),
+      createTextElement("strong", "", module.title),
+      createTextElement("p", "", module.outcome)
+    );
+    article.append(marker, copy);
+    roadmap.appendChild(article);
+  });
 }
 
 function renderDayMap() {
@@ -1018,7 +1347,7 @@ function renderDashboard() {
   setText(
     "[data-dynamic-phrase]",
     waiting
-      ? "Lo de hoy ya esta registrado. Vuelve manana."
+      ? `La jornada de hoy ya esta cerrada. El Dia ${currentDay} abre manana.`
       : completed > 0
         ? "Vuelve al marco."
         : "El Dia 1 decide el inicio."
@@ -1053,7 +1382,7 @@ function renderDailyRitual(day) {
     note = "Este registro ya forma parte de tu evidencia.";
   } else if (waiting) {
     availability = `El Dia ${day} abre manana`;
-    note = "Una jornada por fecha protege la practica. Lo de hoy ya esta hecho.";
+    note = `La jornada anterior ya esta cerrada. El Dia ${day} abre manana.`;
   } else if (entry.startedAt) {
     availability = "Ritual en marcha";
     note = "Ejecuta tu minimo, escribe evidencia y cierra el dia con honestidad.";
@@ -1107,7 +1436,7 @@ function renderLifeProgram(day, entry, inaccessible) {
   const container = document.querySelector("[data-whole-life-program]");
   if (!program) {
     if (container) container.hidden = true;
-    return;
+    return null;
   }
   if (container) container.hidden = false;
 
@@ -1134,12 +1463,26 @@ function renderLifeProgram(day, entry, inaccessible) {
 
   document.querySelectorAll("[data-integral-practice]").forEach((checkbox) => {
     const key = checkbox.dataset.integralPractice;
+    const card = checkbox.closest(".life-practice-item");
+    const focus = program.focus === key || program.focus === "all";
     checkbox.dataset.day = String(day);
     checkbox.checked = Boolean(entry?.integral?.[key]);
     checkbox.disabled = inaccessible;
-    checkbox
-      .closest(".life-practice-item")
-      ?.classList.toggle("is-focus", program.focus === key || program.focus === "all");
+    card?.classList.toggle("is-focus", focus);
+    const renderKey = `${day}:${program.focus}`;
+    if (card && card.dataset.renderKey !== renderKey) {
+      card.dataset.renderKey = renderKey;
+      card.dataset.expanded = String(focus);
+    }
+    if (card) {
+      const expanded = card.dataset.expanded === "true";
+      card.classList.toggle("is-collapsed", !expanded);
+      const toggle = card.querySelector("[data-practice-toggle]");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", String(expanded));
+        toggle.textContent = expanded ? "Ocultar" : "Ver";
+      }
+    }
   });
 
   const evidence = document.querySelector("#dailyEvidence");
@@ -1159,6 +1502,7 @@ function renderLifeProgram(day, entry, inaccessible) {
     button.dataset.day = String(day);
     button.disabled = inaccessible;
   });
+  return program;
 }
 
 function renderDaily(day = getCurrentDay()) {
@@ -1197,7 +1541,13 @@ function renderDaily(day = getCurrentDay()) {
       String(button.dataset.state === entry.state)
     );
   });
-  renderLifeProgram(content.day, entry, inaccessible);
+  const program = renderLifeProgram(content.day, entry, inaccessible);
+  renderDailyCheckin(
+    content.day,
+    inaccessible || VALID_DAY_STATES.has(entry.state),
+    content,
+    program
+  );
   renderDailyRitual(content.day);
 }
 
@@ -1371,7 +1721,7 @@ async function showReminderNotification(isTest = false) {
     tag: isTest ? "100-dias-test" : `100-dias-${localDateKey()}`,
     renotify: false,
     data: {
-      url: new URL("acceso.html#dia", window.location.href).href,
+      url: new URL("acceso.html#hoy", window.location.href).href,
     },
   };
 
@@ -1490,7 +1840,7 @@ function downloadReminderCalendar() {
   if (endDay < currentDay) endDay = 100;
   const firstDate = calendarStartDate(reminderSettings.time);
   const generatedAt = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-  const accessUrl = new URL("acceso.html#dia", window.location.href).href;
+  const accessUrl = new URL("acceso.html#hoy", window.location.href).href;
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -1613,6 +1963,7 @@ function buildJournalText() {
       `DIA ${day}: ${content.theme}`,
       `Fecha: ${formatJournalDate(entry)}`,
       `Estado: ${statusLabels[entry.state]}`,
+      `Dosis elegida: ${entry.checkin?.minutes || 10} minutos, energia ${ENERGY_LABELS[entry.checkin?.energy] || "media"}`,
       `Intencion: ${entry.intention || "Sin registrar"}`,
       `Que hice: ${entry.evidence || "Sin evidencia concreta"}`,
       `Practicas integrales: ${
@@ -1671,7 +2022,7 @@ function downloadJournal() {
 function exportBackup() {
   const exportedAt = new Date().toISOString();
   const backup = {
-    schemaVersion: 3,
+    schemaVersion: 4,
     product: "100 Dias: El Metodo",
     exportedAt,
     state: normalizeState(state),
@@ -1815,13 +2166,17 @@ function renderAll() {
   renderDayMap();
   renderDashboard();
   renderDaily();
+  renderJournalTimeline();
+  renderModuleRoadmap();
   renderWeeklyReview();
   renderReminderCenter();
   renderDataControl();
+  renderAppShell();
 }
 
 let state = loadState();
 let reminderSettings = loadReminderSettings();
+let currentAppView = getInitialAppView();
 
 const leadForm = document.querySelector("#leadForm");
 const planSelect = leadForm?.querySelector("select[name='plan']");
@@ -2167,6 +2522,36 @@ externalLinks.forEach((link) => {
   });
 });
 
+document.querySelectorAll("[data-app-view-target]").forEach((control) => {
+  control.addEventListener("click", (event) => {
+    const view = control.dataset.appViewTarget;
+    const target = control.getAttribute("href") || "";
+    event.preventDefault();
+    switchAppView(view);
+    if (target.startsWith("#") && !Object.values(APP_VIEW_HASHES).includes(target.slice(1))) {
+      window.requestAnimationFrame(() => {
+        document.querySelector(target)?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+    }
+  });
+});
+
+window.addEventListener("hashchange", () => {
+  const view = Object.entries(APP_VIEW_HASHES).find(
+    ([, hash]) => window.location.hash === `#${hash}`
+  )?.[0];
+  if (view && view !== currentAppView) {
+    switchAppView(view, {
+      updateHash: false,
+      scroll: true,
+      track: true,
+    });
+  }
+});
+
 document.querySelectorAll("[data-step]").forEach((button) => {
   button.addEventListener("click", () => {
     const step = button.dataset.step;
@@ -2201,6 +2586,7 @@ document.querySelector("#dayZeroForm")?.addEventListener("submit", (event) => {
   });
   requestPersistentStorage().then(renderDataControl);
   renderAll();
+  switchAppView("today");
   setText(
     "#dayZeroNote",
     "Pacto confirmado. Tu senal, accion minima y regreso ya acompanaran el recorrido."
@@ -2221,6 +2607,114 @@ function canUseDailyRitual(day) {
     !VALID_DAY_STATES.has(state.days[String(day)]?.state)
   );
 }
+
+function updateDailyCheckin(day, updates) {
+  if (!canUseDailyRitual(day)) return;
+  const key = String(day);
+  const existing = state.days[key] || {};
+  state.days[key] = normalizeDayEntry({
+    ...existing,
+    checkin: {
+      ...getDayCheckin(day),
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    },
+    updatedAt: new Date().toISOString(),
+  });
+  saveState();
+  trackEvent("daily_checkin_changed", {
+    day,
+    energy: state.days[key].checkin.energy,
+    minutes: state.days[key].checkin.minutes,
+  });
+  renderAll();
+}
+
+document.querySelectorAll("[data-checkin-energy]").forEach((button) => {
+  button.addEventListener("click", () => {
+    updateDailyCheckin(
+      Number(button.dataset.day || getSelectedDailyDay()),
+      { energy: button.dataset.checkinEnergy }
+    );
+  });
+});
+
+document.querySelectorAll("[data-checkin-minutes]").forEach((button) => {
+  button.addEventListener("click", () => {
+    updateDailyCheckin(
+      Number(button.dataset.day || getSelectedDailyDay()),
+      { minutes: Number(button.dataset.checkinMinutes) }
+    );
+  });
+});
+
+document.querySelectorAll("[data-practice-toggle]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const card = button.closest(".life-practice-item");
+    if (!card) return;
+    card.dataset.expanded = String(card.dataset.expanded !== "true");
+    const expanded = card.dataset.expanded === "true";
+    card.classList.toggle("is-collapsed", !expanded);
+    button.setAttribute("aria-expanded", String(expanded));
+    button.textContent = expanded ? "Ocultar" : "Ver";
+  });
+});
+
+document.querySelector("[data-speak-guidance]")?.addEventListener("click", () => {
+  const note = document.querySelector("[data-voice-note]");
+  if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+    if (note) note.textContent = "La narracion no esta disponible en este navegador.";
+    return;
+  }
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    if (note) note.textContent = "Narracion detenida.";
+    return;
+  }
+  const day = getCurrentDay();
+  const content = dailyContent[day - 1] || dailyContent[0];
+  const program = getLifeDay(day);
+  const guidance = getAdaptiveGuidance(day, content, program);
+  const utterance = new SpeechSynthesisUtterance(guidance.speech);
+  utterance.lang = "es-ES";
+  utterance.rate = 0.94;
+  utterance.onstart = () => {
+    if (note) note.textContent = "Aurelia esta narrando la orientacion de hoy.";
+  };
+  utterance.onend = () => {
+    if (note) note.textContent = "Orientacion terminada. Ahora convierte la idea en accion.";
+  };
+  utterance.onerror = () => {
+    if (note) note.textContent = "La voz del dispositivo no pudo iniciar.";
+  };
+  window.speechSynthesis.speak(utterance);
+  trackEvent("daily_guidance_spoken", { day });
+});
+
+document.querySelector("[data-share-progress]")?.addEventListener("click", async () => {
+  const recorded = getRecordedDays().length;
+  const currentDay = getCurrentDay();
+  const payload = {
+    title: "Mi avance en 100 Dias: El Metodo",
+    text: `Llevo ${recorded} ${recorded === 1 ? "jornada registrada" : "jornadas registradas"} y estoy entrenando ${getPhase(currentDay)}. No busco perfeccion; busco volver manana.`,
+    url: new URL("index.html", window.location.href).href,
+  };
+  const note = document.querySelector("[data-journal-note]");
+  try {
+    if (navigator.share) {
+      await navigator.share(payload);
+      if (note) note.textContent = "Avance compartido sin incluir tu diario.";
+    } else if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(`${payload.text}\n${payload.url}`);
+      if (note) note.textContent = "Resumen seguro copiado para compartir.";
+    }
+    trackEvent("safe_progress_shared", { recorded_days: recorded });
+  } catch (error) {
+    if (error?.name !== "AbortError" && note) {
+      note.textContent = "No se pudo compartir desde este navegador.";
+    }
+  }
+});
 
 document.querySelector("[data-start-ritual]")?.addEventListener("click", () => {
   const day = getSelectedDailyDay();
@@ -2406,6 +2900,8 @@ document.querySelectorAll("[data-life-resource]").forEach((link) => {
 document.querySelectorAll("[data-state]").forEach((button) => {
   button.addEventListener("click", () => {
     const reflection = document.querySelector("#dailyReflection");
+    const evidence = document.querySelector("#dailyEvidence");
+    const intention = document.querySelector("#dailyIntention");
     const dayNumber = Number(reflection?.dataset.day || getCurrentDay());
     if (
       !state.activation.day0 ||
@@ -2416,18 +2912,51 @@ document.querySelectorAll("[data-state]").forEach((button) => {
     }
     const day = String(dayNumber);
     const existing = state.days[day] || {};
+    const status = button.dataset.state;
+    const intentionValue = cleanText(
+      intention?.value || existing.intention || "",
+      180
+    ).trim();
+    const evidenceValue = cleanText(
+      evidence?.value || existing.evidence || "",
+      1000
+    ).trim();
+    const reflectionValue = cleanText(
+      reflection?.value || existing.reflection || "",
+      10000
+    ).trim();
+    const statusNote = document.querySelector("[data-day-status-note]");
+
+    if (status === "complete" && !evidenceValue) {
+      if (statusNote) {
+        statusNote.textContent =
+          "Para cerrar como completado, escribe una evidencia concreta de lo que hiciste.";
+      }
+      evidence?.focus({ preventScroll: true });
+      evidence?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (
+      status === "partial" &&
+      !intentionValue &&
+      !evidenceValue &&
+      !reflectionValue
+    ) {
+      if (statusNote) {
+        statusNote.textContent =
+          "Registra al menos una intencion, una evidencia o una reflexion antes de marcar el dia parcial.";
+      }
+      intention?.focus({ preventScroll: true });
+      intention?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
     state.days[day] = normalizeDayEntry({
       ...existing,
-      state: button.dataset.state,
-      intention:
-        document.querySelector("#dailyIntention")?.value ||
-        existing.intention ||
-        "",
-      evidence:
-        document.querySelector("#dailyEvidence")?.value ||
-        existing.evidence ||
-        "",
-      reflection: reflection?.value || existing.reflection || "",
+      state: status,
+      intention: intentionValue,
+      evidence: evidenceValue,
+      reflection: reflectionValue,
       startedAt: existing.startedAt || new Date().toISOString(),
       recordedOn: existing.recordedOn || localDateKey(),
       updatedAt: new Date().toISOString(),
@@ -2435,7 +2964,6 @@ document.querySelectorAll("[data-state]").forEach((button) => {
     if (day === "1") state.activation.day1 = true;
     state.lastActivity = `Dia ${day}: volviste al marco`;
     saveState();
-    const status = button.dataset.state;
     trackEvent("daily_status_submit", {
       day,
       day_number: dayNumber,
@@ -2449,6 +2977,16 @@ document.querySelectorAll("[data-state]").forEach((button) => {
       trackEvent("day7_submit", { state: status });
     }
     renderAll();
+    setText(
+      "[data-day-status-note]",
+      `Dia ${day} registrado como ${
+        status === "complete"
+          ? "completado"
+          : status === "partial"
+            ? "parcial"
+            : "perdido"
+      }. Tu evidencia queda en el Diario.`
+    );
   });
 });
 
@@ -2458,7 +2996,10 @@ document.querySelector("[data-day-map]")?.addEventListener("click", (event) => {
   const selectedDay = Number(target.dataset.mapDay);
   if (selectedDay > getCurrentDay()) return;
   renderDaily(selectedDay);
-  document.querySelector("#dia")?.scrollIntoView({ behavior: "smooth" });
+  switchAppView("today", { scroll: false });
+  window.requestAnimationFrame(() => {
+    document.querySelector("#dia")?.scrollIntoView({ behavior: "smooth" });
+  });
 });
 
 document.querySelector("#weeklyReviewForm")?.addEventListener("submit", (event) => {
@@ -2513,6 +3054,8 @@ resetConfirm?.addEventListener("click", () => {
     dayZeroForm.reset();
     dayZeroForm.dataset.hydrated = "false";
   }
+  currentAppView = "system";
+  window.speechSynthesis?.cancel?.();
   trackEvent("participant_progress_reset");
   renderAll();
   closeResetModal();

@@ -2,7 +2,7 @@
   "id": "./acceso.html",
   "name": "100 Dias: El Metodo",
   "short_name": "100 Dias",
-  "description": "Experiencia integral guiada de mente, cuerpo, finanzas y vinculos durante 100 dias.",
+  "description": "Experiencia guiada de 100 dias con una dosis diaria adaptada a tu energia, tiempo y direccion personal.",
   "lang": "es",
   "start_url": "./acceso.html",
   "scope": "./",
@@ -17,7 +17,7 @@
       "name": "Ritual de hoy",
       "short_name": "Hoy",
       "description": "Abrir la practica del dia actual.",
-      "url": "./acceso.html#dia",
+      "url": "./acceso.html#hoy",
       "icons": [
         {
           "src": "assets/icon-100-dias-192.png",
@@ -30,7 +30,7 @@
       "name": "Mi sistema",
       "short_name": "Mi sistema",
       "description": "Abrir diario, respaldo y continuidad.",
-      "url": "./acceso.html#mi-sistema",
+      "url": "./acceso.html#sistema",
       "icons": [
         {
           "src": "assets/icon-100-dias-192.png",
