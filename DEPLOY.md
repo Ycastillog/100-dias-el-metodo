@@ -12,6 +12,7 @@ Incluye:
 
 - `index.html`: landing de venta.
 - `acceso.html`: plataforma del participante.
+- `biblioteca.html`: biblioteca integral de lecturas, movimiento, finanzas y videos.
 - `embajadores.html`: programa publico de creadores.
 - `gracias-embajador.html`: confirmacion de solicitud.
 - `terminos-embajadores.html`: reglas de comision y contenido.
@@ -76,10 +77,13 @@ http://127.0.0.1:4290/
 6. Entrar al acceso del participante con `acceso.html?alpha=1`.
 7. Completar Dia 0.
 8. Marcar Dia 1 como completado.
-9. Confirmar eventos en Google Sheets o GA4.
-10. Abrir `embajadores.html` y enviar una solicitud de prueba.
-11. Confirmar la fila en `Ambassador Applications`.
-12. Abrir la landing con `?ref=qa_creador` y verificar la atribucion.
+9. Marcar practicas integrales y registrar que se hizo.
+10. Abrir y compartir un recurso del dia.
+11. Abrir `biblioteca.html` y probar filtros y enlaces.
+12. Confirmar eventos en Google Sheets o GA4.
+13. Abrir `embajadores.html` y enviar una solicitud de prueba.
+14. Confirmar la fila en `Ambassador Applications`.
+15. Abrir la landing con `?ref=qa_creador` y verificar la atribucion.
 
 ## Activar pagos reales
 

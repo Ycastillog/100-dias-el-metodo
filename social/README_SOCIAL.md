@@ -104,6 +104,13 @@ Cada contenido debe responder a una de estas preguntas:
 3. Como se vuelve al marco despues de fallar?
 4. Que significa Control + Fortaleza + Direccion?
 5. Por que el Dia 1 importa mas que la idea de cambiar?
+6. Que practica concreta puede hacer hoy para cuidar mente, cuerpo, dinero o vinculos?
+7. Que etapa de identidad esta entrenando y que evidencia puede registrar?
+
+La serie `SERIE_VIDEO_15_MODULOS_VITAL.md` traduce los 15 modulos del
+curriculo integral a videos cortos. Cada pieza ensena una sola idea, propone
+una accion para el mismo dia y conecta con el Metodo sin prometer resultados
+garantizados.
 
 ## Metricas
 
@@ -145,6 +152,7 @@ Archivos:
 - `week_1_content_pack.md`
 - `upload_checklist.md`
 - `content_metrics_dashboard.csv`
+- `SERIE_VIDEO_15_MODULOS_VITAL.md`
 - `VISUAL_ASSET_SYSTEM.md`
 - `visual_asset_queue.csv`
 - `templates/`

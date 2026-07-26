@@ -8,6 +8,9 @@ Documento canonico del producto, la experiencia y los niveles de entrega.
 
 El producto entrega un marco, tareas, registro y revision. No garantiza una transformacion automatica: el resultado depende de la ejecucion honesta del participante y de su decision de volver cuando falle.
 
+El curriculo integral, la identidad de la guia, los modulos y la biblioteca se
+definen en `CURRICULO_INTEGRAL_100_DIAS.md`.
+
 ## Resultado observable
 
 Al terminar el recorrido, un participante que lo haya ejecutado debe poder mostrar:
@@ -77,14 +80,17 @@ Cada dia contiene:
 
 1. Senal y plan personal definidos en el Dia 0.
 2. Intencion concreta que se protegera hoy.
-3. Capacidad que se esta entrenando.
-4. Principio de filosofia practica.
-5. Pregunta de reflexion.
-6. Tarea asignada de 10 a 15 minutos.
-7. Protocolo de regreso cuando aparece friccion.
-8. Entrada breve de diario.
-9. Estado real: completado, parcial o perdido.
-10. Proxima accion y recordatorio configurable.
+3. Mensaje de Aurelia y paso actual del ciclo VITAL.
+4. Capacidad que se esta entrenando.
+5. Principio de filosofia practica y mentor historico.
+6. Pregunta de reflexion.
+7. Mision central de 10 a 15 minutos.
+8. Foco recomendado de mente, cuerpo, finanzas o vinculos.
+9. Lectura y video relacionados con la etapa.
+10. Protocolo de regreso cuando aparece friccion.
+11. Evidencia concreta y entrada de diario.
+12. Estado real: completado, parcial o perdido.
+13. Proxima accion y recordatorio configurable.
 
 Un dia parcial puede mantener la continuidad, pero no aumenta el progreso completado. Un dia perdido no borra el recorrido; obliga a registrar y volver.
 
@@ -115,6 +121,21 @@ identidad del participante, consentimiento, backend y programador de envios.
 La plataforma tambien puede instalarse y conservar el nucleo diario sin
 conexion despues de la primera carga. El participante puede descargar su diario
 y crear o restaurar una copia de seguridad.
+
+## Guia editorial y biblioteca
+
+Aurelia es la identidad editorial ficticia que mantiene coherencia durante el
+recorrido. No se presenta como una coach humana ni como profesional de salud o
+finanzas. Su ciclo de guia es:
+
+`Ver -> Integrar -> Tomar accion -> Anotar -> Levantarte`
+
+Los textos estoicos funcionan como mentores historicos. La biblioteca tambien
+incluye recursos institucionales de movimiento y finanzas, y videos con autor y
+plataforma identificados.
+
+Los participantes pueden compartir enlaces y recomendaciones. Nunca se incluye
+automaticamente la informacion de su pacto, diario o progreso.
 
 ## Hitos y revisiones
 

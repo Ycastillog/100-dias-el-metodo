@@ -30,11 +30,16 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Programa publico de creadores en `embajadores.html`.
 - Terminos de creadores en `terminos-embajadores.html`.
 - Plataforma del participante en `acceso.html`.
+- Biblioteca integral y compartible en `biblioteca.html`.
 - Sistema canonico de continuidad en `SISTEMA_DE_VIDA_DIARIA.md`.
+- Curriculo, guia y modulos en `CURRICULO_INTEGRAL_100_DIAS.md`.
 - Recorrido completo con tema, objetivo y tarea diferenciados para cada dia hasta el Dia 100.
 - Rutas internas de transformacion para que el participante atraviese etapas, no solo acumule dias.
 - Pacto personal con area, meta, senal cotidiana, lugar, accion minima y version de regreso.
 - Ritual diario de orientar, ejecutar, registrar y volver.
+- Aurelia como voz editorial transparente y ciclo VITAL.
+- Practicas de mente, cuerpo, finanzas y vinculos con un foco recomendado.
+- Libros, videos y recursos institucionales conectados con cada etapa.
 - Avance secuencial de una jornada por fecha calendario.
 - Racha real por fechas y dias activos durante los ultimos siete dias.
 - Revisiones que se habilitan solo al llegar al hito correspondiente.
@@ -147,6 +152,16 @@ En `acceso.html#mi-sistema` tambien puede:
 3. Crear una copia de seguridad del recorrido.
 4. Restaurar pacto, dias, revisiones y recordatorios.
 5. Instalar la experiencia cuando el navegador ofrece esa capacidad.
+
+En `biblioteca.html` puede:
+
+1. Filtrar lecturas, movimiento, finanzas y videos.
+2. Ver autor, fuente y razon de uso.
+3. Abrir el recurso en su plataforma original.
+4. Compartirlo sin divulgar el diario ni el progreso.
+
+Los datos del curriculo y la biblioteca viven en
+`assets/life-program.js`. La interfaz publica usa `assets/library.js`.
 
 El calendario sigue funcionando con la pagina cerrada despues de importarlo. El
 aviso del navegador de esta version funciona mientras la plataforma esta

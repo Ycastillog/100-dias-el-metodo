@@ -1,11 +1,14 @@
-const CACHE_NAME = "100-dias-shell-v4";
+const CACHE_NAME = "100-dias-shell-v5";
 const SHELL_FILES = [
   "./",
   "./index.html",
   "./acceso.html",
+  "./biblioteca.html",
   "./manifest.webmanifest",
   "./assets/styles.css",
   "./assets/app.js",
+  "./assets/life-program.js",
+  "./assets/library.js",
   "./assets/affiliate-links.js",
   "./assets/payments.js",
   "./assets/site-config.js",
@@ -13,6 +16,7 @@ const SHELL_FILES = [
   "./assets/icon-100-dias.svg",
   "./assets/icon-100-dias-192.png",
   "./assets/icon-100-dias-512.png",
+  "./assets/aurelia-guia.webp",
 ];
 
 self.addEventListener("install", (event) => {

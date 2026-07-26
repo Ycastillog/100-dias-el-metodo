@@ -2,7 +2,7 @@
   "id": "./acceso.html",
   "name": "100 Dias: El Metodo",
   "short_name": "100 Dias",
-  "description": "Experiencia guiada de Control, Fortaleza y Direccion durante 100 dias.",
+  "description": "Experiencia integral guiada de mente, cuerpo, finanzas y vinculos durante 100 dias.",
   "lang": "es",
   "start_url": "./acceso.html",
   "scope": "./",
@@ -31,6 +31,19 @@
       "short_name": "Mi sistema",
       "description": "Abrir diario, respaldo y continuidad.",
       "url": "./acceso.html#mi-sistema",
+      "icons": [
+        {
+          "src": "assets/icon-100-dias-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Biblioteca integral",
+      "short_name": "Biblioteca",
+      "description": "Abrir libros, videos y recursos verificados.",
+      "url": "./biblioteca.html",
       "icons": [
         {
           "src": "assets/icon-100-dias-192.png",

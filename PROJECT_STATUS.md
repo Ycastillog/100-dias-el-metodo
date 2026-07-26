@@ -23,6 +23,9 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Continuidad diaria: PACTO PERSONAL + RITUAL + PROTOCOLO DE REGRESO LISTOS
 - Cadencia: UNA JORNADA POR FECHA + RACHA CALENDARIO REAL LISTAS
 - Resiliencia: INSTALACION + MODO SIN CONEXION + COPIA Y RESTAURACION LISTOS
+- Guia editorial: AURELIA + CICLO VITAL LISTOS
+- Curriculo integral: 15 MODULOS / 100 DIAS / 4 DIMENSIONES LISTOS
+- Biblioteca: 14 RECURSOS INICIALES CON FUENTE Y FUNCION COMPARTIR LISTOS
 - Validacion: EN CURSO
 
 ## Fecha de cierre de construccion
@@ -81,6 +84,10 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 - Progresion: dias futuros visibles pero bloqueados para evitar saltos accidentales
 - Ritmo diario: cerrar una jornada habilita la siguiente en una nueva fecha calendario
 - Personalizacion: el Dia 0 alimenta senal, accion minima, regreso, dashboard, calendario y avisos
+- Vida integral: mente, movimiento, finanzas y vinculos con foco diario recomendado
+- Acompanamiento: Aurelia organiza la jornada; los filosofos se presentan como mentores historicos
+- Recursos: biblioteca publica con lecturas abiertas, OMS, CFPB y videos identificados
+- Evidencia diaria: intencion, accion realizada, practicas integrales, reflexion y estado
 - Revisiones: se habilitan solo en el hito pendiente y se cierran al guardarse
 - Datos del participante: diario en texto y copia JSON restaurable
 - Modo sin conexion: nucleo de landing y acceso disponible despues de la primera carga

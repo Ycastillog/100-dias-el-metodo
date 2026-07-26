@@ -10,6 +10,9 @@ evidencia y sepa regresar cuando aparezca friccion.
 
 La unidad del Metodo no es una pantalla. Es una jornada vivida.
 
+El contenido de esa jornada esta definido en
+`CURRICULO_INTEGRAL_100_DIAS.md`.
+
 ## Pacto personal
 
 Antes del Dia 1, cada participante define:
@@ -35,7 +38,8 @@ decidir abandonar.
 ### 1. Orientar
 
 El participante ve su meta, su senal, la capacidad que esta entrenando y la
-tarea del Metodo. Define que protegera durante esa jornada.
+tarea del Metodo. Aurelia ubica el modulo y el paso VITAL. La persona define que
+protegera durante esa jornada.
 
 ### 2. Volver
 
@@ -50,7 +54,8 @@ solo.
 
 ### 3. Cerrar
 
-El participante escribe una reflexion breve y registra el resultado real:
+El participante registra que hizo, que practicas integrales completo, que
+aprendio y el resultado real:
 
 - Completado: suma al porcentaje y sostiene la racha.
 - Parcial: sostiene la racha, pero no suma al porcentaje.
@@ -94,6 +99,7 @@ El participante puede:
 - Descargar su diario en texto legible.
 - Crear una copia JSON de pacto, progreso, revisiones y recordatorios.
 - Restaurar esa copia en otro navegador o dispositivo.
+- Abrir y compartir libros, videos o recursos sin incluir datos privados.
 
 Los datos permanecen en el dispositivo hasta que el participante decide
 exportarlos. El modo estatico no sincroniza cuentas ni envia el diario a un
@@ -114,6 +120,7 @@ El tablero muestra:
 - Racha calendario real.
 - Dias activos durante los ultimos siete dias.
 - Regresos al marco.
+- Practicas integrales realizadas durante los ultimos siete dias.
 - Porcentaje completado.
 - Ultimo movimiento.
 - Proxima accion.
@@ -126,4 +133,3 @@ La metrica principal del negocio sigue siendo:
 
 Una funcion pertenece al Metodo solo si ayuda a orientar, ejecutar, registrar,
 revisar o volver en la vida real.
-

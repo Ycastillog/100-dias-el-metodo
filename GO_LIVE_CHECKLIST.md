@@ -49,6 +49,10 @@ Eventos que deben medirse:
 - Confirmar que el enlace privado Alpha permite entrar despues de validar el pago.
 - Completar Dia 0.
 - Marcar Dia 1 como completado.
+- Confirmar que Aurelia, el modulo y el paso VITAL cambian con el dia.
+- Marcar practicas de mente, cuerpo, finanzas y vinculos y comprobar que quedan guardadas.
+- Escribir `Que hiciste realmente hoy?` y confirmar que aparece en el diario descargado.
+- Abrir y compartir la lectura y el video del dia sin incluir datos privados.
 - Confirmar que el Dia 2 queda disponible para la fecha siguiente y no puede cerrarse el mismo dia.
 - Confirmar que la racha usa fechas consecutivas y que un parcial no aumenta el porcentaje.
 - Activar el protocolo de regreso y confirmar que el contador aumenta.
@@ -64,6 +68,9 @@ Eventos que deben medirse:
 - Descargar el diario y confirmar que contiene pacto, fechas, estados y revisiones.
 - Crear una copia de seguridad, reiniciar el progreso y restaurar la copia.
 - Revisar visualmente landing, gracias y acceso en movil y desktop.
+- Abrir `biblioteca.html`, probar sus cinco filtros y revisar los 14 recursos.
+- Confirmar autor, fuente, enlace y forma de uso en cada recurso.
+- Revisar trimestralmente que OMS, CFPB, Wikisource, Ministerio de Educacion y TED mantengan sus enlaces.
 - Abrir `embajadores.html` en movil y desktop.
 - Probar el simulador de comisiones en los cuatro planes.
 - Enviar una solicitud de creador de prueba.
