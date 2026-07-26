@@ -4,6 +4,18 @@ const EVENTS_KEY = "100dias_events_v1";
 const REMINDER_KEY = "100dias_reminders_v1";
 const BACKUP_META_KEY = "100dias_backup_meta_v1";
 const VALID_DAY_STATES = new Set(["complete", "partial", "missed"]);
+const INTEGRAL_PRACTICE_KEYS = [
+  "learning",
+  "movement",
+  "finance",
+  "connection",
+];
+const INTEGRAL_PRACTICE_LABELS = {
+  learning: "Mente",
+  movement: "Cuerpo",
+  finance: "Finanzas",
+  connection: "Vinculos",
+};
 const LIFE_AREA_LABELS = {
   mentalidad: "Mentalidad y disciplina",
   bienestar: "Salud y bienestar",
@@ -589,7 +601,7 @@ const dailyContent = Array.from({ length: 100 }, (_, index) => {
 });
 
 const defaultState = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   activation: {
     method: false,
     day0: false,
@@ -622,9 +634,17 @@ function normalizeDayZero(value) {
 
 function normalizeDayEntry(value) {
   const source = value && typeof value === "object" ? value : {};
+  const integralSource =
+    source.integral && typeof source.integral === "object"
+      ? source.integral
+      : {};
   const normalized = {
     intention: cleanText(source.intention, 180),
+    evidence: cleanText(source.evidence, 1000),
     reflection: cleanText(source.reflection, 10000),
+    integral: Object.fromEntries(
+      INTEGRAL_PRACTICE_KEYS.map((key) => [key, Boolean(integralSource[key])])
+    ),
     returns: Math.max(0, Math.min(999, Number(source.returns) || 0)),
     startedAt: cleanText(source.startedAt, 40),
     recordedOn: cleanText(source.recordedOn, 10),
@@ -664,7 +684,7 @@ function normalizeState(value) {
   });
 
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     activation: {
       method: Boolean(activationSource.method),
       day0: Boolean(activationSource.day0),
@@ -783,6 +803,31 @@ function getReturnCount() {
     (total, entry) => total + Math.max(0, Number(entry?.returns) || 0),
     0
   );
+}
+
+function getLifeDay(day) {
+  if (typeof window.getLifeProgram === "function") {
+    return window.getLifeProgram(day);
+  }
+  return null;
+}
+
+function getIntegralPracticeCount(entry) {
+  return INTEGRAL_PRACTICE_KEYS.filter(
+    (key) => Boolean(entry?.integral?.[key])
+  ).length;
+}
+
+function getIntegralPracticesLast7() {
+  const today = localDateKey();
+  return Object.values(state.days).reduce((total, entry) => {
+    const date = getRecordDate(entry);
+    if (!date) return total;
+    const age = Array.from({ length: 7 }, (_, offset) =>
+      shiftDateKey(today, -offset)
+    );
+    return age.includes(date) ? total + getIntegralPracticeCount(entry) : total;
+  }, 0);
 }
 
 function getMaxRecordedDay() {
@@ -963,6 +1008,10 @@ function renderDashboard() {
   setText("[data-streak]", `${streak} ${streak === 1 ? "dia" : "dias"}`);
   setText("[data-weekly-active]", `${weeklyActive} de 7`);
   setText("[data-return-count]", String(getReturnCount()));
+  setText(
+    "[data-life-practices]",
+    `${getIntegralPracticesLast7()} practicas`
+  );
   setText("[data-last-activity]", state.lastActivity || "Aun no has vuelto al marco");
   setText("[data-next-action]", nextAction);
   setText("[data-progress-label]", `${completed} de 100`);
@@ -1044,6 +1093,74 @@ function renderDailyRitual(day) {
   if (returnProtocol) returnProtocol.hidden = !(Number(entry.returns) > 0);
 }
 
+function setResourceLink(selector, resource) {
+  const link = document.querySelector(selector);
+  if (!link || !resource) return;
+  link.href = resource.url;
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.dataset.resourceId = resource.id;
+}
+
+function renderLifeProgram(day, entry, inaccessible) {
+  const program = getLifeDay(day);
+  const container = document.querySelector("[data-whole-life-program]");
+  if (!program) {
+    if (container) container.hidden = true;
+    return;
+  }
+  if (container) container.hidden = false;
+
+  setText("[data-life-week]", `Modulo ${program.week}`);
+  setText("[data-life-module]", program.module);
+  setText("[data-life-outcome]", program.outcome);
+  setText("[data-life-focus]", `Foco recomendado: ${program.focusLabel}`);
+  setText("[data-vital-step]", program.rhythm);
+  setText("[data-aurelia-message]", program.guideMessage);
+  setText("[data-life-learning-title]", program.learning.title);
+  setText("[data-life-learning-action]", program.learning.action);
+  setText("[data-life-movement-title]", program.movement.title);
+  setText("[data-life-movement-action]", program.movement.action);
+  setText("[data-life-finance-title]", program.finance.title);
+  setText("[data-life-finance-action]", program.finance.action);
+  setText("[data-life-connection-title]", program.connection.title);
+  setText("[data-life-connection-action]", program.connection.action);
+  setText("[data-life-video-title]", program.video.title);
+  setText("[data-life-video-action]", program.video.action);
+  setText("[data-life-safety]", program.safety);
+
+  setResourceLink("[data-life-reading-link]", program.learning.resource);
+  setResourceLink("[data-life-video-link]", program.video.resource);
+
+  document.querySelectorAll("[data-integral-practice]").forEach((checkbox) => {
+    const key = checkbox.dataset.integralPractice;
+    checkbox.dataset.day = String(day);
+    checkbox.checked = Boolean(entry?.integral?.[key]);
+    checkbox.disabled = inaccessible;
+    checkbox
+      .closest(".life-practice-item")
+      ?.classList.toggle("is-focus", program.focus === key || program.focus === "all");
+  });
+
+  const evidence = document.querySelector("#dailyEvidence");
+  if (evidence) {
+    evidence.dataset.day = String(day);
+    evidence.value = entry?.evidence || "";
+    evidence.disabled = inaccessible;
+  }
+
+  const practiceCount = getIntegralPracticeCount(entry);
+  setText(
+    "[data-integral-progress]",
+    `${practiceCount} de 4 practicas registradas`
+  );
+
+  document.querySelectorAll("[data-share-daily-resource]").forEach((button) => {
+    button.dataset.day = String(day);
+    button.disabled = inaccessible;
+  });
+}
+
 function renderDaily(day = getCurrentDay()) {
   const content = dailyContent[day - 1] || dailyContent[0];
   const identity = getIdentityStage(content.day);
@@ -1080,6 +1197,7 @@ function renderDaily(day = getCurrentDay()) {
       String(button.dataset.state === entry.state)
     );
   });
+  renderLifeProgram(content.day, entry, inaccessible);
   renderDailyRitual(content.day);
 }
 
@@ -1384,6 +1502,7 @@ function downloadReminderCalendar() {
 
   for (let day = currentDay; day <= endDay; day += 1) {
     const content = dailyContent[day - 1] || dailyContent[0];
+    const lifeProgram = getLifeDay(day);
     const eventDate = new Date(firstDate);
     eventDate.setDate(firstDate.getDate() + day - currentDay);
     const personalPlan = state.dayZero.minimumAction
@@ -1395,7 +1514,7 @@ function downloadReminderCalendar() {
       `DTSTAMP:${generatedAt}`,
       `DTSTART:${calendarDateValue(eventDate)}`,
       `SUMMARY:${escapeCalendarText(`100 Dias - Dia ${day}: ${content.theme}`)}`,
-      `DESCRIPTION:${escapeCalendarText(`${personalPlan}Tarea del Metodo: ${content.task}\nEntra, ejecuta y registra con honestidad.`)}`,
+      `DESCRIPTION:${escapeCalendarText(`${personalPlan}Tarea del Metodo: ${content.task}\n${lifeProgram ? `Foco integral: ${lifeProgram.focusLabel}. ${lifeProgram[lifeProgram.focus === "all" ? "learning" : lifeProgram.focus]?.action || lifeProgram.outcome}\n` : ""}Entra, ejecuta y registra con honestidad.`)}`,
       `URL:${accessUrl}`,
       "STATUS:CONFIRMED",
       "TRANSP:TRANSPARENT",
@@ -1495,6 +1614,12 @@ function buildJournalText() {
       `Fecha: ${formatJournalDate(entry)}`,
       `Estado: ${statusLabels[entry.state]}`,
       `Intencion: ${entry.intention || "Sin registrar"}`,
+      `Que hice: ${entry.evidence || "Sin evidencia concreta"}`,
+      `Practicas integrales: ${
+        INTEGRAL_PRACTICE_KEYS.filter((key) => entry.integral?.[key])
+          .map((key) => INTEGRAL_PRACTICE_LABELS[key])
+          .join(", ") || "Ninguna registrada"
+      }`,
       `Regresos al marco: ${Number(entry.returns) || 0}`,
       `Diario: ${entry.reflection || "Sin reflexion escrita"}`
     );
@@ -1546,7 +1671,7 @@ function downloadJournal() {
 function exportBackup() {
   const exportedAt = new Date().toISOString();
   const backup = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     product: "100 Dias: El Metodo",
     exportedAt,
     state: normalizeState(state),
@@ -2156,6 +2281,128 @@ document.querySelector("[data-return-now]")?.addEventListener("click", () => {
   );
 });
 
+document.querySelectorAll("[data-integral-practice]").forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    const dayNumber = Number(checkbox.dataset.day || getSelectedDailyDay());
+    if (
+      !state.activation.day0 ||
+      dayNumber > getCurrentDay() ||
+      (dayNumber === getCurrentDay() && isCadenceWaiting(dayNumber))
+    ) {
+      renderDaily(dayNumber);
+      return;
+    }
+    const day = String(dayNumber);
+    const existing = state.days[day] || {};
+    state.days[day] = normalizeDayEntry({
+      ...existing,
+      evidence:
+        document.querySelector("#dailyEvidence")?.value ||
+        existing.evidence ||
+        "",
+      reflection:
+        document.querySelector("#dailyReflection")?.value ||
+        existing.reflection ||
+        "",
+      integral: {
+        ...existing.integral,
+        [checkbox.dataset.integralPractice]: checkbox.checked,
+      },
+      updatedAt: new Date().toISOString(),
+    });
+    saveState();
+    trackEvent("integral_practice_toggled", {
+      day: dayNumber,
+      practice: checkbox.dataset.integralPractice,
+      value: checkbox.checked,
+    });
+    renderDashboard();
+    renderLifeProgram(dayNumber, state.days[day], false);
+  });
+});
+
+document.querySelector("#dailyEvidence")?.addEventListener("change", (event) => {
+  const dayNumber = Number(event.currentTarget.dataset.day || getSelectedDailyDay());
+  if (
+    !state.activation.day0 ||
+    dayNumber > getCurrentDay() ||
+    (dayNumber === getCurrentDay() && isCadenceWaiting(dayNumber))
+  ) {
+    return;
+  }
+  const day = String(dayNumber);
+  state.days[day] = normalizeDayEntry({
+    ...(state.days[day] || {}),
+    evidence: event.currentTarget.value,
+    reflection:
+      document.querySelector("#dailyReflection")?.value ||
+      state.days[day]?.reflection ||
+      "",
+    updatedAt: new Date().toISOString(),
+  });
+  saveState();
+});
+
+async function shareDailyResource(day, type) {
+  const program = getLifeDay(day);
+  const item = type === "video" ? program?.video : program?.learning;
+  const resource = item?.resource;
+  if (!program || !resource) return;
+  const content = dailyContent[day - 1] || dailyContent[0];
+  const payload = {
+    title: `${resource.title} | Dia ${day} de 100 Dias`,
+    text: `Dia ${day}: ${content.theme}. Recurso recomendado: ${resource.title}. ${item.action}`,
+    url: resource.url,
+  };
+  const note = document.querySelector("[data-share-note]");
+
+  try {
+    if (navigator.share) {
+      await navigator.share(payload);
+      if (note) note.textContent = "Recurso compartido sin incluir datos de tu diario.";
+    } else if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(
+        `${payload.title}\n${payload.text}\n${payload.url}`
+      );
+      if (note) note.textContent = "Enlace y recomendacion copiados.";
+    } else {
+      if (note) {
+        note.textContent =
+          "Abre el recurso y usa la opcion Compartir de tu navegador.";
+      }
+      return;
+    }
+    trackEvent("daily_resource_shared", {
+      day,
+      resource_id: resource.id,
+      resource_type: type,
+    });
+  } catch (error) {
+    if (error?.name !== "AbortError" && note) {
+      note.textContent = "No se pudo compartir. Abre el recurso e intentalo desde el navegador.";
+    }
+  }
+}
+
+document.querySelectorAll("[data-share-daily-resource]").forEach((button) => {
+  button.addEventListener("click", () => {
+    shareDailyResource(
+      Number(button.dataset.day || getSelectedDailyDay()),
+      button.dataset.shareDailyResource
+    );
+  });
+});
+
+document.querySelectorAll("[data-life-resource]").forEach((link) => {
+  link.addEventListener("click", () => {
+    trackEvent("daily_resource_opened", {
+      day: getSelectedDailyDay(),
+      resource_id: link.dataset.resourceId || "",
+      resource_type: link.dataset.lifeResource,
+    });
+  });
+});
+
 document.querySelectorAll("[data-state]").forEach((button) => {
   button.addEventListener("click", () => {
     const reflection = document.querySelector("#dailyReflection");
@@ -2175,6 +2422,10 @@ document.querySelectorAll("[data-state]").forEach((button) => {
       intention:
         document.querySelector("#dailyIntention")?.value ||
         existing.intention ||
+        "",
+      evidence:
+        document.querySelector("#dailyEvidence")?.value ||
+        existing.evidence ||
         "",
       reflection: reflection?.value || existing.reflection || "",
       startedAt: existing.startedAt || new Date().toISOString(),
