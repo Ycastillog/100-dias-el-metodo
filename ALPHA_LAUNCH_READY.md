@@ -9,6 +9,10 @@ Este archivo resume lo que ya esta listo para iniciar validacion real.
 - Dia 0 listo.
 - Dia 1 listo.
 - Dashboard listo.
+- Navegacion Hoy, Camino, Diario, Biblioteca y Mi sistema lista.
+- Dosis adaptativa de 2, 10 o 20 minutos lista.
+- Cinco direcciones personales y cuatro practicas complementarias listas.
+- Recorrido de 100 dias dividido en 15 modulos listo.
 - Registro recibido listo.
 - Manifiesto del fundador listo.
 
@@ -46,6 +50,19 @@ Este archivo resume lo que ya esta listo para iniciar validacion real.
 - Pegar endpoint en `assets/site-config.js` como `leadEndpoint` y `eventEndpoint`.
 - Crear GA4 y pegar `gaMeasurementId`.
 - Crear cuentas sociales o usar cuentas actuales.
+- Sustituir el acceso estatico por autenticacion y entrega automatica cuando el
+  Alpha confirme la conversion.
+
+## QA de salida
+
+- Simulacion real de 10 dias completada.
+- 4,500 combinaciones del programa verificadas.
+- Estados completo, parcial y perdido comprobados.
+- Revision del Dia 7, racha, regreso e identidad comprobados.
+- Nueve paginas comprobadas en 390 px y 1440 px sin desbordamiento.
+- Landing, acceso y biblioteca con accesibilidad, buenas practicas y SEO en 100.
+
+Detalle: `validation/QA_RELEASE_V1_1.md`.
 
 ## Primera accion real
 

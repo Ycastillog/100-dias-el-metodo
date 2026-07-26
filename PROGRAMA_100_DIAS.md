@@ -27,7 +27,8 @@ Al terminar el recorrido, un participante que lo haya ejecutado debe poder mostr
 
 El participante elige:
 
-- Un area de vida y un solo objetivo principal.
+- Una de cinco direcciones: mentalidad, bienestar, profesion, finanzas o relaciones.
+- Un solo objetivo principal.
 - La razon por la que importa.
 - Una senal cotidiana y el lugar donde actuara.
 - Una accion minima de 10 a 15 minutos.
@@ -79,18 +80,25 @@ sienta que esta repitiendo la misma pantalla durante cien dias.
 Cada dia contiene:
 
 1. Senal y plan personal definidos en el Dia 0.
-2. Intencion concreta que se protegera hoy.
-3. Mensaje de Aurelia y paso actual del ciclo VITAL.
-4. Capacidad que se esta entrenando.
-5. Principio de filosofia practica y mentor historico.
-6. Pregunta de reflexion.
-7. Mision central de 10 a 15 minutos.
-8. Foco recomendado de mente, cuerpo, finanzas o vinculos.
-9. Lectura y video relacionados con la etapa.
-10. Protocolo de regreso cuando aparece friccion.
-11. Evidencia concreta y entrada de diario.
-12. Estado real: completado, parcial o perdido.
-13. Proxima accion y recordatorio configurable.
+2. Check-in de energia baja, media o alta.
+3. Eleccion de una dosis real de 2, 10 o 20 minutos.
+4. Intencion concreta que se protegera hoy.
+5. Mensaje adaptado de Aurelia y paso actual del ciclo VITAL.
+6. Capacidad que se esta entrenando.
+7. Principio de filosofia practica y mentor historico.
+8. Pregunta de reflexion.
+9. Mision central ajustada a la dosis y al pacto.
+10. Foco recomendado de mente, cuerpo, finanzas o vinculos.
+11. Lectura y video relacionados con la etapa.
+12. Protocolo de regreso cuando aparece friccion.
+13. Evidencia concreta y entrada de diario.
+14. Estado real: completado, parcial o perdido.
+15. Proxima accion y recordatorio configurable.
+
+La dosis de dos minutos protege el regreso. La de diez minutos ejecuta la
+mision principal. La de veinte minutos agrega una practica complementaria. El
+sistema reduce la exigencia cuando la energia es baja sin presentar esa
+adaptacion como un fracaso.
 
 Un dia parcial puede mantener la continuidad, pero no aumenta el progreso completado. Un dia perdido no borra el recorrido; obliga a registrar y volver.
 
@@ -136,6 +144,14 @@ plataforma identificados.
 
 Los participantes pueden compartir enlaces y recomendaciones. Nunca se incluye
 automaticamente la informacion de su pacto, diario o progreso.
+
+## Espacios del producto
+
+- Hoy: muestra la prescripcion del dia, la sesion y el cierre.
+- Camino: convierte los cien dias en etapas visibles y muestra el mapa.
+- Diario: conserva evidencia, estados y revisiones.
+- Biblioteca: organiza recursos por funcion y fuente.
+- Mi sistema: contiene activacion, recordatorios, instalacion y respaldo.
 
 ## Hitos y revisiones
 

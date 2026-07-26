@@ -392,42 +392,42 @@
         "Hoy observa antes de corregir. Una realidad vista con claridad deja de crecer en la sombra.",
     },
     {
-      name: "Preparar",
+      name: "Integrar",
       focus: "movement",
       label: "Cuerpo",
       message:
         "Hoy prepara el entorno. Lo que dejas listo reduce decisiones cuando llegue el cansancio.",
     },
     {
-      name: "Practicar",
+      name: "Tomar accion",
       focus: "finance",
       label: "Finanzas",
       message:
         "Hoy produce una evidencia concreta. Entender sin practicar todavia no cambia conducta.",
     },
     {
-      name: "Relacionar",
+      name: "Anotar",
       focus: "connection",
       label: "Vinculos",
       message:
         "Hoy lleva el Metodo a una relacion real. Crecer tambien cambia como escuchas y respondes.",
     },
     {
-      name: "Sostener",
+      name: "Levantarte",
       focus: "learning",
       label: "Aprendizaje",
       message:
         "Hoy repite sin buscar novedad. La profundidad aparece cuando una idea sobrevive al entusiasmo.",
     },
     {
-      name: "Compartir",
+      name: "Tomar accion",
       focus: "connection",
       label: "Integracion",
       message:
         "Hoy comparte una idea util o una accion cumplida sin convertirla en una actuacion.",
     },
     {
-      name: "Revisar",
+      name: "Anotar",
       focus: "all",
       label: "Revision",
       message:
@@ -466,48 +466,166 @@
   };
 
   const byId = Object.fromEntries(resources.map((resource) => [resource.id, resource]));
+  const focusLabels = {
+    learning: "Mente",
+    movement: "Cuerpo",
+    finance: "Finanzas",
+    connection: "Vinculos",
+    all: "Integracion",
+  };
+  const lifeAreaProfiles = {
+    mentalidad: {
+      primary: "learning",
+      label: "Mentalidad y disciplina",
+      message: "construir confianza en tu palabra y una respuesta mas consciente",
+    },
+    bienestar: {
+      primary: "movement",
+      label: "Salud y bienestar",
+      message: "proteger energia, movimiento y una relacion mas amable con tu cuerpo",
+    },
+    profesional: {
+      primary: "learning",
+      secondary: "finance",
+      label: "Trabajo y profesion",
+      message: "convertir atencion, aprendizaje y decisiones en trabajo visible",
+    },
+    finanzas: {
+      primary: "finance",
+      label: "Finanzas personales",
+      message: "cambiar evitacion por informacion, criterio y decisiones pequenas",
+    },
+    relaciones: {
+      primary: "connection",
+      label: "Relaciones y vida cotidiana",
+      message: "practicar presencia, limites, escucha y reparacion",
+    },
+  };
+
+  function getSessionMinutes(value) {
+    const minutes = Number(value);
+    return [2, 10, 20].includes(minutes) ? minutes : 10;
+  }
+
+  function getFocus(safeDay, rhythm, profile) {
+    if (!profile) return rhythm.focus;
+    if (rhythm.focus === "all") return profile.primary;
+    const slot = (safeDay - 1) % rhythms.length;
+    if (slot === 0 || slot === 3) return profile.primary;
+    if (slot === 5 && profile.secondary) return profile.secondary;
+    return rhythm.focus;
+  }
+
+  function doseAction(type, defaultAction, baseAction, minutes, energy) {
+    if (minutes === 2) {
+      return {
+        learning:
+          "Lee un solo parrafo o apartado. Escribe una idea que puedas aplicar antes de cerrar esta sesion.",
+        movement:
+          "Haz dos minutos de movimiento suave y seguro. La meta de hoy es activar, no exigirte.",
+        finance:
+          "Abre la informacion necesaria y registra un solo dato financiero sin intentar resolverlo todo.",
+        connection:
+          "Prepara o envia una sola frase honesta que cuide el vinculo y tambien tu limite.",
+      }[type];
+    }
+    if (minutes === 20) {
+      const closing = {
+        learning: "Usa los minutos restantes para escribir como aplicaras la idea.",
+        movement: "Si tu cuerpo responde bien, continua de forma gradual y termina observando tu energia.",
+        finance: "Usa los minutos restantes para ordenar la siguiente decision y su fecha.",
+        connection: "Usa los minutos restantes para escuchar, responder o reparar sin apresurarte.",
+      }[type];
+      return `${defaultAction} ${closing}`;
+    }
+    if (energy === "low" && type === "movement") {
+      return `Elige la version mas suave y segura de esta practica: ${baseAction}.`;
+    }
+    return defaultAction;
+  }
 
   function getModule(day) {
     const safeDay = Math.max(1, Math.min(100, Number(day) || 1));
     return modules.find(({ start, end }) => safeDay >= start && safeDay <= end) || modules[0];
   }
 
-  function getLifeProgram(day) {
+  function getLifeProgram(day, options = {}) {
     const safeDay = Math.max(1, Math.min(100, Number(day) || 1));
     const module = getModule(safeDay);
     const rhythm = rhythms[(safeDay - 1) % rhythms.length];
+    const profile = lifeAreaProfiles[options.lifeArea] || null;
+    const minutes = getSessionMinutes(options.minutes);
+    const energy = ["low", "steady", "high"].includes(options.energy)
+      ? options.energy
+      : "steady";
+    const focus = getFocus(safeDay, rhythm, profile);
     const reading = byId[module.reading];
     const video = byId[module.video];
     const slot = (safeDay - 1) % rhythms.length;
+    const learningAction =
+      slot === 6
+        ? `Revisa una idea que ya marcaste de ${reading.title} y escribe como aparecio en tu semana.`
+        : `Dedica de 5 a 10 minutos a ${reading.title}. ${reading.use}`;
+    const movementAction = templates.movement[slot](module.movement);
+    const financeAction = templates.finance[slot](module.finance);
+    const connectionAction = templates.connection[slot](module.connection);
+    const trackMessage = profile
+      ? `Tu direccion elegida es ${profile.label.toLowerCase()}: hoy la conectamos con ${profile.message}.`
+      : "Hoy conectas el Metodo con una dimension concreta de tu vida.";
 
     return {
       day: safeDay,
       week: module.week,
       module: module.title,
       outcome: module.outcome,
-      guideMessage: `${rhythm.message} ${module.guide}`,
+      guideMessage: `${rhythm.message} ${module.guide} ${trackMessage}`,
       rhythm: rhythm.name,
-      focus: rhythm.focus,
-      focusLabel: rhythm.label,
+      focus,
+      focusLabel: focusLabels[focus] || rhythm.label,
+      track: profile
+        ? { label: profile.label, message: profile.message }
+        : { label: "Dominio personal", message: "integrar las cuatro dimensiones" },
+      dose: { minutes, energy },
       learning: {
         title: `Aprende con ${reading.title}`,
-        action:
-          slot === 6
-            ? `Revisa una idea que ya marcaste de ${reading.title} y escribe como aparecio en tu semana.`
-            : `Dedica de 5 a 10 minutos a ${reading.title}. ${reading.use}`,
+        action: doseAction(
+          "learning",
+          learningAction,
+          reading.use,
+          minutes,
+          energy
+        ),
         resource: reading,
       },
       movement: {
         title: "Cuida tu cuerpo",
-        action: templates.movement[slot](module.movement),
+        action: doseAction(
+          "movement",
+          movementAction,
+          module.movement,
+          minutes,
+          energy
+        ),
       },
       finance: {
         title: "Ordena tu dinero",
-        action: templates.finance[slot](module.finance),
+        action: doseAction(
+          "finance",
+          financeAction,
+          module.finance,
+          minutes,
+          energy
+        ),
       },
       connection: {
         title: "Fortalece un vinculo",
-        action: templates.connection[slot](module.connection),
+        action: doseAction(
+          "connection",
+          connectionAction,
+          module.connection,
+          minutes,
+          energy
+        ),
       },
       video: {
         title: video.title,

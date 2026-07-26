@@ -2,15 +2,17 @@
 
 ## Estado del proyecto
 
-Version: 1.0
+Version: 1.1 Alpha
 
 Estado: PRODUCTO LISTO PARA VALIDACION ALPHA
 
-Fecha de cierre de construccion: 24/06/2026
+Fecha de cierre de construccion inicial: 24/06/2026
+
+Ultima revision integral: 26/07/2026
 
 Regla: NO AGREGAR NUEVOS MODULOS DEL METODO HASTA TERMINAR EL ALPHA.
 
-Repositorio de la V1.0 cerrada de **100 Dias: El Metodo**, un sistema de dominio personal actualmente en fase de validacion Alpha.
+Repositorio de **100 Dias: El Metodo**, un sistema de dominio personal actualmente en fase de validacion Alpha.
 
 ## Punto de partida operativo
 
@@ -30,15 +32,18 @@ Ese archivo resume que esta listo, que falta conectar y cual es la primera accio
 - Programa publico de creadores en `embajadores.html`.
 - Terminos de creadores en `terminos-embajadores.html`.
 - Plataforma del participante en `acceso.html`.
+- Aplicacion organizada en Hoy, Camino, Diario, Biblioteca y Mi sistema.
 - Biblioteca integral y compartible en `biblioteca.html`.
 - Sistema canonico de continuidad en `SISTEMA_DE_VIDA_DIARIA.md`.
 - Curriculo, guia y modulos en `CURRICULO_INTEGRAL_100_DIAS.md`.
 - Recorrido completo con tema, objetivo y tarea diferenciados para cada dia hasta el Dia 100.
 - Rutas internas de transformacion para que el participante atraviese etapas, no solo acumule dias.
-- Pacto personal con area, meta, senal cotidiana, lugar, accion minima y version de regreso.
+- Pacto personal con una de cinco direcciones: mentalidad, bienestar, profesion, finanzas o relaciones.
+- Dosis diaria adaptativa de 2, 10 o 20 minutos segun energia y tiempo real.
+- Pacto con meta, senal cotidiana, lugar, accion minima y version de regreso.
 - Ritual diario de orientar, ejecutar, registrar y volver.
 - Aurelia como voz editorial transparente y ciclo VITAL.
-- Practicas de mente, cuerpo, finanzas y vinculos con un foco recomendado.
+- Practicas complementarias de mente, cuerpo, finanzas y vinculos con un foco recomendado.
 - Libros, videos y recursos institucionales conectados con cada etapa.
 - Avance secuencial de una jornada por fecha calendario.
 - Racha real por fechas y dias activos durante los ultimos siete dias.
@@ -98,13 +103,9 @@ No agregar nuevos modulos, comunidad, certificaciones ni conceptos hasta complet
 
 ## Venta y medicion
 
-Para activar cobros reales:
-
-1. Crear links PayPal para Alpha, Metodo, Sistema y Premium.
-2. Crear Stripe Payment Links para Alpha, Metodo, Sistema y Premium.
-3. Pegarlos en `assets/payments.js`.
-
-Estado actual: PayPal y Stripe estan configurados para USD 9, USD 29, USD 79 y USD 297.
+PayPal y Stripe estan configurados en `assets/payments.js` para USD 9, USD 29,
+USD 79 y USD 297. Antes de abrir una campana se debe ejecutar una compra real
+de bajo riesgo y confirmar pago, retorno y entrega.
 
 Para recibir leads y eventos fuera del navegador:
 
@@ -162,6 +163,16 @@ En `biblioteca.html` puede:
 
 Los datos del curriculo y la biblioteca viven en
 `assets/life-program.js`. La interfaz publica usa `assets/library.js`.
+
+La navegacion principal usa:
+
+- `acceso.html#hoy`: sesion diaria y dosis adaptativa.
+- `acceso.html#camino`: etapas, modulos y mapa.
+- `acceso.html#diario`: evidencia y revisiones.
+- `acceso.html#sistema`: activacion, recordatorios, respaldo y soporte.
+
+El reporte tecnico de la revision actual esta en
+`validation/QA_RELEASE_V1_1.md`.
 
 El calendario sigue funcionando con la pagina cerrada despues de importarlo. El
 aviso del navegador de esta version funciona mientras la plataforma esta

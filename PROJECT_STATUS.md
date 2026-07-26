@@ -2,7 +2,7 @@
 
 ## Version
 
-1.0
+1.1 Alpha
 
 ## Estado
 
@@ -18,19 +18,25 @@ PRODUCTO LISTO PARA VALIDACION ALPHA
 - Operacion: COMPRA ACTIVA / VALIDACION DE PAGO MANUAL
 - Mercado: PROGRAMA DE EMBAJADORES PREPARADO / PENDIENTE DE PRIMERA COHORTE
 - Contenido de lanzamiento: 14 DIAS LISTOS / 25 PIEZAS VISUALES EXPORTADAS
-- Recorrido del participante: 100 DIAS DIFERENCIADOS / 14 RUTAS INTERNAS
+- Recorrido del participante: 100 DIAS DIFERENCIADOS / 15 MODULOS
+- Navegacion del producto: HOY / CAMINO / DIARIO / BIBLIOTECA / MI SISTEMA
+- Adaptacion diaria: ENERGIA + DOSIS DE 2, 10 O 20 MINUTOS
+- Direcciones personales: MENTALIDAD / BIENESTAR / PROFESION / FINANZAS / RELACIONES
 - Recordatorios: CALENDARIO DEL DISPOSITIVO + AVISO DEL NAVEGADOR LISTOS
 - Continuidad diaria: PACTO PERSONAL + RITUAL + PROTOCOLO DE REGRESO LISTOS
 - Cadencia: UNA JORNADA POR FECHA + RACHA CALENDARIO REAL LISTAS
 - Resiliencia: INSTALACION + MODO SIN CONEXION + COPIA Y RESTAURACION LISTOS
 - Guia editorial: AURELIA + CICLO VITAL LISTOS
-- Curriculo integral: 15 MODULOS / 100 DIAS / 4 DIMENSIONES LISTOS
+- Curriculo integral: 15 MODULOS / 100 DIAS / 5 DIRECCIONES + 4 PRACTICAS LISTOS
 - Biblioteca: 14 RECURSOS INICIALES CON FUENTE Y FUNCION COMPARTIR LISTOS
-- Validacion: EN CURSO
+- QA de producto: 10 DIAS SIMULADOS / 4,500 COMBINACIONES VERIFICADAS
+- Validacion de mercado: EN CURSO
 
 ## Fecha de cierre de construccion
 
-16/06/2026
+Construccion inicial: 16/06/2026
+
+Revision integral actual: 26/07/2026
 
 ## Regla operativa
 
@@ -83,8 +89,10 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 - Rutas internas: Activacion, Evidencia, Control, Fortaleza, Direccion, Sistema Personal y cierre con evidencia
 - Progresion: dias futuros visibles pero bloqueados para evitar saltos accidentales
 - Ritmo diario: cerrar una jornada habilita la siguiente en una nueva fecha calendario
-- Personalizacion: el Dia 0 alimenta senal, accion minima, regreso, dashboard, calendario y avisos
-- Vida integral: mente, movimiento, finanzas y vinculos con foco diario recomendado
+- Personalizacion: el Dia 0 alimenta direccion, senal, accion minima, regreso, dashboard, calendario y avisos
+- Adaptacion: antes de ejecutar, el participante indica energia y elige una dosis real de 2, 10 o 20 minutos
+- Espacios: Hoy concentra la accion; Camino muestra etapas; Diario conserva evidencia; Mi sistema contiene soporte y datos
+- Vida integral: cinco direcciones personales y cuatro practicas complementarias con foco diario recomendado
 - Acompanamiento: Aurelia organiza la jornada; los filosofos se presentan como mentores historicos
 - Recursos: biblioteca publica con lecturas abiertas, OMS, CFPB y videos identificados
 - Evidencia diaria: intencion, accion realizada, practicas integrales, reflexion y estado
@@ -100,6 +108,18 @@ La experiencia canonica esta definida en `PROGRAMA_100_DIAS.md`. La entrega y lo
 - Ventana de ascenso: 60 dias
 - Control financiero: outputs/embajadores-dia-1/EMBAJADORES_CONTROL.xlsx
 - Eventos de creadores: affiliate_landing_view, ambassador_cta_click, ambassador_application_submit, ambassador_thank_you_view
+
+## Calidad verificada
+
+- 4,500 combinaciones del programa: 100 dias x 5 direcciones x 3 dosis x 3 niveles de energia.
+- Simulacion de participante durante 10 dias con estados completo, parcial y perdido.
+- Protocolo de regreso, racha, revision del Dia 7 e identidad Constructor comprobados.
+- Landing, acceso y biblioteca sin errores de consola ni recursos fallidos.
+- Nueve paginas sin desbordamiento horizontal a 390 px y 1440 px.
+- Lighthouse: Landing 90/100/100/100; Acceso 91/100/100/100; Biblioteca 99/100/100/100.
+- HTML semantico, JavaScript, enlaces locales y cache offline validados.
+
+Reporte: `validation/QA_RELEASE_V1_1.md`.
 
 ## Objetivo del Alpha
 

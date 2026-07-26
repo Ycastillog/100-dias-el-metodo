@@ -17,7 +17,7 @@ El contenido de esa jornada esta definido en
 
 Antes del Dia 1, cada participante define:
 
-1. Un area de vida.
+1. Una direccion entre mentalidad, bienestar, profesion, finanzas o relaciones.
 2. Una direccion observable para los 100 dias.
 3. La razon por la que importa.
 4. Una senal cotidiana que ya existe.
@@ -39,7 +39,9 @@ decidir abandonar.
 
 El participante ve su meta, su senal, la capacidad que esta entrenando y la
 tarea del Metodo. Aurelia ubica el modulo y el paso VITAL. La persona define que
-protegera durante esa jornada.
+protegera durante esa jornada. Antes de comenzar, registra su energia y elige
+una dosis de 2, 10 o 20 minutos. El sistema ajusta el mensaje, la mision y el
+foco recomendado sin cambiar la direccion del pacto.
 
 ### 2. Volver
 
@@ -124,6 +126,7 @@ El tablero muestra:
 - Porcentaje completado.
 - Ultimo movimiento.
 - Proxima accion.
+- Dosis y energia registradas en cada entrada del diario.
 
 La metrica principal del negocio sigue siendo:
 
