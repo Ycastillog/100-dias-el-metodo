@@ -1,0 +1,14 @@
+{
+  "name": "100-dias-el-metodo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 8790 --strictPort",
+    "build": "vite build && node hosting/stage-assets.mjs",
+    "test": "node --test hosting/*.test.mjs"
+  },
+  "devDependencies": {
+    "@openai/sites-vite-plugin": "0.2.0",
+    "vite": "8.2.2"
+  }
+}

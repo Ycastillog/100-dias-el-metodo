@@ -39,7 +39,7 @@ const LIFE_AREA_LABELS = {
 const PLAN_DETAILS = {
   Alpha: {
     key: "alpha",
-    label: "Grupo Alpha",
+    label: "Acceso Alpha",
     price: "USD 9",
   },
   "El Metodo": {
