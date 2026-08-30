@@ -7,7 +7,7 @@ export function respond(request, assets) {
   });
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     headers.set('Allow', 'GET, HEAD');
-    return new Response('Esta revisión no acepta registros ni pagos.', { status: 405, headers });
+    return new Response('Esta versión no acepta registros ni pagos.', { status: 405, headers });
   }
   let pathname;
   try { pathname = decodeURIComponent(new URL(request.url).pathname); }

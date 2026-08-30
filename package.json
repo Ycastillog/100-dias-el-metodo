@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 8790 --strictPort",
+    "dev:prelaunch": "vite --mode prelaunch --host 127.0.0.1 --port 8790 --strictPort",
     "build": "vite build && node hosting/stage-assets.mjs",
+    "build:prelaunch": "vite build --mode prelaunch && node hosting/stage-assets.mjs --prelaunch",
     "test": "node --test hosting/*.test.mjs"
   },
   "devDependencies": {

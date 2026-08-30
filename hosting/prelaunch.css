@@ -1,0 +1,12 @@
+.skip-link{position:absolute;left:16px;top:-100px;z-index:100;padding:14px;background:#f7f4ec;color:#090a08}.skip-link:focus{top:12px}
+.launch-notice{padding:13px 20px;text-align:center;border-bottom:1px solid var(--line);background:#1c2118;color:#e2ebd3;font-size:14px;line-height:1.5}
+.prelaunch-page .app-header>.button{min-height:42px;padding:10px 14px;font-size:13px}
+.prelaunch-page .official-socials{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.prelaunch-page .daily-experience-copy>p:not(.eyebrow){max-width:660px;color:var(--muted);line-height:1.7}
+.prelaunch-page .daily-experience-section{display:grid;gap:36px;align-items:start}
+.prelaunch-page footer a{text-decoration:underline;text-underline-offset:4px}
+.prelaunch-page :focus-visible{outline:3px solid var(--gold-strong);outline-offset:5px}
+.prelaunch-page .information-page{max-width:850px;margin:auto;padding:48px 24px;line-height:1.8}
+@media(min-width:1040px){.prelaunch-page .daily-experience-section{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px}.prelaunch-page .app-header nav{display:flex}}
+@media(max-width:480px){.prelaunch-page .official-socials .button{width:100%}.launch-notice{font-size:12px}.prelaunch-page .app-header{gap:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}

@@ -2,17 +2,22 @@ import { defineConfig } from 'vite';
 import { sites } from '@openai/sites-vite-plugin';
 import { resolve } from 'node:path';
 import { loadAssets, PUBLIC_FILES } from './hosting/asset-manifest.mjs';
+import { loadPrelaunchAssets, PRELAUNCH_FILES } from './hosting/prelaunch-assets.mjs';
 
 const virtualId = '\0virtual:brand-review-assets';
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const prelaunch = mode === 'prelaunch';
+  const files = prelaunch ? PRELAUNCH_FILES : PUBLIC_FILES;
+  const readAssets = prelaunch ? loadPrelaunchAssets : loadAssets;
+  return {
   publicDir: false,
   plugins: [sites(), {
     name: 'brand-private-review',
     resolveId(id) { return id === 'virtual:brand-review-assets' ? virtualId : null; },
     async load(id) {
       if (id !== virtualId) return;
-      for (const file of PUBLIC_FILES) this.addWatchFile(resolve(file));
-      return 'export default ' + JSON.stringify(await loadAssets(process.cwd()));
+      for (const file of files) this.addWatchFile(resolve(file));
+      return 'export default ' + JSON.stringify(await readAssets(process.cwd()));
     },
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
@@ -31,4 +36,5 @@ export default defineConfig({
     ssr: 'hosting/worker.mjs', outDir: 'dist/server', emptyOutDir: true,
     rolldownOptions: { output: { entryFileNames: 'index.js' } },
   },
+  };
 });
