@@ -29,10 +29,10 @@
   <a class="skip-link" href="#inicio">Saltar al contenido</a>
   <header class="app-header">
     <a class="brand" href="#inicio" aria-label="100 Días — El Método"><span>100</span><strong>Días</strong></a>
-    <nav aria-label="Principal"><a href="#cambio">Cómo funciona</a><a href="#experiencia">Prueba una acción</a><a href="#comunidad">Nuestras redes</a></nav>
-    <a class="button secondary" href="#experiencia">Empieza por hoy</a>
+    <nav aria-label="Principal"><a href="#cambio">Cómo funciona</a><a href="#experiencia">Prueba una acción</a><a href="#lista-espera">Lista de espera</a></nav>
+    <a class="button secondary" href="#lista-espera" data-track="waitlist_cta" data-detail="header">Avísame al lanzar</a>
   </header>
-  <aside class="launch-notice" role="note">Prelanzamiento · Puedes explorar esta muestra. Todavía no aceptamos pagos ni registros.</aside>
+  <aside class="launch-notice" role="note">Prelanzamiento · Muestra abierta y lista de espera. Todavía no aceptamos pagos.</aside>
   <main>
     <section class="sales-hero" id="inicio">
       <div class="sales-copy">
@@ -45,7 +45,7 @@
           <span role="listitem"><b>02</b> Haz una acción concreta</span>
           <span role="listitem"><b>03</b> Registra lo que pasó</span>
         </div>
-        <div class="hero-actions"><a class="button primary" href="#experiencia">Probar una acción hoy</a><a class="button secondary" href="#comunidad">Conocer nuestras redes</a></div>
+        <div class="hero-actions"><a class="button primary" href="#experiencia">Probar una acción hoy</a><a class="button secondary" href="#lista-espera" data-track="waitlist_cta" data-detail="hero">Recibir aviso de lanzamiento</a></div>
         <p class="hero-reassurance">No necesitas una rutina perfecta para probar la muestra. Una libreta o una nota en tu teléfono es suficiente.</p>
       </div>
       <aside class="hero-visual" aria-label="Vista del diseño del programa en preparación">
@@ -83,20 +83,51 @@
         <p class="day-companion-preview">El registro describe un hecho. No mide tu valor ni te exige fingir que el día fue perfecto.</p>
       </article>
     </section>
+    <section class="waitlist-section section-band" id="lista-espera" aria-labelledby="waitlist-title">
+      <div class="waitlist-copy">
+        <p class="eyebrow">Sé de los primeros</p>
+        <h2 id="waitlist-title">Recibe el aviso cuando el Método esté listo.</h2>
+        <p>Te escribiremos únicamente sobre el lanzamiento, los materiales de práctica y los libros del proyecto. Unirte no crea una cuenta ni realiza un pago.</p>
+        <ul>
+          <li>Una muestra clara de lo que incluirá el recorrido.</li>
+          <li>Fecha de apertura y opciones disponibles.</li>
+          <li>Acceso para salir de la lista cuando quieras.</li>
+        </ul>
+      </div>
+      <form class="waitlist-form" method="post" action="/api/waitlist">
+        <label>Nombre <span>(opcional)</span><input type="text" name="name" autocomplete="name" maxlength="80"></label>
+        <label>Correo electrónico <input type="email" name="email" autocomplete="email" inputmode="email" maxlength="254" required></label>
+        <label>¿Qué te interesa más?
+          <select name="interest">
+            <option value="metodo">El Método de 100 días</option>
+            <option value="libros">Los libros y lecturas</option>
+            <option value="ambos">Ambos</option>
+          </select>
+        </label>
+        <label class="waitlist-consent"><input type="checkbox" name="consent" value="yes" required><span>Quiero recibir el aviso de lanzamiento y materiales relacionados. He leído la <a href="privacidad.html">información de privacidad</a>.</span></label>
+        <label class="waitlist-honeypot" aria-hidden="true">Tu sitio web<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <input type="hidden" name="utm_source" data-utm-field="source">
+        <input type="hidden" name="utm_medium" data-utm-field="medium">
+        <input type="hidden" name="utm_campaign" data-utm-field="campaign">
+        <button class="button primary" type="submit">Quiero recibir el aviso</button>
+        <p class="waitlist-fineprint">Sin cobro. Sin promesas de resultados. Tus datos se usan para este aviso.</p>
+      </form>
+    </section>
     <section class="future-section final-cta" id="comunidad">
-      <div><p class="eyebrow">100 Días — El Método</p><h2>Conoce las cuentas del proyecto.</h2><p>Compartiremos ejercicios, lecturas y ejemplos para poner una idea en práctica. El programa y los libros están en preparación; esta página no vende ni recibe solicitudes de acceso.</p></div>
-      <div class="official-socials" aria-label="Redes oficiales"><a class="button primary" href="https://www.youtube.com/@100diaselmetodooficial" rel="noopener noreferrer">YouTube</a><a class="button secondary" href="https://www.instagram.com/100diaselmetodo/" rel="noopener noreferrer">Instagram</a><a class="button secondary" href="https://www.facebook.com/100diaselmetodo" rel="noopener noreferrer">Facebook</a></div>
+      <div><p class="eyebrow">100 Días — El Método</p><h2>Conoce las cuentas del proyecto.</h2><p>Compartiremos ejercicios, lecturas y ejemplos para poner una idea en práctica. El programa y los libros están en preparación; esta página recibe solicitudes para la lista de espera, pero todavía no vende accesos.</p></div>
+      <div class="official-socials" aria-label="Redes oficiales"><a class="button primary" href="https://www.youtube.com/@100diaselmetodooficial" rel="noopener noreferrer" data-track="social_outbound" data-detail="youtube">YouTube</a><a class="button secondary" href="https://www.instagram.com/100diaselmetodo/" rel="noopener noreferrer" data-track="social_outbound" data-detail="instagram">Instagram</a><a class="button secondary" href="https://www.facebook.com/100diaselmetodo" rel="noopener noreferrer" data-track="social_outbound" data-detail="facebook">Facebook</a></div>
     </section>
     <section class="faq-section section-band" id="preguntas">
       <div class="section-head"><p class="eyebrow">Antes de empezar</p><h2>Qué es esta versión y qué no es.</h2></div>
       <div class="resource-list faq-grid">
         <div><strong>¿Puedo comprar el programa?</strong><span>Todavía no desde esta página. El pago y la entrega del programa completo siguen en preparación.</span></div>
-        <div><strong>¿Se guardan mis respuestas?</strong><span>No. La muestra es estática y no tiene formularios. Guarda tus notas donde prefieras.</span></div>
+        <div><strong>¿Se guardan mis respuestas?</strong><span>No. La práctica sigue siendo una muestra estática. El único formulario guarda los datos de la lista de espera que tú decides enviar.</span></div>
         <div><strong>¿Promete cambiar mi vida en 100 días?</strong><span>No. Los 100 días son la duración del recorrido, no una garantía de resultados.</span></div>
         <div><strong>¿Reemplaza ayuda profesional?</strong><span>No. Es material educativo para practicar acciones y revisar hábitos; no sustituye atención médica, terapia ni asesoría profesional.</span></div>
       </div>
     </section>
   </main>
-  <footer><p>100 Días — El Método. Una meta. Una acción diaria.</p><p>Prelanzamiento · Sin cobros ni registro de participantes en esta versión.</p><p><a href="privacidad.html">Información sobre datos y enlaces</a> · <a href="#inicio">Volver al inicio</a></p></footer>
+  <footer><p>100 Días — El Método. Una meta. Una acción diaria.</p><p>Prelanzamiento · Lista de espera activa; sin cobros ni cuentas de participantes.</p><p><a href="privacidad.html">Información sobre datos y enlaces</a> · <a href="#inicio">Volver al inicio</a></p></footer>
+  <script src="assets/prelaunch.js" defer></script>
 </body>
 </html>

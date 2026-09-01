@@ -4,9 +4,24 @@
 .prelaunch-page .official-socials{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .prelaunch-page .daily-experience-copy>p:not(.eyebrow){max-width:660px;color:var(--muted);line-height:1.7}
 .prelaunch-page .daily-experience-section{display:grid;gap:36px;align-items:start}
+.prelaunch-page .waitlist-section{display:grid;gap:34px;align-items:start;background:linear-gradient(140deg,rgba(240,207,122,.08),rgba(57,194,118,.05));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.prelaunch-page .waitlist-copy h2{max-width:720px;margin-bottom:18px}
+.prelaunch-page .waitlist-copy>p{max-width:660px;color:var(--muted);line-height:1.7}
+.prelaunch-page .waitlist-copy ul{display:grid;gap:10px;margin:24px 0 0;padding-left:22px;color:var(--muted)}
+.prelaunch-page .waitlist-form{display:grid;gap:16px;padding:clamp(22px,4vw,36px);border:1px solid var(--line);background:rgba(12,14,11,.92);box-shadow:0 24px 70px rgba(0,0,0,.24)}
+.prelaunch-page .waitlist-form label{display:grid;gap:8px;color:var(--paper);font-weight:700;font-size:14px}
+.prelaunch-page .waitlist-form label span{color:var(--muted);font-weight:500}
+.prelaunch-page .waitlist-form input:not([type=checkbox]),.prelaunch-page .waitlist-form select{width:100%;min-height:48px;border:1px solid var(--line);background:#f7f4ec;color:#11130f;padding:11px 13px;font:inherit;border-radius:0}
+.prelaunch-page .waitlist-form input:focus,.prelaunch-page .waitlist-form select:focus{border-color:var(--gold-strong);box-shadow:0 0 0 3px rgba(240,207,122,.18);outline:0}
+.prelaunch-page .waitlist-consent{grid-template-columns:22px minmax(0,1fr)!important;align-items:start;font-weight:500!important;line-height:1.55}
+.prelaunch-page .waitlist-consent input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}
+.prelaunch-page .waitlist-consent a{color:var(--gold-strong);text-decoration:underline;text-underline-offset:3px}
+.prelaunch-page .waitlist-honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.prelaunch-page .waitlist-form .button{width:100%;border:0;cursor:pointer}
+.prelaunch-page .waitlist-fineprint{margin:0;text-align:center;color:var(--muted);font-size:12px;line-height:1.5}
 .prelaunch-page footer a{text-decoration:underline;text-underline-offset:4px}
 .prelaunch-page :focus-visible{outline:3px solid var(--gold-strong);outline-offset:5px}
 .prelaunch-page .information-page{max-width:850px;margin:auto;padding:48px 24px;line-height:1.8}
-@media(min-width:1040px){.prelaunch-page .daily-experience-section{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px}.prelaunch-page .app-header nav{display:flex}}
+@media(min-width:1040px){.prelaunch-page .daily-experience-section,.prelaunch-page .waitlist-section{grid-template-columns:minmax(0,1fr) minmax(360px,.72fr);gap:64px}.prelaunch-page .app-header nav{display:flex}}
 @media(max-width:480px){.prelaunch-page .official-socials .button{width:100%}.launch-notice{font-size:12px}.prelaunch-page .app-header{gap:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}

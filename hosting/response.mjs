@@ -1,17 +1,22 @@
-export function respond(request, assets) {
+import { handleAnalyticsEvent, handleWaitlistSignup } from './waitlist.mjs';
+
+export async function respond(request, assets, env = {}) {
   const headers = new Headers({
     'Cache-Control': 'private, no-store',
     'X-Content-Type-Options': 'nosniff',
     'X-Robots-Tag': 'noindex, nofollow',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
   });
-  if (request.method !== 'GET' && request.method !== 'HEAD') {
-    headers.set('Allow', 'GET, HEAD');
-    return new Response('Esta versión no acepta registros ni pagos.', { status: 405, headers });
-  }
   let pathname;
   try { pathname = decodeURIComponent(new URL(request.url).pathname); }
   catch { return new Response('Dirección no válida.', { status: 400, headers }); }
+
+  if (pathname === '/api/waitlist') return handleWaitlistSignup(request, env, headers);
+  if (pathname === '/api/events') return handleAnalyticsEvent(request, env, headers);
+  if (request.method !== 'GET' && request.method !== 'HEAD') {
+    headers.set('Allow', 'GET, HEAD');
+    return new Response('Esta versión no acepta ese tipo de solicitud.', { status: 405, headers });
+  }
   const found = Object.hasOwn(assets, pathname) ? assets[pathname] : null;
   const asset = found ?? assets['/404.html'];
   if (!asset) return new Response(null, { status: 404, headers });
