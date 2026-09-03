@@ -7,7 +7,7 @@ test('default PayPal transport preserves the Workers global fetch receiver', asy
   let calls = 0;
   globalThis.fetch = async function(url, options) {
     assert.equal(this, globalThis, 'Worker fetch must not be detached'); calls++;
-    assert.equal(options.redirect, 'manual', 'Workers supports manual or follow; never forward credentials on redirects');
+    assert.equal(options.redirect, 'manual', 'Handle redirects explicitly; never forward credentials to another destination');
     return Response.json(url.endsWith('/token') ? { access_token: 'test-token' } : { id: 'ORDER123' });
   };
   const order = await paypalClient({ PAYPAL_ENV: 'sandbox', PAYPAL_CLIENT_ID: 'test', PAYPAL_CLIENT_SECRET: 'test' }).getOrder('ORDER123');

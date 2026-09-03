@@ -80,14 +80,29 @@ comercio, importe, firma, reintentos, aislamiento de compras, duración, límite
 plan, conflictos del diario, entrega y recuperación. Las pruebas de interfaz no
 realizan cargos y no sustituyen una compra aprobada en PayPal Sandbox.
 
-Completado contra PayPal: autenticación Live y Sandbox, pedidos Sandbox sin
-aprobar, registro de webhooks, verificación del comercio Live sin captura.
-Pendiente: compra aprobada y capturada con comprador ficticio de Sandbox,
-recepción real de sus eventos, recuperación y reembolso de esa misma prueba.
-La sesión del panel expiró antes de esa prueba; se pidió al titular volver a
-iniciar sesión. No abrir cobros reales ni afirmar una prueba de extremo a extremo
-completada hasta obtener esa evidencia. No realizar un cargo o devolución Live
-para probar sin una autorización específica del titular.
+Completado contra PayPal: autenticación Live y Sandbox, registro de webhooks y
+verificación del comercio Live sin captura. El 3 de septiembre se aprobaron y
+capturaron dos compras ficticias a través del backend desplegado: Alpha USD 9 y
+Método USD 29. Ambas entregaron su código privado y acceso correcto a 14/100 días.
+Se verificaron recuperación en otro dispositivo, guardado durable de un perfil
+ficticio, conflicto de edición (409), aislamiento entre compras y rechazo de un
+código Sandbox por Live (401). Repetir la captura devolvió el mismo recibo.
+
+La devolución Sandbox de Alpha llegó como evento firmado real, revocó el acceso
+y bloqueó tanto la sesión como la recuperación (401). Un COMPLETED tardío llegó
+después del REFUNDED y no reactivó la compra. No se usaron eventos simulados para
+esa prueba ni se hizo una compra con dinero real. La segunda captura y la
+devolución del Método también se tramitaron en Sandbox. Los pedidos y eventos de
+prueba permanecen identificados por `environment=sandbox`, sin borrar registros.
+
+El transporte PayPal conserva el receptor global de fetch y usa redirect manual:
+no sigue redirecciones ni reenvía credenciales. El diagnóstico temporal detallado
+se retiró. Los fallos solo registran fase y categorías acotadas, sin mensajes
+crudos, claves ni datos del comprador. La primera clave temporal de prueba se
+rotó y se cambió a Authorization tras verificar la redacción de logs. Retirar
+CHECKOUT_TEST_TOKEN y CHECKOUT_TEST_EXPIRES_AT al habilitar CHECKOUT_ENABLED=true.
+PAYPAL_ENV permanece live. No hacer cargos ni devoluciones Live para probar sin
+autorización específica del titular. Primera compra real aún no realizada.
 
 Publicar requiere: `npm test`, `npm run build:sales`, fuente exacta subida,
 archivo creado con el empaquetador oficial de Sites y despliegue de esa versión.
