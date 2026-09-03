@@ -3,18 +3,27 @@ import { sites } from '@openai/sites-vite-plugin';
 import { resolve } from 'node:path';
 import { loadAssets, PUBLIC_FILES } from './hosting/asset-manifest.mjs';
 import { loadPrelaunchAssets, PRELAUNCH_FILES } from './hosting/prelaunch-assets.mjs';
+import { loadSalesAssets, SALES_FILES } from './hosting/sales-assets.mjs';
+import { programModule, PROGRAM_FILES } from './hosting/program-source.mjs';
 
 const virtualId = '\0virtual:brand-review-assets';
+const programId = '\0virtual:private-program';
 export default defineConfig(({ mode }) => {
   const prelaunch = mode === 'prelaunch';
-  const files = prelaunch ? PRELAUNCH_FILES : PUBLIC_FILES;
-  const readAssets = prelaunch ? loadPrelaunchAssets : loadAssets;
+  const sales = mode === 'sales';
+  const files = sales ? SALES_FILES : prelaunch ? PRELAUNCH_FILES : PUBLIC_FILES;
+  const readAssets = sales ? loadSalesAssets : prelaunch ? loadPrelaunchAssets : loadAssets;
   return {
   publicDir: false,
   plugins: [sites(), {
     name: 'brand-private-review',
-    resolveId(id) { return id === 'virtual:brand-review-assets' ? virtualId : null; },
+    resolveId(id) { return id === 'virtual:brand-review-assets' ? virtualId : id === 'virtual:private-program' ? programId : null; },
     async load(id) {
+      if (id === programId) {
+        if (!sales) return 'export default null;';
+        for (const file of PROGRAM_FILES) this.addWatchFile(resolve(file));
+        return programModule(process.cwd());
+      }
       if (id !== virtualId) return;
       for (const file of files) this.addWatchFile(resolve(file));
       return 'export default ' + JSON.stringify(await readAssets(process.cwd()));
@@ -45,7 +54,9 @@ export default defineConfig(({ mode }) => {
           if (!['GET', 'HEAD'].includes(req.method)) init.body = Buffer.concat(chunks);
           const response = await worker.fetch(new Request(url, init));
           res.statusCode = response.status;
-          response.headers.forEach((value, name) => res.setHeader(name, value));
+          response.headers.forEach((value, name) => { if (name !== 'set-cookie') res.setHeader(name, value); });
+          const cookies = response.headers.getSetCookie();
+          if (cookies.length) res.setHeader('set-cookie', cookies);
           res.end(Buffer.from(await response.arrayBuffer()));
         } catch (error) { next(error); }
       });

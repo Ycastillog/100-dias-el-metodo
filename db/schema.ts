@@ -59,3 +59,19 @@ export const paymentEvents = sqliteTable('payment_events', {
   orderId: text('order_id').references(() => purchaseOrders.id),
   processedAt: text('processed_at').notNull(),
 });
+
+export const participantRecords = sqliteTable('participant_records', {
+  id: text('id').primaryKey(),
+  orderId: text('order_id').notNull().references(() => purchaseOrders.id),
+  recordKey: text('record_key').notNull(),
+  body: text('body').notNull(),
+  revision: integer('revision').notNull().default(1),
+  updatedAt: text('updated_at').notNull(),
+}, table => [uniqueIndex('idx_participant_records_order_key').on(table.orderId, table.recordKey)]);
+
+// Short-lived abuse counters. Never store raw client IP addresses.
+export const requestLimits = sqliteTable('request_limits', {
+  bucket: text('bucket').primaryKey(),
+  windowStart: integer('window_start').notNull(),
+  hits: integer('hits').notNull(),
+});

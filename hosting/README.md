@@ -1,16 +1,21 @@
-# Private review deployment
+# Hosting modes
 
-The original static website remains the source of the design. The hosting layer
-packages an explicit allowlist for a private Sites review, disables payment links,
-adds a visible review notice, prevents indexing and rejects POST requests.
+The original static website remains in Git. This hosting layer has three explicit
+build modes; keep their artifacts separate.
 
-This is not a public sales release and must remain owner-only. The participant
-experience still uses browser-local progress and the legacy access flag; neither
-is authentication. A paid launch requires server-validated purchases, real user
-authentication, a working customer-registration destination and delivery tests.
+- `npm run build`: historical owner-only review, including the legacy participant
+  prototype. Never publish this artifact as a public shop.
+- `npm run build:prelaunch`: public sample and waitlist, without participant code.
+- `npm run build:sales`: commercial landing, PayPal checkout, purchase-scoped
+  access and server-backed records. Lesson content exists only in the Worker;
+  the public member HTML is a shell, not an entitlement.
 
-Do not enable public access to this review or connect the customer-facing domain
-until its launch scope has been confirmed and the relevant blockers resolved.
+See `LIVE-RELEASE.md` for supported plans, configuration, tests and remaining
+payment-acceptance checks. Runtime secrets belong in Sites, not this repository.
+`CHECKOUT_ENABLED=false` closes new purchases without disabling existing access,
+receipts or verified payment/refund notifications.
 
-Run `npm test`, then `npm run build`. Sites metadata belongs in
-`.openai/hosting.json`; never store a source credential in this repository.
+Run `npm test`, build the intended mode, commit and push that exact source,
+package with the official Sites helper, and save/deploy the matching version.
+Sites metadata belongs in `.openai/hosting.json`. Do not include an unrestricted
+source tree, credentials or legacy public access flags in a sales artifact.

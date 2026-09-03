@@ -1,3 +1,14 @@
+// The provider's completion time anchors access; retries must not reset its age.
+export function paymentCompletedAt(order, capture, observedAt) {
+  const value = capture.update_time || capture.create_time;
+  // Isolated historical Sandbox fixtures omitted provider timestamps. Never
+  // accept that omission when fulfilling a real-money purchase.
+  if (!value && order.environment === 'sandbox') return observedAt;
+  const millis = typeof value === 'string' ? Date.parse(value) : NaN;
+  if (!Number.isFinite(millis) || millis > Date.parse(observedAt) + 300000 || millis < Date.parse(order.created_at) - 300000) throw new Error('invalid_payment_time');
+  return new Date(millis).toISOString();
+}
+
 // One prepared SQL statement per call. Schema changes live only in migrations.
 export function paymentStore(db) {
   if (!db?.prepare || !db?.batch) throw new Error('database_unavailable');
@@ -20,7 +31,12 @@ export function paymentStore(db) {
     async setPayPal(orderId, paypalId, now) {
       await statement("UPDATE purchase_orders SET paypal_order_id = ?, status = 'created', updated_at = ? WHERE id = ? AND paypal_order_id IS NULL", [paypalId, now, orderId]).run();
     },
+    async markAvailable(orderId, now) {
+      await statement("UPDATE purchase_orders SET delivery_status = 'available', updated_at = ? WHERE id = ? AND status = 'paid' AND delivery_status != 'revoked'", [now, orderId]).run();
+      return this.byId(orderId);
+    },
     async reconcile(order, capture, status, now, event) {
+      const completed = status === 'paid' ? paymentCompletedAt(order, capture, now) : null;
       // A delayed COMPLETED notification must never reactivate a refunded order.
       // A delayed PENDING notification must not downgrade a completed purchase.
       const writes = [statement(`UPDATE purchase_orders SET
@@ -30,7 +46,7 @@ export function paymentStore(db) {
           WHEN status = 'paid' AND ? IN ('pending', 'denied') THEN status ELSE ? END,
         delivery_status = CASE WHEN ? IN ('refunded', 'reversed', 'review') THEN 'revoked' ELSE delivery_status END,
         paid_at = CASE WHEN ? = 'paid' THEN COALESCE(paid_at, ?) ELSE paid_at END,
-        updated_at = ? WHERE id = ?`, [capture.id, status, status, status, status, now, now, order.id])];
+        updated_at = ? WHERE id = ?`, [capture.id, status, status, status, status, completed, now, order.id])];
       if (event) writes.push(statement('INSERT INTO payment_events (id, event_type, order_id, processed_at) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO NOTHING', [event.id, event.event_type, order.id, now]));
       await db.batch(writes);
       return this.byId(order.id);

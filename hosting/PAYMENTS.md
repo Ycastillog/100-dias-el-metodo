@@ -1,5 +1,9 @@
 # Pagos únicos — estado y activación
 
+> Historial del checkout de prueba. El estado y la implementación actual se
+> describen en `LIVE-RELEASE.md`; no usar las restricciones históricas de este
+> documento para describir como inexistente el recorrido que ya está en Git.
+
 Decisiones del titular, 2 de septiembre de 2026:
 
 - Alpha: USD 9; Método: USD 29; Sistema: USD 79; Premium: USD 297.

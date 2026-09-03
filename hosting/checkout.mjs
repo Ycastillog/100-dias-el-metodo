@@ -1,13 +1,16 @@
-import { PLANS, planFor, checkoutConfiguration } from './catalog.mjs';
+import { PLANS, planFor, checkoutConfiguration, paymentEnvironment } from './catalog.mjs';
 import { paypalClient, PayPalError, verifyOrder, verifyCapture } from './paypal.mjs';
 import { paymentStore } from './payment-store.mjs';
 import { checkoutPage } from './checkout-page.mjs';
+import { programReady, secretReady, readyPlan, issueAccess, accessCookie, accessExpiry, isAccessible } from './purchase-access.mjs';
+import { allowRequest } from './request-limit.mjs';
 
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
 const SESSION = /^[a-f0-9]{64}$/;
 const WEBHOOK_TYPES = new Set(['PAYMENT.CAPTURE.COMPLETED', 'PAYMENT.CAPTURE.PENDING', 'PAYMENT.CAPTURE.DENIED', 'PAYMENT.CAPTURE.DECLINED', 'PAYMENT.CAPTURE.REFUNDED', 'PAYMENT.CAPTURE.REVERSED']);
 const now = () => new Date().toISOString();
 const cookieName = request => new URL(request.url).protocol === 'https:' ? '__Host-metodo-checkout' : 'metodo-checkout-dev';
+export const clearCheckoutCookie = request => cookieName(request) + '=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0' + (new URL(request.url).protocol === 'https:' ? '; Secure' : '');
 function sessionToken(request) {
   const cookies = (request.headers.get('cookie') || '').split(';').map(value => value.trim());
   const value = cookies.find(value => value.startsWith(cookieName(request) + '='))?.split('=').slice(1).join('=');
@@ -20,7 +23,7 @@ async function sessionHash(request) {
 }
 function checkoutCookie(request) {
   const token = Array.from(crypto.getRandomValues(new Uint8Array(32)), byte => byte.toString(16).padStart(2, '0')).join('');
-  return cookieName(request) + '=' + token + '; HttpOnly; SameSite=Strict; Path=/; Max-Age=86400' + (new URL(request.url).protocol === 'https:' ? '; Secure' : '');
+  return cookieName(request) + '=' + token + '; HttpOnly; SameSite=Strict; Path=/; Max-Age=2592000' + (new URL(request.url).protocol === 'https:' ? '; Secure' : '');
 }
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex, nofollow' } });
@@ -47,11 +50,20 @@ async function readJson(request, limit = 4096) {
   return { raw, data };
 }
 function receipt(order) {
-  // Purchase-scoped receipt: NOT an account or a participant access credential.
   return { id: order.id, plan: order.plan_key, amountCents: order.amount_cents, currency: order.currency,
     billing: 'one_time', status: order.status, deliveryStatus: order.delivery_status, sandbox: order.environment === 'sandbox' };
 }
-async function canonicalPayment(client, order, merchantId) {
+async function receiptResponse(request, order, env, store, deliveryReady) {
+  let access = null;
+  if (deliveryReady && isAccessible(order, env)) {
+    order = await store.markAvailable(order.id, now());
+    access = await issueAccess(order, env);
+  }
+  const response = json({ ...receipt(order), ...(access ? { access } : {}) });
+  if (access) response.headers.set('Set-Cookie', accessCookie(request, access.code, accessExpiry(order)));
+  return response;
+}
+export async function canonicalPayment(client, order, merchantId) {
   const remote = await client.getOrder(order.paypal_order_id);
   const unit = verifyOrder(remote, order, merchantId);
   const captures = unit.payments?.captures;
@@ -96,20 +108,24 @@ async function processWebhook(request, env, store, client) {
 export async function handleCheckout(request, env = {}, dependencies = {}) {
   const path = new URL(request.url).pathname;
   if (!(path === '/comprar' || path === '/api/checkout/config' || path === '/api/paypal/webhook' || path === '/api/paypal/orders' || path.startsWith('/api/paypal/orders/') || path.startsWith('/api/checkout/orders/'))) return null;
-  const config = checkoutConfiguration(env);
+  env = paymentEnvironment(env);
+  const deliveryReady = programReady(dependencies.program) && secretReady(env);
+  const config = checkoutConfiguration(env, deliveryReady);
   if (path === '/comprar') {
     if (!['GET', 'HEAD'].includes(request.method)) return failure('method_not_allowed', 405);
-    const headers = new Headers({ 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'private, no-store', 'Referrer-Policy': 'same-origin', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex, nofollow' });
-    if (config.enabled && !sessionToken(request) && request.method === 'GET') headers.set('Set-Cookie', checkoutCookie(request));
-    return new Response(request.method === 'HEAD' ? null : checkoutPage(config.enabled), { headers });
+    const headers = new Headers({ 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'private, no-store', 'Referrer-Policy': 'same-origin', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex, nofollow', 'Content-Security-Policy': "frame-ancestors 'none'; object-src 'none'; base-uri 'self'" });
+    if (config.configured && !sessionToken(request) && request.method === 'GET') headers.set('Set-Cookie', checkoutCookie(request));
+    return new Response(request.method === 'HEAD' ? null : checkoutPage(config), { headers });
   }
   if (path === '/api/checkout/config') {
     if (request.method !== 'GET') return failure('method_not_allowed', 405);
-    return json({ enabled: config.enabled, sandbox: config.enabled && config.mode === 'sandbox', clientId: config.enabled ? config.clientId : null, plans: Object.values(PLANS) });
+    return json({ enabled: config.enabled, sandbox: config.mode === 'sandbox', clientId: config.enabled ? config.clientId : null, plans: Object.values(PLANS).map(plan => ({ ...plan, available: readyPlan(plan.key) })) });
   }
   const isStatus = /^\/api\/checkout\/orders\/([a-f0-9-]+)$/.exec(path);
   if (request.method !== (isStatus ? 'GET' : 'POST')) return failure('method_not_allowed', 405);
-  if (!config.enabled) return failure('sales_closed', 503);
+  // Closing new sales must not disable receipts, refunds or pending captures.
+  if (!config.configured) return failure('sales_closed', 503);
+  if (path === '/api/paypal/orders' && !config.enabled) return failure('sales_closed', 503);
   if (new URL(request.url).origin !== config.origin) return failure('invalid_origin', 403);
   if (path !== '/api/paypal/webhook' && request.method === 'POST' && (request.headers.get('origin') !== config.origin || request.headers.get('sec-fetch-site') === 'cross-site')) return failure('invalid_origin', 403);
   try {
@@ -124,9 +140,9 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
       if (!order || order.session_hash !== hash || order.environment !== config.mode) return failure('order_not_found', 404);
       if (order.paypal_order_id) {
         const verified = await canonicalPayment(client, order, env.PAYPAL_MERCHANT_ID);
-        if (verified) return json(receipt(await store.reconcile(order, verified.capture, verified.status, now())));
+        if (verified) return await receiptResponse(request, await store.reconcile(order, verified.capture, verified.status, now()), env, store, deliveryReady);
       }
-      return json(receipt(order));
+      return await receiptResponse(request, order, env, store, deliveryReady);
     }
     let data;
     try { ({ data } = await readJson(request)); } catch { return failure('invalid_request'); }
@@ -134,8 +150,11 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
       const plan = planFor(data.plan);
       const email = typeof data.email === 'string' ? data.email.trim().toLowerCase() : '';
       if (!plan || !UUID.test(data.requestId || '') || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/u.test(email)) return failure('invalid_request');
+      if (config.mode === 'live' && data.terms !== true) return failure('terms_required');
+      if (!readyPlan(plan.key)) return failure('plan_not_available', 409);
       let order = await store.byId(data.requestId);
       if (!order) {
+        if (!await allowRequest(request, env, 'new-order', 24, 3600)) return failure('rate_limited', 429);
         if (await store.recentCount(hash, new Date(Date.now() - 3_600_000).toISOString()) >= 8) return failure('rate_limited', 429);
         order = await store.create({ id: data.requestId, session_hash: hash, plan_key: plan.key, amount_cents: plan.amountCents, currency: plan.currency, environment: config.mode, contact_email: email, capture_request_id: crypto.randomUUID(), created_at: now() });
       }
@@ -151,8 +170,10 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
     }
     const captureRoute = /^\/api\/paypal\/orders\/([a-f0-9-]+)\/capture$/.exec(path);
     if (!captureRoute || !UUID.test(captureRoute[1])) return failure('order_not_found', 404);
+    if (config.mode === 'live' && !deliveryReady) return failure('delivery_not_ready', 503);
     let order = await store.byId(captureRoute[1]);
     if (!order || order.session_hash !== hash || order.environment !== config.mode || !order.paypal_order_id) return failure('order_not_found', 404);
+    if (!readyPlan(order.plan_key)) return failure('plan_not_available', 409);
     if (data.paypalOrderId !== order.paypal_order_id) return failure('payment_mismatch', 409);
     // Validate amount, metadata and merchant before trying to capture.
     const before = await client.getOrder(order.paypal_order_id);
@@ -167,7 +188,7 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
     const verified = await canonicalPayment(client, order, env.PAYPAL_MERCHANT_ID);
     if (!verified) return failure('payment_not_confirmed', 503);
     order = await store.reconcile(order, verified.capture, verified.status, now());
-    return json(receipt(order));
+    return await receiptResponse(request, order, env, store, deliveryReady);
   } catch (error) {
     const code = error instanceof PayPalError ? error.code : 'checkout_unavailable';
     return failure(code, code === 'payment_mismatch' ? 409 : 503);
