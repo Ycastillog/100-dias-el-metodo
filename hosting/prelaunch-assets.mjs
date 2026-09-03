@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 // unchanged in the checkout and is NEVER included in this allowlist.
 export const PRELAUNCH_FILES = [
   'hosting/prelaunch.html', 'hosting/prelaunch.css', 'hosting/prelaunch.js', 'assets/styles.css',
+  'hosting/checkout.css', 'hosting/checkout.js',
   'assets/icon-100-dias.svg', 'assets/icon-100-dias-192.png',
   'assets/icon-100-dias-512.png', 'assets/og-100-dias.png', 'assets/product-day1.png',
 ];
@@ -25,6 +26,8 @@ export async function loadPrelaunchAssets(root) {
     const bytes = await readFile(resolve(root, path));
     const route = path === 'hosting/prelaunch.html' ? '/index.html'
       : path === 'hosting/prelaunch.css' ? '/assets/prelaunch.css'
+      : path === 'hosting/checkout.css' ? '/assets/checkout.css'
+      : path === 'hosting/checkout.js' ? '/assets/checkout.js'
       : path === 'hosting/prelaunch.js' ? '/assets/prelaunch.js' : '/' + path;
     const extension = path.split('.').at(-1);
     const type = {html:'text/html; charset=utf-8',css:'text/css; charset=utf-8',js:'text/javascript; charset=utf-8',svg:'image/svg+xml',png:'image/png'}[extension];

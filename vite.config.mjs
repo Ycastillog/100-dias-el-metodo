@@ -24,7 +24,26 @@ export default defineConfig(({ mode }) => {
         if (req.url?.startsWith('/@')) return next();
         try {
           const { default: worker } = await server.ssrLoadModule('/hosting/worker.mjs');
-          const response = await worker.fetch(new Request(new URL(req.url ?? '/', 'http://127.0.0.1:8790'), { method: req.method }));
+          // Preserve cookies, Origin and request bodies during local validation.
+          // This adapter intentionally has no production secrets or live DB.
+          const host = req.headers.host || '127.0.0.1:8790';
+          const url = new URL(req.url ?? '/', 'http://' + host);
+          if (!['127.0.0.1', 'localhost'].includes(url.hostname)) {
+            res.statusCode = 403; res.end(); return;
+          }
+          const chunks = []; let size = 0;
+          for await (const chunk of req) {
+            size += chunk.length;
+            if (size > 128 * 1024) { res.statusCode = 413; res.end(); return; }
+            chunks.push(chunk);
+          }
+          const headers = new Headers();
+          for (const [name, value] of Object.entries(req.headers)) {
+            if (value !== undefined) headers.set(name, Array.isArray(value) ? value.join(', ') : value);
+          }
+          const init = { method: req.method, headers };
+          if (!['GET', 'HEAD'].includes(req.method)) init.body = Buffer.concat(chunks);
+          const response = await worker.fetch(new Request(url, init));
           res.statusCode = response.status;
           response.headers.forEach((value, name) => res.setHeader(name, value));
           res.end(Buffer.from(await response.arrayBuffer()));

@@ -33,7 +33,7 @@ test('all local links, image and stylesheet URLs exist in the artifact',()=>{
 });
 
 test('artifact routes are exactly the reviewed public files',()=>{
-  assert.deepEqual(Object.keys(assets).sort(),['/','/index.html','/assets/prelaunch.css','/assets/prelaunch.js','/assets/styles.css','/assets/icon-100-dias.svg','/assets/icon-100-dias-192.png','/assets/icon-100-dias-512.png','/assets/og-100-dias.png','/assets/product-day1.png','/404.html','/gracias.html','/privacidad.html','/robots.txt','/sw.js'].sort());
+  assert.deepEqual(Object.keys(assets).sort(),['/','/index.html','/assets/prelaunch.css','/assets/prelaunch.js','/assets/checkout.css','/assets/checkout.js','/assets/styles.css','/assets/icon-100-dias.svg','/assets/icon-100-dias-192.png','/assets/icon-100-dias-512.png','/assets/og-100-dias.png','/assets/product-day1.png','/404.html','/gracias.html','/privacidad.html','/robots.txt','/sw.js'].sort());
 });
 
 test('retirement worker removes only this app legacy caches and unregisters',async()=>{

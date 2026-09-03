@@ -14,6 +14,7 @@ export const PUBLIC_FILES = [
   'assets/og-100-dias.png', 'assets/aurelia-guia.webp',
   'assets/embajadores-dia1-hero.png', 'assets/product-day1.png',
   'assets/product-dashboard.png', 'assets/product-checkout.png',
+  'hosting/checkout.css', 'hosting/checkout.js',
 ];
 
 const CONTENT_TYPES = {
@@ -35,7 +36,8 @@ export async function loadAssets(root) {
     const bytes = await readFile(resolve(root, path));
     const type = CONTENT_TYPES[path.split('.').at(-1)];
     const text = /^(text\/|application\/)/.test(type) || type === 'image/svg+xml';
-    return ['/' + path, {
+    const route = path.startsWith('hosting/checkout.') ? '/assets/' + path.split('/').at(-1) : '/' + path;
+    return [route, {
       type,
       encoding: text ? 'utf8' : 'base64',
       data: text ? prepareText(path, bytes.toString('utf8')) : bytes.toString('base64'),

@@ -11,3 +11,11 @@ El modo predeterminado sigue siendo una revisión privada y **no debe abrirse al
 Los dos modos mantienen noindex mientras el lanzamiento está en preparación. Cambiar el DNS no implementa autenticación, cobros ni entrega. La exposición previa en el repositorio público y GitHub Pages no desaparece por desplegar este artefacto; debe revisarse separadamente sin eliminar ni privatizar el repositorio sin autorización.
 
 Pendientes para una venta real: titularidad de pagos, webhook verificable, autenticación/autorización en servidor, entrega y recuperación de acceso, tratamiento de datos, soporte y prueba de compra/reembolso autorizada. No prometer disponibilidad de estas funciones antes de completarlas.
+
+## Preparación de pagos únicos
+
+La ruta `/comprar` presenta ahora los cuatro precios de pago único. Las rutas de
+PayPal y las tablas de pedidos están implementadas para pruebas, pero permanecen
+cerradas sin configuración y bloquean explícitamente el modo de cobros reales
+hasta completar la entrega. No se enlazan desde la portada de prelanzamiento.
+Consultar `PAYMENTS.md` antes de configurar, probar o proponer su publicación.

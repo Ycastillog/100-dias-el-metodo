@@ -30,3 +30,32 @@ export const analyticsEvents = sqliteTable('analytics_events', {
 }, (table) => [
   index('idx_analytics_events_name_occurred').on(table.eventName, table.occurredAt),
 ]);
+
+export const purchaseOrders = sqliteTable('purchase_orders', {
+  id: text('id').primaryKey(),
+  sessionHash: text('session_hash').notNull(),
+  planKey: text('plan_key').notNull(),
+  amountCents: integer('amount_cents').notNull(),
+  currency: text('currency').notNull().default('USD'),
+  environment: text('environment').notNull(),
+  contactEmail: text('contact_email').notNull(),
+  paypalOrderId: text('paypal_order_id'),
+  paypalCaptureId: text('paypal_capture_id'),
+  captureRequestId: text('capture_request_id').notNull(),
+  status: text('status').notNull().default('initiated'),
+  deliveryStatus: text('delivery_status').notNull().default('not_ready'),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
+  paidAt: text('paid_at'),
+}, table => [
+  uniqueIndex('idx_purchase_orders_paypal_order').on(table.paypalOrderId),
+  uniqueIndex('idx_purchase_orders_paypal_capture').on(table.paypalCaptureId),
+  index('idx_purchase_orders_session_created').on(table.sessionHash, table.createdAt),
+]);
+
+export const paymentEvents = sqliteTable('payment_events', {
+  id: text('id').primaryKey(),
+  eventType: text('event_type').notNull(),
+  orderId: text('order_id').references(() => purchaseOrders.id),
+  processedAt: text('processed_at').notNull(),
+});

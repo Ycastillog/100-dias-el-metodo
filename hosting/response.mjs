@@ -1,4 +1,5 @@
 import { handleAnalyticsEvent, handleWaitlistSignup } from './waitlist.mjs';
+import { handleCheckout } from './checkout.mjs';
 
 export async function respond(request, assets, env = {}) {
   const headers = new Headers({
@@ -10,6 +11,9 @@ export async function respond(request, assets, env = {}) {
   let pathname;
   try { pathname = decodeURIComponent(new URL(request.url).pathname); }
   catch { return new Response('Dirección no válida.', { status: 400, headers }); }
+
+  const checkout = await handleCheckout(request, env);
+  if (checkout) return checkout;
 
   if (pathname === '/api/waitlist') return handleWaitlistSignup(request, env, headers);
   if (pathname === '/api/events') return handleAnalyticsEvent(request, env, headers);
