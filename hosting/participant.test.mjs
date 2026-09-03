@@ -4,6 +4,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
 import vm from 'node:vm';
+import { spawnSync } from 'node:child_process';
 import { programModule } from './program-source.mjs';
 import { handleParticipant } from './participant.mjs';
 import { participantStore, validateRecord } from './participant-store.mjs';
@@ -224,7 +225,11 @@ test('sales build publicly exposes only the member shell, never Git lessons or p
   for (const asset of Object.values(assets)) assert.ok(!asset.data.includes(program.lessons[99].task));
   const html = assets['/'].data; assert.match(html, /\/comprar\?plan=alpha/); assert.match(html, /\/comprar\?plan=metodo/); assert.doesNotMatch(html, /\/comprar\?plan=(sistema|premium)/);
   assert.match(html, /No enviamos un correo automático/); assert.match(assets['/condiciones.html'].data, /YC Systems LLC/);
-  for (const name of ['checkout.js', 'participant.js']) new vm.Script(await readFile(new URL('./' + name, import.meta.url), 'utf8'));
+  new vm.Script(await readFile(new URL('./checkout.js', import.meta.url), 'utf8'));
+  for (const name of ['participant.js', 'participant-tools.js']) {
+    const check = spawnSync(process.execPath, ['--input-type=module', '--check'], { input: await readFile(new URL('./' + name, import.meta.url), 'utf8'), encoding: 'utf8' });
+    assert.equal(check.status, 0, check.stderr);
+  }
   for (const path of ['/index.html', '/mi-metodo', '/condiciones.html', '/privacidad.html']) {
     const page = assets[path].data;
     const ids = [...page.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);

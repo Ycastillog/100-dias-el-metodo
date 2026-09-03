@@ -1,3 +1,5 @@
+import { practiceSequence, journeyMap, formatJournalExport } from './participant-tools.js';
+
 (() => {
   const $ = selector => document.querySelector(selector);
   const status = $('#member-status');
@@ -38,6 +40,8 @@
       item.append(element('p', 'Guardado: ' + date(record.updatedAt), 'record-date')); container.append(item);
     }
     $('#current-goal').textContent = records.get('profile')?.body.goal || 'Empieza eligiendo una prioridad en el Día 0.';
+    $('#start-priority').textContent = records.has('profile') ? 'Prioridad guardada' : 'Define tu prioridad en el Día 0';
+    $('#start-record').textContent = days.length ? 'Ya tienes un registro: continúa tu práctica' : 'Haz una acción y guarda tu primer registro';
   }
   function renderReview() { fill($('#review-form'), records.get('review:' + $('#review-select').value)?.body); }
   async function renderDay(nextDay) {
@@ -51,8 +55,14 @@
       const { lesson, practice } = data;
       $('#day-label').textContent = 'Día ' + day + ' de ' + session.plan.days + ' · ' + lesson.phase;
       $('#day-title').textContent = lesson.theme; $('#day-principle').textContent = lesson.principle;
-      $('#day-question').textContent = lesson.question; $('#day-task').textContent = lesson.task;
-      $('#dose-note').textContent = 'Tu ritmo elegido: ' + profileValues().minutes + ' minutos. Adapta la tarea a ese tiempo; si el ejemplo propone más, haz una parte concreta. Puedes cambiar tu ritmo en el Día 0.';
+      $('#day-question').textContent = lesson.question;
+      const sequence = practiceSequence(lesson, profileValues().minutes);
+      $('#day-task').textContent = sequence.objective;
+      const steps = $('#practice-steps'); steps.replaceChildren();
+      for (const step of sequence.steps) {
+        const item = element('li'); item.append(element('strong', step.time + ' · ' + step.title), element('p', step.text)); steps.append(item);
+      }
+      $('#dose-note').textContent = 'Tu bloque de hoy: ' + sequence.minutes + ' minutos en total, incluido el registro. Puedes cambiarlo en el Día 0. Si necesitas parar o descansar, registra esa decisión; no tienes que completar la tarea a cualquier coste.';
       $('#day-companion').textContent = lesson.companion; $('#life-message').textContent = practice.guideMessage;
       const actions = $('#life-actions'); actions.replaceChildren();
       for (const key of ['learning', 'movement', 'finance', 'connection', 'video']) {
@@ -92,9 +102,14 @@
       $('#access-entry').hidden = true; $('#member-workspace').hidden = false;
       $('#plan-label').textContent = loaded.plan.name + ' · Contenido digital autoguiado'; $('#expiry').textContent = 'Acceso hasta ' + date(loaded.expiresAt);
       $('#day-select').replaceChildren(...loaded.days.map(value => { const option = element('option', 'Día ' + value.day + ' · ' + value.title); option.value = value.day; return option; }));
+      const roadmap = $('#journey-map'); roadmap.replaceChildren();
+      for (const phase of journeyMap(loaded.plan.days)) {
+        const item = element('li'); item.append(element('strong', 'Días ' + phase.from + '–' + phase.to + ' · ' + phase.title), element('p', phase.description)); roadmap.append(item);
+      }
       const reviews = loaded.days.filter(value => value.day % 7 === 0 || value.day === loaded.plan.days);
       $('#review-select').replaceChildren(...reviews.map(value => { const option = element('option', 'Día ' + value.day + (value.day === loaded.plan.days ? ' · Cierre del recorrido' : ' · Revisión semanal')); option.value = value.day; return option; }));
       fill($('#profile-form'), profileValues()); $('#profile-panel').open = !records.has('profile'); renderReview(); renderHistory();
+      $('#start-section').open = !records.has('profile') || !loaded.records.some(record => record.key.startsWith('day:'));
       day = loaded.days.find(value => !records.has('day:' + value.day))?.day || loaded.plan.days;
       await renderDay(day);
     } catch (error) { $('#member-workspace').hidden = true; $('#access-entry').hidden = false; tell(error.message); }
@@ -111,6 +126,12 @@
     if (await save(form, 'profile', values)) { $('#profile-panel').open = false; if ($('#journal-form').dataset.dirty !== 'true') await renderDay(day); else tell('Prioridad guardada. Tu borrador del día sigue aquí; guárdalo antes de recargar la práctica.'); }
   });
   $('#day-select').addEventListener('change', event => { const requested = Number(event.target.value); if (mayNavigate()) renderDay(requested); else event.target.value = String(day); });
+  $('#start-priority').addEventListener('click', () => { $('#profile-panel').open = true; });
+  document.querySelectorAll('.member-menu nav a').forEach(link => link.addEventListener('click', () => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target?.tagName === 'DETAILS') target.open = true;
+    $('.member-menu').open = false;
+  }));
   $('#previous-day').addEventListener('click', () => { if (day > 1 && mayNavigate()) renderDay(day - 1); });
   $('#next-day').addEventListener('click', () => { if (day < session.plan.days && mayNavigate()) renderDay(day + 1); });
   let previousReview = '';
@@ -120,8 +141,9 @@
   window.addEventListener('beforeunload', event => { if (hasDraft() || writing) { event.preventDefault(); event.returnValue = ''; } });
   function download(text, filename, type = 'text/plain;charset=utf-8') { const url = URL.createObjectURL(new Blob([text], { type })); const link = element('a'); link.href = url; link.download = filename; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
   $('#export-records').addEventListener('click', async () => {
-    try { const latest = await api('session'); download(JSON.stringify({ program: '100 Días — El Método', exportedAt: new Date().toISOString(), records: latest.records }, null, 2), 'mis-registros-100-dias.json', 'application/json'); tell('Descargaste los registros confirmados del servidor. Los borradores sin guardar no están incluidos.'); } catch (error) { tell(error.message); }
+    try { const latest = await api('session'); download(formatJournalExport(latest), 'mi-diario-100-dias.txt'); tell('Descargaste tu diario en texto legible. Incluye lo confirmado por el servidor, no los borradores sin guardar.'); } catch (error) { tell(error.message); }
   });
+  $('#export-backup').addEventListener('click', async () => { try { const latest = await api('session'); download(JSON.stringify({ program: '100 Días — El Método', exportedAt: new Date().toISOString(), records: latest.records }, null, 2), 'mis-registros-100-dias.json', 'application/json'); tell('Copia de datos descargada. No incluye el código de acceso ni los borradores.'); } catch (error) { tell(error.message); } });
   $('#recover-code').addEventListener('click', async () => { try { const { access } = await api('access'); download('100 Días — El Método\nCódigo privado: ' + access.code + '\nEntrar: ' + location.origin + access.url + '\nAcceso hasta: ' + date(access.expiresAt) + '\nNo compartas este archivo.\n', 'mi-acceso-100-dias.txt'); } catch (error) { tell(error.message); } });
   $('#logout').addEventListener('click', async () => { if (!mayNavigate()) return; try { await api('logout', {}); for (const id of ['#journal-form', '#profile-form', '#review-form']) $(id).dataset.dirty = ''; try { localStorage.removeItem('metodo-checkout-last-order-v1'); } catch {} location.reload(); } catch (error) { tell(error.message); } });
   start();

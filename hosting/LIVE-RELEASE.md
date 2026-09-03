@@ -109,7 +109,37 @@ archivo creado con el empaquetador oficial de Sites y despliegue de esa versión
 Nunca publicar secretos ni incluir los archivos heredados de acceso del cliente.
 Las migraciones 0003/0004 agregan registros y contadores, sin borrar compras o leads.
 
+## Preparación editorial y operativa posterior al lanzamiento
+
+Se añadió una guía de inicio al recorrido, un mapa ajustado a los días comprados
+y una secuencia de tres pasos cuyo tiempo total es 2, 10 o 20 minutos. La tarea
+principal usa el objetivo de la lección para no imponer 10–15 minutos a quien
+eligió dos. El diario se descarga también como texto legible, manteniendo la
+copia JSON. Ninguna descarga incluye el código privado de acceso.
+
+TikTok @100diaselmetodo se incorpora a las cuentas oficiales. La portada anuncia
+solo las dos opciones que se pueden comprar; los niveles cerrados siguen
+rechazándose en servidor y explicados en las condiciones. No cambiaron precios,
+plazos, claves, PayPal, bases de datos ni reglas de autorización.
+
+Verificación del 3 de septiembre: 84 pruebas locales superadas y comprobación del
+artefacto comercial compilado, sin red ni cargos. `inspect-product.mjs` comprueba
+100 lecciones y temas, fases de 30/30/40 días, los campos de práctica y las
+duraciones, además de identificar los 14 recursos externos como opcionales. Es
+un inventario estructural, no una certificación pedagógica ni una promesa de
+resultados. Los cambios nuevos requieren publicar la versión validada; este
+registro por sí solo no afirma que estén en producción.
+
 El alojamiento sirve archivos estáticos antes que el Worker. Por eso la
 compilación comercial no coloca `index.html` ni la ruta sin extensión `mi-metodo`
 en `dist/client`: ambas se sirven desde el Worker con estado y MIME correctos.
 El dominio técnico de Sites redirige esas páginas al dominio público canónico.
+
+La revisión visual incorpora un tema editorial claro independiente del CSS
+heredado, imagen ilustrativa original optimizada, menú móvil visible y un diario
+con navegación plegable. La imagen está identificada como generada con IA, no
+como fotografía de un cliente ni producto físico. `EDITORIAL-IMAGE.md` conserva
+el prompt y la procedencia. No hubo pruebas visuales del sitio en navegador;
+se comprobaron fuente, recursos, enlaces, estructura, rutas y controles de
+seguridad mediante pruebas automatizadas. La salida compilada comercial excluye
+el programa fuente y los secretos, y mantiene las páginas de acceso en el Worker.
