@@ -5,7 +5,9 @@ export class PayPalError extends Error {
   constructor(code = 'paypal_unavailable') { super(code); this.code = code; }
 }
 
-export function paypalClient(env, fetcher = fetch) {
+// Workers fetch can require its global receiver; do not detach it as a default
+// parameter. Injected test adapters still use the same two-argument contract.
+export function paypalClient(env, fetcher = (...args) => globalThis.fetch(...args)) {
   const base = API[env.PAYPAL_ENV];
   if (!base || !env.PAYPAL_CLIENT_ID || !env.PAYPAL_CLIENT_SECRET) throw new PayPalError('paypal_not_configured');
   let token;

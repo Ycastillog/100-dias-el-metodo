@@ -196,7 +196,8 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
     const code = error instanceof PayPalError ? error.code : 'checkout_unavailable';
     // Deliberately exclude raw messages, request headers, emails and secrets.
     const message = String(error?.message || '');
-    const category = /ByteString|Latin1|Invalid character|btoa/i.test(message) ? 'encoding'
+    const category = /illegal invocation|incorrect.*this/i.test(message) ? 'receiver'
+      : /ByteString|Latin1|Invalid character|btoa/i.test(message) ? 'encoding'
       : /AbortSignal|timeout/i.test(message) ? 'timeout_api'
       : /fetch|network|connection|TLS/i.test(message) ? 'transport'
       : /D1|SQLITE/i.test(message) ? 'database' : 'other';
