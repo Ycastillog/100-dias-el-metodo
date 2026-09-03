@@ -143,3 +143,23 @@ el prompt y la procedencia. No hubo pruebas visuales del sitio en navegador;
 se comprobaron fuente, recursos, enlaces, estructura, rutas y controles de
 seguridad mediante pruebas automatizadas. La salida compilada comercial excluye
 el programa fuente y los secretos, y mantiene las páginas de acceso en el Worker.
+
+## Portada conectada con el producto
+
+La mejora de la portada sustituye el protagonismo de una imagen de escritorio
+por una vista ilustrativa del diario y una práctica existente. Los ejemplos
+no son notas reales de clientes ni campos que guarden datos. El mapa muestra
+las tres fases y títulos comprobados contra el programa; Alpha se delimita a
+los primeros 14 días. La muestra gratuita aplica el Día 1 a un currículum con
+la misma secuencia de 1 + 7 + 2 minutos del espacio privado.
+
+Los botones principales y el cierre llevan a las dos ofertas existentes. Las
+redes se conservan en el pie. La entrega por código, el plazo consecutivo, los
+pagos únicos y la ausencia de correo automático siguen visibles. No cambian
+precios, PayPal, sesiones privadas, base de datos ni reglas de acceso. No se
+añaden ofertas, promesas de ingresos, testimonios o resultados inventados.
+
+Las pruebas de sales-product.test.mjs contrastan las afirmaciones principales
+con el catálogo, el programa y los tiempos de práctica. La revisión se limita
+a código, pruebas y respuestas HTTP: no implica pruebas visuales de navegador
+ni demuestra un incremento de conversiones.
