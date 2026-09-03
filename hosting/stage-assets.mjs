@@ -24,7 +24,9 @@ for (const [url, asset] of Object.entries(assets)) {
   // Sites serves matching static assets before the Worker. Keep these routes
   // Worker-only: the home page needs the current sales state and /mi-metodo
   // needs an explicit HTML MIME type, not an extensionless static download.
-  if (url === '/' || sales && ['/index.html', '/mi-metodo'].includes(url)) continue;
+  // The hosting static layer does not identify WebP reliably. Let the Worker
+  // serve this image with its explicit image/webp MIME type as well.
+  if (url === '/' || sales && ['/index.html', '/mi-metodo', '/assets/practice-editorial-v2.webp'].includes(url)) continue;
   const target = resolve(output, '.' + url);
   if (!target.startsWith(output + sep)) {
     throw new Error('Asset outside build output');
