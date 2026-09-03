@@ -28,17 +28,45 @@ cuenta de participante ni un sistema de recuperación. Los recibos y pedidos se
 guardan en D1; nunca se concede acceso con `?alpha=1`, localStorage o la URL de
 retorno. `delivery_status` permanece `not_ready` o `revoked`.
 
-Las pruebas locales usan SQLite en memoria y respuestas PayPal simuladas. NO son
-una compra real, NO demuestran recepción de fondos y NO son una prueba Sandbox
-contra el proveedor. Los enlaces NCP antiguos se conservan, pero no se usan como
+Las 42 pruebas automatizadas locales usan SQLite en memoria y respuestas PayPal
+simuladas. NO son una compra real ni demuestran recepción de fondos. La comprobación
+adicional contra la API Sandbox se detalla abajo. Los enlaces NCP antiguos se conservan, pero no se usan como
 confirmación de compra ni se asume que sus eventos pertenezcan a esta aplicación.
 
-## Configuración Sandbox pendiente
+## Configuración Sandbox realizada, 2 de septiembre de 2026
 
-Crear o seleccionar una aplicación PayPal dedicada a este proyecto. Confirmar
-antes de crear credenciales persistentes o conceder acceso nuevo. Guardar solo
-en el almacén de secretos de Sites, nunca en Git, HTML, capturas, archivos públicos
-ni mensajes del chat:
+El titular confirmó que la cuenta receptora pertenece a YC Systems LLC y autorizó
+crear la aplicación de prueba, aceptar el acuerdo de desarrollador de PayPal y
+guardar sus credenciales protegidas. Se creó **100 Dias El Metodo - Sandbox**,
+de tipo Merchant, con una cuenta empresarial de prueba. No se creó una aplicación
+Live ni se modificaron los cobros reales de la empresa.
+
+Se guardaron Client ID, secreto, comercio y webhook como secretos de Sites.
+`PAYPAL_ENV=sandbox` y `CHECKOUT_ENABLED=false`. La revisión de entorno guardada
+es la 3; todavía no está aplicada a la publicación, que conserva la revisión 0.
+Aplicarla requiere una nueva publicación aprobada; no equivale a abrir ventas.
+No guardar valores de credenciales en Git, HTML, capturas ni mensajes del chat.
+
+Prueba real contra **api-m.sandbox.paypal.com** con el adaptador de la aplicación:
+
+- Autenticación de la aplicación: aceptada.
+- Webhook de los seis eventos de captura: creado y verificado en la respuesta de
+  PayPal, con la URL propia indicada abajo.
+- Pedidos de USD 9, 29, 79 y 297: creados y consultados correctamente; se verificó
+  comercio, moneda, importe, referencia interna, plan e intención `CAPTURE`.
+- Una repetición de cada solicitud devolvió el mismo pedido de PayPal.
+- Los cuatro quedaron `PAYER_ACTION_REQUIRED`, sin aprobación ni captura.
+  No se movió dinero, ni real ni de prueba. No se han probado todavía el pago
+  aprobado, la recepción de webhooks en la web pública o la entrega de contenido.
+- Las 42 pruebas automatizadas siguen pasando.
+
+`hosting/sandbox-check.mjs` permite repetir estas comprobaciones solo con una
+operación explícita (`--register-webhook` o `--create-orders`). Restringe el destino
+a Sandbox, recibe secretos solo en el entorno del proceso y nunca los imprime.
+Reutilizar el mismo `PAYPAL_TEST_RUN_ID` para reintentar el mismo lote. No forma
+parte de la aplicación pública ni se ejecuta con `npm test`.
+
+Configuración necesaria para una futura prueba integral:
 
 | Variable | Valor |
 | --- | --- |
@@ -53,6 +81,9 @@ ni mensajes del chat:
 Webhook: `https://100diaselmetodo.com/api/paypal/webhook`. Registrar solo los
 eventos `PAYMENT.CAPTURE.COMPLETED`, `PENDING`, `DENIED`/`DECLINED` según los que
 ofrezca el panel, `REFUNDED` y `REVERSED`. No activar suscripciones ni Vault.
+El registro ya existe en la aplicación Sandbox. Con el checkout desactivado,
+el receptor público también permanece cerrado; registrar la URL no demuestra
+que las notificaciones lleguen ni que se procesen correctamente.
 Una URL pública para Sandbox y las escrituras de secretos necesitan aprobación
 de su publicación/configuración. No enviar compradores reales a una prueba.
 
