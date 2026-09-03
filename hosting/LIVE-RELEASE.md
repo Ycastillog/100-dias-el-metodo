@@ -64,6 +64,15 @@ creaciones de pedidos e intentos de recuperación sin guardar IPs en claro.
 
 ## Verificación y estado de lanzamiento
 
+La prueba real de Sandbox usa temporalmente `CHECKOUT_TEST_TOKEN` (256 bits) y
+`CHECKOUT_TEST_EXPIRES_AT` (máximo tres horas) solo en peticiones del operador con
+la cabecera `x-metodo-sandbox-test`. No se publica el token ni una tienda Sandbox.
+Esas peticiones usan únicamente las credenciales Sandbox existentes; no reciben
+las Live. Se quitan ambas variables al finalizar. Los códigos de acceso y pedidos
+Sandbox no son válidos en el entorno Live. El webhook existente distingue el
+entorno por el host del certificado, pero siempre exige verificar la firma con
+PayPal y comprobar el entorno del pedido antes de reconocer cualquier evento.
+
 Las pruebas locales usan SQLite y respuestas PayPal simuladas. Cubren precios,
 comercio, importe, firma, reintentos, aislamiento de compras, duración, límites de
 plan, conflictos del diario, entrega y recuperación. Las pruebas de interfaz no

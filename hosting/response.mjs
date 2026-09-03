@@ -3,8 +3,12 @@ import { handleCheckout } from './checkout.mjs';
 import { handleParticipant } from './participant.mjs';
 import { checkoutConfiguration, paymentEnvironment } from './catalog.mjs';
 import { programReady, secretReady } from './purchase-access.mjs';
+import { sandboxProbe } from './sandbox-probe.mjs';
 
 export async function respond(request, assets, env = {}, program = null) {
+  const probe = await sandboxProbe(request, env);
+  if (probe instanceof Response) return probe;
+  if (probe) { request = probe.request; env = probe.env; }
   const headers = new Headers({
     'Cache-Control': 'private, no-store',
     'X-Content-Type-Options': 'nosniff',
