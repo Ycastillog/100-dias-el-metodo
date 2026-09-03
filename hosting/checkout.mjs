@@ -203,7 +203,13 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
       : /D1|SQLITE/i.test(message) ? 'database' : 'other';
     const reason = /RequestRedirect|redirect.*enum|redirect.*invalid/i.test(message) ? 'unsupported_redirect_mode'
       : /illegal invocation|incorrect.*this/i.test(message) ? 'missing_receiver' : undefined;
-    console.error('checkout_failure', { phase, code, category, reason, name: ['TypeError', 'Error', 'InvalidCharacterError', 'ReferenceError'].includes(error?.name) ? error.name : 'ProviderError' });
+    let diagnostic;
+    if (env.PAYPAL_ENV === 'sandbox' && error?.name === 'TypeError') {
+      diagnostic = message;
+      for (const value of Object.values(env)) if (typeof value === 'string' && value.length >= 8) diagnostic = diagnostic.split(value).join('[redacted]');
+      diagnostic = diagnostic.replace(/https?:\/\/\S+|\S+@\S+|[A-Za-z0-9_+/=-]{20,}/g, '[redacted]').slice(0, 240);
+    }
+    console.error('checkout_failure', { phase, code, category, reason, diagnostic, name: ['TypeError', 'Error', 'InvalidCharacterError', 'ReferenceError'].includes(error?.name) ? error.name : 'ProviderError' });
     return failure(code, code === 'payment_mismatch' ? 409 : 503);
   }
 }
