@@ -19,13 +19,18 @@ await mkdir(output, { recursive: true });
 const prelaunch = process.argv.includes('--prelaunch');
 const sales = process.argv.includes('--sales');
 const assets = await (sales ? loadSalesAssets : prelaunch ? loadPrelaunchAssets : loadAssets)(root);
+let staged = 0;
 for (const [url, asset] of Object.entries(assets)) {
-  if (url === '/') continue;
+  // Sites serves matching static assets before the Worker. Keep these routes
+  // Worker-only: the home page needs the current sales state and /mi-metodo
+  // needs an explicit HTML MIME type, not an extensionless static download.
+  if (url === '/' || sales && ['/index.html', '/mi-metodo'].includes(url)) continue;
   const target = resolve(output, '.' + url);
   if (!target.startsWith(output + sep)) {
     throw new Error('Asset outside build output');
   }
   await mkdir(resolve(target, '..'), { recursive: true });
   await writeFile(target, Buffer.from(asset.data, asset.encoding === 'base64' ? 'base64' : 'utf8'));
+  staged++;
 }
-console.log(`Staged ${Object.keys(assets).length - 1} allowlisted ${sales ? 'sales' : prelaunch ? 'prelaunch' : 'private review'} assets.`);
+console.log(`Staged ${staged} allowlisted ${sales ? 'sales' : prelaunch ? 'prelaunch' : 'private review'} assets.`);

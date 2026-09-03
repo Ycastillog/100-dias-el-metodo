@@ -26,4 +26,9 @@ const anonymous = await worker.fetch(new Request(origin + '/api/participant/day?
 assert.equal(anonymous.status, 401);
 for (const path of ['/assets/app.js', '/assets/ops.js', '/assets/life-program.js', '/.env', '/.git/config']) assert.equal((await worker.fetch(new Request(origin + path), env)).status, 404);
 assert.ok((await readFile(new URL('../dist/client/assets/participant.js', import.meta.url), 'utf8')).length > 1000);
+for (const path of ['../dist/client/index.html', '../dist/client/mi-metodo']) await assert.rejects(readFile(new URL(path, import.meta.url)), { code: 'ENOENT' });
+for (const path of ['/', '/mi-metodo', '//attacker.example/']) {
+  const redirected = await worker.fetch(new Request('https://metodo-100-dias.yeicastillog.chatgpt.site' + path), env);
+  assert.equal(redirected.status, 307); assert.equal(new URL(redirected.headers.get('location')).origin, origin);
+}
 console.log('Compiled sales artifact: routes, Live configuration, secret exclusion and anonymous access gates passed. No network or charge.');

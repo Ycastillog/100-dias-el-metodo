@@ -15,6 +15,18 @@ export async function respond(request, assets, env = {}, program = null) {
   try { pathname = decodeURIComponent(new URL(request.url).pathname); }
   catch { return new Response('Dirección no válida.', { status: 400, headers }); }
 
+  // The hosting-provider URL remains a valid entry point, but purchase cookies
+  // and PayPal callbacks intentionally use the one canonical customer domain.
+  if (program && env.PAYPAL_ENV === 'live' && ['GET', 'HEAD'].includes(request.method) && !pathname.startsWith('/api/')) {
+    try {
+      const source = new URL(request.url); const canonical = new URL(env.CHECKOUT_ORIGIN);
+      if (canonical.protocol === 'https:' && canonical.origin === env.CHECKOUT_ORIGIN && source.origin !== canonical.origin) {
+        canonical.pathname = source.pathname; canonical.search = source.search;
+        return new Response(null, { status: 307, headers: { Location: canonical.href, 'Cache-Control': 'private, no-store' } });
+      }
+    } catch { /* An incomplete local preview never redirects. */ }
+  }
+
   const checkout = await handleCheckout(request, env, { program });
   if (checkout) return checkout;
 

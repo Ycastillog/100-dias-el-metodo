@@ -82,3 +82,8 @@ Publicar requiere: `npm test`, `npm run build:sales`, fuente exacta subida,
 archivo creado con el empaquetador oficial de Sites y despliegue de esa versión.
 Nunca publicar secretos ni incluir los archivos heredados de acceso del cliente.
 Las migraciones 0003/0004 agregan registros y contadores, sin borrar compras o leads.
+
+El alojamiento sirve archivos estáticos antes que el Worker. Por eso la
+compilación comercial no coloca `index.html` ni la ruta sin extensión `mi-metodo`
+en `dist/client`: ambas se sirven desde el Worker con estado y MIME correctos.
+El dominio técnico de Sites redirige esas páginas al dominio público canónico.
