@@ -15,6 +15,33 @@ test('prelaunch has explicit status, waitlist and verified social links', async(
   assert.doesNotMatch(html, /link[^>]+rel="manifest"/i);
 });
 
+test('landing explains the offer and keeps the exact reel calls to action', () => {
+  const html = assets['/'].data;
+  for (const text of ['Al comenzar', 'Cada día', 'Cada 7 días', 'pago único', 'no una suscripción', 'no envía un correo inmediato', 'YC Systems LLC']) assert.ok(html.includes(text), text);
+  assert.match(html, /href="#experiencia">Probar una acción hoy<\/a>/);
+  assert.match(html, /href="#lista-espera"[^>]*>Recibir aviso de lanzamiento<\/a>/);
+  assert.match(html, /data-detail="after_sample"/);
+  assert.equal((html.match(/<h1>/g) || []).length, 1);
+  assert.equal((html.match(/<form\b/g) || []).length, 1);
+  assert.match(html, /name="consent" value="yes" required/);
+  assert.doesNotMatch(html, /name="consent"[^>]*\bchecked/);
+  assert.match(html, /role="status" aria-live="polite"/);
+  assert.match(html, /Ejemplo ilustrativo/);
+  assert.doesNotMatch(html, /<input[^>]+(?:tarjeta|card|password)/i);
+});
+
+test('all landing section ids are unique and sample remains available without JS', () => {
+  const html = assets['/'].data;
+  const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(new Set(ids).size, ids.length);
+  for (const [, reference] of html.matchAll(/aria-(?:describedby|labelledby)="([^"]+)"/g)) {
+    for (const id of reference.split(' ')) assert.ok(ids.includes(id), id);
+  }
+  assert.ok(html.indexOf('id="experiencia"') < html.indexOf('id="lista-espera"'));
+  assert.match(html, /<details open><summary>/);
+  assert.match(html, /method="post" action="\/api\/waitlist"/);
+});
+
 test('participant program and every obsolete entry point fail closed',async()=>{
   for(const path of ['/acceso.html','/acceso.html?alpha=1','/biblioteca.html','/embajadores.html','/gracias-embajador.html','/assets/payments.js','/assets/app.js','/assets/life-program.js','/assets/library.js','/assets/ops.js','/assets/site-config.js','/manifest.webmanifest','/.openai/hosting.json','/.git/config','/.env','/hosting/prelaunch.html','/public/downloads/README.txt']) assert.equal((await respond(request(path),assets)).status,404,path);
 });
