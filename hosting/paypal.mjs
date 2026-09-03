@@ -14,7 +14,7 @@ export function paypalClient(env, fetcher = (...args) => globalThis.fetch(...arg
   async function call(path, { method = 'GET', body, requestId, rawBody } = {}) {
     if (!token) {
       const response = await fetcher(base + '/v1/oauth2/token', {
-        method: 'POST', redirect: 'error', signal: AbortSignal.timeout(15_000),
+        method: 'POST', redirect: 'manual', signal: AbortSignal.timeout(15_000),
         headers: { Authorization: 'Basic ' + btoa(env.PAYPAL_CLIENT_ID + ':' + env.PAYPAL_CLIENT_SECRET), 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'grant_type=client_credentials',
       });
@@ -25,7 +25,7 @@ export function paypalClient(env, fetcher = (...args) => globalThis.fetch(...arg
     const headers = { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json', Prefer: 'return=representation' };
     if (requestId) headers['PayPal-Request-Id'] = requestId;
     const response = await fetcher(base + path, {
-      method, headers, redirect: 'error', signal: AbortSignal.timeout(15_000),
+      method, headers, redirect: 'manual', signal: AbortSignal.timeout(15_000),
       body: rawBody ?? (body === undefined ? undefined : JSON.stringify(body)),
     });
     if (!response.ok) {

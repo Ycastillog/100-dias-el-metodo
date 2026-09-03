@@ -201,7 +201,9 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
       : /AbortSignal|timeout/i.test(message) ? 'timeout_api'
       : /fetch|network|connection|TLS/i.test(message) ? 'transport'
       : /D1|SQLITE/i.test(message) ? 'database' : 'other';
-    console.error('checkout_failure', { phase, code, category, name: ['TypeError', 'Error', 'InvalidCharacterError', 'ReferenceError'].includes(error?.name) ? error.name : 'ProviderError' });
+    const reason = /RequestRedirect|redirect.*enum|redirect.*invalid/i.test(message) ? 'unsupported_redirect_mode'
+      : /illegal invocation|incorrect.*this/i.test(message) ? 'missing_receiver' : undefined;
+    console.error('checkout_failure', { phase, code, category, reason, name: ['TypeError', 'Error', 'InvalidCharacterError', 'ReferenceError'].includes(error?.name) ? error.name : 'ProviderError' });
     return failure(code, code === 'payment_mismatch' ? 409 : 503);
   }
 }
