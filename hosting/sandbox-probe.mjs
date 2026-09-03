@@ -27,8 +27,11 @@ export async function sandboxProbe(request, env) {
     // PayPal still must pass normal signature, environment and order checks.
     return { request: new Request(url, request), env: sandboxEnvironment(env, false) };
   }
-  const supplied = request.headers.get('x-metodo-sandbox-test');
-  if (supplied === null) return null;
+  // Standard Authorization is redacted by the hosting request logger; custom
+  // secret headers are not. Never place the probe key in URLs or custom headers.
+  const authorization = request.headers.get('authorization');
+  if (!authorization?.startsWith('Bearer sandbox-')) return null;
+  const supplied = authorization.slice('Bearer sandbox-'.length);
   const expiry = Date.parse(env.CHECKOUT_TEST_EXPIRES_AT || '');
   if (!PROBE_PATH.test(url.pathname) || url.protocol !== 'https:' || url.origin !== env.CHECKOUT_ORIGIN ||
       !TOKEN.test(supplied) || !TOKEN.test(env.CHECKOUT_TEST_TOKEN || '') ||

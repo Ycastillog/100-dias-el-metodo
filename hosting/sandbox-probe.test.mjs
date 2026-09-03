@@ -9,7 +9,7 @@ const makeEnv = () => ({ PAYPAL_ENV: 'live', CHECKOUT_ENABLED: 'false', CHECKOUT
   PAYPAL_CLIENT_ID: 'sandbox-public', PAYPAL_CLIENT_SECRET: 'sandbox-secret', PAYPAL_MERCHANT_ID: 'SB', PAYPAL_WEBHOOK_ID: 'SBHOOK',
   PAYPAL_LIVE_CLIENT_ID: 'live-public', PAYPAL_LIVE_CLIENT_SECRET: 'live-secret', PAYPAL_LIVE_MERCHANT_ID: 'LIVE', PAYPAL_LIVE_WEBHOOK_ID: 'LIVEHOOK',
   ACCESS_SIGNING_SECRET: 'a'.repeat(64), DB: { prepare() { throw new Error('No DB calls expected'); }, batch() {} } });
-const request = (path = '/api/checkout/config', token = 'b'.repeat(64), base = origin) => new Request(base + path, { headers: token === null ? {} : { 'x-metodo-sandbox-test': token } });
+const request = (path = '/api/checkout/config', token = 'b'.repeat(64), base = origin) => new Request(base + path, { headers: token === null ? {} : { authorization: 'Bearer sandbox-' + token } });
 
 test('operator Sandbox gate does not change normal Live traffic or expose protected keys', async () => {
   const env = makeEnv();

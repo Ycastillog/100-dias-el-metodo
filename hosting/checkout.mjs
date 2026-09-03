@@ -128,6 +128,7 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
   if (path === '/api/paypal/orders' && !config.enabled) return failure('sales_closed', 503);
   if (new URL(request.url).origin !== config.origin) return failure('invalid_origin', 403);
   if (path !== '/api/paypal/webhook' && request.method === 'POST' && (request.headers.get('origin') !== config.origin || request.headers.get('sec-fetch-site') === 'cross-site')) return failure('invalid_origin', 403);
+  let phase = 'initialization';
   try {
     const store = dependencies.store || paymentStore(env.DB);
     const client = dependencies.client || paypalClient(env);
@@ -161,7 +162,9 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
       if (order.session_hash !== hash || order.plan_key !== plan.key || order.contact_email !== email || order.environment !== config.mode) return failure('order_conflict', 409);
       if (Date.now() - Date.parse(order.created_at) > 5 * 3_600_000) return failure('order_expired', 409);
       if (!order.paypal_order_id) {
+        phase = 'provider_create';
         const remote = await client.create(order, plan);
+        phase = 'persist_provider_order';
         if (!/^[A-Z0-9]{1,36}$/.test(remote.id || '')) throw new PayPalError();
         await store.setPayPal(order.id, remote.id, now());
         order = await store.byId(order.id);
@@ -191,6 +194,13 @@ export async function handleCheckout(request, env = {}, dependencies = {}) {
     return await receiptResponse(request, order, env, store, deliveryReady);
   } catch (error) {
     const code = error instanceof PayPalError ? error.code : 'checkout_unavailable';
+    // Deliberately exclude raw messages, request headers, emails and secrets.
+    const message = String(error?.message || '');
+    const category = /ByteString|Latin1|Invalid character|btoa/i.test(message) ? 'encoding'
+      : /AbortSignal|timeout/i.test(message) ? 'timeout_api'
+      : /fetch|network|connection|TLS/i.test(message) ? 'transport'
+      : /D1|SQLITE/i.test(message) ? 'database' : 'other';
+    console.error('checkout_failure', { phase, code, category, name: ['TypeError', 'Error', 'InvalidCharacterError', 'ReferenceError'].includes(error?.name) ? error.name : 'ProviderError' });
     return failure(code, code === 'payment_mismatch' ? 409 : 503);
   }
 }
