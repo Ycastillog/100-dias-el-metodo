@@ -4,6 +4,7 @@ import { handleParticipant } from './participant.mjs';
 import { checkoutConfiguration, paymentEnvironment } from './catalog.mjs';
 import { programReady, secretReady } from './purchase-access.mjs';
 import { sandboxProbe } from './sandbox-probe.mjs';
+import { audioResponse } from './guided-week.mjs';
 
 export async function respond(request, assets, env = {}, program = null) {
   const probe = await sandboxProbe(request, env);
@@ -49,6 +50,7 @@ export async function respond(request, assets, env = {}, program = null) {
   headers.set('Content-Security-Policy', "frame-ancestors 'none'; object-src 'none'; base-uri 'self'");
   const asset = found ?? assets['/404.html'];
   if (!asset) return new Response(null, { status: 404, headers });
+  if (found?.type === 'video/mp4' && request.method === 'GET') return audioResponse(request, found, found.type);
   headers.set('Content-Type', asset.type);
   let body = request.method === 'HEAD' ? null : asset.encoding === 'base64'
     ? Uint8Array.from(atob(asset.data), c => c.charCodeAt(0))

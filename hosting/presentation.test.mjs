@@ -3,11 +3,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { loadSalesAssets } from './sales-assets.mjs';
 import { checkoutPage } from './checkout-page.mjs';
+import { respond } from './response.mjs';
 
 const root = process.cwd();
 const assets = await loadSalesAssets(root);
 const sales = assets['/'].data;
 const member = assets['/mi-metodo'].data;
+
+test('public example video supports native byte-range seeking without unlocking paid audio',async()=>{
+  const result=await respond(new Request('https://100diaselmetodo.com/assets/first-step-example.mp4',{headers:{range:'bytes=0-127'}}),assets);
+  assert.equal(result.status,206);assert.equal(result.headers.get('content-type'),'video/mp4');assert.equal((await result.arrayBuffer()).byteLength,128);assert.match(result.headers.get('content-range'),/^bytes 0-127\//);
+});
 
 test('legacy artwork is preserved and the page features a disclosed optional video instead of a notebook', () => {
   const image = assets['/assets/practice-editorial-v2.webp'];

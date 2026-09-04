@@ -21,10 +21,10 @@ export function dayGuide(program, day, profile, requestedArea) {
 
 // MP3 files remain inside the Worker and are only returned after entitlement
 // validation. Support a single byte range for native audio seeking.
-export function audioResponse(request, media) {
+export function audioResponse(request, media, contentType = 'audio/mpeg') {
   if (!media) return new Response(null, { status: 404 });
   const bytes = Uint8Array.from(atob(media.data), value => value.charCodeAt(0));
-  const headers = { 'Content-Type': 'audio/mpeg', 'Cache-Control': 'private, no-store', 'Accept-Ranges': 'bytes', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex, nofollow' };
+  const headers = { 'Content-Type': contentType, 'Cache-Control': 'private, no-store', 'Accept-Ranges': 'bytes', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex, nofollow' };
   const range = request.headers.get('range');
   if (!range) return new Response(bytes, { headers: { ...headers, 'Content-Length': String(bytes.length) } });
   const match = /^bytes=(\d*)-(\d*)$/.exec(range);
