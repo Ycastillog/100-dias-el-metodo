@@ -1,0 +1,1058 @@
+{
+  "version": "1.1.0",
+  "days": [
+    {
+      "day": 1,
+      "title": "Recuperar el control",
+      "foundation": {
+        "originalTitle": "Recuperar el control",
+        "originalTask": "Pon un temporizador de 10 minutos, completa una accion pendiente y registra que cambio."
+      },
+      "explanation": "Hoy elige algo que puedas hacer por tu cuenta y cerrar dentro del tiempo disponible. Recuperar el control empieza con una decisión concreta, aunque el resto del día siga desordenado. Aparta una distracción mientras realizas esa acción. Al terminar, observa qué quedó distinto. Esa pequeña evidencia servirá para conocer tu punto de partida, sin convertirlo en un examen personal hoy.",
+      "example": "El teléfono ocupa el sitio donde quiero escribir. Lo dejo en otro lugar y recupero ese espacio. Mi evidencia es concreta: ahora cabe la libreta.",
+      "reflection": "¿Qué cambió gracias a una decisión que sí dependía de ti?",
+      "task": "Recupera una pequeña parte de tu entorno con la acción de tu área. Elige una duración y observa el resultado de esa única tarea.",
+      "areas": {
+        "mentalidad": {
+          "action": "Retira de tu campo de visión una distracción que hayas elegido, dejando disponible el lugar de tu próxima práctica.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Aparta una sola distracción. Basta con comprobar que ese lugar quedó disponible. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Dedica la acción a decidir dónde dejar esa misma distracción y apartarla sin perder tiempo buscándola después. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Usa la acción para ajustar la ubicación de esa misma distracción. Termina cuando el lugar te resulte utilizable. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Apartar el teléfono del lugar de práctica"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al abrir la libreta; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Apartar una sola distracción"
+            }
+          ],
+          "example": "Dejo el teléfono en la repisa. La libreta vuelve a tener espacio; hoy solo quería recuperar ese lugar."
+        },
+        "profesional": {
+          "action": "Completa una frase de un borrador de trabajo propio y no confidencial, manteniendo a la vista solo ese documento.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Escribe una frase que explique para qué sirve el borrador. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Trabaja esa misma frase hasta que exprese con claridad el propósito del borrador. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Revisa esa misma frase con calma y deja una versión que puedas entender al volver. No hace falta completar el documento. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Escribir el propósito de mi borrador"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al abrir el documento propio; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una frase provisional"
+            }
+          ],
+          "example": "Escribo «Esta guía ayuda a ordenar una agenda». Esa frase cierra la tarea de hoy aunque el documento siga en borrador."
+        },
+        "bienestar": {
+          "action": "Deja libre un pequeño lugar de uso cotidiano para una pausa, reubicando un objeto ligero que esté a tu alcance.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Reubica un objeto pequeño del lugar elegido; esa superficie libre es el resultado de hoy. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Dedica la acción a encontrar un sitio práctico para ese mismo objeto y dejar libre el lugar de la pausa. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Ajusta con calma la ubicación de ese mismo objeto. Detén la tarea cuando el lugar elegido quede disponible. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Dejar libre una esquina de la mesa"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al llegar a mi mesa; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Reubicar un objeto ligero a mi alcance"
+            }
+          ],
+          "example": "Reubico un cuaderno ligero en la repisa cercana. Queda disponible una esquina de la mesa para mi pausa."
+        },
+        "finanzas": {
+          "action": "Elige un compromiso de pago propio próximo para tu calendario privado. Usa un nombre general y la moneda que corresponda; añade importe y fecha solo si ya los conoces.",
+          "example": "Elijo «internet» como compromiso. Si aún no conozco el importe o la fecha, los dejo pendientes en mi nota; no invento datos ni marco el pago como realizado.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Elige un compromiso y su nombre general; deja sin completar los datos desconocidos. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Aclara ese mismo compromiso y qué datos conoces para una sola fila. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Revisa esa misma fila y su moneda. Las otras dos filas pueden quedar vacías. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "name",
+              "label": "Compromiso elegido",
+              "example": "Internet"
+            },
+            {
+              "id": "amount",
+              "label": "Importe, si lo conoces",
+              "example": "Importe real conocido; vacío si no lo sé"
+            },
+            {
+              "id": "date",
+              "label": "Fecha ya acordada",
+              "example": "Fecha conocida; vacía si no la sé"
+            }
+          ]
+        },
+        "relaciones": {
+          "action": "Redacta en privado una frase que cuente qué acción pequeña estás intentando sostener, como ensayo para compartirla si alguna vez lo deseas.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Escribe una frase sobre tu propia práctica, sin nombres ni destinatarios. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Ajusta esa misma frase hasta que cuente una acción concreta con palabras que usarías al hablar. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Ensaya esa misma frase en privado y afina su claridad. El borrador basta para cerrar la tarea. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "situation",
+              "label": "Situación cotidiana general",
+              "example": "Quiero contar una práctica propia"
+            },
+            {
+              "id": "intention",
+              "label": "Lo que quiero expresar",
+              "example": "Explicar una acción pequeña sin pedir aprobación"
+            },
+            {
+              "id": "phrase",
+              "label": "Mi frase de ensayo",
+              "example": "Estoy practicando escuchar antes de responder"
+            }
+          ],
+          "example": "Escribo «Estoy practicando escuchar antes de responder». El ensayo habla de mi acción y no incluye nombres ni historias ajenas."
+        }
+      },
+      "defaultFocus": "mentalidad"
+    },
+    {
+      "day": 2,
+      "title": "La primera victoria",
+      "foundation": {
+        "originalTitle": "La primera victoria",
+        "originalTask": "Escribe una promesa de una sola linea, ejecutala y registra la hora en que la cumpliste."
+      },
+      "explanation": "Una promesa útil describe algo que puedes reconocer cuando termina. Hoy acuerda contigo una acción pequeña y realízala antes de abrir una distracción. El tamaño importa menos que la claridad del acuerdo. Puedes reducirlo antes de empezar si no cabe en tu tiempo. Al cerrar, registra lo que hiciste, sin añadir otra meta para que la primera parezca más valiosa.",
+      "example": "Mi promesa es aclarar el nombre de una fila del calendario. Escribo «internet del hogar» y reconozco ese cambio como el cierre. No tengo que añadir pagos, inventar importes ni completar otros datos.",
+      "reflection": "¿La promesa fue lo bastante clara y pequeña para reconocer cuándo terminaste?",
+      "task": "Formula tu acción como una promesa de una línea y cumple esa misma promesa. Si te sirve, anota la hora en el campo de cierre.",
+      "areas": {
+        "mentalidad": {
+          "action": "Cumple la promesa de escribir una frase que nombre tu prioridad de hoy antes de abrir una distracción.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Completa una frase: «Hoy mi prioridad es…». Esa es toda la promesa. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Usa la acción para precisar esa misma prioridad en una frase que entiendas sin explicaciones. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Trabaja con calma la misma frase. Conserva una sola prioridad y cierra cuando el acuerdo esté expresado. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Escribir una frase con mi prioridad"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Antes de abrir las redes; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Escribir una prioridad sin pulirla"
+            }
+          ],
+          "example": "Escribo «Mi prioridad de hoy es cerrar una frase del borrador». Cumplo la promesa de aclarar mi prioridad; no necesito completar el borrador ahora."
+        },
+        "profesional": {
+          "action": "Cumple la promesa de poner un título descriptivo a un borrador propio y no confidencial que ya tengas abierto.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Escribe un título que permita reconocer el tema del borrador. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Ajusta ese mismo título para que nombre el tema y el propósito del trabajo. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a pulir ese mismo título. No tienes que redactar el resto del borrador. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Poner un título descriptivo al borrador"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Antes de abrir otro documento; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Un título sencillo"
+            }
+          ],
+          "example": "Cambio el título a «Guía breve para ordenar una agenda». Mi promesa era poner un título claro; el resto puede esperar."
+        },
+        "bienestar": {
+          "action": "Cumple la promesa de dejar un objeto cotidiano que usarás en una pausa en un lugar accesible que tú elijas.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Deja un objeto pequeño, como un libro, en el lugar elegido. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Elige una ubicación práctica para ese mismo objeto y déjalo preparado allí. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Ajusta la ubicación de ese mismo objeto hasta que te resulte cómoda. La preparación completa la promesa. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Dejar un objeto listo para mi pausa"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al terminar mi jornada; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Colocar un libro ligero a mi alcance"
+            }
+          ],
+          "example": "Dejo mi libro en la mesita. La promesa era prepararlo, así que hoy no tengo que añadir una sesión de lectura."
+        },
+        "finanzas": {
+          "action": "Cumple la promesa de dejar reconocible el nombre de un compromiso en una fila del calendario. Conserva su importe y fecha si ya los conoces, sin inventar datos.",
+          "example": "Cambio un nombre vago por «internet del hogar». Cumplí la promesa de aclarar la etiqueta; eso no confirma que el pago se haya realizado.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Escribe un nombre general y claro para una sola fila. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Ajusta ese mismo nombre para reconocer qué compromiso representa. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Afina esa misma etiqueta con calma, sin añadir compromisos para llenar el calendario. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "name",
+              "label": "Nombre claro del compromiso",
+              "example": "Internet del hogar"
+            },
+            {
+              "id": "amount",
+              "label": "Importe conocido de esa fila",
+              "example": "Conservar el importe real si ya lo conozco"
+            },
+            {
+              "id": "date",
+              "label": "Fecha conocida de esa fila",
+              "example": "Conservar la fecha ya acordada"
+            }
+          ]
+        },
+        "relaciones": {
+          "action": "Cumple la promesa de ensayar en privado una frase para preguntar si es buen momento para conversar, dejando espacio para una negativa.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Ensaya una vez: «¿Te viene bien hablar ahora o prefieres otro momento?». Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Adapta y ensaya esa misma pregunta con palabras propias, conservando la posibilidad de otro momento. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a que esa misma pregunta suene natural. Un ensayo privado completa la promesa. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "situation",
+              "label": "Situación cotidiana general",
+              "example": "Quiero iniciar una conversación cotidiana"
+            },
+            {
+              "id": "intention",
+              "label": "Lo que quiero expresar",
+              "example": "Comprobar si hay disponibilidad para hablar"
+            },
+            {
+              "id": "phrase",
+              "label": "Mi frase de ensayo",
+              "example": "¿Te viene bien hablar ahora o prefieres otro momento?"
+            }
+          ],
+          "example": "Ensayo «¿Te viene bien hablar ahora o prefieres otro momento?». Termino al decir la pregunta una vez en privado, sin necesitar una respuesta."
+        }
+      },
+      "defaultFocus": "finanzas"
+    },
+    {
+      "day": 3,
+      "title": "La primera resistencia",
+      "foundation": {
+        "originalTitle": "La primera resistencia",
+        "originalTask": "Nombra tu excusa, inicia de inmediato y sostente durante al menos 10 minutos."
+      },
+      "explanation": "Antes de empezar puede aparecer una razón para posponer: falta de tiempo, dudas o ganas de hacerlo perfecto. Nómbrala como una observación, sin llamarte perezoso. Después prueba el comienzo más pequeño de tu tarea. Si existe un impedimento real, ajusta el alcance. Hoy interesa distinguir entre necesitar mejores condiciones y poder iniciar una parte concreta con las condiciones disponibles ahora.",
+      "example": "Quiero preparar una petición, pero espero encontrar palabras perfectas. Escribo: «¿Podemos buscar otro momento para hablar?». Ese borrador de una frase completa mi versión de dos minutos.",
+      "reflection": "¿Qué parte de la dificultad pudiste reducir y qué condición sigue necesitando atención?",
+      "task": "Nombra lo que está frenando el comienzo y realiza la versión elegida de la acción de tu área. Dos minutos son una opción completa.",
+      "areas": {
+        "mentalidad": {
+          "action": "Escribe el comienzo de una nota personal que hayas pospuesto: una frase sobre algo que quieres decidir, aceptando una primera versión sencilla.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Nombra tu freno en pocas palabras y escribe una primera frase sin pulirla. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Da forma a esa misma frase hasta que exprese lo que quieres decidir. No hace falta resolver la decisión. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Revisa esa misma frase con calma. Puedes cerrar al tener un comienzo claro, aunque queden preguntas abiertas. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Empezar una nota personal pendiente"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al abrir mi nota; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Escribir una primera frase"
+            }
+          ],
+          "example": "Escribo «Quiero decidir cuándo reservar mi próxima práctica». Una primera frase basta, aunque no tenga todas las respuestas."
+        },
+        "profesional": {
+          "action": "Escribe una primera frase de un borrador propio que has pospuesto, usando un tema genérico y sin exigir una versión lista para entregar.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Nombra tu freno y escribe una frase provisional del borrador. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Desarrolla esa misma frase hasta que comunique una idea reconocible. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Afina esa misma idea dentro del borrador. La tarea termina con una frase útil; no exige entregar ni publicar. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Empezar una frase del borrador pendiente"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al abrir el borrador; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una frase sin pulir"
+            }
+          ],
+          "example": "Escribo una introducción provisional de una frase. No necesito que esté lista para entregar para reconocer que ya empecé."
+        },
+        "bienestar": {
+          "action": "Prepara una parte pequeña de un lugar cotidiano que has dejado pendiente, reubicando solo un objeto ligero que esté a tu alcance.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Nombra el freno y reubica un objeto pequeño del lugar elegido. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Busca un destino sencillo para ese mismo objeto y completa su reubicación. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a resolver dónde quedará ese mismo objeto. No necesitas ordenar el resto del espacio. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Reubicar un objeto de un lugar pendiente"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Cuando esté junto a mi mesa; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Un objeto pequeño y accesible"
+            }
+          ],
+          "example": "Pensaba en ordenar toda la mesa. Reubico solo un cuaderno y reconozco esa parte como el comienzo de hoy."
+        },
+        "finanzas": {
+          "action": "Empieza por la fecha de un compromiso cuyo registro has pospuesto: anota la fecha ya acordada si la conoces o reconoce que sigue pendiente de confirmar.",
+          "example": "He pospuesto aclarar la fecha de «internet». No la recuerdo, así que la dejo vacía y anoto «fecha por confirmar» en privado. Reconocer el dato pendiente completa esta versión.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Escribe una fecha conocida o identifica que sigue por confirmar. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Aclara la fecha de esa misma fila con información que ya tengas presente. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Revisa ese mismo dato sin abrir cuentas ni inventar un vencimiento. Puedes cerrar con la fecha pendiente. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "name",
+              "label": "Compromiso cuya fecha revisaré",
+              "example": "Internet del hogar"
+            },
+            {
+              "id": "amount",
+              "label": "Importe conocido",
+              "example": "Conservar el importe real; vacío si lo desconozco"
+            },
+            {
+              "id": "date",
+              "label": "Fecha conocida o pendiente",
+              "example": "Vacía si todavía está por confirmar"
+            }
+          ]
+        },
+        "relaciones": {
+          "action": "Redacta en privado una petición cotidiana que has pospuesto, centrada en lo que necesitas y dejando a la otra persona libertad para responder.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Nombra tu freno y escribe una petición breve sobre un asunto cotidiano. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Ajusta esa misma petición para que exprese qué necesitas y permita una respuesta distinta a la esperada. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Ensaya esa misma petición en privado y afina el tono. El borrador basta; no necesitas contactar a nadie. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "situation",
+              "label": "Situación cotidiana general",
+              "example": "Quiero proponer otro momento para hablar"
+            },
+            {
+              "id": "intention",
+              "label": "Lo que quiero expresar",
+              "example": "Expresar mi necesidad dejando espacio para elegir"
+            },
+            {
+              "id": "phrase",
+              "label": "Mi frase de ensayo",
+              "example": "¿Podemos buscar otro momento para hablar con calma?"
+            }
+          ],
+          "example": "Me cuesta pedir otro horario. Dejo escrito «¿Podemos buscar otro momento para hablar con calma?». El borrador breve es mi comienzo de hoy."
+        }
+      },
+      "defaultFocus": "relaciones"
+    },
+    {
+      "day": 4,
+      "title": "Romper el piloto automático",
+      "foundation": {
+        "originalTitle": "Romper el piloto automatico",
+        "originalTask": "Cuando aparezca el disparador, espera 60 segundos y ejecuta una alternativa que hayas elegido antes."
+      },
+      "explanation": "Algunas acciones empiezan casi sin que las elijas: abrir una pestaña, cambiar de tarea o responder deprisa. Hoy observa una señal cotidiana y prepara una alternativa pequeña. Cuando aparezca, deja pasar sesenta segundos antes de actuar. También puedes ensayarlo imaginando la situación. La pausa forma parte de la misma tarea; no necesitas provocar una discusión ni esperar el momento perfecto.",
+      "example": "Imagino que voy a dejar el cuaderno en el lugar de mi pausa. Espero sesenta segundos y lo coloco en la repisa cercana. La pausa y esa ubicación forman una sola práctica.",
+      "reflection": "¿Qué señal reconociste y qué respuesta pudiste elegir después de la pausa?",
+      "task": "Ante una señal cotidiana real o imaginada, espera sesenta segundos y realiza la alternativa de tu área. La pausa está incluida en el tiempo elegido.",
+      "areas": {
+        "mentalidad": {
+          "action": "Ensaya una respuesta al impulso de abrir una distracción: espera sesenta segundos y escribe en tu nota cuál era tu siguiente paso.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Imagina la señal, espera sesenta segundos y escribe tu siguiente paso en pocas palabras. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Haz una sola pausa de sesenta segundos y precisa la misma frase sobre tu siguiente paso. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a ese mismo ensayo y su frase. Basta una pausa; no hace falta repetir el ejercicio. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Pausar y escribir mi siguiente paso"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "En esta sesión, con una señal imaginada; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una pausa de sesenta segundos y unas palabras"
+            }
+          ],
+          "example": "Imagino el impulso de abrir otra pestaña. Espero sesenta segundos y escribo «terminar esta frase» como siguiente paso."
+        },
+        "profesional": {
+          "action": "Ensaya qué harás al querer saltar a otra tarea: espera sesenta segundos y termina la frase que tengas abierta en un borrador propio.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Imagina la interrupción, espera sesenta segundos y cierra una frase breve del borrador. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Después de una sola pausa de sesenta segundos, da claridad a esa misma frase. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Trabaja con calma esa misma frase después de la pausa. El ensayo no requiere abrir otra tarea. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Pausar y cerrar una frase abierta"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "En esta sesión, con una interrupción imaginada; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una pausa de sesenta segundos y una frase corta"
+            }
+          ],
+          "example": "Imagino que quiero cambiar de documento. Espero sesenta segundos y termino la frase que tengo abierta."
+        },
+        "bienestar": {
+          "action": "Ensaya el momento de dejar un objeto en el lugar reservado para una pausa: espera sesenta segundos y colócalo en otro sitio accesible.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Con un objeto ligero a tu alcance, espera sesenta segundos y déjalo en la ubicación alternativa. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Haz una sola pausa de sesenta segundos y ajusta dónde dejar ese mismo objeto. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a ese mismo ensayo de ubicación. El resultado es conservar disponible el lugar elegido. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Pausar y ubicar un objeto fuera del lugar de pausa"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "En esta sesión, con el cuaderno a mi alcance; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una pausa de sesenta segundos y un objeto"
+            }
+          ],
+          "example": "Espero sesenta segundos antes de dejar el cuaderno en el lugar de mi pausa. Lo pongo en la repisa y cierro el ensayo."
+        },
+        "finanzas": {
+          "action": "Ante el impulso de cerrar el calendario, espera sesenta segundos y anota el importe de una fila solo si ya lo conoces. Si no, deja el dato pendiente y conserva la moneda correcta.",
+          "example": "Espero sesenta segundos y reviso el campo de importe. Como no lo recuerdo, lo dejo vacío; no uso cero. Registrar un importe conocido tampoco significa haber pagado.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Espera sesenta segundos y escribe un importe conocido o deja identificado que falta. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Después de una sola pausa de sesenta segundos, aclara el importe y la moneda de esa misma fila. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a ese mismo dato tras una sola pausa. El total mostrado solo resume importes registrados; no hace falta tomar ninguna decisión. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "name",
+              "label": "Compromiso del importe elegido",
+              "example": "Internet del hogar"
+            },
+            {
+              "id": "amount",
+              "label": "Importe en la moneda seleccionada",
+              "example": "Importe real conocido; nunca cero para indicar desconocido"
+            },
+            {
+              "id": "date",
+              "label": "Fecha conocida de esa fila",
+              "example": "Conservar la fecha conocida; dejar vacía si falta"
+            }
+          ]
+        },
+        "relaciones": {
+          "action": "Ensaya en privado una respuesta a una petición cotidiana imaginaria: espera sesenta segundos y formula una frase respetuosa sobre tu disponibilidad.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Imagina una petición sencilla, espera sesenta segundos y ensaya una frase sobre tu disponibilidad. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Tras una sola pausa, ajusta esa misma frase para expresar con claridad qué momento te viene bien. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Ensaya esa misma respuesta con calma después de la pausa. No necesitas recrear un conflicto ni enviar mensajes. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "situation",
+              "label": "Situación cotidiana general",
+              "example": "Petición imaginaria de hablar mientras hago una tarea"
+            },
+            {
+              "id": "intention",
+              "label": "Lo que quiero expresar",
+              "example": "Expresar mi disponibilidad después de una pausa"
+            },
+            {
+              "id": "phrase",
+              "label": "Mi frase de ensayo",
+              "example": "Ahora no puedo; puedo proponer otro momento"
+            }
+          ],
+          "example": "Imagino que me piden hablar mientras estoy ocupado. Espero sesenta segundos y ensayo «Ahora no puedo; puedo proponer otro momento»."
+        }
+      },
+      "defaultFocus": "bienestar"
+    },
+    {
+      "day": 5,
+      "title": "Cumplir aunque nadie mire",
+      "foundation": {
+        "originalTitle": "Cumplir aunque nadie mire",
+        "originalTask": "Haz una tarea importante en silencio y escribe que sentiste al terminar sin reconocimiento externo."
+      },
+      "explanation": "Hay acciones que merecen hacerse aunque nadie las vea. Hoy realiza una tarea pequeña sin anunciarla antes ni esperar reconocimiento para considerarla terminada. Puedes guardar una nota privada sobre lo ocurrido. La intención es observar cómo trabajas cuando la referencia es tu acuerdo, no la reacción ajena. Pedir apoyo sigue siendo válido; completar esta práctica no exige aislarte de nadie.",
+      "example": "Corrijo una frase de mi borrador y lo guardo sin publicarlo. Sé que terminé porque la frase quedó clara, aunque nadie haya visto el cambio ni vaya a comentarlo.",
+      "reflection": "¿Qué sentiste al dar por terminada la tarea sin esperar reconocimiento?",
+      "task": "Completa la acción de tu área sin anunciarla antes. Reconoce su cierre con una evidencia propia; compartirla después queda a tu elección.",
+      "areas": {
+        "mentalidad": {
+          "action": "Escribe en privado una frase sobre una decisión pequeña que sí llevaste a la práctica esta semana, usando un hecho que recuerdes.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Escribe un hecho en una frase; si no lo recuerdas, anota «todavía no lo identifico». Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Precisa esa misma frase para describir qué hiciste sin evaluarte como persona. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Revisa esa misma frase con calma y conserva una observación concreta. No hace falta buscar más logros. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Escribir un hecho propio de la semana"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al revisar una nota propia; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una frase sobre un hecho que recuerdo"
+            }
+          ],
+          "example": "Escribo «El martes aparté el teléfono para abrir la libreta». Guardo ese hecho en privado sin convertirlo en una lista de logros."
+        },
+        "profesional": {
+          "action": "Corrige una frase poco clara de un borrador propio y no confidencial, sin anunciar ni publicar la mejora como parte de la tarea.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Corrige una frase corta del borrador. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Trabaja esa misma frase hasta que su idea principal resulte clara. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a pulir esa misma frase. Cierra cuando tenga sentido, aunque nadie la revise hoy. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Aclarar una frase del borrador"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al retomar mi documento; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una corrección en una frase"
+            }
+          ],
+          "example": "Aclaro la frase de propósito y guardo el borrador. No lo publico ni necesito que alguien lo revise para cerrar esta práctica."
+        },
+        "bienestar": {
+          "action": "Deja preparado un objeto pequeño para una pausa cotidiana, eligiendo tú una ubicación práctica sin necesitar mostrar el resultado.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Coloca un objeto ligero de uso personal en el lugar elegido. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Ajusta la ubicación de ese mismo objeto para encontrarlo fácilmente cuando lo quieras usar. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a esa misma preparación. Puedes terminar en cuanto el objeto quede disponible. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Preparar un objeto para mi pausa"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al terminar mi jornada; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Un objeto ligero en el lugar elegido"
+            }
+          ],
+          "example": "Dejo el libro junto a mi asiento sin mostrar cómo quedó. Verlo preparado basta para cerrar la acción."
+        },
+        "finanzas": {
+          "action": "En privado, compara las fechas ya registradas de hasta tres compromisos e identifica cuál es la más próxima. Si hay una sola fecha conocida, esa basta; si no hay ninguna, deja la comparación pendiente.",
+          "example": "En un ejemplo ficticio con fechas 10 y 18 del mismo mes, el 10 es anterior. Esa comparación ordena información; no recomienda qué pagar ni confirma pagos.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Mira las fechas conocidas e identifica la más próxima, o reconoce que faltan datos. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Compara esas mismas fechas conocidas sin añadir compromisos ni cambiar vencimientos. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Aclara esa misma comparación usando las fechas completas. No hace falta priorizar pagos ni compartir el calendario. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "name",
+              "label": "Compromiso con fecha más próxima",
+              "example": "Etiqueta de la fila más próxima; pendiente si no hay fechas"
+            },
+            {
+              "id": "amount",
+              "label": "Importe conocido de esa fila",
+              "example": "Conservar el importe real si ya está registrado"
+            },
+            {
+              "id": "date",
+              "label": "Fecha más próxima conocida",
+              "example": "La fecha completa que ya figure en el calendario"
+            }
+          ]
+        },
+        "relaciones": {
+          "action": "Ensaya en privado una frase para ofrecer escucha sin prometer una solución ni necesitar agradecimiento por la oferta.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Ensaya una vez: «Si te viene bien, puedo escucharte un momento». Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Adapta esa misma frase a tu forma de hablar, dejando la decisión a quien reciba la oferta. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Afina y ensaya esa misma frase en privado. Completarla no depende de enviarla ni de obtener respuesta. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "situation",
+              "label": "Situación cotidiana general",
+              "example": "Quiero ensayar una oferta de escucha"
+            },
+            {
+              "id": "intention",
+              "label": "Lo que quiero expresar",
+              "example": "Ofrecer presencia sin exigir aceptación"
+            },
+            {
+              "id": "phrase",
+              "label": "Mi frase de ensayo",
+              "example": "Si te viene bien, puedo escucharte un momento"
+            }
+          ],
+          "example": "Ensayo «Si te viene bien, puedo escucharte un momento». La oferta deja espacio para una negativa y no promete resolver nada."
+        }
+      },
+      "defaultFocus": "profesional"
+    },
+    {
+      "day": 6,
+      "title": "La incomodidad aparece",
+      "foundation": {
+        "originalTitle": "La incomodidad aparece",
+        "originalTask": "Elige algo que has evitado, trabaja 10 minutos y describe la resistencia sin juzgarte."
+      },
+      "explanation": "Una tarea cotidiana puede resultar aburrida, incierta o poco atractiva. Hoy elige una que hayas evitado y reduce su alcance hasta que quepa en tu sesión. Describe la dificultad con palabras sencillas mientras haces esa versión. No necesitas forzarte ante dolor, peligro o una situación que te sobrepasa. También puedes ajustar o detenerte; observar tus límites forma parte del aprendizaje.",
+      "example": "He evitado aclarar qué significa «organizarme». Lo convierto en «elegir un pendiente al abrir la agenda». Hoy termino con esa frase; ejecutar lo que describe puede esperar.",
+      "reflection": "¿Qué hizo la tarea más abordable y qué límite necesitaste respetar?",
+      "task": "Realiza una versión pequeña de una tarea cotidiana evitada. Describe la dificultad sin juzgarte y ajusta el alcance cuando lo necesites.",
+      "areas": {
+        "mentalidad": {
+          "action": "Reescribe una intención vaga que has dejado pendiente como una acción concreta de una frase; hoy la tarea es aclararla, no ejecutar todo lo que dice.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Convierte una intención, como «organizarme», en una frase que empiece con un verbo concreto. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Ajusta esa misma frase hasta que puedas reconocer el alcance de la acción que describe. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a precisar esa misma frase. No necesitas cumplir la acción descrita durante esta sesión. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Concretar una intención vaga"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al abrir la agenda; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Cambiar una intención por una frase con un verbo"
+            }
+          ],
+          "example": "Cambio «organizarme» por «elegir un pendiente al abrir la agenda». Hoy aclaro la intención; no tengo que ejecutar la nueva frase."
+        },
+        "profesional": {
+          "action": "Revisa una frase de un borrador propio que has evitado corregir y deja una versión comprensible, aunque todavía pueda mejorarse.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Aclara una frase corta del borrador, con una sola corrección si basta. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Trabaja esa misma frase hasta que comunique lo que querías decir. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a esa misma frase. Termina antes si ya se entiende o si necesitas ajustar la sesión. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Corregir una frase que he pospuesto"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al abrir el documento; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Una sola corrección comprensible"
+            }
+          ],
+          "example": "Una frase tiene demasiadas ideas. Dejo solo la principal y cierro esa corrección, aunque el documento pueda mejorar después."
+        },
+        "bienestar": {
+          "action": "Reubica un objeto ligero y accesible que lleva días ocupando un lugar de uso personal, resolviendo solo esa pequeña preparación pendiente.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Coloca ese objeto pequeño en un sitio accesible que hayas elegido. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Dedica la acción a resolver la ubicación de ese mismo objeto. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Ajusta con calma dónde quedará ese mismo objeto. Puedes detenerte cuando esa parte del lugar quede lista. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "action",
+              "label": "Acción concreta",
+              "example": "Resolver la ubicación de un objeto pendiente"
+            },
+            {
+              "id": "time",
+              "label": "Cuándo y tiempo total",
+              "example": "Al estar junto a la mesita; sesión total de 2 minutos"
+            },
+            {
+              "id": "smallerVersion",
+              "label": "Versión más pequeña",
+              "example": "Reubicar solo ese objeto ligero"
+            }
+          ],
+          "example": "Me aburre ordenar la mesita. Pongo el cuaderno en una repisa cercana y termino con ese único cambio."
+        },
+        "finanzas": {
+          "action": "Simplifica la revisión de una fila que has evitado mirar: comprueba qué datos ya tienes y aclara solo uno entre nombre, importe o fecha. Lo desconocido puede seguir pendiente.",
+          "example": "Miro la fila «internet»: el nombre se entiende, pero falta la fecha. Dejo claro en mi nota que ese es el dato pendiente. Hoy no tengo que resolver todo el calendario.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Mira una fila y aclara un dato conocido o identifica uno pendiente. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Revisa esa misma fila y precisa un único dato con información que ya conozcas. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Dedica la acción a ese mismo dato. Puedes cerrar con una duda identificada, sin realizar pagos ni estimar ingresos. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "name",
+              "label": "Fila que revisaré",
+              "example": "Internet del hogar"
+            },
+            {
+              "id": "amount",
+              "label": "Importe conocido o pendiente",
+              "example": "Importe real conocido; vacío si falta"
+            },
+            {
+              "id": "date",
+              "label": "Fecha conocida o pendiente",
+              "example": "Fecha ya acordada; vacía si falta"
+            }
+          ]
+        },
+        "relaciones": {
+          "action": "Ensaya en privado una frase sobre un límite cotidiano de tu tiempo, sin justificarlo con información ajena ni ensayar una situación que te sobrepase.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Ensaya una frase breve: «Ahora necesito terminar esto; puedo hablar después». Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Ajusta esa misma frase para expresar tu disponibilidad con claridad y respeto. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Practica esa misma frase con calma. Puedes cerrar con el borrador o detenerte si necesitas ajustar el ejercicio. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "situation",
+              "label": "Situación cotidiana general",
+              "example": "Quiero proteger un momento para terminar una tarea"
+            },
+            {
+              "id": "intention",
+              "label": "Lo que quiero expresar",
+              "example": "Comunicar un límite cotidiano con respeto"
+            },
+            {
+              "id": "phrase",
+              "label": "Mi frase de ensayo",
+              "example": "Ahora necesito terminar esto; puedo hablar después"
+            }
+          ],
+          "example": "Ensayo «Ahora necesito terminar esto; puedo hablar después». Me limito a un asunto cotidiano y puedo detener el ensayo si lo necesito."
+        }
+      },
+      "defaultFocus": "mentalidad"
+    },
+    {
+      "day": 7,
+      "title": "Primera revisión",
+      "foundation": {
+        "originalTitle": "Primera revision",
+        "originalTask": "Cuenta completados, parciales y perdidos; escribe que funciono y decide una regla para los proximos 7 dias."
+      },
+      "explanation": "Hoy la única tarea es revisar la semana en todas las áreas que practicaste. Mira los seis días anteriores: distingue acciones completadas, parciales, omitidas y días sin registro. Busca qué facilitó empezar y qué añadió dificultad. Elige un ajuste que puedas probar al alternar tus áreas durante los próximos siete días. No recuperes pendientes hoy: esta revisión cuenta como práctica.",
+      "example": "Tres días completos: mentalidad, finanzas y relaciones; uno parcial en bienestar, uno omitido en profesional y uno sin registro en mentalidad. Empezar con una versión breve ayudó en varias áreas. Mi regla será acotar la acción antes de empezar.",
+      "reflection": "¿Qué condición ayudó al pasar de un área a otra y qué único ajuste quieres probar la próxima semana?",
+      "review": {
+        "daysToReview": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "nextDays": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "countUnit": "days",
+        "totalDays": 6,
+        "statusLabels": {
+          "complete": "Completado",
+          "partial": "Parcial",
+          "missed": "Omitido",
+          "unrecorded": "Sin registro"
+        },
+        "unrecordedIsStoredDayState": false,
+        "unrecordedMeaning": "Ausencia de registro; no se convierte automáticamente en missed.",
+        "countSource": "Usar los estados reales de los días 1 al 6 cuando existan. Contar cada día una vez, aunque se hayan cambiado el área o los minutos.",
+        "mixedAreasCopy": "Cuenta una sola vez cada uno de los seis días, aunque hayas cambiado de foco. Observa qué facilitó empezar en las distintas áreas y elige una sola regla para la próxima semana.",
+        "noRecordsCopy": "Si no hay registros, deja seis días sin registro. Puedes usar un recuerdo concreto o escribir «aún no veo un patrón» y elegir una regla sencilla para probar.",
+        "completionCopy": "Marca el día 7 por la revisión realizada. La regla para la semana siguiente se probará cuando corresponda; hoy no tienes que ejecutarla.",
+        "scope": "Todas las áreas practicadas",
+        "areaBreakdownOptional": true,
+        "zeroAreaActivityCopy": "Un área que no fue el foco de un día no cuenta como omitida ni genera una tarea pendiente.",
+        "selectedAreasCopy": "Mira las áreas elegidas y los focos que realmente practicaste. Un área sin práctica esta semana puede seguir en la rotación; no cuenta como fallo ni necesita recuperación."
+      },
+      "task": "Revisa los días 1 al 6 en todas las áreas que practicaste. Identifica un patrón y elige una sola regla para los días 8 al 14. La revisión es toda la tarea de hoy.",
+      "areas": {
+        "mentalidad": {
+          "action": "Revisa los días 1 al 6 en todas las áreas practicadas. Observa cómo una señal o un entorno sencillo ayudó a empezar y elige una sola regla para la próxima semana; esta es la única revisión de hoy.",
+          "example": "El balance reúne tres días completos, uno parcial, uno omitido y uno sin registro. Dejar el teléfono aparte ayudó tanto al borrador como al calendario. Elijo una regla compartida, sin añadir una tarea para cada área.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Mira el balance de todas las áreas, nombra un patrón y elige una regla breve. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Revisa los mismos seis días en todas las áreas y precisa una sola regla a partir de un patrón. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Compara con calma las condiciones entre áreas en esos mismos seis días y afina la misma regla. Hoy no recuperes tareas. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "counts",
+              "label": "Balance conjunto de seis días",
+              "example": "3 completos; 1 parcial; 1 omitido; 1 sin registro"
+            },
+            {
+              "id": "pattern",
+              "label": "Qué ayudó o dificultó entre áreas",
+              "example": "Dejar el teléfono aparte ayudó tanto al borrador como al calendario"
+            },
+            {
+              "id": "nextRule",
+              "label": "Una regla para la semana 2",
+              "example": "Al abrir la agenda, acotaré la acción del foco de hoy"
+            }
+          ]
+        },
+        "profesional": {
+          "action": "Revisa los días 1 al 6 en todas las áreas practicadas. Observa cómo acotar una tarea ayudó a cerrar la práctica y elige una sola regla para la próxima semana; esta es la única revisión de hoy.",
+          "example": "El balance reúne tres días completos, uno parcial, uno omitido y uno sin registro. Elegir una frase o una fila ayudó en profesional y finanzas. Elijo una regla compartida, sin añadir una tarea para cada área.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Mira el balance de todas las áreas, nombra un patrón y elige una regla breve. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Revisa los mismos seis días en todas las áreas y precisa una sola regla a partir de un patrón. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Compara con calma las condiciones entre áreas en esos mismos seis días y afina la misma regla. Hoy no recuperes tareas. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "counts",
+              "label": "Balance conjunto de seis días",
+              "example": "3 completos; 1 parcial; 1 omitido; 1 sin registro"
+            },
+            {
+              "id": "pattern",
+              "label": "Qué ayudó o dificultó entre áreas",
+              "example": "Elegir una frase o una fila ayudó en profesional y finanzas"
+            },
+            {
+              "id": "nextRule",
+              "label": "Una regla para la semana 2",
+              "example": "Antes de empezar el foco de hoy, elegiré una sola parte"
+            }
+          ]
+        },
+        "bienestar": {
+          "action": "Revisa los días 1 al 6 en todas las áreas practicadas. Observa cómo un lugar y un tiempo disponibles facilitaron practicar y elige una sola regla para la próxima semana; esta es la única revisión de hoy.",
+          "example": "El balance reúne tres días completos, uno parcial, uno omitido y uno sin registro. Tener un lugar preparado ayudó en bienestar y mentalidad. Elijo una regla compartida, sin añadir una tarea para cada área.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Mira el balance de todas las áreas, nombra un patrón y elige una regla breve. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Revisa los mismos seis días en todas las áreas y precisa una sola regla a partir de un patrón. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Compara con calma las condiciones entre áreas en esos mismos seis días y afina la misma regla. Hoy no recuperes tareas. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "counts",
+              "label": "Balance conjunto de seis días",
+              "example": "3 completos; 1 parcial; 1 omitido; 1 sin registro"
+            },
+            {
+              "id": "pattern",
+              "label": "Qué ayudó o dificultó entre áreas",
+              "example": "Tener un lugar preparado ayudó en bienestar y mentalidad"
+            },
+            {
+              "id": "nextRule",
+              "label": "Una regla para la semana 2",
+              "example": "Usaré un lugar disponible para la acción del foco de hoy"
+            }
+          ]
+        },
+        "finanzas": {
+          "action": "Revisa los días 1 al 6 en todas las áreas practicadas. Observa cómo preparar pocos datos facilitó observar y registrar y elige una sola regla para la próxima semana; esta es la única revisión de hoy.",
+          "example": "El balance reúne tres días completos, uno parcial, uno omitido y uno sin registro. Una fila o una frase ayudó en finanzas y relaciones; buscar todo me frenó. Elijo una regla compartida, sin añadir una tarea para cada área.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Mira el balance de todas las áreas, nombra un patrón y elige una regla breve. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Revisa los mismos seis días en todas las áreas y precisa una sola regla a partir de un patrón. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Compara con calma las condiciones entre áreas en esos mismos seis días y afina la misma regla. Hoy no recuperes tareas. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "counts",
+              "label": "Balance conjunto de seis días",
+              "example": "3 completos; 1 parcial; 1 omitido; 1 sin registro"
+            },
+            {
+              "id": "pattern",
+              "label": "Qué ayudó o dificultó entre áreas",
+              "example": "Una fila o una frase ayudó en finanzas y relaciones; buscar todo me frenó"
+            },
+            {
+              "id": "nextRule",
+              "label": "Una regla para la semana 2",
+              "example": "Registraré solo lo necesario para la acción del foco de hoy"
+            }
+          ]
+        },
+        "relaciones": {
+          "action": "Revisa los días 1 al 6 en todas las áreas practicadas. Observa cómo expresar la intención propia con claridad ayudó a empezar y elige una sola regla para la próxima semana; esta es la única revisión de hoy.",
+          "example": "El balance reúne tres días completos, uno parcial, uno omitido y uno sin registro. Una intención clara ayudó en relaciones y en el trabajo con el borrador. Elijo una regla compartida, sin añadir una tarea para cada área.",
+          "durationOptions": {
+            "2": "Define (15 s): elige el alcance. Actúa (hasta 90 s): Mira el balance de todas las áreas, nombra un patrón y elige una regla breve. Registra (15 s): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "10": "Define (1 min): elige el alcance. Actúa (hasta 7 min): Revisa los mismos seis días en todas las áreas y precisa una sola regla a partir de un patrón. Registra (2 min): cierra con unas palabras o tu estado del día; los campos son opcionales.",
+            "20": "Define (2 min): elige el alcance. Actúa (hasta 15 min): Compara con calma las condiciones entre áreas en esos mismos seis días y afina la misma regla. Hoy no recuperes tareas. Registra (3 min): cierra con unas palabras o tu estado del día; los campos son opcionales."
+          },
+          "fields": [
+            {
+              "id": "counts",
+              "label": "Balance conjunto de seis días",
+              "example": "3 completos; 1 parcial; 1 omitido; 1 sin registro"
+            },
+            {
+              "id": "pattern",
+              "label": "Qué ayudó o dificultó entre áreas",
+              "example": "Una intención clara ayudó en relaciones y en el trabajo con el borrador"
+            },
+            {
+              "id": "nextRule",
+              "label": "Una regla para la semana 2",
+              "example": "Nombraré mi intención antes de la acción del foco de hoy"
+            }
+          ]
+        }
+      },
+      "defaultFocus": "integrated_review"
+    }
+  ],
+  "privacy": "Usa etiquetas generales y escribe sobre tus propias acciones. En tu calendario privado puedes anotar el importe y la fecha de un compromiso propio. No incluyas nombres de terceros, números de cuenta, tarjetas, credenciales, mensajes ajenos ni documentos privados."
+}

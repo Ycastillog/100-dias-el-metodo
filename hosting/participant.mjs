@@ -5,6 +5,7 @@ import { accessCookie, accessExpiry, readAccessCookie, verifyAccessCode, isAcces
 import { allowRequest } from './request-limit.mjs';
 import { canonicalPayment, clearCheckoutCookie } from './checkout.mjs';
 import { paypalClient } from './paypal.mjs';
+import { dayGuide, audioResponse } from './guided-week.mjs';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex, nofollow', 'Referrer-Policy': 'no-referrer' };
 const json = (value, status = 200) => new Response(JSON.stringify(value), { status, headers });
@@ -39,7 +40,7 @@ export async function handleParticipant(request, rawEnv, program, dependencies =
   const path = url.pathname.slice('/api/participant/'.length);
   const expected = ['redeem', 'logout', 'record'].includes(path) ? 'POST' : 'GET';
   if (request.method !== expected) return fail('method_not_allowed', 405);
-  if (!['redeem', 'logout', 'record', 'session', 'day', 'access'].includes(path)) return fail('not_found', 404);
+  if (!['redeem', 'logout', 'record', 'session', 'day', 'media', 'access'].includes(path)) return fail('not_found', 404);
   try {
     if (path === 'redeem' && !await allowRequest(request, env, 'redeem', 20)) return fail('rate_limited', 429);
     if (path === 'logout') {
@@ -72,11 +73,18 @@ export async function handleParticipant(request, rawEnv, program, dependencies =
       days: program.lessons.slice(0, plan.accessDays).map(day => ({ day: day.day, title: day.theme || 'Tu práctica diaria' })),
     });
     if (path === 'access') return json({ access: await issueAccess(order, env) });
+    if (path === 'media') {
+      const day = Number(url.searchParams.get('day'));
+      if (!Number.isInteger(day) || day < 1 || day > Math.min(7, plan.accessDays)) return fail('day_not_available', 403);
+      return audioResponse(request, program.media?.[day]);
+    }
     if (path === 'day') {
       const day = Number(url.searchParams.get('day'));
       if (!Number.isInteger(day) || day < 1 || day > plan.accessDays) return fail('day_not_available', 403);
       const profile = (await records.get(order.id, 'profile'))?.body || {};
-      return json({ lesson: program.lessons[day - 1], practice: program.getLifeProgram(day, profile) });
+      const guided = dayGuide(program, day, profile, url.searchParams.get('area'));
+      if (!guided) return fail('invalid_area');
+      return json({ lesson: program.lessons[day - 1], practice: program.getLifeProgram(day, { ...profile, lifeArea: guided.area }), ...guided });
     }
     if (path === 'record') {
       if (typeof body.key !== 'string' || !Number.isSafeInteger(body.revision) || body.revision < 0) return fail('invalid_record');

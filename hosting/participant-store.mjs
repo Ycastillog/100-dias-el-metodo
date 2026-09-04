@@ -1,3 +1,5 @@
+import { validToolRecord } from './guided-tools.js';
+
 export function participantStore(db) {
   const stmt = (sql, values) => db.prepare(sql).bind(...values);
   const parse = row => row ? { key: row.record_key, body: JSON.parse(row.body), revision: row.revision, updatedAt: row.updated_at } : null;
@@ -29,8 +31,11 @@ export function validateRecord(key, body, maxDays) {
   const text = (field, max, required = false) => typeof body[field] === 'string' && body[field].length <= max && (!required || body[field].trim());
   const only = fields => Object.keys(body).every(key => fields.includes(key));
   const dose = () => [2, 10, 20].includes(body.minutes) && ['low', 'steady', 'high'].includes(body.energy);
-  if (key === 'profile') {
-    if (!only(['goal', 'firstStep', 'lifeArea', 'minutes', 'energy']) || !text('goal', 500, true) || !text('firstStep', 500) || !dose() || !['mentalidad', 'bienestar', 'profesional', 'finanzas', 'relaciones'].includes(body.lifeArea)) return null;
+  if (typeof key === 'string' && key.startsWith('tool:')) {
+    if (!validToolRecord(key, body, maxDays)) return null;
+  } else if (key === 'profile') {
+    if (!only(['goal', 'firstStep', 'lifeArea', 'areas', 'minutes', 'energy']) || !text('goal', 500, true) || !text('firstStep', 500) || !dose() || !['mentalidad', 'bienestar', 'profesional', 'finanzas', 'relaciones'].includes(body.lifeArea)) return null;
+    if (body.areas !== undefined && (!Array.isArray(body.areas) || body.areas.length<1 || body.areas.length>5 || new Set(body.areas).size!==body.areas.length || body.areas.some(area=>!['mentalidad','bienestar','profesional','finanzas','relaciones'].includes(area)))) return null;
   } else {
     const match = /^(day|review):([1-9]\d{0,2})$/.exec(key);
     const day = Number(match?.[2]);

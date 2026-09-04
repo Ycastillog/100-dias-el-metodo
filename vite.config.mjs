@@ -8,7 +8,7 @@ import { programModule, PROGRAM_FILES } from './hosting/program-source.mjs';
 
 const virtualId = '\0virtual:brand-review-assets';
 const programId = '\0virtual:private-program';
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const prelaunch = mode === 'prelaunch';
   const sales = mode === 'sales';
   const files = sales ? SALES_FILES : prelaunch ? PRELAUNCH_FILES : PUBLIC_FILES;
@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
       if (id === programId) {
         if (!sales) return 'export default null;';
         for (const file of PROGRAM_FILES) this.addWatchFile(resolve(file));
-        return programModule(process.cwd());
+        return programModule(process.cwd(), { requireComplete: command !== 'serve' });
       }
       if (id !== virtualId) return;
       for (const file of files) this.addWatchFile(resolve(file));

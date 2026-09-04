@@ -49,6 +49,7 @@ section{scroll-margin-top:110px}
 .product-preview-body{padding:24px}
 .preview-priority{padding:0 0 20px;border-bottom:1px solid var(--line)}
 .preview-priority p{font:1.5rem/1.35 Georgia,serif;margin:8px 0 0}
+.preview-paths{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.preview-paths span{font-size:.875rem;padding:4px 10px;border-radius:20px;background:#e9eee5;color:#183b31}.preview-record .preview-next{font-size:.875rem;padding-top:12px;border-top:1px solid #bacbb7;margin-bottom:0}
 .preview-practice{padding:22px 0}
 .preview-practice .ui-label{color:var(--gold);margin-bottom:10px}
 .preview-practice h2{font-size:2rem;letter-spacing:-.02em;line-height:1.2;margin-bottom:12px}
@@ -220,3 +221,16 @@ footer a{display:inline-block;padding:6px 0}
   .sample-steps li{grid-template-columns:50px 1fr;gap:12px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+.life-platform{background:#faf9f3}
+.life-platform .section-head{max-width:770px;margin-bottom:36px}
+.life-area-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.life-area-grid article{grid-column:span 2;background:#fff;border:1px solid #dcded4;border-radius:16px;padding:28px}
+.life-area-grid article:nth-last-child(-n+2){grid-column:span 3}
+.life-area-grid h3{font-size:23px;line-height:1.25;margin:18px 0 12px;font-family:Arial,sans-serif;letter-spacing:-.5px}
+.life-area-grid p{font-size:16px;line-height:1.65;color:#465647;margin:0}
+.area-number{font-size:12px;letter-spacing:.08em;font-weight:700;color:#45674c}
+.first-week-band{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;padding:32px;border-radius:16px;margin-top:24px;background:#17372b;color:#fff}
+.first-week-band .eyebrow{color:#cfdaa9}.first-week-band h3{font:600 26px/1.25 Arial,sans-serif;margin:10px 0}.first-week-band p{font-size:16px;line-height:1.7;margin:0}
+.method-video video{display:block;width:100%;height:auto;max-height:500px;object-fit:contain;background:#132b22;border-radius:14px}
+@media(max-width:760px){.life-area-grid{grid-template-columns:1fr 1fr}.life-area-grid article,.life-area-grid article:nth-last-child(-n+2){grid-column:auto}.life-area-grid article:last-child{grid-column:1/-1}.first-week-band{grid-template-columns:1fr;gap:16px;padding:24px}.life-area-grid article{padding:22px}}
+@media(max-width:460px){.life-area-grid{grid-template-columns:1fr}.life-area-grid h3{font-size:22px}.method-video video{max-height:390px}}

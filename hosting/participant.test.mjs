@@ -58,6 +58,39 @@ async function fixture(t, options = {}) {
 const profile = { goal: 'Terminar un borrador', firstStep: 'Escribir dos ideas', lifeArea: 'profesional', minutes: 2, energy: 'steady' };
 const journal = { state: 'partial', action: 'Escribí una idea', notes: 'Un intento real', obstacle: '', nextStep: 'La segunda idea', minutes: 2, energy: 'steady' };
 
+test('new first-week guides and audio remain behind purchase verification',async t=>{
+  const f=await fixture(t);
+  for(const day of [1,7]){
+    assert.equal((await f.call('media?day='+day,undefined,'')).status,401);
+    const res=await f.call('media?day='+day,undefined,undefined,{range:'bytes=0-255'});
+    assert.equal(res.status,206);assert.equal(res.headers.get('content-type'),'audio/mpeg');assert.equal((await res.arrayBuffer()).byteLength,256);
+  }
+  for(const day of [0,8,100,'../1','NaN'])assert.equal((await f.call('media?day='+day)).status,403);
+  await f.call('record',{key:'profile',revision:0,body:{...profile,areas:['relaciones','finanzas']}});
+  const one=await(await f.call('day?day=1')).json();const two=await(await f.call('day?day=2')).json();
+  assert.equal(one.area,'relaciones');assert.equal(two.area,'finanzas');assert.ok(one.guide.transcript);assert.equal(one.guide.audio,'/api/participant/media?day=1');
+  assert.equal((await(await f.call('day?day=1&area=bienestar')).json()).area,'bienestar');
+  assert.equal((await f.call('day?day=1&area=__proto__')).status,400);
+  assert.equal((await(await f.call('day?day=14')).json()).guide,null);
+  const assets=await loadSalesAssets(root);
+  for(const path of ['/hosting/guided-week.json','/assets/guided-week.json','/hosting/week-audio/dia-01.mp3','/assets/dia-01.mp3'])assert.equal((await respond(new Request(ORIGIN+path),assets,f.env,program)).status,404);
+  await f.store.reconcile(f.order,{id:'CAPTURE123'},'refunded',now());
+  assert.equal((await f.call('media?day=1')).status,401);
+});
+
+test('area tools retain purchase isolation and optimistic concurrency across devices',async t=>{
+  const f=await fixture(t);const body={area:'relaciones',first:'Cambió el horario',second:'Necesito organizarme',third:'Confirmar antes'};
+  const key='tool:2:relaciones';assert.equal((await f.call('record',{key,body,revision:0})).status,200);
+  assert.equal((await f.call('record',{key,body:{...body,first:'Intento antiguo'},revision:0})).status,409);
+  const saved=(await(await f.call('session')).json()).records.find(r=>r.key===key);assert.equal(saved.body.first,body.first);
+  let other=await f.store.create({...f.order,id:SECOND,created_at:now()});other=await f.store.reconcile(other,{id:'TOOL_OTHER'},'paid',now());const otherCode=(await issueAccess(other,f.env)).code;
+  assert.equal((await(await f.call('session',undefined,otherCode)).json()).records.length,0);
+  assert.equal((await f.call('record',{key,body:{...body,first:'Otra compra'},revision:0},otherCode)).status,200);
+  assert.equal((await f.records.get(ID,key)).body.first,body.first);
+  assert.equal((await f.call('record',{key:'tool:2:finanzas',body,revision:0})).status,400);
+  assert.equal((await f.call('record',{key,body,revision:1},'',{origin:'https://other.example'})).status,403);
+});
+
 test('the exact Git program supplies 100 complete lessons and dose-aware actions', () => {
   assert.equal(program.lessons.length, 100);
   for (const [index, lesson] of program.lessons.entries()) {

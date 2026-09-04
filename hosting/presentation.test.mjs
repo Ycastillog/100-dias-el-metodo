@@ -9,15 +9,20 @@ const assets = await loadSalesAssets(root);
 const sales = assets['/'].data;
 const member = assets['/mi-metodo'].data;
 
-test('editorial image is optimized, served with correct MIME, and identified as illustrative', () => {
+test('legacy artwork is preserved and the page features a disclosed optional video instead of a notebook', () => {
   const image = assets['/assets/practice-editorial-v2.webp'];
   assert.equal(image.type, 'image/webp');
   const bytes = Buffer.from(image.data, 'base64');
   assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
   assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   assert.ok(bytes.length < 150000);
-  assert.match(sales, /width="1086" height="1448"/);
-  assert.match(sales, /Imagen ilustrativa generada con IA/);
+  assert.doesNotMatch(sales, /<img[^>]*practice-editorial/);
+  assert.match(sales, /<video controls playsinline preload="none"/);
+  assert.match(sales, /voz sintética y subtítulos integrados/);
+  assert.match(sales, /no un testimonio/);
+  const video = assets['/assets/first-step-example.mp4'];
+  assert.equal(video.type,'video/mp4');
+  assert.ok(Buffer.from(video.data,'base64').length<2500000);
   assert.match(sales, /El recorrido es digital/);
 });
 
