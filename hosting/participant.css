@@ -57,3 +57,16 @@ body{overflow-wrap:anywhere}.member-header{background:#f5f7f6}.member-header,.me
 @media(max-width:1100px){.system-areas{grid-template-columns:repeat(6,minmax(0,1fr))}.system-area{grid-column:span 2}.system-area:nth-last-child(-n+2){grid-column:span 3}.system-area .eyebrow{min-height:0}.system-area h3{font-size:1.2rem}.system-workspace-heading{align-items:start}}
 @media(max-width:700px){.system-areas{grid-template-columns:1fr 1fr}.system-area,.system-area:nth-last-child(-n+2){grid-column:auto}.system-area:last-child{grid-column:1/-1}.system-workspace-heading{display:block}.system-workspace-heading>p{margin-top:16px;max-width:none}.workspace-nav{gap:8px 20px}.balance-row{grid-template-columns:1fr;gap:10px;padding:14px 0}.balance-row select{font-size:1rem}.direction-card-head{display:block}.direction-card-head a{display:inline-block;margin-top:12px}.system-workspace{margin-bottom:28px}}
 @media(max-width:440px){.system-areas{grid-template-columns:1fr}.system-area:last-child{grid-column:auto}.system-area{padding:22px}.system-area .fine{padding-top:0}.direction-grid{grid-template-columns:1fr}.milestone-actions{grid-template-columns:1fr}.workspace-nav a{font-size:.875rem}.balance-table th,.balance-table td{padding:12px 8px}.direction-card{padding:20px}.week-day{font-size:.875rem}.today-progress{overflow:hidden}.week-days{gap:4px}.member-menu nav a{font-size:.9375rem}.system-area button{align-self:flex-start;padding-inline:18px}}
+
+/* Classical reading cues stay secondary to the participant's actual practice. */
+.practice-wisdom{margin:20px 0;padding:0 20px;border:1px solid #cdbb96;border-radius:5px;background:#fff}
+.practice-wisdom>summary{padding:16px 0;min-height:48px;color:#73572d;font-size:1rem;cursor:pointer}
+.practice-wisdom .wisdom-origin{font-size:.875rem;color:#73572d}
+.practice-wisdom h4{font:400 1.5rem/1.3 Georgia,serif;margin:12px 0}
+.practice-wisdom>p{font-size:1rem;line-height:1.65}
+.practice-wisdom .wisdom-exercise{border-left:2px solid #b79c68;padding-left:18px}
+.practice-wisdom .fine,.practice-wisdom>a{font-size:.875rem}
+.practice-wisdom>a{display:inline-block;margin:4px 0 20px}
+.today-overview{background:#171f1d}.today-progress{background:#242f29}
+.today-main .eyebrow{color:#d4bb86}.today-main button{background:#d4bb86;border-color:#d4bb86;color:#171f1d}
+.member-heading h1{font-family:Georgia,'Times New Roman',serif;font-weight:400}

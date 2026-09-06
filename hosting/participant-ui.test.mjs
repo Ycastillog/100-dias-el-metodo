@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import * as systemTools from './system-tools.js';
 import * as guidedTools from './guided-tools.js';
+import * as wisdomTools from './practice-wisdom.js';
 
 const source=await readFile(new URL('participant.js',import.meta.url),'utf8');
 // Run the real event handlers with a small in-memory form adapter. No browser,
@@ -17,9 +18,9 @@ function harness(){
   const form=(id,fields)=>{const node=get(id);node.fields=fields.map(name=>({name,value:'',disabled:false}));node.elements={namedItem:name=>node.fields.find(f=>f.name===name)};return node;};
   form('#journal-form',['action','state','notes','obstacle','nextStep']);form('#tool-form',['first','second','third']);form('#review-form',['worked','difficult','nextStep']);form('#profile-form',['goal','minutes','energy']);
   class FormAdapter {constructor(node){this.entries=node.fields.filter(f=>!f.disabled && f.checked!==false).map(f=>[f.name,f.value]);}[Symbol.iterator](){return this.entries[Symbol.iterator]();}getAll(key){return this.entries.filter(([k])=>k===key).map(([,v])=>v);}}
-  const context={...systemTools,...guidedTools,document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
+  const context={...systemTools,...guidedTools,...wisdomTools,document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
   vm.createContext(context);
-  const instrumented=source.replace(/^import .*;\r?\n/gm,'').replace(/  start\(\);\r?\n\}\)\(\);/,`  globalThis.subject={api,save,renderReview,renderDay,records,setSession:value=>{session=value;},invalidate:()=>{sessionGeneration++;},setDayData:value=>{dayData=value;},review:()=>renderedReview}; renderHistory=()=>{};\n})();`);
+  const instrumented=source.replace(/^import .*;\r?\n/gm,'').replace(/  start\(\);\r?\n\}\)\(\);/,`  globalThis.subject={api,save,renderReview,renderDay,records,renderTool,setArea:value=>{displayedArea=value;},setSession:value=>{session=value;},invalidate:()=>{sessionGeneration++;},setDayData:value=>{dayData=value;},review:()=>renderedReview}; renderHistory=()=>{};\n})();`);
   vm.runInContext(instrumented,context);
   context.subject.setSession({plan:{days:14}});
   return {get,context,subject:context.subject};
@@ -55,4 +56,15 @@ test('changing one of several checked areas during save keeps the new draft dirt
   form.fields.find(field=>field.value==='mentalidad').checked=false;
   finish({ok:true,json:async()=>({record:{key:'profile',body:{},revision:1,updatedAt:new Date().toISOString()}})});
   assert.equal(await pending,false);assert.equal(form.dataset.dirty,'true');
+});
+test('area wisdom follows the current tool and never writes or collects personal data',()=>{
+  const h=harness();
+  for(const [area,wisdom] of Object.entries(wisdomTools.PRACTICE_WISDOM)){
+    h.subject.setArea(area);h.subject.renderTool();
+    assert.equal(h.get('#wisdom-title').textContent,wisdom.title);
+    assert.equal(h.get('#wisdom-exercise').textContent,wisdom.exercise);
+    assert.equal(h.get('#wisdom-source').hidden,!wisdom.source);
+    assert.equal(h.get('#practice-wisdom').open,false);
+  }
+  assert.equal(h.subject.records.size,0);
 });

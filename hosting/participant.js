@@ -1,6 +1,7 @@
 import { practiceSequence, journeyMap, formatJournalExport } from './participant-tools.js';
 import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, toolPreview } from './guided-tools.js';
 import { BALANCE_STATES, AREA_CONTEXT, reviewDays, systemSnapshot, formatSystemReport } from './system-tools.js';
+import { PRACTICE_WISDOM } from './practice-wisdom.js';
 
 (() => {
   const $ = selector => document.querySelector(selector);
@@ -152,6 +153,11 @@ import { BALANCE_STATES, AREA_CONTEXT, reviewDays, systemSnapshot, formatSystemR
   function updateToolPreview() { $('#tool-preview').textContent=toolPreview(toolBody()) || 'Tu preparación aparecerá aquí mientras completas los campos.'; }
   function renderTool() {
     const section=$('#tool-section'); section.hidden=false;
+    const wisdom=PRACTICE_WISDOM[displayedArea];
+    $('#practice-wisdom').open=false;
+    for(const key of ['origin','title','idea','exercise','caution']) $('#wisdom-'+key).textContent=wisdom[key];
+    const source=$('#wisdom-source');source.hidden=!wisdom.source;
+    if(wisdom.source){source.href=wisdom.source;source.textContent=wisdom.sourceTitle+' ↗';}else{source.removeAttribute('href');source.textContent='';}
     const area=AREAS[displayedArea]; $('#tool-area').textContent=area.name; $('#tool-title').textContent=AREA_CONTEXT[displayedArea].title;
     $('#tool-intro').textContent=displayedArea==='finanzas' ? 'Anota hasta tres compromisos en una misma moneda. El total solo suma lo escrito; no comprueba tu cuenta ni marca nada como pagado.' : displayedArea==='relaciones' ? 'Ensaya una petición para una conversación segura. No se envía a nadie. Si hay amenazas o violencia, prioriza tu seguridad y busca apoyo; no tienes que iniciar esa conversación.' : 'Haz visible una acción, el momento de intentarla y una alternativa pequeña. Puedes volver a ajustarla.';
     const fields=$('#tool-fields'); fields.replaceChildren();
