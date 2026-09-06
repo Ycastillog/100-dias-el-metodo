@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import * as systemTools from './system-tools.js';
 import * as guidedTools from './guided-tools.js';
 import * as wisdomTools from './practice-wisdom.js';
+import * as participantTools from './participant-tools.js';
 
 const source=await readFile(new URL('participant.js',import.meta.url),'utf8');
 // Run the real event handlers with a small in-memory form adapter. No browser,
@@ -18,7 +19,7 @@ function harness(){
   const form=(id,fields)=>{const node=get(id);node.fields=fields.map(name=>({name,value:'',disabled:false}));node.elements={namedItem:name=>node.fields.find(f=>f.name===name)};return node;};
   form('#journal-form',['action','state','notes','obstacle','nextStep']);form('#tool-form',['first','second','third']);form('#review-form',['worked','difficult','nextStep']);form('#profile-form',['goal','minutes','energy']);
   class FormAdapter {constructor(node){this.entries=node.fields.filter(f=>!f.disabled && f.checked!==false).map(f=>[f.name,f.value]);}[Symbol.iterator](){return this.entries[Symbol.iterator]();}getAll(key){return this.entries.filter(([k])=>k===key).map(([,v])=>v);}}
-  const context={...systemTools,...guidedTools,...wisdomTools,document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
+  const context={...participantTools,...systemTools,...guidedTools,...wisdomTools,document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
   vm.createContext(context);
   const instrumented=source.replace(/^import .*;\r?\n/gm,'').replace(/  start\(\);\r?\n\}\)\(\);/,`  globalThis.subject={api,save,renderReview,renderDay,records,renderTool,setArea:value=>{displayedArea=value;},setSession:value=>{session=value;},invalidate:()=>{sessionGeneration++;},setDayData:value=>{dayData=value;},review:()=>renderedReview}; renderHistory=()=>{};\n})();`);
   vm.runInContext(instrumented,context);
@@ -66,5 +67,37 @@ test('area wisdom follows the current tool and never writes or collects personal
     assert.equal(h.get('#wisdom-source').hidden,!wisdom.source);
     assert.equal(h.get('#practice-wisdom').open,false);
   }
+  assert.equal(h.subject.records.size,0);
+});
+
+test('expanded day rendering shows the guide, keeps examples optional and never copies day zero over later evidence',async()=>{
+  const h=harness();
+  h.subject.records.set('profile',{key:'profile',body:{goal:'Mi dirección',firstStep:'Solo mi primer movimiento',lifeArea:'mentalidad',minutes:10,energy:'steady'}});
+  const guide={title:'La idea detrás de la práctica',explanation:'Una explicación concreta para este día.',task:'Revisar un intento y elegir un ajuste.',activity:'Trabajar una parte de la acción.',reflection:'¿Qué quiero revisar?',evidence:'Un hecho y un siguiente ajuste.',smaller:'Revisar una sola entrada del diario.',bridge:'La conexión con mi área.',example:'Ejemplo ilustrativo, nunca mi registro.',safety:'Puedo reducir la práctica.',audio:null,video:null,transcript:''};
+  h.context.fetch=async()=>({ok:true,json:async()=>({area:'mentalidad',lesson:{day:14,theme:'Revisar el recorrido',phase:'Control',principle:'Reflexión',companion:'Puedo retomar'},practice:{guideMessage:'Opcional',safety:'Cuidado'},guide})});
+  await h.subject.renderDay(14);
+  assert.match(h.get('#member-status').textContent,/Tu práctica está lista/);
+  assert.equal(h.get('#guide-evidence').textContent,guide.evidence);
+  assert.equal(h.get('#guide-smaller').textContent,guide.smaller);
+  assert.equal(h.get('#guide-context').open,false);
+  assert.equal(h.get('#practice-check').hidden,false);
+  assert.equal(h.get('#lesson-audio-wrap').hidden,true);
+  assert.equal(h.get('#journal-form').elements.namedItem('action').value,'');
+  assert.equal(h.subject.records.size,1);
+  h.subject.records.set('day:14',{key:'day:14',body:{action:'Mi intento guardado',state:'partial',notes:'Mis notas'}});
+  await h.subject.renderDay(14);
+  assert.equal(h.get('#journal-form').elements.namedItem('action').value,'Mi intento guardado');
+  assert.equal(h.get('#journal-form').elements.namedItem('notes').value,'Mis notas');
+});
+
+test('review instructions distinguish starting, adjusting and purchased closing without fabricating outcomes',()=>{
+  const h=harness();h.get('#review-select').value='7';h.subject.renderReview();
+  assert.match(h.get('#review-coaching').textContent,/Tu primera revisión/);
+  h.get('#review-select').value='14';h.subject.renderReview();
+  assert.match(h.get('#review-coaching').textContent,/Tu cierre/);
+  h.subject.setSession({plan:{days:100}});h.get('#review-select').value='60';h.subject.renderReview();
+  assert.match(h.get('#review-coaching').textContent,/Revisa hechos/);
+  h.get('#review-select').value='100';h.subject.renderReview();
+  assert.match(h.get('#review-coaching').textContent,/antes del vencimiento/);
   assert.equal(h.subject.records.size,0);
 });

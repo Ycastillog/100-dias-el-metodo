@@ -72,11 +72,23 @@ test('new first-week guides and audio remain behind purchase verification',async
   assert.equal(one.practice.track.label,'Trabajo y profesion');assert.equal(two.practice.track.label,'Trabajo y profesion');
   assert.equal((await(await f.call('day?day=1&area=bienestar')).json()).area,'bienestar');
   assert.equal((await f.call('day?day=1&area=__proto__')).status,400);
-  assert.equal((await(await f.call('day?day=14')).json()).guide,null);
+  const fourteen=(await(await f.call('day?day=14')).json()).guide;
+  assert.ok(fourteen.explanation);assert.ok(fourteen.evidence);assert.ok(fourteen.smaller);assert.equal(fourteen.audio,null);
   const assets=await loadSalesAssets(root);
-  for(const path of ['/hosting/guided-week.json','/assets/guided-week.json','/hosting/week-audio/dia-01.mp3','/assets/dia-01.mp3'])assert.equal((await respond(new Request(ORIGIN+path),assets,f.env,program)).status,404);
+  for(const path of ['/hosting/guided-week.json','/assets/guided-week.json','/hosting/curriculum-lessons.json','/assets/curriculum-lessons.json','/hosting/curriculum.mjs','/assets/curriculum.mjs','/hosting/week-audio/dia-01.mp3','/assets/dia-01.mp3'])assert.equal((await respond(new Request(ORIGIN+path),assets,f.env,program)).status,404);
   await f.store.reconcile(f.order,{id:'CAPTURE123'},'refunded',now());
   assert.equal((await f.call('media?day=1')).status,401);
+});
+
+test('expanded last-day teaching requires a valid Método entitlement and preserves saved notes',async t=>{
+  const alpha=await fixture(t);assert.equal((await alpha.call('day?day=100')).status,403);
+  const full=await fixture(t,{plan:'metodo'});
+  await full.call('record',{key:'day:100',revision:0,body:journal});
+  const response=await full.call('day?day=100&area=relaciones');assert.equal(response.status,200);
+  const data=await response.json();assert.match(data.guide.task,/revisión final/);assert.equal(data.guide.audio,null);
+  assert.equal((await full.records.get(ID,'day:100')).body.notes,journal.notes);
+  await full.store.reconcile(full.order,{id:'CAPTURE123'},'refunded',now());
+  assert.equal((await full.call('day?day=100')).status,401);
 });
 
 test('area tools retain purchase isolation and optimistic concurrency across devices',async t=>{

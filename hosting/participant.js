@@ -183,8 +183,10 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
     $('#lesson-audio').pause();$('#lesson-video').pause();$('#audio-status').textContent='';
     $('#guided-lesson').hidden=!guide;$('#lesson-audio-wrap').hidden=!guide?.audio;$('#lesson-video-wrap').hidden=!guide?.video;
     $('#lesson-audio').removeAttribute('src');$('#lesson-video').removeAttribute('src');
+    $('#practice-check').hidden=!guide;
     if(!guide)return;
-    for(const [id,key] of [['guide-title','title'],['guide-explanation','explanation'],['guide-example','example'],['guide-task','task'],['guide-safety','safety']])$('#'+id).textContent=guide[key]||'';
+    for(const [id,key] of [['guide-title','title'],['guide-explanation','explanation'],['guide-example','example'],['guide-bridge','bridge'],['guide-evidence','evidence'],['guide-smaller','smaller'],['guide-safety','safety']])$('#'+id).textContent=guide[key]||'';
+    $('#guide-context').open=false;$('#guide-reduce').open=false;
     $('#audio-transcript').textContent=guide.transcript||'';
     if(guide.audio)$('#lesson-audio').src=guide.audio;if(guide.video)$('#lesson-video').src=guide.video;
   }
@@ -193,6 +195,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
     renderBalance('#review-balance-fields','balance',saved?.balance);
     $('#review-direction').textContent=records.has('profile')?`Tu norte: ${profile.goal} · Evidencia que elegiste observar: ${profile.evidence || 'aún no definida'}.`:'Define primero tu punto de partida en el Día 0 para saber con qué comparar tus registros.';
     $('#review-next-label').textContent=Number(renderedReview)===session?.plan.days?'¿Qué mantendré al terminar y cuándo volveré a revisarlo?':'¿Qué ajustaré o mantendré desde ahora?';
+    $('#review-coaching').textContent=Number(renderedReview)===session?.plan.days?'Tu cierre: compara el Día 0 con tus registros. Separa lo que observaste, lo que sigue abierto y lo que no puedes concluir. Elige hasta dos prácticas para continuar, un lugar donde anotarlas y una fecha para revisarlas. Descarga tu diario y tu informe antes del vencimiento.':Number(renderedReview)<=7?'Tu primera revisión: busca un intento real y una dificultad. Mira las cinco áreas, aunque alguna siga sin registros. Decide un solo ajuste para la próxima semana; no necesitas convertir todas tus intenciones en nuevas tareas.':'Revisa hechos, no solo la sensación de la semana. Compara un intento con tu señal del Día 0; reconoce qué condición te ayudó y qué necesitas reducir o cambiar. Guarda un ajuste concreto, sin exigir avances en todas las áreas.';
     const number=Number(renderedReview),from=number===30||number===60?number-29:number===100?61:Math.max(1,number-6),areas=$('#area-review');areas.replaceChildren();
     for(const key of AREA_ORDER){const relevant=[...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===key&&Number(r.key.split(':')[1])>=from&&Number(r.key.split(':')[1])<=number);const item=element('div');item.append(element('strong',AREAS[key].name),element('p',relevant.length+' herramientas guardadas · Días '+from+'–'+number));areas.append(item);}
   }
@@ -212,11 +215,11 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
       $('#area-context').textContent='El recorrido alterna tus áreas. Puedes cambiar el foco de hoy; las herramientas guardadas de cada área se conservan por separado.';
       const { lesson, practice } = data;
       $('#day-label').textContent = 'Día ' + day + ' de ' + session.plan.days + ' · ' + lesson.phase;
-      $('#day-title').textContent = lesson.theme; $('#day-principle').textContent = lesson.principle;
+      $('#day-title').textContent = lesson.theme; $('#day-principle').textContent = lesson.principle; $('#day-principle').hidden=!!data.guide;
       const profile=profileValues();
-      $('#day-direction').textContent=records.has('profile')?`Tu dirección: ${profile.goal}. En ${AREAS[displayedArea].name.toLowerCase()}, tu herramienta sirve para ${AREA_CONTEXT[displayedArea].purpose.toLowerCase()} Al terminar, observa qué conexión tiene este intento con la señal que elegiste: ${profile.evidence || 'un avance que puedas describir'}.`:'Completa el Día 0 para conectar cada práctica con tu situación y una dirección personal.';
+      $('#day-direction').textContent=records.has('profile')?`Tu norte: ${profile.goal}. Hoy trabajas con ${AREAS[displayedArea].name.toLowerCase()}.`:'Completa el Día 0 para conectar cada práctica con tu situación y una dirección personal.';
       $('#day-question').textContent = data.guide?.reflection || lesson.question;
-      const sequence = practiceSequence(data.guide ? { action:data.guide.task } : lesson, profileValues().minutes);
+      const sequence = practiceSequence(data.guide ? { action:data.guide.task, evidence:data.guide.evidence } : lesson, profileValues().minutes);
       if(data.guide) sequence.steps[1].text=data.guide.activity;
       $('#day-task').textContent = sequence.objective;
       const steps = $('#practice-steps'); steps.replaceChildren();
@@ -236,7 +239,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
         actions.append(item);
       }
       $('#life-safety').textContent = practice.safety;
-      fill($('#journal-form'), records.get('day:' + day)?.body || { action: profileValues().firstStep || '', state: 'partial' });
+      fill($('#journal-form'), records.get('day:' + day)?.body || { action: day===1 ? profileValues().firstStep || '' : '', state: 'partial' });
       $('#previous-day').disabled = day === 1; $('#next-day').disabled = day === session.plan.days;
       tell(session.sandbox ? 'PRUEBA SANDBOX · Este acceso no corresponde a un pago real.' : 'Tu práctica está lista. Elige una acción y registra lo que ocurrió.');
     } catch (error) { $('#day-select').value = String(day); tell(error.message); }

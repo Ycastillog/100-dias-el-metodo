@@ -24,7 +24,7 @@ const page = await (await worker.fetch(new Request(origin + '/comprar'), env)).t
 assert.match(page, /Compra a YC Systems LLC/); assert.doesNotMatch(page, /PRUEBA SANDBOX/);
 const anonymous = await worker.fetch(new Request(origin + '/api/participant/day?day=1&alpha=1'), env);
 assert.equal(anonymous.status, 401);
-for (const path of ['/assets/app.js', '/assets/ops.js', '/assets/life-program.js', '/.env', '/.git/config']) assert.equal((await worker.fetch(new Request(origin + path), env)).status, 404);
+for (const path of ['/assets/app.js', '/assets/ops.js', '/assets/life-program.js', '/hosting/curriculum-lessons.json', '/assets/curriculum-lessons.json', '/hosting/curriculum.mjs', '/.env', '/.git/config']) assert.equal((await worker.fetch(new Request(origin + path), env)).status, 404);
 assert.ok((await readFile(new URL('../dist/client/assets/participant.js', import.meta.url), 'utf8')).length > 1000);
 for (const path of ['../dist/client/index.html', '../dist/client/mi-metodo', '../dist/client/assets/practice-editorial-v2.webp']) await assert.rejects(readFile(new URL(path, import.meta.url)), { code: 'ENOENT' });
 const editorialImage = await worker.fetch(new Request(origin + '/assets/practice-editorial-v2.webp'), env);

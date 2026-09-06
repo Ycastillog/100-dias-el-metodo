@@ -70,3 +70,19 @@ body{overflow-wrap:anywhere}.member-header{background:#f5f7f6}.member-header,.me
 .today-overview{background:#171f1d}.today-progress{background:#242f29}
 .today-main .eyebrow{color:#d4bb86}.today-main button{background:#d4bb86;border-color:#d4bb86;color:#171f1d}
 .member-heading h1{font-family:Georgia,'Times New Roman',serif;font-weight:400}
+
+/* One primary practice; examples and reference material reveal on demand. */
+.guide-example>summary,.practice-check summary,.journal-example>summary{cursor:pointer;min-height:44px;padding:12px 0;font-size:1rem;line-height:1.5;color:#73572d}
+.guide-example>p,.practice-check>p,.journal-example>p{font-size:1rem;line-height:1.7}
+.practice-check{margin:24px 0;padding:22px 24px;border-left:3px solid #997844;background:#f6f3ed;border-radius:0 6px 6px 0}
+.practice-check h4{margin:0;font-size:1rem;color:#332b20}
+.practice-check>p{margin:10px 0}
+.practice-check details{border-top:1px solid #d5c9b8;margin-top:14px}
+.practice-check details p{font-size:1rem;line-height:1.7;margin:4px 0 0}
+.journal-example{margin:8px 0 24px;border-bottom:1px solid #d5c9b8}
+.review-coaching,.report-instruction{padding:18px 20px;border-left:3px solid #997844;background:#f6f3ed;font-size:1rem;line-height:1.7}
+.member-content>.system-workspace{margin:0;padding:26px;scroll-margin-top:90px}
+.member-content .system-areas{grid-template-columns:repeat(2,minmax(0,1fr))}
+.member-content .system-workspace-heading{display:block}
+.member-content .system-workspace-heading>p{max-width:none}
+@media(max-width:640px){.member-content .system-areas{grid-template-columns:1fr}.member-content>.system-workspace{padding:22px 18px}.practice-check{padding:18px}.review-coaching,.report-instruction{padding:16px}}

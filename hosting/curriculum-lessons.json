@@ -1,0 +1,702 @@
+[
+  {
+    "day": 1,
+    "explanation": "Una decisión pequeña sirve para conocer tu punto de partida. No necesitas ordenar toda tu vida hoy: elige algo que puedas cambiar por tu cuenta y observa qué pasa.",
+    "action": "Retira una distracción y realiza una parte pequeña de una tarea pendiente.",
+    "evidence": "Una distracción retirada y un intento descrito sin exagerarlo.",
+    "smaller": "Aparta una sola distracción."
+  },
+  {
+    "day": 2,
+    "explanation": "Una victoria útil tiene un final reconocible. Decidir de antemano qué cuenta como suficiente evita ampliar la tarea mientras la haces.",
+    "action": "Escribe cómo se verá una acción terminada y realiza solo esa versión.",
+    "evidence": "Puedes señalar qué parte quedó hecha, parcial o pendiente.",
+    "smaller": "Define el final de una sola acción."
+  },
+  {
+    "day": 3,
+    "explanation": "Empezar no obliga a terminar todo. La resistencia puede bajar cuando el primer paso está claro; si no baja, puedes reducir el alcance sin inventar un avance.",
+    "action": "Prepara lo necesario e intenta el primer paso de tu prioridad.",
+    "evidence": "Un primer paso realizado o el obstáculo concreto que impidió hacerlo.",
+    "smaller": "Abre el material necesario."
+  },
+  {
+    "day": 4,
+    "explanation": "Una reacción habitual no tiene que decidir por ti. Identificar el momento anterior te permite ensayar otra respuesta, sin esperar controlar todas tus emociones.",
+    "action": "Detecta una reacción repetida, haz una pausa y elige una respuesta pequeña.",
+    "evidence": "El momento que notaste y la respuesta que elegiste.",
+    "smaller": "Escribe qué señal quieres reconocer."
+  },
+  {
+    "day": 5,
+    "explanation": "Tu registro puede ser útil aunque nadie lo vea. Hoy observa si buscar aprobación cambia el tiempo o la atención que dedicas a una acción elegida.",
+    "action": "Haz una acción privada y registra el resultado antes de decidir si quieres compartirlo.",
+    "evidence": "Un hecho de tu práctica, sin depender de comentarios de otras personas.",
+    "smaller": "Dedica un momento privado a preparar la acción."
+  },
+  {
+    "day": 6,
+    "explanation": "Distingue una dificultad cotidiana de una señal de daño o agotamiento. Practicar no significa ignorar dolor, inseguridad ni límites; ajustar o parar también puede ser una decisión responsable.",
+    "action": "Valora la dificultad de tu tarea y elige entre una versión segura más pequeña, pedir apoyo o descansar.",
+    "evidence": "La dificultad identificada y la decisión que tomaste ante ella.",
+    "smaller": "Escribe qué necesitarías para intentarlo con seguridad."
+  },
+  {
+    "day": 7,
+    "explanation": "Una revisión compara intentos, no califica tu valor. Busca una condición que ayudó y otra que complicó la semana; con eso basta para elegir un ajuste.",
+    "action": "Relee tus registros de la semana en todas las áreas y guarda una revisión con un solo ajuste.",
+    "evidence": "Un ejemplo real y un ajuste concreto para la siguiente semana.",
+    "smaller": "Revisa un registro; si no hay ninguno, anota qué dificultó empezar."
+  },
+  {
+    "day": 8,
+    "explanation": "Después de una pausa, el punto de partida es la situación de hoy. Compensar todas las tareas pendientes puede hacer más difícil volver; elige una entrada manejable.",
+    "action": "Retoma una acción pendiente desde el punto en que estás, con un alcance menor.",
+    "evidence": "Qué retomaste y dónde dejaste preparado el siguiente paso.",
+    "smaller": "Abre el último material que usaste."
+  },
+  {
+    "day": 9,
+    "explanation": "Una prioridad necesita un lugar en el día. Reservar un bloque no garantiza que nada interrumpa, pero te permite reconocer qué espacio intentaste proteger.",
+    "action": "Elige un bloque disponible y retira una interrupción antes de trabajar en tu prioridad.",
+    "evidence": "El bloque que intentaste usar y la interrupción que apareció, si la hubo.",
+    "smaller": "Reserva un momento y prepara lo necesario."
+  },
+  {
+    "day": 10,
+    "explanation": "Un compromiso claro permite revisar lo ocurrido sin convertirlo en una sentencia personal. Define una acción realista y acepta describir un resultado parcial cuando corresponda.",
+    "action": "Escribe qué acción intentarás hoy, cuándo y qué considerarás suficiente.",
+    "evidence": "La diferencia entre el acuerdo inicial y lo que realmente ocurrió.",
+    "smaller": "Formula un compromiso más pequeño y verificable."
+  },
+  {
+    "day": 11,
+    "explanation": "Ordenar es útil cuando facilita algo que necesitas hacer. Elige una zona o un pendiente relacionado con tu dirección; evita convertir la práctica en una limpieza completa.",
+    "action": "Retira o recoloca un elemento que esté dificultando tu próxima acción.",
+    "evidence": "Qué quedó más fácil de encontrar, usar o empezar.",
+    "smaller": "Ordena un solo elemento que esté a tu alcance."
+  },
+  {
+    "day": 12,
+    "explanation": "Una pausa permite revisar una respuesta antes de actuar. Puedes usarla para decidir qué decir, posponer una respuesta o reconocer que ahora no es un buen momento.",
+    "action": "Ante una situación cotidiana, escribe una respuesta inicial y una alternativa más deliberada.",
+    "evidence": "La alternativa que elegiste y por qué te servía.",
+    "smaller": "Escribe la alternativa sin enviarla."
+  },
+  {
+    "day": 13,
+    "explanation": "Una versión pequeña conserva la intención de la práctica. La medida no es hacer poco por obligación, sino elegir algo posible cuando el tiempo o la energía son limitados.",
+    "action": "Reduce una tarea a una parte útil y trabaja únicamente en esa parte.",
+    "evidence": "La parte elegida y lo que pudiste hacer.",
+    "smaller": "Identifica el primer gesto de la tarea."
+  },
+  {
+    "day": 14,
+    "explanation": "Cerrar un primer ciclo sirve para decidir cómo continuar. Los registros incompletos también muestran obstáculos; no necesitas presentar catorce días perfectos.",
+    "action": "Compara tu punto de partida con tus registros y guarda la revisión del día 14.",
+    "evidence": "Una evidencia, una dificultad y una decisión de continuidad.",
+    "smaller": "Elige un registro y una decisión; descarga tus notas si termina tu acceso."
+  },
+  {
+    "day": 15,
+    "explanation": "El entorno puede facilitar o interrumpir una acción. Cambia una condición concreta antes de exigirte más esfuerzo y observa si la diferencia te resulta útil.",
+    "action": "Prepara un lugar o un material para la próxima práctica de tu área.",
+    "evidence": "Una condición del entorno modificada y su utilidad observada.",
+    "smaller": "Deja a mano un solo material."
+  },
+  {
+    "day": 16,
+    "explanation": "Recuperar la atención empieza por saber a qué quieres volver. Una distracción no borra lo que ya hiciste; usa una señal sencilla para retomar la tarea.",
+    "action": "Escribe tu acción principal y vuelve a ella una vez cuando notes una distracción.",
+    "evidence": "A qué volviste y qué te había apartado.",
+    "smaller": "Escribe la acción en una frase visible."
+  },
+  {
+    "day": 17,
+    "explanation": "Preparar el descanso no exige una rutina perfecta. Puedes reducir una decisión o un pendiente al final del día sin convertir dormir en otra meta de rendimiento.",
+    "action": "Elige una acción de cierre que facilite tu descanso y prepara cómo la intentarás.",
+    "evidence": "Una preparación realizada o un momento elegido para descansar.",
+    "smaller": "Deja resuelto un detalle de mañana."
+  },
+  {
+    "day": 18,
+    "explanation": "Una mañana comienza también con lo que dejas preparado. Elige una primera acción realista para tu horario, sin asumir que levantarte antes sea siempre mejor.",
+    "action": "Deja preparado el primer paso que quieres realizar al comenzar tu próximo día.",
+    "evidence": "El material o la decisión que ya no tendrás que improvisar.",
+    "smaller": "Escribe cuál será el primer paso."
+  },
+  {
+    "day": 19,
+    "explanation": "Una lista larga puede mezclar lo urgente con lo importante. Reducirla por hoy no elimina tus responsabilidades: te ayuda a decidir qué intentar primero.",
+    "action": "Selecciona una prioridad de tu lista y define la parte que cabe en tu bloque.",
+    "evidence": "Una prioridad concreta y las tareas que decidiste no abrir en ese bloque.",
+    "smaller": "Marca la prioridad sin reorganizar toda la lista."
+  },
+  {
+    "day": 20,
+    "explanation": "Un límite expresa lo que puedes ofrecer en una situación. No necesitas imponerlo ni justificarlo con una historia inventada; considera tus responsabilidades y la seguridad de la conversación.",
+    "action": "Prepara una respuesta breve a una demanda que desplaza tu prioridad.",
+    "evidence": "Una respuesta con disponibilidad o límite claros; no es obligatorio enviarla.",
+    "smaller": "Redacta una frase de límite."
+  },
+  {
+    "day": 21,
+    "explanation": "La base de una práctica suele estar en condiciones observables: tiempo, lugar, materiales o ayuda. Revisa esas condiciones antes de atribuir todo a falta de voluntad.",
+    "action": "Compara dos intentos de la semana y guarda el ajuste que probarás después.",
+    "evidence": "Una condición que ayudó o faltó, apoyada en tus registros.",
+    "smaller": "Revisa un intento y anota qué lo rodeaba."
+  },
+  {
+    "day": 22,
+    "explanation": "Un impulso se entiende mejor cuando describes cuándo aparece. Registrar una señal concreta evita quedarte en una etiqueta como «soy distraído».",
+    "action": "Observa una distracción habitual y anota qué ocurrió justo antes.",
+    "evidence": "Una señal concreta, sin datos privados de otras personas.",
+    "smaller": "Recuerda un episodio reciente y describe la señal."
+  },
+  {
+    "day": 23,
+    "explanation": "El primer clic puede abrir una actividad que no habías elegido. Preparar otra entrada te permite decidir qué revisar primero, sin prohibirte toda distracción.",
+    "action": "Antes de abrir una aplicación por costumbre, realiza un pequeño paso de tu prioridad.",
+    "evidence": "Qué elegiste hacer primero y si pudiste mantenerlo.",
+    "smaller": "Abre primero el material de tu tarea."
+  },
+  {
+    "day": 24,
+    "explanation": "Un bloque protegido puede ser breve y flexible. Define una entrada y una salida para que una interrupción no te obligue a reconstruir toda la tarea.",
+    "action": "Trabaja en una parte de tu prioridad y deja una nota de dónde continuar.",
+    "evidence": "Una parte intentada y una indicación de continuidad.",
+    "smaller": "Prepara el bloque y escribe por dónde empezar."
+  },
+  {
+    "day": 25,
+    "explanation": "Una meta visible describe una acción o un resultado que puedes reconocer. «Estar mejor» puede orientar tu vida, pero necesitas una señal más concreta para revisar el día.",
+    "action": "Transforma una intención de tu área en una acción observable para hoy.",
+    "evidence": "Una acción definida sin prometer un resultado que dependa de otros.",
+    "smaller": "Escribe una señal de avance posible."
+  },
+  {
+    "day": 26,
+    "explanation": "No todas las interrupciones son evitables. Elige una que sí puedas modificar sin descuidar una necesidad o responsabilidad importante.",
+    "action": "Cierra, silencia o aparta una interrupción durante tu bloque de práctica.",
+    "evidence": "Qué interrupción cambiaste y durante qué intento.",
+    "smaller": "Aparta una sola fuente de interrupción."
+  },
+  {
+    "day": 27,
+    "explanation": "Mejorar una tarea y terminar una versión son decisiones distintas. Define una versión útil para no cambiar de objetivo cada vez que aparece una idea nueva.",
+    "action": "Termina o revisa una parte según el criterio que fijaste antes de empezar.",
+    "evidence": "La parte útil que quedó y la mejora que reservaste para después.",
+    "smaller": "Define el criterio de suficiente para una parte."
+  },
+  {
+    "day": 28,
+    "explanation": "Una interrupción aporta información sobre tu sistema. Revisa cómo retomaste o qué te habría ayudado a volver; la revisión semanal puede ser la práctica de hoy.",
+    "action": "Relee los intentos interrumpidos de la semana y guarda una regla sencilla para retomar.",
+    "evidence": "Una regla basada en una interrupción real.",
+    "smaller": "Revisa una interrupción y su posible punto de regreso."
+  },
+  {
+    "day": 29,
+    "explanation": "Un día difícil no tiene las mismas condiciones que uno cómodo. Preparar una alternativa evita decidir todo cuando ya tienes menos margen.",
+    "action": "Define una versión reducida de una práctica y cuándo elegirías descansar en su lugar.",
+    "evidence": "Una alternativa concreta y un límite que respetarás.",
+    "smaller": "Escribe una sola alternativa viable."
+  },
+  {
+    "day": 30,
+    "explanation": "El cierre de Control busca una base que puedas usar de nuevo. Revisa las cinco áreas y distingue lo que intentaste de lo que solo preparaste.",
+    "action": "Guarda la revisión del día 30 con una regla que quieras llevar a la siguiente etapa.",
+    "evidence": "Un ejemplo de tu base actual y una regla para Fortaleza.",
+    "smaller": "Elige una herramienta y un ajuste; puedes dejar áreas sin valorar."
+  },
+  {
+    "day": 31,
+    "explanation": "No siempre tendrás ganas al comenzar. Puedes probar una entrada pequeña y evaluar lo que ocurre; una dificultad persistente merece ajustes, no reproches.",
+    "action": "Prepara el primer paso de una tarea necesaria y prueba esa entrada.",
+    "evidence": "Qué permitió empezar o qué condición faltó.",
+    "smaller": "Deja listo el primer material."
+  },
+  {
+    "day": 32,
+    "explanation": "Una tarea sencilla puede parecer poco estimulante. Define su utilidad y un final pequeño para decidir si merece tu atención, sin imponerte aguantar por aguantar.",
+    "action": "Trabaja en una parte repetitiva que sea útil para tu prioridad.",
+    "evidence": "La parte intentada y la distracción que notaste.",
+    "smaller": "Completa una sola unidad de esa tarea."
+  },
+  {
+    "day": 33,
+    "explanation": "Actuar con incertidumbre no exige asumir riesgos grandes. Distingue un paso reversible de una decisión que necesita más información o apoyo.",
+    "action": "Elige un paso pequeño y reversible relacionado con un pendiente.",
+    "evidence": "El paso probado y la información que todavía falta.",
+    "smaller": "Escribe qué necesitas saber antes de decidir."
+  },
+  {
+    "day": 34,
+    "explanation": "La frustración no obliga a abandonar ni a forzar el resultado. Identifica qué cambió y busca una respuesta que respete tus límites y los de otras personas.",
+    "action": "Describe un obstáculo y ajusta una sola condición de tu siguiente intento.",
+    "evidence": "Un obstáculo concreto y una modificación posible.",
+    "smaller": "Nombra el obstáculo sin resolverlo todavía."
+  },
+  {
+    "day": 35,
+    "explanation": "Una tarea pendiente puede seguir abierta por falta de un final claro. En esta revisión semanal, distingue lo que puedes cerrar de lo que necesitas renegociar.",
+    "action": "Revisa un pendiente de la semana y decide si terminar una parte, reprogramarlo o pedir información.",
+    "evidence": "Una decisión explícita sobre ese pendiente, guardada en tu revisión.",
+    "smaller": "Define el siguiente paso del pendiente."
+  },
+  {
+    "day": 36,
+    "explanation": "Pedir ayuda funciona mejor cuando la otra persona entiende qué necesitas y puede elegir responder. Preparar la petición ya permite aclarar tu parte de la tarea.",
+    "action": "Redacta una petición con el contexto mínimo y una ayuda concreta que necesitas.",
+    "evidence": "Una petición comprensible, enviada solo si corresponde y es seguro.",
+    "smaller": "Escribe qué ayuda específica te falta."
+  },
+  {
+    "day": 37,
+    "explanation": "La resistencia puede tener causas distintas: una tarea confusa, cansancio, falta de tiempo o temor a equivocarte. Observar la situación ayuda a elegir un ajuste más adecuado.",
+    "action": "Compara un intento difícil con uno más llevadero y describe una diferencia.",
+    "evidence": "Una diferencia apoyada en tus notas, no una etiqueta sobre tu carácter.",
+    "smaller": "Revisa un solo intento y su dificultad."
+  },
+  {
+    "day": 38,
+    "explanation": "Tu capacidad cambia de un día a otro. Una práctica razonable puede consistir en reducir el alcance o descansar; no necesitas demostrar rendimiento constante.",
+    "action": "Elige entre una versión pequeña de tu acción y una pausa necesaria, y registra la decisión.",
+    "evidence": "Lo que elegiste según tu energía disponible.",
+    "smaller": "Anota cuál es tu límite de hoy."
+  },
+  {
+    "day": 39,
+    "explanation": "Después de un error, reparar una consecuencia concreta suele ser más útil que describirte como un fracaso. Algunas reparaciones necesitan tiempo, autorización o ayuda.",
+    "action": "Identifica una consecuencia corregible y prepara el primer paso para atenderla.",
+    "evidence": "Una corrección intentada o una petición de ayuda preparada.",
+    "smaller": "Escribe qué consecuencia puedes atender."
+  },
+  {
+    "day": 40,
+    "explanation": "Una recompensa puede acompañar una práctica, pero no debe convertirse en castigo ni justificar privarte de necesidades básicas. Observa qué orden te sirve para una actividad cotidiana.",
+    "action": "Prueba hacer una pequeña parte de tu prioridad antes de una distracción opcional.",
+    "evidence": "Qué orden probaste y si fue realista.",
+    "smaller": "Prepara primero el material de tu prioridad."
+  },
+  {
+    "day": 41,
+    "explanation": "Una crítica puede mezclar información útil con opiniones o formas de hablar que no aceptas. No tienes que asumirla entera ni responder de inmediato.",
+    "action": "Separa una observación concreta de una crítica y decide si requiere una acción.",
+    "evidence": "La observación elegida y tu decisión de usarla, aclararla o dejarla.",
+    "smaller": "Escribe una pregunta de aclaración sin enviarla."
+  },
+  {
+    "day": 42,
+    "explanation": "Un límite necesita considerar tanto tu disponibilidad como tus acuerdos. Aprovecha la revisión semanal para detectar dónde aceptaste más de lo que podías sostener.",
+    "action": "Revisa un compromiso de la semana y prepara un límite o una renegociación respetuosa.",
+    "evidence": "Un compromiso revisado y un ajuste que no dependa de imponerlo a otros.",
+    "smaller": "Anota qué disponibilidad puedes ofrecer."
+  },
+  {
+    "day": 43,
+    "explanation": "Una conversación difícil requiere condiciones adecuadas. Preparar tus palabras no te obliga a hablar si existe riesgo, presión o falta de consentimiento.",
+    "action": "Redacta un hecho, una necesidad y una petición para una conversación segura.",
+    "evidence": "Un borrador claro; puedes decidir no enviarlo.",
+    "smaller": "Escribe solo el hecho, sin acusaciones ni datos sensibles."
+  },
+  {
+    "day": 44,
+    "explanation": "Bajo presión, añadir objetivos puede aumentar la confusión. Decide qué parte es imprescindible y qué necesita esperar o aclararse con quien corresponda.",
+    "action": "Selecciona la parte imprescindible de una tarea y trabaja solo en ella.",
+    "evidence": "La parte priorizada y lo que dejaste fuera de ese intento.",
+    "smaller": "Define qué sería suficiente por ahora."
+  },
+  {
+    "day": 45,
+    "explanation": "La mitad del recorrido permite observar diferencias, no exigir una transformación. Busca una regla que funcionó en condiciones distintas y reconoce también dónde dejó de servir.",
+    "action": "Compara una semana más llevadera con una difícil y anota una condición útil en ambas.",
+    "evidence": "Dos ejemplos reales y una regla provisional.",
+    "smaller": "Compara dos registros en vez de dos semanas completas."
+  },
+  {
+    "day": 46,
+    "explanation": "Una emoción intensa puede hacer conveniente posponer una respuesta. Una pausa no resuelve por sí sola el problema, pero puede darte margen para elegir el siguiente paso.",
+    "action": "Ante una situación cotidiana tensa, prepara una respuesta o decide cuándo revisarla.",
+    "evidence": "La decisión de responder, pedir tiempo o buscar apoyo.",
+    "smaller": "Escribe que necesitas una pausa; no tienes que enviarlo."
+  },
+  {
+    "day": 47,
+    "explanation": "Las condiciones de otra persona no son tu punto de partida. Volver a tus registros ayuda a revisar una acción propia sin convertir la comparación en una medida de tu valor.",
+    "action": "Relee una evidencia tuya y elige el siguiente paso según tu situación actual.",
+    "evidence": "Una evidencia propia y una decisión basada en ella.",
+    "smaller": "Abre un registro y reconoce un hecho concreto."
+  },
+  {
+    "day": 48,
+    "explanation": "Una versión útil no necesita resolver todas las mejoras posibles. El criterio de calidad depende de la tarea; no rebajes requisitos de seguridad o compromisos importantes.",
+    "action": "Define el mínimo útil de una tarea y revisa una parte con ese criterio.",
+    "evidence": "Una parte utilizable y una mejora que puede esperar.",
+    "smaller": "Escribe el criterio antes de modificar la tarea."
+  },
+  {
+    "day": 49,
+    "explanation": "No todas las prácticas producen algo que otras personas puedan ver. Revisa su utilidad para tu dirección y para tus responsabilidades, sin depender solo del reconocimiento.",
+    "action": "En la revisión semanal, identifica una acción útil poco visible y decide si mantenerla.",
+    "evidence": "Un ejemplo de utilidad concreta y una decisión para la próxima semana.",
+    "smaller": "Revisa un intento aunque nadie más lo conozca."
+  },
+  {
+    "day": 50,
+    "explanation": "La tensión puede reducir el margen para decidir con calma. Evita usar la práctica para exigirte más; identifica qué decisión puede esperar y cuál necesita apoyo.",
+    "action": "Reordena una situación de presión: una cosa para atender, otra para posponer si es posible.",
+    "evidence": "Una prioridad realista y el apoyo o tiempo que necesitas.",
+    "smaller": "Escribe qué decisión puede esperar."
+  },
+  {
+    "day": 51,
+    "explanation": "Un resultado que no salió como querías puede revelar un ajuste. Distingue lo que hiciste de lo que dependía de factores externos antes de decidir cómo volver.",
+    "action": "Describe un intento fallido y prepara una versión diferente para retomarlo.",
+    "evidence": "Un hecho del intento y un ajuste específico.",
+    "smaller": "Escribe por dónde podrías volver a empezar."
+  },
+  {
+    "day": 52,
+    "explanation": "Proteger una versión mínima significa conservar lo esencial, no fingir que hiciste la tarea completa. Revisa si esa versión todavía responde a tu intención.",
+    "action": "Elige el paso más pequeño que siga siendo útil para una práctica pendiente.",
+    "evidence": "Qué propósito conservaste al reducir la acción.",
+    "smaller": "Define la parte esencial sin ejecutarla todavía."
+  },
+  {
+    "day": 53,
+    "explanation": "Hablar de una capacidad es más preciso cuando puedes mostrar una conducta. No necesitas convertir un día difícil en una historia heroica.",
+    "action": "Elige una habilidad que hayas practicado y encuentra un registro que la muestre.",
+    "evidence": "Una conducta concreta vinculada a esa habilidad.",
+    "smaller": "Localiza un ejemplo sin sacar conclusiones generales."
+  },
+  {
+    "day": 54,
+    "explanation": "Si un acuerdo dejó de ser viable, reconocerlo permite buscar una salida honesta. Cumplir, pedir más tiempo o renegociar son opciones que dependen del contexto.",
+    "action": "Revisa una promesa pendiente y prepara una respuesta honesta sobre lo que puedes ofrecer.",
+    "evidence": "El estado real del compromiso y el siguiente paso para aclararlo.",
+    "smaller": "Redacta una actualización breve sin excusas inventadas."
+  },
+  {
+    "day": 55,
+    "explanation": "Cambiar la forma de hacer algo puede conservar su propósito. Decide qué parte es esencial y qué condición puedes adaptar a tu realidad.",
+    "action": "Prueba una forma distinta de realizar una parte de tu acción habitual.",
+    "evidence": "La adaptación probada y lo que mantuvo de la intención original.",
+    "smaller": "Cambia solo el punto de entrada."
+  },
+  {
+    "day": 56,
+    "explanation": "Una acción sostenible se revisa con evidencia de tu propia semana. Si la versión elegida fue demasiado exigente, reduce una variable en vez de cambiarlo todo.",
+    "action": "En tu revisión semanal, elige una práctica y ajusta su alcance, momento o preparación.",
+    "evidence": "Un ajuste concreto apoyado en lo ocurrido esta semana.",
+    "smaller": "Revisa una práctica y cambia una sola condición."
+  },
+  {
+    "day": 57,
+    "explanation": "Descansar no necesita justificarse como una forma de producir más. Puedes cuidar tu recuperación y dejar una indicación de continuidad cuando eso te ayude.",
+    "action": "Elige un momento de descanso y, si te sirve, deja una nota de dónde retomar después.",
+    "evidence": "La decisión de descanso y una entrada opcional para volver.",
+    "smaller": "Anota que hoy necesitas descansar."
+  },
+  {
+    "day": 58,
+    "explanation": "Un patrón repetido puede anticiparse con una respuesta preparada. No necesitas adivinar todas las dificultades: empieza por la que aparece con más frecuencia en tus notas.",
+    "action": "Escribe qué harás si vuelve una dificultad habitual, incluyendo una opción de apoyo o pausa.",
+    "evidence": "Una señal concreta y una respuesta posible.",
+    "smaller": "Nombra la señal que quieres reconocer."
+  },
+  {
+    "day": 59,
+    "explanation": "Una regla útil tiene condiciones: puede servir en una situación y no en otra. Elige una que tus registros respalden, sin convertirla en una obligación rígida.",
+    "action": "Selecciona una regla que te ayudó y escribe cuándo conviene aplicarla.",
+    "evidence": "Una regla y el contexto en que te resultó útil.",
+    "smaller": "Relee un registro que muestre esa regla."
+  },
+  {
+    "day": 60,
+    "explanation": "Cerrar Fortaleza consiste en preparar cómo volver cuando el plan se interrumpe. Revisa las áreas con información disponible y conserva una respuesta realista a la dificultad.",
+    "action": "Guarda la revisión del día 60 y actualiza tu plan para retomar cuando lo necesites.",
+    "evidence": "Una dificultad reconocida, una respuesta preparada y un próximo momento posible.",
+    "smaller": "Elige una dificultad y una sola respuesta."
+  },
+  {
+    "day": 61,
+    "explanation": "Un valor se vuelve observable cuando eliges una conducta relacionada con él. No tienes que demostrarlo en todas las áreas hoy ni usarlo para exigirte perfección.",
+    "action": "Elige un valor importante y tradúcelo en una acción pequeña de tu área.",
+    "evidence": "La relación entre el valor y la acción elegida.",
+    "smaller": "Escribe una conducta que represente ese valor."
+  },
+  {
+    "day": 62,
+    "explanation": "Elegir una prioridad para el siguiente tramo requiere mirar lo aprendido. Considera tus recursos actuales y lo que todavía necesita atención.",
+    "action": "Revisa tus últimas notas y selecciona una prioridad concreta para continuar.",
+    "evidence": "Una prioridad acompañada de una señal observable.",
+    "smaller": "Identifica un asunto al que quieres dar atención."
+  },
+  {
+    "day": 63,
+    "explanation": "Una elección ocupa recursos y deja otras opciones para después. En la revisión semanal, observa ese intercambio sin tratar cada renuncia como un fracaso.",
+    "action": "Revisa una decisión de la semana y nombra qué protegiste y qué pospusiste.",
+    "evidence": "Un intercambio real y una decisión sobre si mantenerlo.",
+    "smaller": "Anota el costo de una sola elección."
+  },
+  {
+    "day": 64,
+    "explanation": "Un compromiso puede dejar de encajar, pero retirarlo requiere considerar sus consecuencias. Distingue lo que puedes cancelar de lo que debes renegociar o completar.",
+    "action": "Revisa un compromiso que ya no encaja y prepara una forma responsable de ajustarlo.",
+    "evidence": "Una opción concreta para aclarar o modificar el compromiso.",
+    "smaller": "Escribe qué tendrías que consultar antes de cambiarlo."
+  },
+  {
+    "day": 65,
+    "explanation": "No toda decisión pendiente debe resolverse hoy. Aclarar qué información falta o quién participa puede ser el paso que desbloquea una elección.",
+    "action": "Elige una decisión pendiente y define el siguiente paso para tomarla con información suficiente.",
+    "evidence": "Una decisión tomada o una necesidad de información identificada.",
+    "smaller": "Formula una pregunta que permita avanzar."
+  },
+  {
+    "day": 66,
+    "explanation": "El calendario muestra cómo intentas distribuir tu tiempo, no cuánto vales. Busca un espacio realista para algo importante sin borrar obligaciones o descanso.",
+    "action": "Ajusta un bloque de tu calendario para una prioridad que elegiste.",
+    "evidence": "Un bloque viable o la limitación que necesitas resolver.",
+    "smaller": "Señala un posible momento sin comprometerlo todavía."
+  },
+  {
+    "day": 67,
+    "explanation": "Una dirección se puede revisar sin invalidar todo lo anterior. Compara una intención con tus acciones recientes y decide si cambiar el plan o la prioridad.",
+    "action": "Relee tu dirección inicial y dos registros recientes de distintas áreas, si los hay.",
+    "evidence": "Una coincidencia o diferencia y un ajuste posible.",
+    "smaller": "Compara tu dirección con un solo registro."
+  },
+  {
+    "day": 68,
+    "explanation": "Decir no con claridad puede incluir otra disponibilidad cuando de verdad la tienes. No necesitas inventar razones ni negociar bajo presión o en una situación insegura.",
+    "action": "Prepara una respuesta breve a una solicitud que no puedes asumir.",
+    "evidence": "Una respuesta respetuosa que expresa tu disponibilidad real.",
+    "smaller": "Escribe el límite sin enviarlo."
+  },
+  {
+    "day": 69,
+    "explanation": "Concentrarte requiere un objetivo acotado y condiciones compatibles con tus responsabilidades. Un bloque breve también puede producir una parte útil.",
+    "action": "Trabaja en una parte definida de tu proyecto con una interrupción menos, si puedes hacerlo.",
+    "evidence": "La parte intentada y las condiciones del bloque.",
+    "smaller": "Prepara el archivo o material por el que empezarás."
+  },
+  {
+    "day": 70,
+    "explanation": "La información que consumes puede ayudarte o abrir más asuntos de los que puedes atender. Revisa una entrada concreta sin proponerte desconectarte de todo.",
+    "action": "En la revisión semanal, elige una fuente o aviso que ajustar para proteger tu atención.",
+    "evidence": "Una entrada de información revisada y una regla para la próxima semana.",
+    "smaller": "Silencia un aviso opcional o anota por qué debes mantenerlo."
+  },
+  {
+    "day": 71,
+    "explanation": "Abrir tareas nuevas puede ocultar decisiones pendientes. Cerrar también puede ser entregar una parte, archivar un intento o decidir que no seguirá: no todo tiene que terminarse a cualquier costo.",
+    "action": "Elige un pendiente y define un cierre posible. Realiza un paso hacia ese cierre, sin abrir otro proyecto.",
+    "evidence": "Deja escrito qué quedó cerrado y qué sigue pendiente; no confundas decidir con haberlo ejecutado.",
+    "smaller": "Pon nombre al pendiente y escribe qué significaría cerrarlo."
+  },
+  {
+    "day": 72,
+    "explanation": "Una oportunidad útil necesita caber en tus prioridades y recursos. Que algo sea atractivo no lo convierte en una obligación; puedes dejarlo pendiente mientras consigues información.",
+    "action": "Compara una oportunidad con tu dirección, el tiempo que requiere y lo que desplazaría. Decide si investigar, aceptar o dejar pasar; no contrates ni gastes para completar el ejercicio.",
+    "evidence": "Guarda tu decisión provisional y el dato que todavía necesitas comprobar.",
+    "smaller": "Escribe una pregunta que necesites responder antes de comprometerte."
+  },
+  {
+    "day": 73,
+    "explanation": "Un compromiso claro tiene alcance y límites. Reducir lo prometido requiere reconocer a quién afecta; no consiste en abandonar responsabilidades sin comunicación.",
+    "action": "Revisa un compromiso propio. Identifica una parte que puedas simplificar sin incumplir acuerdos, o prepara una petición para renegociarla.",
+    "evidence": "Anota qué mantienes y qué necesitas acordar; una petición escrita aún no es un acuerdo.",
+    "smaller": "Señala una parte del compromiso que necesita aclaración."
+  },
+  {
+    "day": 74,
+    "explanation": "Un criterio evita decidir desde cero cada vez. Debe ayudarte a mirar consecuencias, no convertirse en una regla rígida que ignore cambios de contexto.",
+    "action": "Escribe un criterio para una decisión recurrente y pruébalo con un caso pequeño de hoy. Incluye cuándo necesitarías revisar ese criterio.",
+    "evidence": "Registra la decisión y si el criterio te ayudó o dejó algo importante fuera.",
+    "smaller": "Completa: «Antes de decidir esto, comprobaré…»."
+  },
+  {
+    "day": 75,
+    "explanation": "El enfoque se revisa observando dónde fue tu atención, no castigándote por distraerte. Un registro incompleto también señala qué necesitas hacer más fácil de observar.",
+    "action": "Compara una prioridad reciente con lo que realmente hiciste. Elige un ajuste en la tarea, el momento o el entorno para el próximo intento.",
+    "evidence": "Distingue el hecho observado de tu explicación y deja un solo ajuste concreto.",
+    "smaller": "Revisa una entrada del diario y subraya qué hiciste realmente."
+  },
+  {
+    "day": 76,
+    "explanation": "Elevar un estándar puede significar más claridad o cuidado, no más cantidad. Elige una mejora que puedas sostener sin quitar descanso ni exceder tus posibilidades.",
+    "action": "Toma una tarea habitual y define una mejora pequeña y verificable: una instrucción más clara, un dato comprobado o un cierre ordenado. Pruébala una vez.",
+    "evidence": "Anota qué cambió en esa tarea y si el esfuerzo adicional fue manejable.",
+    "smaller": "Describe una mejora antes de intentar aplicarla."
+  },
+  {
+    "day": 77,
+    "explanation": "Tu identidad no se resume en una semana buena o difícil. Puede orientarte una forma de actuar que eliges practicar, sin usar etiquetas como prueba de tu valor.",
+    "action": "Mira los registros de esta semana en tus áreas. Elige una conducta que represente cómo quieres actuar y conviértela en un próximo paso pequeño en la revisión.",
+    "evidence": "Guarda un ejemplo real y un ajuste; evita concluir «siempre soy» o «nunca puedo» a partir de un intento.",
+    "smaller": "Completa una línea de la revisión con un hecho y una conducta que quieras probar."
+  },
+  {
+    "day": 78,
+    "explanation": "Hablar con intención empieza por saber qué quieres comunicar y qué no puedes controlar. La otra persona conserva su derecho a responder, disentir o no continuar.",
+    "action": "Prepara un mensaje breve con un hecho, tu necesidad y una petición concreta. Léelo y decide si es seguro y oportuno compartirlo; puedes dejarlo como borrador privado.",
+    "evidence": "Diferencia el mensaje que preparaste de la conversación que realmente ocurrió.",
+    "smaller": "Escribe solo la necesidad, sin enviarla a nadie."
+  },
+  {
+    "day": 79,
+    "explanation": "Usar el dinero con criterio empieza por conocer lo que has anotado y lo que falta por verificar. Este ejercicio organiza una decisión; no indica dónde invertir ni cómo resolver una deuda.",
+    "action": "Elige un gasto previsto y comprueba su importe y fecha en una fuente propia. Anota qué necesidad atiende y qué información te falta antes de decidir.",
+    "evidence": "Marca los datos comprobados y los pendientes; no registres una compra como realizada si solo la consideraste.",
+    "smaller": "Anota el nombre del gasto y deja en blanco el importe que no hayas comprobado."
+  },
+  {
+    "day": 80,
+    "explanation": "Cuidar el cuerpo no requiere ganarte el descanso ni compararte con un ideal. Observa qué opción cotidiana de cuidado encaja con tus necesidades y límites de hoy.",
+    "action": "Elige una pausa cómoda, un descanso o una preparación cotidiana que te facilite cuidarte. Adáptala a tu situación y detén cualquier movimiento que cause dolor o malestar.",
+    "evidence": "Registra qué probaste y cómo resultó de cómodo y posible, sin convertirlo en una valoración médica.",
+    "smaller": "Prepara un lugar o un momento para descansar, aunque hoy no puedas hacer más."
+  },
+  {
+    "day": 81,
+    "explanation": "Cuidar una relación incluye presencia y límites, no cargar con toda su responsabilidad. Un gesto propio puede ofrecer conexión, pero no garantiza reciprocidad ni resuelve una relación insegura.",
+    "action": "Elige un gesto respetuoso y voluntario para una relación segura: escuchar, agradecer algo concreto o acordar cuándo conversar. No contactes a quien haya pedido distancia.",
+    "evidence": "Anota tu gesto y lo que ocurrió, sin atribuir pensamientos o intenciones a la otra persona.",
+    "smaller": "Escribe en privado qué tipo de atención o límite necesitas."
+  },
+  {
+    "day": 82,
+    "explanation": "Una dirección personal puede cambiar cuando conoces mejor tu situación. Revisa las etiquetas que usas para describirte frente a ejemplos concretos, sin buscar una versión perfecta de ti.",
+    "action": "Elige una descripción que sueles hacer de ti y compárala con dos registros del recorrido. Reescríbela como una conducta que estás practicando.",
+    "evidence": "Conserva los ejemplos, incluidos los que no encajan con tu primera interpretación.",
+    "smaller": "Cambia «soy incapaz de…» por una descripción de un hecho y de un siguiente intento posible."
+  },
+  {
+    "day": 83,
+    "explanation": "El inicio del día depende de tu horario real, no de una hora ideal para levantarse. Una señal sencilla puede ayudarte a entrar en tu primera prioridad sin crear una rutina extensa.",
+    "action": "Diseña un inicio de dos pasos que encaje con tu jornada: reconocer tu prioridad y preparar su primer gesto. Pruébalo al comenzar tu siguiente bloque disponible.",
+    "evidence": "Deja escrito qué señal usarás para empezar y qué paso pudiste probar.",
+    "smaller": "Prepara únicamente el material o la nota que necesitas al empezar."
+  },
+  {
+    "day": 84,
+    "explanation": "Cerrar el día no exige resolver todos los pendientes. Dejar un punto de regreso reduce la necesidad de recordar todo; la revisión semanal sirve para ajustar, no para acumular obligaciones.",
+    "action": "Escribe dónde dejaste una tarea y cuál sería el siguiente paso. En tu revisión de esta semana, decide si este cierre cabe en tu horario habitual.",
+    "evidence": "Guarda un punto de regreso claro y una decisión sobre mantener o simplificar el cierre.",
+    "smaller": "Anota una frase: «La próxima vez empiezo por…»."
+  },
+  {
+    "day": 85,
+    "explanation": "Una revisión útil responde a pocas preguntas y termina en una decisión manejable. Revisar más datos no ayuda si después no sabes qué conservar o cambiar.",
+    "action": "Prepara tu revisión semanal con tres preguntas: qué intenté, qué me dificultó hacerlo y qué ajustaré. Mira las áreas elegidas y fija un momento realista para revisarlas.",
+    "evidence": "Guarda las preguntas y un momento posible; no marques como hecha una revisión que solo has preparado.",
+    "smaller": "Elige el momento y una sola pregunta de revisión."
+  },
+  {
+    "day": 86,
+    "explanation": "Regresar es una habilidad que puede prepararse. Un plan de regreso debe funcionar también con poca energía y no convertir los días perdidos en una deuda de tareas.",
+    "action": "Completa «Volver al camino» con una dificultad real, una acción reducida y un momento para intentarla. Si ya tienes un plan, revisa si sigue siendo posible.",
+    "evidence": "Comprueba que el plan indique qué harás y cuándo; los días omitidos no necesitan recuperarse todos.",
+    "smaller": "Elige solo el primer gesto con el que retomarías."
+  },
+  {
+    "day": 87,
+    "explanation": "Una medida es útil si aclara una decisión. Contar intentos puede orientar una práctica, pero no mide tu valor ni demuestra por sí solo cambios en salud, dinero o relaciones.",
+    "action": "Revisa la señal que elegiste en el Día 0. Compárala con tus registros y decide si necesitas hacerla más concreta o mantenerla.",
+    "evidence": "Escribe qué puedes observar con los datos disponibles y qué todavía no puedes concluir.",
+    "smaller": "Elige una señal observable y un lugar donde anotarla."
+  },
+  {
+    "day": 88,
+    "explanation": "Un límite digital tiene que convivir con las responsabilidades y los contactos importantes. Empieza por una interrupción opcional que puedas reducir sin perder comunicaciones necesarias.",
+    "action": "Identifica una distracción digital y prepara un límite para un bloque corto: apartar una aplicación opcional o silenciar una alerta no esencial. Prueba solo si tus responsabilidades lo permiten.",
+    "evidence": "Registra el límite y si respetó tus necesidades de comunicación; ajústalo si no fue viable.",
+    "smaller": "Señala una alerta opcional que podrías revisar más tarde, sin cambiar todavía la configuración."
+  },
+  {
+    "day": 89,
+    "explanation": "Descansar no tiene que producir algo ni compensar una supuesta falta de esfuerzo. Puedes observar qué pausa resulta accesible sin exigir que elimine el cansancio.",
+    "action": "Reserva una pausa que se adapte a tus necesidades, horario y comodidad. Si no puedes tomarla ahora, prepara una opción posible para después.",
+    "evidence": "Anota si la pausa ocurrió y cómo la adaptarías; no necesitas afirmar que te recuperó por completo.",
+    "smaller": "Deja preparado un momento de descanso o una postura cómoda."
+  },
+  {
+    "day": 90,
+    "explanation": "Tu sistema debería ayudarte a decidir y actuar, no obligarte a mantener herramientas que no usas. Una herramienta sin registros puede necesitar simplificarse, no otra capa de organización.",
+    "action": "Revisa tu sistema de cinco áreas. Elige una herramienta que sí te haya servido y otra que necesite un cambio; guarda esa decisión en el registro de hoy.",
+    "evidence": "Distingue uso real de intención y define una sola simplificación para el siguiente tramo.",
+    "smaller": "Abre una herramienta guardada y señala qué parte te resulta útil."
+  },
+  {
+    "day": 91,
+    "explanation": "Volver al punto de partida permite comparar hechos sin exigir una transformación total. Tus prioridades o recursos pueden haber cambiado; describe esa diferencia antes de sacar conclusiones.",
+    "action": "Lee tu Día 0 y la revisión más reciente. Compara una señal inicial con un registro actual de cada área que tengas documentada y guarda tu balance semanal.",
+    "evidence": "Separa lo observado, lo pendiente y lo que no puedes comparar por falta de registros.",
+    "smaller": "Compara una sola señal del Día 0 con una entrada posterior."
+  },
+  {
+    "day": 92,
+    "explanation": "Un patrón necesita varios ejemplos y puede tener más de una explicación. Busca condiciones que se repiten sin convertirlas en un diagnóstico o un defecto personal.",
+    "action": "Lee tres intentos del diario y compara el momento, el tamaño de la acción y las dificultades. Anota una posible repetición y un pequeño ajuste para comprobarla.",
+    "evidence": "Escribe «puede que…» cuando sea una hipótesis y conserva los ejemplos que la apoyan o contradicen.",
+    "smaller": "Compara dos registros y anota una similitud sin concluir todavía un patrón."
+  },
+  {
+    "day": 93,
+    "explanation": "Reconocer capacidad significa identificar algo que pudiste hacer y las condiciones que lo hicieron posible. No necesitas borrar los intentos parciales ni compararte con otra persona.",
+    "action": "Elige un intento concreto que pudiste realizar. Describe qué habilidad usaste y qué apoyo o condición te ayudó; decide cuál puedes repetir.",
+    "evidence": "Guarda un ejemplo específico, no una frase de éxito genérica, y reconoce la ayuda que recibiste.",
+    "smaller": "Escribe una acción real que lograste intentar, aunque quedara incompleta."
+  },
+  {
+    "day": 94,
+    "explanation": "Una dificultad persistente merece una respuesta más precisa que exigirte más. Puede requerir reducir alcance, aprender algo, cambiar condiciones o pedir ayuda apropiada.",
+    "action": "Escoge una dificultad repetida y distingue lo que puedes modificar de lo que no controlas. Prepara un próximo intento más pequeño o una pregunta para buscar apoyo.",
+    "evidence": "Anota la dificultad como un hecho y el cambio que probarás, sin etiquetarte como el problema.",
+    "smaller": "Completa: «Lo que me está frenando es…; necesito aclarar…»."
+  },
+  {
+    "day": 95,
+    "explanation": "Una regla central puede servirte como recordatorio si es flexible y concreta. No debe obligarte a ignorar enfermedad, agotamiento, seguridad o cambios importantes.",
+    "action": "Escribe una regla breve que quieras conservar después del recorrido, basada en tus registros. Añade una excepción razonable y un modo de regresar.",
+    "evidence": "Guarda la regla junto a un ejemplo de cuándo usarla y cuándo adaptarla.",
+    "smaller": "Escribe un recordatorio para tu próximo intento, sin convertirlo en una promesa permanente."
+  },
+  {
+    "day": 96,
+    "explanation": "Preparar un día difícil permite decidir con anticipación qué reducir y a quién acudir. No puedes preverlo todo; el plan debe dejar espacio para descansar o pedir apoyo.",
+    "action": "Usa una dificultad anterior para diseñar una versión pequeña de tu práctica, una señal para detenerte y una opción de apoyo si la necesitas.",
+    "evidence": "Deja claro qué intentarías, qué no te exigirías y qué harías si no es posible continuar.",
+    "smaller": "Anota una acción mínima o una opción de descanso para un día complicado."
+  },
+  {
+    "day": 97,
+    "explanation": "Continuar no exige repetir el programa completo ni aumentar el volumen. Elige pocas prácticas basadas en lo que de verdad utilizaste y reserva una fecha para revisarlas.",
+    "action": "Selecciona hasta dos prácticas que quieras conservar. Define dónde registrarás tus intentos cuando termine el acceso y un momento para revisar si siguen sirviéndote.",
+    "evidence": "Guarda el plan fuera de la plataforma antes del vencimiento; escribirlo no significa que ya lo hayas cumplido.",
+    "smaller": "Elige una práctica y el lugar donde continuarías su registro."
+  },
+  {
+    "day": 98,
+    "explanation": "Escribir al futuro puede recordarte decisiones útiles sin prometer una vida resuelta. La carta vale por sus detalles reales y por permitirte cambiar de rumbo si tu situación cambia.",
+    "action": "Escribe a tu yo de las próximas semanas: qué aprendiste de un intento, qué quieres conservar y cómo retomar si te interrumpes. Usa tu revisión semanal como apoyo.",
+    "evidence": "Incluye un ejemplo concreto y una posibilidad de adaptación, no exigencias ni predicciones.",
+    "smaller": "Escribe tres líneas: «Aprendí… / conservaré… / si me interrumpo…»."
+  },
+  {
+    "day": 99,
+    "explanation": "El cierre necesita registros disponibles, no una historia impecable. Puedes ordenar lo que existe y reconocer sus límites; no hace falta completar retrospectivamente todos los días.",
+    "action": "Reúne tu Día 0, algunas entradas, herramientas y revisiones. Identifica qué puedes comparar en las cinco áreas y qué información falta para tu balance final.",
+    "evidence": "Prepara ejemplos concretos para el cierre y deja vacíos los datos que no tienes; no inventes avances.",
+    "smaller": "Elige una entrada inicial y una reciente para llevar a tu revisión final."
+  },
+  {
+    "day": 100,
+    "explanation": "Cerrar con evidencia es reconocer qué intentaste, qué cambió según tus registros y qué sigue abierto. El programa termina, pero puedes continuar con una estructura propia, sin depender de otra compra.",
+    "action": "Completa la revisión final mirando tu punto de partida y tus registros de las cinco áreas. Elige qué mantener, qué ajustar y un próximo momento de revisión. Descarga tu informe y tu diario antes de que venza el acceso.",
+    "evidence": "Distingue avances observados, dificultades y asuntos sin datos. Comprueba que tus archivos descargados contienen tus notas y un siguiente paso realista.",
+    "smaller": "Guarda una conclusión honesta y un siguiente paso, y descarga tus registros mientras el acceso esté vigente."
+  }
+]

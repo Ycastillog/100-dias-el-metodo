@@ -46,5 +46,6 @@ export function formatSystemReport(snapshot, exportedAt=new Date().toISOString()
   for(const row of state.reviews)lines.push('Día '+row.key.split(':')[1],'Evidencia: '+(row.body.worked || 'Sin anotar'),'Dificultad: '+(row.body.difficult || 'Sin anotar'),'Mi siguiente ajuste: '+row.body.nextStep,'');
   const closing=state.reviews.find(row=>row.key==='review:'+limit);
   lines.push('MI CONTINUIDAD',closing?.body.nextStep || 'Completa la revisión de cierre para decidir qué mantendrás y cuándo volverás a revisarlo.');
+  lines.push('', 'CÓMO USAR ESTE INFORME', 'Orientaciones del Método, no resultados ni decisiones registradas por ti:', '1. Compara una señal del punto de partida con un ejemplo real. Si faltan datos, déjalo indicado.', '2. Conserva hasta dos prácticas que te hayan servido; adapta su tamaño a tu situación.', '3. Elige dónde seguir anotando tus intentos y una fecha de revisión fuera de la plataforma.', '4. Si te interrumpes, utiliza tu plan para retomar. No necesitas completar retrospectivamente todos los días ni hacer otra compra.', '', 'Guarda esta copia en un lugar privado. Tu acceso conserva su fecha de vencimiento original.');
   return lines.join('\n');
 }

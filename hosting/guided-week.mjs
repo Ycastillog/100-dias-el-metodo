@@ -1,17 +1,22 @@
 import { AREAS, focusArea } from './guided-tools.js';
+import { curriculumGuide } from './curriculum.mjs';
 
 export function dayGuide(program, day, profile, requestedArea) {
   const area = requestedArea || focusArea(day, profile);
   if (!Object.hasOwn(AREAS, area)) return null;
+  const minutes = [2, 10, 20].includes(Number(profile.minutes)) ? Number(profile.minutes) : 10;
+  const expanded = curriculumGuide(program.curriculum, program.lessons, day, area, minutes, profile.energy);
   const lesson = program.week?.days.find(item => item.day === day);
   const variant = lesson?.areas[area];
-  if (!variant) return { area, guide: null };
-  const minutes = [2, 10, 20].includes(Number(profile.minutes)) ? Number(profile.minutes) : 10;
+  if (!variant) return { area, guide: expanded };
   const dose = variant.durationOptions[String(minutes)];
   const activity = dose.split(/Actúa \([^)]*\): /)[1]?.split(/ Registra \(/)[0] || variant.action;
   return { area, guide: {
-    title: lesson.title, explanation: lesson.explanation, example: variant.example,
+    ...(expanded || {}),
+    title: 'La idea detrás de la práctica', explanation: lesson.explanation, example: variant.example,
     task: variant.action, activity, reflection: lesson.reflection,
+    evidence: 'Compara lo que querías intentar con lo que ocurrió. Describe un hecho concreto o qué te impidió empezar; preparar la acción no equivale a realizarla.',
+    smaller: variant.durationOptions['2'].split(/Actúa \([^)]*\): /)[1]?.split(/ Registra \(/)[0] || variant.action,
     safety: program.week.privacy,
     audio: program.media?.[day] ? '/api/participant/media?day=' + day : null,
     transcript: program.media?.[day]?.transcript || '',

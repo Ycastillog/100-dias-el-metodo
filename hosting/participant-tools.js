@@ -9,7 +9,7 @@ export function practiceSequence(lesson, requestedMinutes) {
     steps: [
       { time: timing[0], title: 'Define el intento', text: 'Elige una sola parte de la práctica de hoy. Escribe qué vas a hacer y qué observarás al terminar.' },
       { time: timing[1], title: 'Haz esa parte', text: minutes === 2 ? 'Empieza por el primer gesto de esa acción. Si no cabe completa, un intento parcial es válido; no añadas otra tarea.' : 'Trabaja en la parte elegida hasta que termine este bloque. Si aparece una dificultad, anótala y reduce la tarea; no necesitas forzar el resultado.' },
-      { time: timing[2], title: 'Deja un registro', text: minutes === 2 ? 'Escribe una frase: «Hice… / lo siguiente es…». Después pulsa Guardar.' : 'Anota qué hiciste, qué lo dificultó y el próximo paso. Puedes marcar completado, parcial o sin avance. Pulsa Guardar y espera la confirmación.' },
+      { time: timing[2], title: 'Deja un registro', text: minutes === 2 ? 'Escribe una frase: «Hice… / lo siguiente es…». Después pulsa Guardar.' : 'Anota qué hiciste, qué lo dificultó y el próximo paso. Usa la pista de «Qué observar al terminar», sin exigir un resultado. Puedes marcar completado, parcial o sin avance. Pulsa Guardar y espera la confirmación.' },
     ],
   };
 }
