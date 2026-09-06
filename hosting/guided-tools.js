@@ -8,7 +8,7 @@ export const AREAS = {
 
 export function toolKey(day, area) { return 'tool:' + day + ':' + area; }
 export const AREA_ORDER = ['mentalidad','finanzas','relaciones','bienestar','profesional'];
-export function chosenAreas(profile={}) { const areas=Array.isArray(profile.areas)?profile.areas.filter(a=>Object.hasOwn(AREAS,a)):[];return areas.length?[...new Set(areas)]:AREA_ORDER; }
+export function chosenAreas(profile={}) { const selected=Array.isArray(profile.areas)?[...new Set(profile.areas.filter(a=>Object.hasOwn(AREAS,a)))]:[];const primary=Object.hasOwn(AREAS,profile.lifeArea)?profile.lifeArea:null;if(selected.length)return primary&&selected.includes(primary)?[primary,...selected.filter(area=>area!==primary)]:selected;return primary?[primary,...AREA_ORDER.filter(area=>area!==primary)]:AREA_ORDER; }
 export function focusArea(day,profile={}) {const areas=chosenAreas(profile);return areas[(day-1)%areas.length];}
 export function summarizeJourney(records, limit) {
   const list = Array.isArray(records) ? records : [...records.values()];

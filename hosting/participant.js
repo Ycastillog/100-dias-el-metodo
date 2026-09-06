@@ -27,10 +27,29 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
   }
   const formValues = form => Object.fromEntries(new FormData(form));
   const formSnapshot = form => JSON.stringify([...new FormData(form)]);
-  function profileValues() { return records.get('profile')?.body || { minutes: 10, energy: 'steady', lifeArea: 'mentalidad' }; }
+  function profileValues() { return records.get('profile')?.body || { goal: '', evidence: '', firstStep: '', minutes: 10, energy: 'steady', lifeArea: 'mentalidad' }; }
   function hasDraft() { return ['#journal-form', '#profile-form', '#review-form', '#tool-form'].some(id => $(id).dataset.dirty === 'true'); }
   function mayNavigate() { if (writing || loadingDay) { tell('Espera a que termine la carga o el guardado antes de cambiar.'); return false; } return !hasDraft() || window.confirm('Hay cambios sin guardar. ¿Quieres continuar sin guardarlos?'); }
   function element(tag, text, className) { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; if (className) node.className = className; return node; }
+  function renderDirection() {
+    const profile = profileValues(), ready = records.has('profile');
+    $('#direction-goal').textContent = ready ? profile.goal : 'Todavía no lo definiste.';
+    $('#direction-evidence').textContent = ready ? (profile.evidence || 'Añade en el Día 0 una señal observable para reconocer avance.') : 'Elige una señal observable para reconocer avance.';
+    $('#direction-primary').textContent = ready ? (AREAS[profile.lifeArea]?.name || 'Por definir') : 'Por definir';
+    $('#direction-rhythm').textContent = (profile.minutes || 10) + ' minutos por práctica';
+    $('#direction-first-step').textContent = ready ? (profile.firstStep || 'Añade un primer movimiento en el Día 0.') : 'Por definir';
+    $('#direction-title').textContent = ready ? 'La dirección que elegiste.' : 'Empieza por definir una dirección.';
+    $('#edit-direction').textContent = ready ? 'Ajustar mi brújula →' : 'Definir mi brújula →';
+    $('#review-direction').textContent = ready ? `Tu norte: ${profile.goal} · Evidencia que elegiste observar: ${profile.evidence || 'aún no definida'}.` : 'Define primero tu brújula en el Día 0 para saber con qué comparar tus registros.';
+  }
+  function syncPrimaryAreaChoice() {
+    const primary = $('#profile-form').elements.namedItem('lifeArea')?.value;
+    for (const checkbox of $('#profile-areas').querySelectorAll('input')) {
+      const isPrimary = checkbox.value === primary;
+      if (isPrimary) checkbox.checked = true;
+      checkbox.disabled = isPrimary;
+    }
+  }
   function renderHistory() {
     const container = $('#record-history'); container.replaceChildren();
     const days = [...records.values()].filter(record => record.key.startsWith('day:')).sort((a, b) => Number(b.key.split(':')[1]) - Number(a.key.split(':')[1]));
@@ -51,9 +70,10 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
       if(record.body.area==='finanzas')for(const row of record.body.rows)if(row.name.trim())item.append(element('p',row.name+' · '+(row.amount||'importe pendiente')+' '+record.body.currency+' · '+(row.date||'fecha pendiente')));
       const button=element('button','Volver a esta herramienta','quiet');button.type='button';button.addEventListener('click',async()=>{if(mayNavigate()){await renderDay(number,record.body.area);$('#day-title').focus();}});item.append(button);container.append(item);
     }
-    $('#current-goal').textContent = records.get('profile')?.body.goal || 'Empieza eligiendo tus áreas en el Día 0.';
-    $('#start-priority').textContent = records.has('profile') ? 'Áreas y ritmo guardados' : 'Elige tus áreas y tu ritmo en el Día 0';
+    $('#current-goal').textContent = records.get('profile')?.body.goal ? 'Tu norte: ' + records.get('profile').body.goal : 'Empieza definiendo tu brújula en el Día 0.';
+    $('#start-priority').textContent = records.has('profile') ? 'Tu brújula está guardada: revísala o ajústala' : 'Define tu norte y la evidencia que buscarás en el Día 0';
     $('#start-record').textContent = days.length ? 'Ya tienes un registro: continúa tu práctica' : 'Haz una acción y guarda tu primer registro';
+    renderDirection();
     renderOverview();
   }
   function renderOverview() {
@@ -61,10 +81,11 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
     const summary = summarizeJourney(records, session.plan.days);
     const area = AREAS[displayedArea] || AREAS.mentalidad;
     $('#today-area').textContent = 'Foco de hoy · '+area.name;
-    $('#today-title').textContent = records.has('profile') ? 'Día ' + day + ' · ' + (dayData?.lesson.theme || 'Tu siguiente práctica') : 'Tu vida tiene varias áreas.';
-    $('#today-description').textContent = records.has('profile') ? (dayData?.guide?.task || dayData?.lesson.task || 'Una práctica para aprender, hacer y revisar.') : 'Elige los aspectos que quieres trabajar. El recorrido alterna focos y te permite explorar otras áreas sin empezar de cero.';
-    $('#continue-practice').textContent = records.has('profile') ? 'Ir a mi práctica →' : 'Elegir mis áreas →';
-    $('#today-context').textContent = day <= 7 ? 'Primera semana · guía, herramienta y registro. Tú eliges tu ritmo.' : 'Continúa con las prácticas originales de tu recorrido.';
+    const profile = profileValues(), task = dayData?.guide?.task || dayData?.lesson.task || 'Una práctica para aprender, hacer y revisar.';
+    $('#today-title').textContent = records.has('profile') ? 'Día ' + day + ' · ' + (dayData?.lesson.theme || 'Tu siguiente práctica') : 'Primero, define hacia dónde vas.';
+    $('#today-description').textContent = records.has('profile') ? `Para avanzar hacia «${profile.goal}», hoy: ${task}` : 'En el Día 0 elegirás un norte, una señal observable y el área que necesita dirección primero.';
+    $('#continue-practice').textContent = records.has('profile') ? 'Ir a mi práctica →' : 'Definir mi brújula →';
+    $('#today-context').textContent = records.has('profile') ? `${area.name} es el foco de hoy. Tu área principal sigue siendo ${AREAS[profile.lifeArea]?.name || area.name}.` : 'Después recibirás una acción por día y revisarás tu evidencia cada siete días.';
     $('#week-summary').textContent = summary.weekRecorded + ' de 7 días con registro en tu primera semana.';
     for (const state of ['complete','partial','missed']) $('#count-'+state).textContent=String(summary.weekCounts[state]);
     const nav=$('#week-days'); nav.replaceChildren();
@@ -119,7 +140,7 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
     $('#audio-transcript').textContent=guide.transcript||'';
     if(guide.audio)$('#lesson-audio').src=guide.audio;if(guide.video)$('#lesson-video').src=guide.video;
   }
-  function renderReview() { renderedReview=$('#review-select').value;fill($('#review-form'), records.get('review:' + renderedReview)?.body); }
+  function renderReview() { const profile=profileValues();renderedReview=$('#review-select').value;fill($('#review-form'), records.get('review:' + renderedReview)?.body);$('#review-direction').textContent=records.has('profile')?`Tu norte: ${profile.goal} · Evidencia que elegiste observar: ${profile.evidence || 'aún no definida'}.`:'Define primero tu brújula en el Día 0 para saber con qué comparar tus registros.'; }
   function lockPractice(locked){for(const selector of ['#journal-form','#tool-form','#profile-form'])$(selector).querySelectorAll('input,textarea,select,button').forEach(field=>field.disabled=locked);}
   async function renderDay(nextDay,requestedArea) {
     const number = ++loadNumber;
@@ -137,6 +158,8 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
       const { lesson, practice } = data;
       $('#day-label').textContent = 'Día ' + day + ' de ' + session.plan.days + ' · ' + lesson.phase;
       $('#day-title').textContent = lesson.theme; $('#day-principle').textContent = lesson.principle;
+      const profile=profileValues();
+      $('#day-direction').textContent=records.has('profile')?`Conexión con tu norte: hoy trabajas ${AREAS[displayedArea].name.toLowerCase()} para acercarte a «${profile.goal}». Al terminar, observa si apareció esta evidencia: ${profile.evidence || 'un avance concreto que puedas describir'}.`:'Completa el Día 0 para conectar cada práctica con una dirección personal.';
       $('#day-question').textContent = data.guide?.reflection || lesson.question;
       const sequence = practiceSequence(data.guide ? { action:data.guide.task } : lesson, profileValues().minutes);
       if(data.guide) sequence.steps[1].text=data.guide.activity;
@@ -197,6 +220,7 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
       fill($('#profile-form'), profileValues());
       const areaChoices=$('#profile-areas');areaChoices.replaceChildren();
       for(const key of AREA_ORDER){const label=element('label'),checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.name='areas';checkbox.value=key;checkbox.checked=chosenAreas(profileValues()).includes(key);label.append(checkbox,element('span',AREAS[key].name));areaChoices.append(label);}
+      syncPrimaryAreaChoice();renderDirection();
       $('#profile-panel').open = !records.has('profile'); renderReview(); renderHistory();
       $('#start-section').open = !records.has('profile') || !loaded.records.some(record => record.key.startsWith('day:'));
       day = loaded.days.find(value => !records.has('day:' + value.day))?.day || loaded.plan.days;
@@ -213,12 +237,14 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
   $('#review-form').addEventListener('submit', async event => { event.preventDefault(); if(renderedReview)await save(event.currentTarget, 'review:' + renderedReview, formValues(event.currentTarget)); });
   $('#profile-form').addEventListener('submit', async event => {
     event.preventDefault(); const form = event.currentTarget; const values = formValues(form); values.minutes = Number(values.minutes);
-    values.areas=new FormData(form).getAll('areas');if(!values.areas.length){tell('Elige al menos un área; puedes seleccionar varias.');return;}values.lifeArea=values.areas[0];
+    values.areas=[...new Set([values.lifeArea,...new FormData(form).getAll('areas')])];
     if($('#journal-form').dataset.dirty==='true'||$('#tool-form').dataset.dirty==='true'){tell('Guarda primero tu registro y tu herramienta para cambiar tus áreas sin perder el trabajo.');return;}
     if (await save(form, 'profile', values)) { $('#profile-panel').open = false; if ($('#journal-form').dataset.dirty !== 'true') await renderDay(day); else tell('Áreas guardadas. Tu borrador del día sigue aquí; guárdalo antes de recargar la práctica.'); }
   });
+  $('#profile-form').addEventListener('change',event=>{if(event.target.name==='lifeArea')syncPrimaryAreaChoice();});
   $('#day-select').addEventListener('change', event => { const requested = Number(event.target.value); if (mayNavigate()) renderDay(requested); else event.target.value = String(day); });
   $('#start-priority').addEventListener('click', () => { $('#profile-panel').open = true; });
+  $('#edit-direction').addEventListener('click', () => { $('#profile-panel').open = true; });
   document.querySelectorAll('.member-menu nav a').forEach(link => link.addEventListener('click', () => {
     const target = document.querySelector(link.getAttribute('href'));
     if (target?.tagName === 'DETAILS') target.open = true;

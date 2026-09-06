@@ -27,7 +27,7 @@ export function formatJournalExport(snapshot, exportedAt = new Date().toISOStrin
   const rows = Array.isArray(snapshot.records) ? snapshot.records : [];
   const profile = rows.find(row => row.key === 'profile')?.body;
   const lines = ['100 DÍAS — EL MÉTODO', 'Mi registro personal', '', 'Exportado: ' + exportedAt, 'Plan: ' + (snapshot.plan?.name || 'Mi recorrido'), '', 'Copia privada. No compartas información sensible. Solo incluye registros confirmados; no contiene tu código de acceso.', ''];
-  if (profile) lines.push('MI VIDA Y MIS ÁREAS', profile.goal || '', 'Áreas elegidas: ' + chosenAreas(profile).map(key=>AREAS[key].name).join(', '), 'Primer paso: ' + (profile.firstStep || ''), 'Tiempo elegido: ' + profile.minutes + ' minutos', '');
+  if (profile) lines.push('MI BRÚJULA DEL RECORRIDO', 'Mi norte: ' + (profile.goal || ''), 'Evidencia que buscaré: ' + (profile.evidence || 'No definida'), 'Área principal: ' + (AREAS[profile.lifeArea]?.name || 'No definida'), 'Áreas conectadas: ' + chosenAreas(profile).map(key=>AREAS[key].name).join(', '), 'Primer movimiento: ' + (profile.firstStep || ''), 'Tiempo elegido: ' + profile.minutes + ' minutos', '');
   const daily = rows.filter(row => /^day:\d+$/.test(row.key)).sort((a,b) => Number(a.key.split(':')[1]) - Number(b.key.split(':')[1]));
   const stateNames = { complete: 'Completado', partial: 'Parcial', missed: 'Sin avance' };
   if (!daily.length) lines.push('Todavía no hay días guardados.', '');

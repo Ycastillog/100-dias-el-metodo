@@ -69,6 +69,7 @@ test('new first-week guides and audio remain behind purchase verification',async
   await f.call('record',{key:'profile',revision:0,body:{...profile,areas:['relaciones','finanzas']}});
   const one=await(await f.call('day?day=1')).json();const two=await(await f.call('day?day=2')).json();
   assert.equal(one.area,'relaciones');assert.equal(two.area,'finanzas');assert.ok(one.guide.transcript);assert.equal(one.guide.audio,'/api/participant/media?day=1');
+  assert.equal(one.practice.track.label,'Trabajo y profesion');assert.equal(two.practice.track.label,'Trabajo y profesion');
   assert.equal((await(await f.call('day?day=1&area=bienestar')).json()).area,'bienestar');
   assert.equal((await f.call('day?day=1&area=__proto__')).status,400);
   assert.equal((await(await f.call('day?day=14')).json()).guide,null);

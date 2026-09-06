@@ -3,34 +3,42 @@
 <a class="skip-link" href="#inicio">Saltar al contenido</a>
 <header class="app-header">
   <a class="brand" href="/" aria-label="100 Días — El Método"><span>100</span><strong>DÍAS<br><small>EL MÉTODO</small></strong></a>
-  <nav aria-label="Principal"><a href="#cambio">Qué incluye</a><a href="#experiencia">Ver una práctica</a><a href="#planes">Precios</a></nav>
+  <nav aria-label="Principal"><a href="#route-preview">Prueba tu ruta</a><a href="#cambio">Cómo funciona</a><a href="#planes">Precios</a></nav>
   <a class="button secondary" href="/mi-metodo">Ya compré: entrar</a>
 </header>
 <aside class="launch-notice">Todo digital · Un solo pago · Sin renovación automática</aside>
 <main>
 <section class="sales-hero" id="inicio">
   <div class="sales-copy">
-    <p class="eyebrow">Tu vida, puesta en práctica</p>
-    <h1>Tu vida es más<br><em>que una sola meta.</em></h1>
-    <p class="welcome-statement">Aprende algo. Ponlo en práctica. Descubre qué ajustar.</p>
-    <p class="lead">Dedica 100 días a trabajar cómo te organizas, cuidas tus relaciones y cumples tus acuerdos. Una <strong>plataforma de práctica personal</strong> que conecta disciplina, dinero cotidiano, bienestar y proyectos: eliges varias áreas, alternas acciones y revisas lo que cambia.</p>
-    <div class="hero-actions"><a class="button primary" href="/comprar?plan=metodo">Empezar el Método · USD 29 <span aria-hidden="true">→</span></a><a class="text-link" href="#experiencia">Ver una práctica antes</a></div>
+    <p class="eyebrow">Una ruta autoguiada para tu vida real</p>
+    <h1>No compras motivación.<br><em>Construyes dirección.</em></h1>
+    <p class="welcome-statement">Un norte primero. Varias áreas conectadas. Una acción cada día.</p>
+    <p class="lead">El Método convierte lo que quieres mejorar en un recorrido que puedes seguir: en el Día 0 defines <strong>qué cambio buscas y cómo reconocerlo</strong>; cada día recibes una práctica, haces una acción pequeña y dejas evidencia; cada 7 días revisas y ajustas.</p>
+    <ul class="hero-method-summary" aria-label="Cómo funciona el Método"><li><strong>Decidir</strong><span>qué importa ahora</span></li><li><strong>Practicar</strong><span>durante 2, 10 o 20 minutos</span></li><li><strong>Registrar</strong><span>qué pasó de verdad</span></li><li><strong>Ajustar</strong><span>sin empezar de cero</span></li></ul>
+    <div class="hero-actions"><a class="button primary" href="#route-preview">Ver cómo empezaría yo <span aria-hidden="true">→</span></a><a class="text-link" href="/comprar?plan=metodo">Ir al recorrido completo</a></div>
     <p class="hero-reassurance"><strong>Pago único · 100 días de acceso.</strong><br>¿Prefieres un ciclo corto? <a href="#planes">Alpha: 14 días por USD 9.</a></p>
   </div>
-  <figure class="product-preview" aria-labelledby="product-preview-caption">
-    <figcaption id="product-preview-caption"><span>POR DENTRO DEL MÉTODO</span><span class="preview-label">Vista ilustrativa</span></figcaption>
+  <section class="product-preview route-builder" id="route-preview" aria-labelledby="route-builder-title">
+    <header class="route-builder-head"><span>PRUEBA TU RECORRIDO</span><span class="preview-label">Vista interactiva · No guarda datos</span></header>
     <div class="product-preview-body">
-      <div class="preview-priority"><span class="ui-label">Tu espacio de práctica · Ejemplo</span><p>Hoy tienes un siguiente paso.</p><div class="preview-paths"><span>Disciplina</span><span>Dinero cotidiano</span><span>Relaciones</span></div></div>
-      <div class="preview-practice"><p class="ui-label">Día 1 · Control</p><h2>Recuperar el control</h2><p>Retira una distracción y ejecuta una tarea breve que reduzca caos.</p><div class="practice-rhythm"><span>1 min<br><strong>Definir</strong></span><span>7 min<br><strong>Practicar</strong></span><span>2 min<br><strong>Registrar</strong></span></div></div>
-      <div class="preview-record"><span class="ui-label">Mi diario · Ejemplo de respuesta</span><p>«Corregí una descripción. Me distraje buscando una plantilla. Después revisaré las fechas».</p><span class="record-state">Intento parcial</span><p class="preview-next">Día 7 · Volver a tus notas y elegir un ajuste.</p></div>
+      <div class="route-question"><span class="route-step">1</span><fieldset><legend id="route-builder-title">¿Dónde necesitas dirección primero?</legend><div class="route-options"><label><input type="radio" name="route-area" value="disciplina" checked><span>Disciplina</span></label><label><input type="radio" name="route-area" value="finanzas"><span>Finanzas</span></label><label><input type="radio" name="route-area" value="relaciones"><span>Relaciones</span></label><label><input type="radio" name="route-area" value="bienestar"><span>Bienestar</span></label><label><input type="radio" name="route-area" value="proyectos"><span>Proyectos</span></label></div></fieldset></div>
+      <div class="route-question"><span class="route-step">2</span><div class="route-field"><label for="route-support">¿Qué otra parte de tu vida se conecta?</label><select id="route-support"><option value="finanzas">Finanzas</option><option value="relaciones">Relaciones</option><option value="bienestar">Bienestar</option><option value="proyectos">Proyectos</option><option value="disciplina">Disciplina</option></select></div></div>
+      <div class="route-question"><span class="route-step">3</span><fieldset><legend>¿Qué ritmo podrías sostener?</legend><div class="route-time-options"><label><input type="radio" name="route-time" value="2"><span>2 min</span></label><label><input type="radio" name="route-time" value="10" checked><span>10 min</span></label><label><input type="radio" name="route-time" value="20"><span>20 min</span></label></div></fieldset></div>
+      <div class="route-result" aria-live="polite">
+        <span class="ui-label" id="route-kicker">TU PRIMERA SEMANA · DISCIPLINA + FINANZAS</span>
+        <h2 id="route-goal">Cumplir una prioridad pequeña aun cuando no tengas ganas.</h2>
+        <p class="route-proof"><strong>Tu señal de avance:</strong> <span id="route-proof">terminaste una acción concreta y sabes qué repetir mañana.</span></p>
+        <ol class="route-week"><li><span>Día 0</span><p id="route-day-zero">Defines tu norte y la evidencia que quieres poder ver.</p></li><li><span>Días 1–2</span><p id="route-days-one">Practicas durante 10 minutos y registras qué ocurrió.</p></li><li><span>Días 3–6</span><p id="route-days-middle">Conectas tus finanzas sin perder el foco principal.</p></li><li><span>Día 7</span><p>Revisas tus intentos y eliges un ajuste para la semana siguiente.</p></li></ol>
+        <div class="route-delivery"><strong>Dentro recibes:</strong><span>guía del día + acción concreta + herramienta o diario privado + revisión semanal.</span></div>
+        <a class="button primary route-buy" href="/comprar?plan=metodo">Quiero mi recorrido de 100 días · USD 29 <span aria-hidden="true">→</span></a>
+      </div>
     </div>
-    <p class="preview-footnote">Este ejemplo muestra la estructura. Dentro de tu acceso escribes y guardas tus propios registros.</p>
-  </figure>
+  </section>
 </section>
-<section class="authority-strip" aria-label="Lo que incluye tu compra"><span>Varias áreas, un recorrido</span><span>Guías + audios iniciales</span><span>Herramientas privadas</span><span>Revisión y continuidad</span></section>
+<section class="authority-strip" aria-label="Lo que incluye tu compra"><span>Día 0: defines tu brújula</span><span>Cada día: una práctica</span><span>Guardas evidencia privada</span><span>Cada 7 días: ajustas</span></section>
 
 <section class="life-platform section-band" aria-labelledby="life-platform-title">
-  <div class="section-head"><p class="eyebrow">No tienes que elegir una sola parte de ti</p><h2 id="life-platform-title">Trabaja tu vida.<br><em>Con acciones que puedas hacer.</em></h2><p>El recorrido sugiere un foco diario entre tus áreas elegidas. Puedes cambiarlo, usar otra herramienta y conservar tus notas sin empezar de cero.</p></div>
+  <div class="section-head"><p class="eyebrow">Una dirección principal · Varias áreas conectadas</p><h2 id="life-platform-title">No cambias todo a la vez.<br><em>Pero tampoco ignoras el resto de tu vida.</em></h2><p>El Día 0 eliges qué necesita dirección primero y cómo reconocerás avance. Después el recorrido conecta esa prioridad con las otras áreas que influyen en ella, un foco manejable cada día.</p></div>
   <div class="life-area-grid">
     <article><span class="area-number">01 / DISCIPLINA</span><h3>Que tu intención tenga un lugar.</h3><p>Define una acción, cuándo intentarla y una versión pequeña para los días difíciles.</p></article>
     <article><span class="area-number">02 / DINERO COTIDIANO</span><h3>Ver lo que viene.</h3><p>Ordena hasta tres compromisos con su importe y fecha. Observa lo anotado, sin conectar cuentas ni hacer pagos.</p></article>
@@ -38,17 +46,17 @@
     <article><span class="area-number">04 / BIENESTAR</span><h3>Dejar espacio para ti.</h3><p>Prepara una pausa y un entorno cotidiano más manejable, respetando tu capacidad y tu tiempo.</p></article>
     <article><span class="area-number">05 / PROYECTOS</span><h3>Avanzar en algo concreto.</h3><p>Convierte un pendiente en un próximo paso. Acota un borrador o una tarea y reconoce qué pudiste hacer.</p></article>
   </div>
-  <div class="first-week-band"><div><p class="eyebrow">Tu primera semana, acompañada por guías</p><h3>Entender → practicar → revisar.</h3></div><p><strong>Días 1–7:</strong> siete guías con audio y transcripción, ejemplos por área y herramientas que puedes guardar. <strong>Desde el día 8:</strong> continúan las prácticas escritas, recursos opcionales y revisiones del recorrido original. No son 100 videoclases.</p></div>
+  <div class="first-week-band"><div><p class="eyebrow">Tu primera semana, sin adivinar qué hacer</p><h3>Definir → actuar → dejar evidencia → ajustar.</h3></div><p><strong>Día 0:</strong> construyes tu brújula. <strong>Días 1–6:</strong> recibes una guía, una acción adaptada a 2, 10 o 20 minutos y un espacio para registrar lo ocurrido. <strong>Día 7:</strong> comparas tus intentos con la evidencia que elegiste. Desde el día 8 continúa el programa escrito original.</p></div>
 </section>
 
 <section class="change-mechanism-section section-band" id="cambio">
   <div class="method-intro">
-    <div class="section-head"><p class="eyebrow">De la motivación a la práctica</p><h2>Un recorrido para<br><em>hacer, observar y ajustar.</em></h2><p>Leer una idea puede inspirarte. Aquí la conviertes en una acción, observas qué ocurrió y usas esa evidencia para decidir cómo seguir.</p><p><strong>Varias áreas a lo largo del proceso; un paso manejable cada vez.</strong> No tienes que resolverlo todo hoy ni limitar tus 100 días a un solo aspecto de tu vida.</p>
+    <div class="section-head"><p class="eyebrow">De una meta suelta a un sistema personal</p><h2>Siempre sabes<br><em>qué haces y para qué.</em></h2><p>Leer una idea puede inspirarte. Aquí primero defines el cambio que buscas y una señal que puedas observar. Luego cada práctica se conecta con esa dirección, registras lo ocurrido y usas esa evidencia para decidir cómo seguir.</p><p><strong>Un norte durante el proceso; varias áreas al servicio de ese norte.</strong> No tienes que resolverlo todo hoy ni reducir tu vida a un solo aspecto.</p>
       <figure class="method-scene method-video"><video controls playsinline preload="none" aria-label="Ejemplo de una práctica pequeña" width="720" height="1280" src="/assets/first-step-example.mp4"></video><figcaption>Un ejemplo de la marca. Vídeo opcional con voz sintética y subtítulos integrados; escenas ilustrativas, no un testimonio. El recorrido es digital, sin cuaderno físico.</figcaption></figure>
     </div>
     <div class="curriculum"><p class="eyebrow">El mapa de los 100 días</p>
       <ol class="curriculum-list">
-        <li><div class="stage-marker">0</div><div><span class="ui-label">Antes de empezar · Día 0</span><h3>Tu vida, tus áreas y tu ritmo.</h3><p>Elige varios aspectos que quieras trabajar, una primera acción y el tiempo que tienes disponible.</p></div></li>
+        <li><div class="stage-marker">0</div><div><span class="ui-label">Antes de empezar · Día 0</span><h3>Construye tu brújula.</h3><p>Define tu norte, una evidencia observable, el área principal, las áreas conectadas, tu primer movimiento y el tiempo disponible.</p></div></li>
         <li><div class="stage-marker">01</div><div><span class="ui-label">Días 1–30 · Control</span><h3>Haz espacio para empezar.</h3><p>Observa distracciones, concreta una acción y revisa tus primeros intentos.</p><p class="lesson-examples">Día 1: Recuperar el control<br>Día 7: Primera revisión<br>Día 14: Cerrar el primer ciclo</p></div></li>
         <li><div class="stage-marker">02</div><div><span class="ui-label">Días 31–60 · Fortaleza</span><h3>Aprende a volver.</h3><p>Trabaja qué hacer cuando aparecen cansancio, errores o pérdida de ritmo.</p><p class="lesson-examples">Día 31: Empezar sin ganas<br>Día 60: Cerrar Fortaleza</p></div></li>
         <li><div class="stage-marker">03</div><div><span class="ui-label">Días 61–100 · Dirección</span><h3>Decide qué vas a sostener.</h3><p>Revisa tus criterios y registros para preparar una forma de continuar.</p><p class="lesson-examples">Día 61: Definir lo que valoras<br>Día 100: Cerrar con evidencia</p></div></li>
@@ -62,7 +70,7 @@
 <section class="daily-experience-section section-band" id="experiencia">
   <div class="daily-experience-copy">
     <p class="eyebrow">Una práctica abierta · Sin pagar ni registrarte</p><h2>Así pasas de una idea<br><em>a algo que hiciste.</em></h2>
-    <p>Tomemos el Día 1: <strong>Recuperar el control</strong>. Su propuesta es retirar una distracción y hacer una tarea breve. Este es un ejemplo aplicado a un currículum.</p>
+    <p>Tomemos el Día 1: <strong>Recuperar el control</strong>. Su propuesta es: «Retira una distracción y ejecuta una tarea breve que reduzca caos.» Este es un ejemplo aplicado a un currículum.</p>
     <ol class="sample-steps">
       <li><span>1 min</span><div><h3>Elige una parte.</h3><p>Abre tu currículum. Elige una descripción vaga que puedas mejorar y aparta una distracción.</p></div></li>
       <li><span>7 min</span><div><h3>Trabaja en esa parte.</h3><p>Reescribe la descripción con una tarea que sí hayas realizado. No inventes cifras ni experiencia. No cambies de plantilla ahora.</p></div></li>
@@ -81,14 +89,14 @@
     </dl>
     <p class="review-example"><strong>Al revisar la semana:</strong> puedes reconocer esa distracción y decidir trabajar primero en el texto. Tus propios registros sirven para hacer el ajuste.</p>
   </article>
-  <div class="sample-next-step"><div><p class="eyebrow">Eso es lo que compras</p><h3>El espacio para llevarlo a tu vida.</h3><p>En las redes ves ejemplos. Dentro eliges tus áreas, sigues el recorrido y conservas herramientas, notas y revisiones. La primera semana añade guías con audio para ayudarte a empezar.</p></div><a class="button primary" href="#planes">Elegir mi recorrido <span aria-hidden="true">→</span></a></div>
+  <div class="sample-next-step"><div><p class="eyebrow">Eso es lo que compras</p><h3>Una ruta que conecta cada día con una dirección.</h3><p>En las redes ves ideas. Dentro defines tu brújula, recibes una práctica, guardas evidencia privada y ajustas cada semana. La primera semana añade guías con audio para que no tengas que adivinar cómo empezar.</p></div><a class="button primary" href="#planes">Elegir mi recorrido <span aria-hidden="true">→</span></a></div>
 </section>
 
 <section class="section-band offer-section" id="planes">
   <div class="section-head"><p class="eyebrow">Dos formas de empezar · Precios en USD</p><h2>Elige cuánto recorrido<br><em>quieres trabajar.</em></h2><p>La misma forma de practicar. Cambian las lecciones incluidas y el tiempo de acceso. No son mensualidades ni niveles que debas comprar uno después del otro.</p></div>
   <div class="offer-grid">
-    <article class="offer-card"><p class="eyebrow">Para comenzar con el primer ciclo</p><h3>Acceso Alpha</h3><p class="offer-price">USD 9 <span>pago único</span></p><p class="access-duration"><strong>14 días consecutivos de acceso</strong><br>Desde la confirmación del pago.</p><ul><li>Día 0: elige tus áreas y tu ritmo.</li><li>14 prácticas: días 1 al 14 de Control.</li><li>Primera semana con guías, audios y herramientas por área.</li><li>Diario privado y revisiones de los días 7 y 14.</li><li>Descarga de tu diario y entrada desde otro dispositivo con tu código.</li></ul><p class="plan-fit">Elígelo si quieres empezar por un ciclo corto y revisar cómo te fue.</p><a class="button primary" href="/comprar?plan=alpha">Empezar Alpha · USD 9 <span aria-hidden="true">→</span></a></article>
-    <article class="offer-card offer-complete"><p class="eyebrow">Las tres etapas completas</p><h3>El Método</h3><p class="offer-price">USD 29 <span>pago único</span></p><p class="access-duration"><strong>100 días consecutivos de acceso</strong><br>Desde la confirmación del pago.</p><ul><li>Día 0: elige tus áreas y tu ritmo.</li><li>100 prácticas: Control, Fortaleza y Dirección.</li><li>Primera semana con guías, audios y herramientas por área.</li><li>Diario privado, revisiones semanales y cierre del día 100.</li><li>Descarga de tu diario y entrada desde otro dispositivo con tu código.</li></ul><p class="plan-fit">Elígelo si quieres trabajar el recorrido completo sin comprar Alpha antes.</p><a class="button primary" href="/comprar?plan=metodo">Empezar el Método · USD 29 <span aria-hidden="true">→</span></a></article>
+    <article class="offer-card"><p class="eyebrow">Para probar el sistema completo en pequeño</p><h3>Acceso Alpha</h3><p class="offer-price">USD 9 <span>pago único</span></p><p class="access-duration"><strong>14 días consecutivos de acceso</strong><br>Desde la confirmación del pago.</p><ul><li>Día 0: define tu norte, evidencia, área principal y ritmo.</li><li>14 prácticas: días 1 al 14 de Control.</li><li>Primera semana con guías, audios y herramientas por área.</li><li>Diario privado y revisiones de los días 7 y 14.</li><li>Descarga de tu brújula y registros; entrada desde otro dispositivo con tu código.</li></ul><p class="plan-fit">Elígelo si quieres probar un ciclo completo de acción y revisión antes de comprometerte con 100 días.</p><a class="button primary" href="/comprar?plan=alpha">Empezar Alpha · USD 9 <span aria-hidden="true">→</span></a></article>
+    <article class="offer-card offer-complete"><p class="eyebrow">Para construir continuidad durante tres etapas</p><h3>El Método</h3><p class="offer-price">USD 29 <span>pago único</span></p><p class="access-duration"><strong>100 días consecutivos de acceso</strong><br>Desde la confirmación del pago.</p><ul><li>Día 0: define tu norte, evidencia, área principal y ritmo.</li><li>100 prácticas: Control, Fortaleza y Dirección.</li><li>Primera semana con guías, audios y herramientas por área.</li><li>Diario privado, 14 revisiones semanales y cierre del día 100.</li><li>Descarga de tu brújula y registros; entrada desde otro dispositivo con tu código.</li></ul><p class="plan-fit">Elígelo si quieres usar tus registros para aprender a volver, ajustar y decidir qué sostener al terminar.</p><a class="button primary" href="/comprar?plan=metodo">Empezar el Método · USD 29 <span aria-hidden="true">→</span></a></article>
   </div>
   <p class="offer-details">Ambos son digitales y autoguiados. No incluyen clases en vivo, asesoría privada, seguimiento humano ni libros propios adicionales. Los recursos externos opcionales pertenecen a sus autores. El acceso no es indefinido y las pausas no amplían su duración. <a href="/condiciones.html">Condiciones de compra y acceso</a>.</p>
   <div class="delivery-strip"><div><p class="eyebrow">De la compra a tu primera práctica</p><h3>Pagas una vez.<br>Empiezas aquí.</h3></div><ol class="delivery-steps"><li><strong>Elige y paga con PayPal.</strong><span>Revisa tu plan y el importe. El cobro es a nombre de YC Systems LLC.</span></li><li><strong>Guarda tu código privado.</strong><span>Al confirmarse el pago aparecen aquí el botón de entrada y el código. No enviamos un correo automático de acceso.</span></li><li><strong>Abre el Día 0 y elige tus áreas.</strong><span>Después elige tu práctica. Puedes volver con tu código desde el teléfono o el ordenador.</span></li></ol></div>
@@ -97,7 +105,7 @@
 <section class="faq-section section-band" id="preguntas">
   <div class="section-head"><p class="eyebrow">Antes de decidir</p><h2>Qué esperar.<br><em>Y qué no.</em></h2><p>Si tienes una duda sobre tu acceso, escríbenos a <a href="https://www.instagram.com/100diaselmetodo/" target="_blank" rel="noopener noreferrer">@100diaselmetodo</a>.</p></div>
   <div class="prelaunch-faq">
-    <details><summary>¿Qué recibo: un libro, vídeos o una aplicación?</summary><p>Recibes acceso a una plataforma web con un recorrido por varias áreas, prácticas escritas, registros privados y revisiones autoguiadas. Los días 1–7 incluyen guías con audio y transcripción, ejemplos por área y herramientas guardables. Desde el día 8 continúa el programa escrito original. No son 100 videoclases, un envío físico ni asesoría personal. Puedes descargar tus registros; no se entrega el programa completo como un PDF.</p></details>
+    <details><summary>¿Qué compro exactamente y qué hago después de pagar?</summary><p>Compras acceso temporal a una plataforma web autoguiada, no un libro físico. En el Día 0 defines tu brújula: norte, evidencia, área principal, áreas conectadas, primer movimiento y ritmo. Después abres una práctica, haces una acción de 2, 10 o 20 minutos, guardas lo ocurrido y revisas cada siete días. Los días 1–7 incluyen audio, transcripción y herramientas. Desde el día 8 continúa el programa escrito original. No son 100 videoclases ni asesoría personal.</p></details>
     <details><summary>¿Pagaré otra vez cada mes?</summary><p>No. Alpha cuesta USD 9 y El Método USD 29, una sola vez. No hay cuotas mensuales, anualidades ni renovación automática. El acceso dura 14 o 100 días consecutivos desde el pago confirmado, según la opción elegida.</p></details>
     <details><summary>¿Qué pasa si no practico todos los días?</summary><p>Puedes registrar «sin avance» y retomar sin inventar una racha. Los días no están bloqueados por calendario: eliges cuál trabajar dentro de tu recorrido. Las pausas no cambian la fecha de vencimiento. Descarga tu diario antes de que termine el acceso.</p></details>
     <details><summary>¿Necesito ChatGPT o instalar algo?</summary><p>No necesitas ChatGPT ni descargar una aplicación. Usas el navegador con conexión a internet y tu código privado de compra. Puedes entrar desde el teléfono y el ordenador. Tus registros se guardan cuando pulsas Guardar y el servidor confirma.</p></details>
@@ -107,7 +115,7 @@
 </section>
 
 <section class="final-cta">
-  <div><p class="eyebrow">Tu vida merece práctica</p><h2>No necesitas resolver tu vida hoy.<br>Empieza por una parte.</h2><p>Elige tu recorrido, conecta tus áreas y empieza con una acción.</p></div>
+  <div><p class="eyebrow">Tu vida merece dirección y práctica</p><h2>No necesitas resolver tu vida hoy.<br>Necesitas saber qué hacer después.</h2><p>Define un norte, conecta tus áreas y deja evidencia durante el recorrido.</p></div>
   <div class="closing-actions"><a class="button primary" href="/comprar?plan=metodo">Empezar 100 días · USD 29 <span aria-hidden="true">→</span></a><a class="text-link" href="/comprar?plan=alpha">Prefiero empezar 14 días · USD 9</a><p>Pago único · Acceso por el plazo elegido</p></div>
 </section>
 </main>
@@ -115,5 +123,5 @@
   <div class="footer-top"><a class="brand" href="/" aria-label="100 Días — El Método"><span>100</span><strong>DÍAS<br><small>EL MÉTODO</small></strong></a><div id="comunidad"><p>Ejemplos para practicar, en nuestras redes:</p><nav class="official-socials" aria-label="Redes oficiales"><a href="https://www.youtube.com/@100diaselmetodooficial" rel="noopener noreferrer">YouTube</a><a href="https://www.instagram.com/100diaselmetodo/" rel="noopener noreferrer">Instagram</a><a href="https://www.facebook.com/100diaselmetodo" rel="noopener noreferrer">Facebook</a><a href="https://www.tiktok.com/@100diaselmetodo" rel="noopener noreferrer">TikTok</a></nav></div></div>
   <div class="footer-bottom"><p>100 Días — El Método · Un proyecto de YC Systems LLC.</p><p><a href="/privacidad.html">Privacidad</a> · <a href="/condiciones.html">Compra y entrega</a> · <a href="/mi-metodo">Mi recorrido</a></p></div>
 </footer>
-<script src="/assets/prelaunch.js" defer></script>
+<script src="/assets/prelaunch.js" defer></script><script src="/assets/sales-experience.js" defer></script>
 </body></html>

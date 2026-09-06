@@ -34,7 +34,7 @@ export function validateRecord(key, body, maxDays) {
   if (typeof key === 'string' && key.startsWith('tool:')) {
     if (!validToolRecord(key, body, maxDays)) return null;
   } else if (key === 'profile') {
-    if (!only(['goal', 'firstStep', 'lifeArea', 'areas', 'minutes', 'energy']) || !text('goal', 500, true) || !text('firstStep', 500) || !dose() || !['mentalidad', 'bienestar', 'profesional', 'finanzas', 'relaciones'].includes(body.lifeArea)) return null;
+    if (!only(['goal', 'evidence', 'firstStep', 'lifeArea', 'areas', 'minutes', 'energy']) || !text('goal', 500, true) || body.evidence !== undefined && !text('evidence', 500) || !text('firstStep', 500) || !dose() || !['mentalidad', 'bienestar', 'profesional', 'finanzas', 'relaciones'].includes(body.lifeArea)) return null;
     if (body.areas !== undefined && (!Array.isArray(body.areas) || body.areas.length<1 || body.areas.length>5 || new Set(body.areas).size!==body.areas.length || body.areas.some(area=>!['mentalidad','bienestar','profesional','finanzas','relaciones'].includes(area)))) return null;
   } else {
     const match = /^(day|review):([1-9]\d{0,2})$/.exec(key);

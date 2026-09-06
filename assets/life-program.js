@@ -553,12 +553,13 @@
     const safeDay = Math.max(1, Math.min(100, Number(day) || 1));
     const module = getModule(safeDay);
     const rhythm = rhythms[(safeDay - 1) % rhythms.length];
-    const profile = lifeAreaProfiles[options.lifeArea] || null;
+    const practiceProfile = lifeAreaProfiles[options.lifeArea] || null;
+    const profile = lifeAreaProfiles[options.primaryLifeArea] || practiceProfile;
     const minutes = getSessionMinutes(options.minutes);
     const energy = ["low", "steady", "high"].includes(options.energy)
       ? options.energy
       : "steady";
-    const focus = getFocus(safeDay, rhythm, profile);
+    const focus = getFocus(safeDay, rhythm, practiceProfile);
     const reading = byId[module.reading];
     const video = byId[module.video];
     const slot = (safeDay - 1) % rhythms.length;
@@ -569,8 +570,10 @@
     const movementAction = templates.movement[slot](module.movement);
     const financeAction = templates.finance[slot](module.finance);
     const connectionAction = templates.connection[slot](module.connection);
+    const personalGoal = typeof options.goal === "string" && options.goal.trim() ? options.goal.trim() : "";
+    const personalEvidence = typeof options.evidence === "string" && options.evidence.trim() ? options.evidence.trim() : "";
     const trackMessage = profile
-      ? `Tu direccion elegida es ${profile.label.toLowerCase()}: hoy la conectamos con ${profile.message}.`
+      ? `${personalGoal ? `Tu norte es: ${personalGoal}. ` : ""}Tu area principal es ${profile.label.toLowerCase()}: hoy la conectamos con ${profile.message}.${personalEvidence ? ` La evidencia que elegiste observar es: ${personalEvidence}.` : ""}`
       : "Hoy conectas el Metodo con una dimension concreta de tu vida.";
 
     return {

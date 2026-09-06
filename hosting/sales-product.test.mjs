@@ -54,13 +54,17 @@ test('every purchase link selects a real one-time offer with its price and durat
   assert.doesNotMatch(html, /USD (?:79|297)/);
 });
 
-test('product illustration is not an operative private form or a fabricated customer result', () => {
-  const preview = html.match(/<figure class="product-preview"[\s\S]*?<\/figure>/)[0];
-  assert.match(preview, /Vista ilustrativa/);
-  assert.match(preview, /Ejemplo de respuesta/);
-  assert.match(preview, /Dentro de tu acceso escribes y guardas tus propios registros/);
-  assert.doesNotMatch(preview, /<(?:form|input|textarea|button)\b/);
+test('interactive route preview explains the product without saving data or inventing results', async () => {
+  const preview = html.match(/<section class="product-preview route-builder"[\s\S]*?<\/section>/)[0];
+  assert.match(preview, /Vista interactiva · No guarda datos/);
+  assert.match(preview, /¿Dónde necesitas dirección primero?/);
+  assert.match(preview, /Tu señal de avance/);
+  assert.match(preview, /guía del día \+ acción concreta \+ herramienta o diario privado \+ revisión semanal/);
+  assert.match(preview, /<(?:input|select)\b/);
   assert.doesNotMatch(preview, /Guardado correctamente|Testimonio|Cliente verificado/);
+  const script = await readFile(new URL('sales-experience.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(script, /fetch\(|localStorage|sessionStorage|document\.cookie/);
+  new vm.Script(script);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
   assert.match(html, /no una transformación garantizada/);
 });

@@ -84,7 +84,7 @@ export async function handleParticipant(request, rawEnv, program, dependencies =
       const profile = (await records.get(order.id, 'profile'))?.body || {};
       const guided = dayGuide(program, day, profile, url.searchParams.get('area'));
       if (!guided) return fail('invalid_area');
-      return json({ lesson: program.lessons[day - 1], practice: program.getLifeProgram(day, { ...profile, lifeArea: guided.area }), ...guided });
+      return json({ lesson: program.lessons[day - 1], practice: program.getLifeProgram(day, { ...profile, primaryLifeArea: profile.lifeArea, lifeArea: guided.area }), ...guided });
     }
     if (path === 'record') {
       if (typeof body.key !== 'string' || !Number.isSafeInteger(body.revision) || body.revision < 0) return fail('invalid_record');
