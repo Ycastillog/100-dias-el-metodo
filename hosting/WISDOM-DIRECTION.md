@@ -22,8 +22,8 @@ La preparación de conversaciones es un ejercicio original. Las sugerencias de m
 Generada mediante la herramienta integrada image_gen, una única solicitud y sin variantes. El sujeto es un pensador anónimo, no un retrato autenticado de un filósofo ni un miembro del programa.
 
 - Original: C:/Users/Yeica/.codex/generated_images/01a0753c-2aa1-7680-84fb-1c32f7fcc494/exec-1519a966-953c-4a91-8181-da9a05cd5e10.png
-- Activo final: C:/Users/Yeica/Documents/Codex/100-dias-el-metodo/assets/wisdom-hero-v1.webp
-- Original: 1536 × 1024. Publicación: 1440 × 960, WebP, 70.294 bytes. Conversión y reducción para carga web; original preservado.
+- Activo final: C:/Users/Yeica/Documents/Codex/100-dias-el-metodo/assets/wisdom-hero-v1.jpg
+- Original: 1536 × 1024. Publicación: 1440 × 960, JPEG optimizado. Conversión y reducción para carga web; original preservado. Se eligió JPEG tras comprobar que la publicación devolvía el WebP como application/octet-stream.
 
 ## Prompt final
 

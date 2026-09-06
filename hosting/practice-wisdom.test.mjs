@@ -18,7 +18,7 @@ test('public references and participant advice agree for all five supported area
   }
   assert.match(html,/no implican colaboración ni respaldo/);
   const assets=await loadSalesAssets(process.cwd());
-  assert.equal(assets['/assets/wisdom-hero-v1.webp'].type,'image/webp');
-  assert.ok(Buffer.from(assets['/assets/wisdom-hero-v1.webp'].data,'base64').length<150000);
+  assert.equal(assets['/assets/wisdom-hero-v1.jpg'].type,'image/jpeg');
+  assert.ok(Buffer.from(assets['/assets/wisdom-hero-v1.jpg'].data,'base64').length<150000);
   assert.match(assets['/assets/practice-wisdom.js'].data,/export const PRACTICE_WISDOM/);
 });

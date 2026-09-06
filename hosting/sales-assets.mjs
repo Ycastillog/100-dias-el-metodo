@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { loadPrelaunchAssets, PRELAUNCH_FILES } from './prelaunch-assets.mjs';
 
-export const SALES_FILES = [...PRELAUNCH_FILES, 'hosting/sales.html', 'hosting/sales.css', 'hosting/sales-experience.js', 'hosting/participant.html', 'hosting/participant.js', 'hosting/participant-tools.js', 'hosting/system-tools.js', 'hosting/practice-wisdom.js', 'hosting/guided-tools.js', 'hosting/participant.css', 'assets/practice-editorial-v2.webp', 'assets/practice-life-v1.jpg', 'assets/wisdom-hero-v1.webp', 'assets/first-step-example.mp4'];
+export const SALES_FILES = [...PRELAUNCH_FILES, 'hosting/sales.html', 'hosting/sales.css', 'hosting/sales-experience.js', 'hosting/participant.html', 'hosting/participant.js', 'hosting/participant-tools.js', 'hosting/system-tools.js', 'hosting/practice-wisdom.js', 'hosting/guided-tools.js', 'hosting/participant.css', 'assets/practice-editorial-v2.webp', 'assets/practice-life-v1.jpg', 'assets/wisdom-hero-v1.jpg', 'assets/first-step-example.mp4'];
 const textAsset = (type, data) => ({ type, encoding: 'utf8', data });
 const page = (title, content) => textAsset('text/html; charset=utf-8', `<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} | 100 Días — El Método</title><link rel="stylesheet" href="/assets/participant.css"></head><body><header class="member-header"><a class="member-brand" href="/">100 <span>DÍAS / EL MÉTODO</span></a><a href="/mi-metodo">Mi recorrido</a></header><main class="member-shell"><article class="panel"><h1>${title}</h1>${content}<p><a href="/">Volver al inicio</a></p></article></main></body></html>`);
 
@@ -14,7 +14,7 @@ export async function loadSalesAssets(root) {
   ]) assets[route] = textAsset(type + '; charset=utf-8', await readFile(resolve(root, 'hosting', file), 'utf8'));
   assets['/'] = assets['/index.html'];
   assets['/assets/practice-editorial-v2.webp'] = { type: 'image/webp', encoding: 'base64', data: (await readFile(resolve(root, 'assets/practice-editorial-v2.webp'))).toString('base64') };
-  assets['/assets/wisdom-hero-v1.webp'] = { type: 'image/webp', encoding: 'base64', data: (await readFile(resolve(root, 'assets/wisdom-hero-v1.webp'))).toString('base64') };
+  assets['/assets/wisdom-hero-v1.jpg'] = { type: 'image/jpeg', encoding: 'base64', data: (await readFile(resolve(root, 'assets/wisdom-hero-v1.jpg'))).toString('base64') };
   assets['/assets/practice-life-v1.jpg'] = { type: 'image/jpeg', encoding: 'base64', data: (await readFile(resolve(root, 'assets/practice-life-v1.jpg'))).toString('base64') };
   assets['/assets/first-step-example.mp4'] = { type: 'video/mp4', encoding: 'base64', data: (await readFile(resolve(root, 'assets/first-step-example.mp4'))).toString('base64') };
   assets['/robots.txt'] = textAsset('text/plain; charset=utf-8', 'User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /mi-metodo\nDisallow: /comprar\n');
