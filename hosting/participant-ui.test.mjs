@@ -6,6 +6,8 @@ import * as systemTools from './system-tools.js';
 import * as guidedTools from './guided-tools.js';
 import * as wisdomTools from './practice-wisdom.js';
 import * as participantTools from './participant-tools.js';
+import * as toolkit from './toolkit.js';
+import * as welcome from './welcome.js';
 
 const source=await readFile(new URL('participant.js',import.meta.url),'utf8');
 // Run the real event handlers with a small in-memory form adapter. No browser,
@@ -19,13 +21,31 @@ function harness(){
   const form=(id,fields)=>{const node=get(id);node.fields=fields.map(name=>({name,value:'',disabled:false}));node.elements={namedItem:name=>node.fields.find(f=>f.name===name)};return node;};
   form('#journal-form',['action','state','notes','obstacle','nextStep']);form('#tool-form',['first','second','third']);form('#review-form',['worked','difficult','nextStep']);form('#profile-form',['goal','minutes','energy']);
   class FormAdapter {constructor(node){this.entries=node.fields.filter(f=>!f.disabled && f.checked!==false).map(f=>[f.name,f.value]);}[Symbol.iterator](){return this.entries[Symbol.iterator]();}getAll(key){return this.entries.filter(([k])=>k===key).map(([,v])=>v);}}
-  const context={...participantTools,...systemTools,...guidedTools,...wisdomTools,document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
+  const context={...toolkit,...welcome,...participantTools,...systemTools,...guidedTools,...wisdomTools,document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
   vm.createContext(context);
-  const instrumented=source.replace(/^import .*;\r?\n/gm,'').replace(/  start\(\);\r?\n\}\)\(\);/,`  globalThis.subject={api,save,renderReview,renderDay,records,renderTool,setArea:value=>{displayedArea=value;},setSession:value=>{session=value;},invalidate:()=>{sessionGeneration++;},setDayData:value=>{dayData=value;},review:()=>renderedReview}; renderHistory=()=>{};\n})();`);
+  const instrumented=source.replace(/^import .*;\r?\n/gm,'').replace(/  start\(\);\r?\n\}\)\(\);/,`  globalThis.subject={showSpace,renderWelcome,renderReviewEvidence,api,save,renderReview,renderDay,records,renderTool,setArea:value=>{displayedArea=value;},setSession:value=>{session=value;},invalidate:()=>{sessionGeneration++;},setDayData:value=>{dayData=value;},review:()=>renderedReview}; renderHistory=()=>{};\n})();`);
   vm.runInContext(instrumented,context);
   context.subject.setSession({plan:{days:14}});
   return {get,context,subject:context.subject};
 }
+
+test('workspace navigation changes only visibility and preserves an unsaved tool draft',()=>{
+ const h=harness(),form=h.get('#tool-form');form.fields[0].value='Mi borrador';form.dataset.dirty='true';
+ const panels=['practice','system','review','report','help'].map(space=>({dataset:{space},hidden:false}));
+ h.context.document.querySelectorAll=selector=>selector==='[data-space]'?panels:[];
+ h.subject.showSpace('my-system');assert.equal(h.get('#member-workspace').dataset.currentSpace,'system');
+ assert.deepEqual(panels.map(p=>p.hidden),[true,false,true,true,true]);
+ h.subject.showSpace('day-section');assert.equal(form.fields[0].value,'Mi borrador');assert.equal(form.dataset.dirty,'true');
+ h.subject.renderWelcome(4);assert.equal(h.get('#welcome-title').textContent,welcome.WELCOME_STEPS[4].title);assert.equal(h.subject.records.size,0);
+});
+
+test('review evidence refreshes after new tool records without overwriting the review draft',()=>{
+ const h=harness();h.get('#review-select').value='7';h.subject.renderReview();
+ const form=h.get('#review-form');form.fields[0].value='Mi observación pendiente';form.dataset.dirty='true';
+ h.subject.records.set('tool:1:mentalidad',{key:'tool:1:mentalidad',body:{area:'mentalidad',first:'Un paso'}});
+ h.subject.renderReviewEvidence();assert.match(h.get('#area-review').children[0].children[1].textContent,/1 herramienta/);
+ assert.equal(form.fields[0].value,'Mi observación pendiente');assert.equal(form.dataset.dirty,'true');
+});
 test('cancelling review navigation restores the rendered review and saves to its original key',async()=>{
   const h=harness(),select=h.get('#review-select'),form=h.get('#review-form');
   h.subject.records.set('review:7',{key:'review:7',body:{worked:'First week',difficult:'x',nextStep:'a'}});

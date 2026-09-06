@@ -1,9 +1,10 @@
 import { AREAS, AREA_ORDER, toolPreview } from './guided-tools.js';
+import { toolkitExport } from './toolkit.js';
 
 export const BALANCE_STATES = { '': 'Sin valorar', attention: 'Necesita atención', building: 'En construcción', steady: 'Bastante estable' };
 export const AREA_CONTEXT = {
   mentalidad: { title: 'Mi rutina mínima', question: '¿Cómo llevo mis prioridades y hábitos?', purpose: 'Concretar una acción, darle un momento y preparar una versión pequeña.' },
-  finanzas: { title: 'Mis próximos compromisos', question: '¿Cómo llevo el orden de mis pagos cotidianos?', purpose: 'Tener a la vista los importes y fechas que anoto para organizarme.' },
+  finanzas: { title: 'Mi mapa de dinero', question: '¿Cómo llevo el orden de mis pagos cotidianos?', purpose: 'Separar movimientos realizados y compromisos próximos, y revisar lo que falta por comprobar.' },
   relaciones: { title: 'Mi conversación preparada', question: '¿Cómo llevo mis conversaciones y acuerdos?', purpose: 'Aclarar lo que necesito expresar y preparar mis palabras.' },
   bienestar: { title: 'Mi espacio para cuidarme', question: '¿Cómo llevo mi energía y mi espacio personal?', purpose: 'Dejar un momento para una acción cotidiana que respete mi capacidad.' },
   profesional: { title: 'Mi próximo paso', question: '¿Cómo llevo el avance de mis proyectos?', purpose: 'Convertir un pendiente en una parte que pueda intentar.' },
@@ -38,6 +39,7 @@ export function formatSystemReport(snapshot, exportedAt=new Date().toISOString()
   for(const area of state.areas){
     lines.push(area.name.toUpperCase(),'Punto de partida: '+area.baseline,'Última valoración: '+(area.current?area.current+' (revisión del día '+area.reviewDay+')':'Sin revisión valorada'),area.title+':');
     if(area.latest){lines.push(toolPreview(area.latest.body));if(area.key==='finanzas')for(const row of area.latest.body.rows)if(row.name.trim())lines.push(`${row.name} | ${row.amount || 'Importe pendiente'} ${area.latest.body.currency} | ${row.date || 'Fecha pendiente'}`);lines.push('Versión guardada: '+area.latest.updatedAt);}else lines.push('Todavía no guardaste esta herramienta.');
+    if(area.latest)lines.push(...toolkitExport(area.latest.body));
     lines.push('');
   }
   if(state.recovery)lines.push('MI PLAN PARA RETOMAR','Qué me frenó: '+state.recovery.obstacle,'Mi acción pequeña: '+state.recovery.action,'Cuándo la intentaré: '+state.recovery.when,'');

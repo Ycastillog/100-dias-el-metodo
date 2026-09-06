@@ -1,5 +1,6 @@
 // Pure presentation helpers. No account data, storage, payment logic or secrets.
 import { AREAS, chosenAreas, toolPreview } from './guided-tools.js';
+import { toolkitExport } from './toolkit.js';
 export function practiceSequence(lesson, requestedMinutes) {
   const minutes = [2, 10, 20].includes(Number(requestedMinutes)) ? Number(requestedMinutes) : 10;
   const timing = minutes === 2 ? ['15 segundos', '90 segundos', '15 segundos'] : minutes === 10 ? ['1 minuto', '7 minutos', '2 minutos'] : ['2 minutos', '15 minutos', '3 minutos'];
@@ -41,7 +42,7 @@ export function formatJournalExport(snapshot, exportedAt = new Date().toISOStrin
   const reviews = rows.filter(row => /^review:\d+$/.test(row.key)).sort((a,b) => Number(a.key.split(':')[1]) - Number(b.key.split(':')[1]));
   const tools=rows.filter(row=>/^tool:[1-9]\d{0,2}:/.test(row.key)).sort((a,b)=>Number(a.key.split(':')[1])-Number(b.key.split(':')[1]) || a.key.localeCompare(b.key));
   if(tools.length) lines.push('MIS HERRAMIENTAS POR ÁREA','');
-  for(const row of tools){lines.push('DÍA '+row.key.split(':')[1]+' · '+(AREAS[row.body.area]?.name || row.body.area));if(row.body.area==='finanzas'){for(const payment of row.body.rows)if(payment.name.trim())lines.push(payment.name+' | '+(payment.amount||'importe pendiente')+' '+row.body.currency+' | '+(payment.date||'fecha pendiente'));}lines.push(toolPreview(row.body),'Guardado: '+row.updatedAt,'');}
+  for(const row of tools){lines.push('DÍA '+row.key.split(':')[1]+' · '+(AREAS[row.body.area]?.name || row.body.area));if(row.body.area==='finanzas'){for(const payment of row.body.rows)if(payment.name.trim())lines.push(payment.name+' | '+(payment.amount||'importe pendiente')+' '+row.body.currency+' | '+(payment.date||'fecha pendiente'));}lines.push(toolPreview(row.body),...toolkitExport(row.body),'Guardado: '+row.updatedAt,'');}
   for (const row of reviews) {
     lines.push('REVISIÓN DEL DÍA ' + row.key.split(':')[1]);
     for (const [key,label] of [['worked','Pude sostener'],['difficult','Me costó'],['nextStep','Ajustaré o mantendré']]) if (row.body[key]) lines.push(label + ': ' + row.body[key]);

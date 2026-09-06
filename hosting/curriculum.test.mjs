@@ -44,7 +44,7 @@ test('curriculum only references real review milestones and offers autonomous co
 
 test('member flow prioritizes practice and examples never prefill participant evidence',async()=>{
   const html=await readFile(new URL('participant.html',import.meta.url),'utf8');
-  assert.ok(html.indexOf('<section id="day-section"')<html.indexOf('<section class="system-workspace"'));
+  assert.ok(html.indexOf('id="day-section"')<html.indexOf('id="my-system"'));
   for(const id of ['guide-context','guide-evidence','guide-smaller','review-coaching'])assert.equal([...html.matchAll(new RegExp('id="'+id+'"','g'))].length,1);
   assert.match(html,/Ejemplo ilustrativo/);
   assert.doesNotMatch(html,/id="guide-task"/);

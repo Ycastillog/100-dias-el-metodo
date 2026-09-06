@@ -15,6 +15,16 @@ test('public example video supports native byte-range seeking without unlocking 
   assert.equal(result.status,206);assert.equal(result.headers.get('content-type'),'video/mp4');assert.equal((await result.arrayBuffer()).byteLength,128);assert.match(result.headers.get('content-range'),/^bytes 0-127\//);
 });
 
+test('welcome tutorial is optional, captioned and supports seeking without exposing the paid program',async()=>{
+ const response=await respond(new Request('https://100diaselmetodo.com/assets/welcome-tour-v1.mp4',{headers:{range:'bytes=1024-2047'}}),assets);
+ assert.equal(response.status,206);assert.equal(response.headers.get('content-type'),'video/mp4');assert.equal((await response.arrayBuffer()).byteLength,1024);
+ assert.match(member,/<video id="welcome-video" controls playsinline preload="none"/);
+ assert.match(member,/voz sintética de la marca y subtítulos integrados/);
+ assert.match(assets['/assets/welcome-tour-v1.vtt'].data,/^WEBVTT/);
+ assert.ok(Buffer.from(assets['/assets/welcome-tour-v1.mp4'].data,'base64').length<2000000);
+ assert.match(member,/Leer la narración completa/);
+});
+
 test('legacy artwork is preserved and the page features a disclosed optional video instead of a notebook', () => {
   const image = assets['/assets/practice-editorial-v2.webp'];
   assert.equal(image.type, 'image/webp');

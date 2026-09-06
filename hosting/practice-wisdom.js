@@ -15,7 +15,7 @@ export const PRACTICE_WISDOM = {
     "origin": "Educación financiera · CFPB",
     "title": "Claridad antes de decidir.",
     "idea": "Un calendario de pagos pone fechas e importes a la vista. Es una herramienta de organización incluida en los recursos educativos del CFPB de Estados Unidos.",
-    "exercise": "En «Mis próximos compromisos», anota hasta tres pagos, con importe y vencimiento, en una misma moneda. Revisa lo que viene antes de decidir un gasto.",
+    "exercise": "En «Mi mapa de dinero», anota tus compromisos, con importe y vencimiento, en una misma moneda. Registra aparte los ingresos y gastos que ya ocurrieron.",
     "caution": "Esta lista no muestra tu saldo ni conecta cuentas. No incluye asesoría financiera personalizada ni recomendaciones de inversión.",
     "source": "https://www.consumerfinance.gov/consumer-tools/educator-tools/your-money-your-goals/toolkit/",
     "sourceTitle": "CFPB, Your Money, Your Goals · recursos en inglés"

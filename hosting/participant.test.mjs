@@ -58,6 +58,20 @@ async function fixture(t, options = {}) {
 const profile = { goal: 'Terminar un borrador', firstStep: 'Escribir dos ideas', lifeArea: 'profesional', minutes: 2, energy: 'steady' };
 const journal = { state: 'partial', action: 'Escribí una idea', notes: 'Un intento real', obstacle: '', nextStep: 'La segunda idea', minutes: 2, energy: 'steady' };
 
+test('expanded toolkit data round-trips without creating a daily achievement or crossing purchase boundaries',async t=>{
+ const f=await fixture(t,{plan:'metodo'}),key='tool:100:finanzas';
+ const body={area:'finanzas',currency:'DOP',rows:[{name:'Un compromiso',amount:'700',date:'2026-09-10'}],ledger:{start:'',end:'',incomplete:true,entries:[{kind:'income',name:'Mi entrada',amount:'1000',date:''},{kind:'expense',name:'Mi salida',amount:'200',date:''}]}};
+ assert.equal((await f.call('record',{key,body,revision:0})).status,200);
+ assert.deepEqual((await f.records.get(ID,key)).body,body);
+ assert.equal((await f.call('record',{key,body,revision:0})).status,409);
+ assert.equal((await(await f.call('session')).json()).records.length,1);
+ assert.equal(await f.records.get(ID,'day:100'),null);
+ let other=await f.store.create({...f.order,id:SECOND,created_at:now()});other=await f.store.reconcile(other,{id:'OTHER_TOOLKIT'},'paid',now());
+ assert.equal((await(await f.call('session',undefined,(await issueAccess(other,f.env)).code)).json()).records.length,0);
+ await f.store.reconcile(f.order,{id:'CAPTURE123'},'refunded',now());
+ assert.equal((await f.call('record',{key,body,revision:1})).status,401);
+});
+
 test('new first-week guides and audio remain behind purchase verification',async t=>{
   const f=await fixture(t);
   for(const day of [1,7]){

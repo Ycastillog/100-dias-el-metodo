@@ -1,9 +1,10 @@
+import { validDetails, validLedger } from './toolkit.js';
 export const AREAS = {
   mentalidad: {name:'Disciplina y hábitos',title:'Convierte tu intención en una acción',labels:['La acción concreta','Cuándo y dónde la intentaré','Una versión más pequeña'],prompts:['Abrir el documento y escribir una idea','Después de desayunar, en la mesa','Escribir solamente el título']},
   profesional: {name:'Proyectos y trabajo',title:'Prepara tu siguiente paso',labels:['Una parte concreta del proyecto','Mi próximo momento disponible','La versión que cabe si tengo poco tiempo'],prompts:['Revisar una descripción de mi currículum','Mañana, antes de abrir las redes','Corregir una frase']},
   bienestar: {name:'Bienestar cotidiano',title:'Deja espacio para ti',labels:['Una acción cotidiana que me serviría','Un momento realista para hacerla','Cómo reducirla si necesito descansar'],prompts:['Dejar preparada la ropa de mañana','Después de cenar','Preparar solo lo imprescindible']},
   relaciones: {name:'Relaciones y comunicación',title:'Prepara tus palabras',labels:['La situación cotidiana','Lo que quiero expresar','Mi frase de ensayo'],prompts:['Quiero aclarar un horario','Pedir un momento para conversar','¿Podemos buscar otro momento para hablar?']},
-  finanzas: {name:'Organización del dinero',title:'Pon tus próximos pagos a la vista',labels:[],prompts:[]},
+  finanzas: {name:'Organización del dinero',title:'Ordena tus movimientos y próximos compromisos',labels:[],prompts:[]},
 };
 
 export function toolKey(day, area) { return 'tool:' + day + ':' + area; }
@@ -43,8 +44,8 @@ export function validToolRecord(key,body,maxDays) {
   const match=/^tool:([1-9]\d{0,2}):(mentalidad|profesional|bienestar|relaciones|finanzas)$/.exec(key);
   if (!match || Number(match[1])>maxDays || body.area!==match[2]) return false;
   const only=keys=>Object.keys(body).every(k=>keys.includes(k));
-  if(body.area!=='finanzas') return only(['area','first','second','third']) && ['first','second','third'].every(k=>typeof body[k]==='string' && body[k].length<=1500) && !!body.first.trim();
-  if(!only(['area','currency','rows']) || !['USD','DOP','EUR'].includes(body.currency) || !Array.isArray(body.rows) || body.rows.length!==3) return false;
+  if(body.area!=='finanzas') return only(['area','first','second','third','details']) && ['first','second','third'].every(k=>typeof body[k]==='string' && body[k].length<=1500) && !!body.first.trim() && (body.details===undefined || validDetails(body.area,body.details));
+  if(!only(['area','currency','rows','ledger']) || !['USD','DOP','EUR'].includes(body.currency) || !Array.isArray(body.rows) || body.rows.length<1 || body.rows.length>12 || body.ledger!==undefined && !validLedger(body.ledger)) return false;
   const dateOK=s=>s==='' || /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s)) && new Date(s).toISOString().slice(0,10)===s;
-  return body.rows.every(r=>r && typeof r==='object' && !Array.isArray(r) && Object.keys(r).length===3 && ['name','amount','date'].every(k=>typeof r[k]==='string') && r.name.length<=120 && (r.amount==='' || /^\d{1,9}(?:\.\d{1,2})?$/.test(r.amount)) && dateOK(r.date) && (r.name.trim() || !r.amount && !r.date)) && body.rows.some(r=>r.name.trim());
+  return body.rows.every(r=>r && typeof r==='object' && !Array.isArray(r) && Object.keys(r).length===3 && ['name','amount','date'].every(k=>typeof r[k]==='string') && r.name.length<=120 && (r.amount==='' || /^\d{1,9}(?:\.\d{1,2})?$/.test(r.amount)) && dateOK(r.date) && (r.name.trim() || !r.amount && !r.date)) && (body.rows.some(r=>r.name.trim()) || body.ledger?.entries.some(r=>r.name.trim()));
 }

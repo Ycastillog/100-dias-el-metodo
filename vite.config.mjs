@@ -52,7 +52,14 @@ export default defineConfig(({ mode, command }) => {
           }
           const init = { method: req.method, headers };
           if (!['GET', 'HEAD'].includes(req.method)) init.body = Buffer.concat(chunks);
-          const response = await worker.fetch(new Request(url, init));
+          const request = new Request(url, init);
+          let response;
+          if(command==='serve' && sales && process.env.METODO_LOCAL_QA==='1'){
+            const {localQA}=await server.ssrLoadModule('/hosting/local-qa.mjs');
+            const {default:qaProgram}=await server.ssrLoadModule('virtual:private-program');
+            response=await localQA(request,await readAssets(process.cwd()),qaProgram);
+          }
+          response ||= await worker.fetch(request);
           res.statusCode = response.status;
           response.headers.forEach((value, name) => { if (name !== 'set-cookie') res.setHeader(name, value); });
           const cookies = response.headers.getSetCookie();

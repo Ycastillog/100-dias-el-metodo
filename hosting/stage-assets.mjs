@@ -27,7 +27,7 @@ for (const [url, asset] of Object.entries(assets)) {
   // The hosting static layer does not identify WebP reliably. Let the Worker
   // serve this image with its explicit image/webp MIME type as well.
   // The static layer ignores Range for MP4; the Worker supports native seeking.
-  if (url === '/' || sales && ['/index.html', '/mi-metodo', '/assets/practice-editorial-v2.webp', '/assets/first-step-example.mp4'].includes(url)) continue;
+  if (url === '/' || sales && ['/index.html', '/mi-metodo', '/assets/practice-editorial-v2.webp', '/assets/first-step-example.mp4', '/assets/welcome-tour-v1.mp4', '/assets/welcome-tour-v1.vtt'].includes(url)) continue;
   const target = resolve(output, '.' + url);
   if (!target.startsWith(output + sep)) {
     throw new Error('Asset outside build output');

@@ -2,12 +2,15 @@ import { practiceSequence, journeyMap, formatJournalExport } from './participant
 import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, toolPreview } from './guided-tools.js';
 import { BALANCE_STATES, AREA_CONTEXT, reviewDays, systemSnapshot, formatSystemReport } from './system-tools.js';
 import { PRACTICE_WISDOM } from './practice-wisdom.js';
+import { TOOL_DETAILS, TOOL_EXAMPLES, blankPayment, blankEntry, ledgerSummary, toolkitExport } from './toolkit.js';
+import { WELCOME_STEPS } from './welcome.js';
 
 (() => {
   const $ = selector => document.querySelector(selector);
   const status = $('#member-status');
   let session, day = 1, dayData, loadNumber = 0, writing = false, loadingDay = false, displayedArea = 'mentalidad', renderedReview = '', sessionGeneration = 0;
   const records = new Map();
+  let paymentRowCount=3, ledgerRowCount=3, welcomeStep=0;
   const messages = { access_denied: 'El acceso no está activo. Revisa el código y su fecha de vencimiento. Si tu pago está pendiente, espera la confirmación.', access_unavailable: 'No pudimos conectar con tu recorrido. Tus registros guardados siguen en el servidor. Inténtalo más tarde.', record_conflict: 'Este registro cambió en otro dispositivo. Conservamos aquí lo que escribiste: cópialo antes de recargar y comparar con la versión guardada.', invalid_record: 'Revisa los campos y sus límites antes de guardar.', rate_limited: 'Hay varios intentos recientes. Espera un minuto antes de volver a probar.' };
   const tell = text => { status.textContent = text; };
   const date = value => new Date(value).toLocaleString('es', { dateStyle: 'medium', timeStyle: 'short' });
@@ -33,6 +36,22 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
   function hasDraft() { return ['#journal-form', '#profile-form', '#review-form', '#tool-form', '#recovery-form'].some(id => $(id).dataset.dirty === 'true'); }
   function mayNavigate() { if (writing || loadingDay) { tell('Espera a que termine la carga o el guardado antes de cambiar.'); return false; } return !hasDraft() || window.confirm('Hay cambios sin guardar. ¿Quieres continuar sin guardarlos?'); }
   function element(tag, text, className) { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; if (className) node.className = className; return node; }
+  const spaces={'my-system':'system','weekly-section':'review','recovery-section':'review','report-section':'report','history-section':'report','manual-section':'help','welcome-section':'help'};
+  function showSpace(id){
+    const space=spaces[id] || 'practice';$('#member-workspace').dataset.currentSpace=space;
+    document.querySelectorAll('[data-space]').forEach(node=>{node.hidden=node.dataset.space!==space;});
+    document.querySelectorAll('.workspace-nav a').forEach(link=>{if((spaces[link.getAttribute('href').slice(1)] || 'practice')===space)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
+    if(space==='review')renderReviewEvidence();
+    if(space!=='help')$('#welcome-video').pause();
+  }
+  function renderWelcome(index){
+    welcomeStep=Math.max(0,Math.min(WELCOME_STEPS.length-1,index));const step=WELCOME_STEPS[welcomeStep];
+    $('#welcome-title').textContent=step.title;$('#welcome-text').textContent=step.text;$('#welcome-count').textContent=String(welcomeStep+1).padStart(2,'0')+' / 05';
+    const nav=$('#welcome-steps');nav.replaceChildren();
+    WELCOME_STEPS.forEach((item,i)=>{const button=element('button');button.append(element('span',String(i+1).padStart(2,'0'),'welcome-step-number'),element('span',' / '+item.label,'welcome-step-label'));button.type='button';button.setAttribute('aria-label','Paso '+(i+1)+': '+item.label);button.setAttribute('aria-pressed',String(i===welcomeStep));button.addEventListener('click',()=>renderWelcome(i));nav.append(button);});
+    const sample=$('#welcome-sample');sample.replaceChildren();for(const [label,value] of step.fields){const pair=element('div');pair.append(element('dt',label),element('dd',value));sample.append(pair);}
+    $('#welcome-prev').disabled=welcomeStep===0;$('#welcome-next').textContent=welcomeStep===4?'Preparar mi punto de partida →':'Siguiente paso →';
+  }
   function renderBalance(container, prefix, values = {}) {
     const target=$(container); target.replaceChildren();
     for (const area of AREA_ORDER) {
@@ -67,7 +86,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
     for(const area of state.areas){const row=element('tr'),name=element('th',area.name);name.scope='row';row.append(name,element('td',area.baseline),element('td',area.current?area.current+' · Día '+area.reviewDay:'Sin revisión valorada'));body.append(row);}table.append(body);
     const wrapper=element('div',undefined,'table-scroll');wrapper.append(table);report.append(wrapper,element('p','Estas valoraciones son tuyas. Los registros anteriores sin área identificada se conservan sin asignarles una retrospectivamente.','fine'));
     const milestones=element('div',undefined,'milestone-actions');
-    for(const d of (session.plan.days===14?[7,14]:[7,30,60,100])){const button=element('button','Día '+d+' · '+(records.has('review:'+d)?'Revisión guardada':'Revisar'),'quiet');button.type='button';button.addEventListener('click',()=>{if(!mayNavigate())return;$('#review-select').value=String(d);renderReview();$('#weekly-section').scrollIntoView({block:'start'});$('#worked').focus({preventScroll:true});});milestones.append(button);}
+    for(const d of (session.plan.days===14?[7,14]:[7,30,60,100])){const button=element('button','Día '+d+' · '+(records.has('review:'+d)?'Revisión guardada':'Revisar'),'quiet');button.type='button';button.addEventListener('click',()=>{if(!mayNavigate())return;$('#review-select').value=String(d);renderReview();showSpace('weekly-section');$('#weekly-section').scrollIntoView({block:'start'});$('#worked').focus({preventScroll:true});});milestones.append(button);}
     report.append(milestones);
     const last=state.reviews.at(-1);report.append(element('h3','Mi siguiente decisión'),element('p',last?.body.nextStep || 'Aparecerá aquí cuando guardes una revisión. Al cerrar, escribe qué mantendrás y cuándo volverás a revisarlo.','continuity-note'));
   }
@@ -108,6 +127,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
       const item=element('details',undefined,'saved-tool'),number=Number(record.key.split(':')[1]);
       item.append(element('summary','Día '+number+' · '+AREAS[record.body.area].name),element('p',toolPreview(record.body),'saved-tool-text'));
       if(record.body.area==='finanzas')for(const row of record.body.rows)if(row.name.trim())item.append(element('p',row.name+' · '+(row.amount||'importe pendiente')+' '+record.body.currency+' · '+(row.date||'fecha pendiente')));
+      for(const text of toolkitExport(record.body))item.append(element('p',text));
       const button=element('button','Volver a esta herramienta','quiet');button.type='button';button.addEventListener('click',async()=>{if(mayNavigate()){await renderDay(number,record.body.area);$('#day-title').focus();}});item.append(button);container.append(item);
     }
     $('#current-goal').textContent = records.get('profile')?.body.goal ? 'Tu norte: ' + records.get('profile').body.goal : 'Empieza definiendo tu brújula en el Día 0.';
@@ -143,14 +163,30 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
   }
   function toolBody() {
     const values=formValues($('#tool-form'));
-    if(displayedArea==='finanzas') return {area:displayedArea,currency:values.currency,rows:[0,1,2].map(i=>({name:values['name'+i]||'',amount:values['amount'+i]||'',date:values['date'+i]||''}))};
-    return {area:displayedArea,first:values.first||'',second:values.second||'',third:values.third||''};
+    if(displayedArea==='finanzas'){
+      const body={area:displayedArea,currency:values.currency||'DOP',rows:Array.from({length:paymentRowCount},(_,i)=>({name:values['name'+i]||'',amount:values['amount'+i]||'',date:values['date'+i]||''}))};
+      const ledger={start:values.ledgerStart||'',end:values.ledgerEnd||'',incomplete:values.incomplete==='yes',entries:Array.from({length:ledgerRowCount},(_,i)=>({kind:values['kind'+i]||'expense',name:values['entryName'+i]||'',amount:values['entryAmount'+i]||'',date:values['entryDate'+i]||''}))};
+      if(ledger.start||ledger.end||ledger.incomplete||ledger.entries.some(r=>r.name||r.amount||r.date))body.ledger=ledger;
+      return body;
+    }
+    const body={area:displayedArea,first:values.first||'',second:values.second||'',third:values.third||''};
+    const details=Object.fromEntries((TOOL_DETAILS[displayedArea]||[]).map(([key])=>[key,values['detail_'+key]||'']));
+    if(Object.values(details).some(Boolean))body.details=details;return body;
   }
   function fillTool(body) {
-    const values=body?.area==='finanzas' ? {currency:body.currency,...Object.fromEntries(body.rows.flatMap((r,i)=>Object.entries(r).map(([k,v])=>[k+i,v])))} : body;
+    const values=body?.area==='finanzas' ? {currency:body.currency,...Object.fromEntries(body.rows.flatMap((r,i)=>Object.entries(r).map(([k,v])=>[k+i,v]))),ledgerStart:body.ledger?.start||'',ledgerEnd:body.ledger?.end||'',incomplete:body.ledger?.incomplete?'yes':'no',...Object.fromEntries((body.ledger?.entries||[]).flatMap((r,i)=>[['kind'+i,r.kind],['entryName'+i,r.name],['entryAmount'+i,r.amount],['entryDate'+i,r.date]]))} : {...body,...Object.fromEntries(Object.entries(body?.details||{}).map(([k,v])=>['detail_'+k,v]))};
     fill($('#tool-form'),values); updateToolPreview();
   }
-  function updateToolPreview() { $('#tool-preview').textContent=toolPreview(toolBody()) || 'Tu preparación aparecerá aquí mientras completas los campos.'; }
+  function updateToolPreview() {
+    const body=toolBody();$('#tool-preview').textContent=toolPreview(body) || 'Tu preparación aparecerá aquí mientras completas los campos.';
+    $('#money-overview').hidden=displayedArea!=='finanzas';if(displayedArea!=='finanzas')return;
+    const result=ledgerSummary(body.ledger),money=n=>n.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2})+' '+body.currency;
+    for(const [id,value] of [['income',result.income],['expense',result.expense],['difference',result.difference]])$('#money-'+id).textContent=money(value);
+    $('#money-note').textContent=(result.unknown?result.unknown+' importes por comprobar. ':'')+(result.incomplete?'Indicaste que faltan movimientos. ':'')+'Solo suma lo anotado: no es saldo disponible ni ahorro. Los compromisos pendientes no se restan de esta diferencia.';
+    const agenda=$('#payment-agenda');agenda.replaceChildren();const dated=body.rows.filter(r=>r.name.trim()&&r.date).sort((a,b)=>a.date.localeCompare(b.date));
+    for(const row of dated){const item=element('li');item.append(element('strong',row.date),element('span',row.name),element('span',row.amount?money(Number(row.amount)):'Importe por comprobar'));agenda.append(item);}
+    if(!dated.length)agenda.append(element('li','Tus compromisos con fecha aparecerán aquí, ordenados por vencimiento.'));
+  }
   function renderTool() {
     const section=$('#tool-section'); section.hidden=false;
     const wisdom=PRACTICE_WISDOM[displayedArea];
@@ -159,7 +195,16 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
     const source=$('#wisdom-source');source.hidden=!wisdom.source;
     if(wisdom.source){source.href=wisdom.source;source.textContent=wisdom.sourceTitle+' ↗';}else{source.removeAttribute('href');source.textContent='';}
     const area=AREAS[displayedArea]; $('#tool-area').textContent=area.name; $('#tool-title').textContent=AREA_CONTEXT[displayedArea].title;
-    $('#tool-intro').textContent=displayedArea==='finanzas' ? 'Anota hasta tres compromisos en una misma moneda. El total solo suma lo escrito; no comprueba tu cuenta ni marca nada como pagado.' : displayedArea==='relaciones' ? 'Ensaya una petición para una conversación segura. No se envía a nadie. Si hay amenazas o violencia, prioriza tu seguridad y busca apoyo; no tienes que iniciar esa conversación.' : 'Haz visible una acción, el momento de intentarla y una alternativa pequeña. Puedes volver a ajustarla.';
+    $('#tool-intro').textContent=displayedArea==='finanzas' ? 'Separa tus compromisos próximos de los ingresos y gastos ya realizados. Usa una moneda y deja pendientes los datos que no puedas comprobar.' : displayedArea==='relaciones' ? 'Ensaya una petición y una posible revisión. No se envía a nadie. Un acuerdo necesita la aceptación de las personas implicadas; si no es seguro conversar, prioriza tu seguridad.' : 'Prepara una acción, su momento y una alternativa. Puedes añadir un cierre o un plan para las dificultades, sin convertirlo en otra tarea.';
+    const example=TOOL_EXAMPLES[displayedArea];$('#tool-example').open=false;$('#tool-example-situation').textContent=example.situation;$('#tool-example-lesson').textContent=example.lesson;$('#tool-example-caution').textContent=example.caution;
+    const exampleFields=$('#tool-example-fields');exampleFields.replaceChildren();for(const [label,value] of example.fields){const row=element('div');row.append(element('dt',label),element('dd',value));exampleFields.append(row);}
+    const saved=records.get(toolKey(day,displayedArea)),previous=previousTool();
+    renderToolFields(saved?.body || previous?.body);
+    if(!saved&&previous)$('#tool-form .save-status').textContent='Última herramienta cargada como punto de partida. Revísala y guarda para crear una versión en este día.';
+    $('#reuse-tool').hidden=!previous;
+  }
+  function renderToolFields(body){
+    const area=AREAS[displayedArea];paymentRowCount=Math.max(3,body?.rows?.length||0);ledgerRowCount=Math.max(3,body?.ledger?.entries?.length||0);
     const fields=$('#tool-fields'); fields.replaceChildren();
     const input=(name,type,label,placeholder,required=false)=>{
       const wrap=element('div',undefined,'tool-field'), lab=element('label',label),field=document.createElement(type==='textarea'?'textarea':'input');
@@ -171,12 +216,26 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
     if(displayedArea==='finanzas') {
       const label=element('label','Moneda de esta lista');label.htmlFor='tool-currency'; const currency=element('select');currency.id='tool-currency';currency.name='currency';
       for(const [key,text] of [['DOP','Pesos dominicanos · DOP'],['USD','Dólares · USD'],['EUR','Euros · EUR']]){const o=element('option',text);o.value=key;currency.append(o);}fields.append(label,currency);
-      for(let i=0;i<3;i++){const row=element('fieldset',undefined,'payment-row');row.append(element('legend','Pago '+(i+1)),input('name'+i,'text','Concepto','Sin números de cuenta',i===0),input('amount'+i,'number','Importe','0.00'),input('date'+i,'date','Vencimiento'));fields.append(row);}
-    } else area.labels.forEach((label,i)=>fields.append(input(['first','second','third'][i],'textarea',label,area.prompts[i],i===0)));
-    const saved=records.get(toolKey(day,displayedArea)),previous=previousTool();
-    fillTool(saved?.body || previous?.body);
-    if(!saved&&previous)$('#tool-form .save-status').textContent='Última herramienta cargada como punto de partida. Revísala y guarda para crear una versión en este día.';
-    $('#reuse-tool').hidden=!previous;
+      const commitments=element('details',undefined,'tool-expansion');commitments.open=true;commitments.append(element('summary','Mis compromisos próximos'));
+      for(let i=0;i<paymentRowCount;i++){const row=element('fieldset',undefined,'payment-row');row.append(element('legend','Compromiso '+(i+1)),input('name'+i,'text','Concepto','Sin números de cuenta'),input('amount'+i,'number','Importe','Por comprobar'),input('date'+i,'date','Vencimiento'));commitments.append(row);}
+      const addPayment=element('button','Añadir compromiso','quiet');addPayment.type='button';addPayment.disabled=paymentRowCount>=12;addPayment.addEventListener('click',()=>extendFinance('payment'));commitments.append(addPayment);fields.append(commitments);
+      const ledger=element('details',undefined,'tool-expansion');ledger.id='ledger-editor';ledger.open=!!body?.ledger;ledger.append(element('summary','Mis ingresos y gastos anotados'),element('p','Movimientos que ya ocurrieron, separados de los compromisos. Hasta 20 por versión guardada. La lista puede estar incompleta.','fine'));
+      const period=element('div',undefined,'field-pair');period.append(input('ledgerStart','date','Desde'),input('ledgerEnd','date','Hasta'));ledger.append(period);
+      for(let i=0;i<ledgerRowCount;i++){const row=element('fieldset',undefined,'ledger-row'),lab=element('label','Tipo'),kind=element('select');kind.id='tool-kind'+i;kind.name='kind'+i;lab.htmlFor=kind.id;for(const [value,text] of [['expense','Gasto'],['income','Ingreso']]){const option=element('option',text);option.value=value;kind.append(option);}row.append(element('legend','Movimiento '+(i+1)),lab,kind,input('entryName'+i,'text','Concepto del movimiento','Por ejemplo: transporte'),input('entryAmount'+i,'number','Importe del movimiento','Por comprobar'),input('entryDate'+i,'date','Fecha del movimiento'));ledger.append(row);}
+      const addEntry=element('button','Añadir movimiento','quiet');addEntry.type='button';addEntry.disabled=ledgerRowCount>=20;addEntry.addEventListener('click',()=>extendFinance('entry'));ledger.append(addEntry);
+      const note=element('label','¿Faltan movimientos por revisar?'),incomplete=element('select');note.htmlFor='tool-incomplete';incomplete.id='tool-incomplete';incomplete.name='incomplete';for(const [value,text] of [['no','No lo he indicado'],['yes','Sí, todavía faltan movimientos']]){const option=element('option',text);option.value=value;incomplete.append(option);}ledger.append(note,incomplete);fields.append(ledger);
+    } else {
+      area.labels.forEach((label,i)=>fields.append(input(['first','second','third'][i],'textarea',label,area.prompts[i],i===0)));
+      const more=element('details',undefined,'tool-expansion');more.open=!!body?.details;more.append(element('summary','Preparar el cierre y la continuidad'));
+      for(const [key,label,hint] of TOOL_DETAILS[displayedArea]){const field=input('detail_'+key,'textarea',label,hint);field.querySelector('textarea').maxLength=1000;more.append(field);}fields.append(more);
+    }
+    fillTool(body);
+  }
+  function extendFinance(kind){
+    if(writing||loadingDay)return;const body=toolBody();
+    if(kind==='payment'){if(paymentRowCount>=12)return;body.rows.push(blankPayment());}
+    else{if(ledgerRowCount>=20)return;body.ledger ||= {start:'',end:'',incomplete:false,entries:Array.from({length:ledgerRowCount},blankEntry)};body.ledger.entries.push(blankEntry());}
+    renderToolFields(body);$('#tool-form').dataset.dirty='true';$('#tool-form .save-status').textContent='Fila añadida como borrador. Guarda la herramienta para conservarla.';
   }
   function previousTool(){return [...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===displayedArea&&r.key!==toolKey(day,displayedArea)).sort((a,b)=>(Date.parse(b.updatedAt)||0)-(Date.parse(a.updatedAt)||0) || Number(b.key.split(':')[1])-Number(a.key.split(':')[1]))[0];}
   function renderGuide(guide) {
@@ -196,8 +255,11 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
     $('#review-direction').textContent=records.has('profile')?`Tu norte: ${profile.goal} · Evidencia que elegiste observar: ${profile.evidence || 'aún no definida'}.`:'Define primero tu punto de partida en el Día 0 para saber con qué comparar tus registros.';
     $('#review-next-label').textContent=Number(renderedReview)===session?.plan.days?'¿Qué mantendré al terminar y cuándo volveré a revisarlo?':'¿Qué ajustaré o mantendré desde ahora?';
     $('#review-coaching').textContent=Number(renderedReview)===session?.plan.days?'Tu cierre: compara el Día 0 con tus registros. Separa lo que observaste, lo que sigue abierto y lo que no puedes concluir. Elige hasta dos prácticas para continuar, un lugar donde anotarlas y una fecha para revisarlas. Descarga tu diario y tu informe antes del vencimiento.':Number(renderedReview)<=7?'Tu primera revisión: busca un intento real y una dificultad. Mira las cinco áreas, aunque alguna siga sin registros. Decide un solo ajuste para la próxima semana; no necesitas convertir todas tus intenciones en nuevas tareas.':'Revisa hechos, no solo la sensación de la semana. Compara un intento con tu señal del Día 0; reconoce qué condición te ayudó y qué necesitas reducir o cambiar. Guarda un ajuste concreto, sin exigir avances en todas las áreas.';
+    renderReviewEvidence();
+  }
+  function renderReviewEvidence(){
     const number=Number(renderedReview),from=number===30||number===60?number-29:number===100?61:Math.max(1,number-6),areas=$('#area-review');areas.replaceChildren();
-    for(const key of AREA_ORDER){const relevant=[...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===key&&Number(r.key.split(':')[1])>=from&&Number(r.key.split(':')[1])<=number);const item=element('div');item.append(element('strong',AREAS[key].name),element('p',relevant.length+' herramientas guardadas · Días '+from+'–'+number));areas.append(item);}
+    for(const key of AREA_ORDER){const relevant=[...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===key&&Number(r.key.split(':')[1])>=from&&Number(r.key.split(':')[1])<=number);const item=element('div');item.append(element('strong',AREAS[key].name),element('p',relevant.length+(relevant.length===1?' herramienta guardada · Días ':' herramientas guardadas · Días ')+from+'–'+number));areas.append(item);}
   }
   function lockPractice(locked){for(const selector of ['#journal-form','#tool-form','#profile-form','#recovery-form'])$(selector).querySelectorAll('input,textarea,select,button').forEach(field=>field.disabled=locked);if(!locked)syncPrimaryAreaChoice();}
   async function renderDay(nextDay,requestedArea) {
@@ -228,7 +290,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
       }
       $('#dose-note').textContent = 'Tu bloque de hoy: ' + sequence.minutes + ' minutos en total, incluido el registro. Puedes cambiarlo en el Día 0. Si necesitas parar o descansar, registra esa decisión; no tienes que completar la tarea a cualquier coste.';
       $('#day-companion').textContent = lesson.companion; $('#life-message').textContent = practice.guideMessage;
-      renderGuide(data.guide); renderTool(); renderOverview();
+      renderGuide(data.guide); renderTool(); renderOverview();showSpace('day-section');
       const actions = $('#life-actions'); actions.replaceChildren();
       for (const key of ['learning', 'movement', 'finance', 'connection', 'video']) {
         const value = practice[key]; if (!value) continue;
@@ -247,7 +309,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
   }
   async function save(form, key, body) {
     if (writing || loadingDay || !session || !form.reportValidity()) return;
-    writing = true; const button = form.querySelector('button'); button.disabled = true;
+    writing = true; const button = form.querySelector('button[type="submit"]') || form.querySelector('button'); button.disabled = true;
     const note = form.querySelector('.save-status'); note.textContent = 'Guardando…';
     const before = formSnapshot(form);
     try {
@@ -257,6 +319,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
       form.dataset.dirty = editedDuringSave ? 'true' : '';
       note.textContent = 'Guardado en el servidor: ' + date(saved.record.updatedAt) + (editedDuringSave ? '. Hay cambios más recientes sin guardar.' : '.');
       renderHistory();
+      renderReviewEvidence();
       return !editedDuringSave;
     } catch (error) { note.textContent = error.message; return false; }
     finally { writing = false; button.disabled = false; }
@@ -285,6 +348,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
       $('#start-section').open = !records.has('profile') || !loaded.records.some(record => record.key.startsWith('day:'));
       day = loaded.days.find(value => !records.has('day:' + value.day))?.day || loaded.plan.days;
       await renderDay(day);
+      renderWelcome(0);showSpace(records.has('profile')?'day-section':'welcome-section');
     } catch (error) { $('#member-workspace').hidden = true; $('#access-entry').hidden = false; tell(error.message); }
   }
   $('#redeem-form').addEventListener('submit', async event => {
@@ -299,7 +363,7 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
     event.preventDefault(); const form = event.currentTarget; const values = valuesWithBalance(form,'baseline'); values.minutes = Number(values.minutes);
     values.areas=[...new Set([values.lifeArea,...new FormData(form).getAll('areas')])];
     if($('#journal-form').dataset.dirty==='true'||$('#tool-form').dataset.dirty==='true'){tell('Guarda primero tu registro y tu herramienta para cambiar tus áreas sin perder el trabajo.');return;}
-    if (await save(form, 'profile', values)) { $('#profile-panel').open = false; if ($('#journal-form').dataset.dirty !== 'true') await renderDay(day); else tell('Áreas guardadas. Tu borrador del día sigue aquí; guárdalo antes de recargar la práctica.'); }
+    if (await save(form, 'profile', values)) { $('#profile-panel').open = false;$('#start-section').open=false; if ($('#journal-form').dataset.dirty !== 'true') await renderDay(day); else tell('Áreas guardadas. Tu borrador del día sigue aquí; guárdalo antes de recargar la práctica.'); }
   });
   $('#profile-form').addEventListener('change',event=>{if(event.target.name==='lifeArea')syncPrimaryAreaChoice();});
   $('#day-select').addEventListener('change', event => { const requested = Number(event.target.value); if (mayNavigate()) renderDay(requested); else event.target.value = String(day); });
@@ -317,10 +381,14 @@ import { PRACTICE_WISDOM } from './practice-wisdom.js';
   $('#tool-form').addEventListener('input',updateToolPreview);
   $('#tool-form').addEventListener('submit',async event=>{event.preventDefault();if(dayData)await save(event.currentTarget,toolKey(day,displayedArea),toolBody());});
   $('#recovery-form').addEventListener('submit',async event=>{event.preventDefault();await save(event.currentTarget,'recovery',{...formValues(event.currentTarget),day});});
-  $('#use-recovery').addEventListener('click',()=>{if(!session||!dayData||!mayNavigate())return;const recovery=records.get('recovery')?.body;if(!recovery){tell('Guarda primero tu plan para retomar.');return;}fill($('#journal-form'),{...formValues($('#journal-form')),action:recovery.action,state:'partial',nextStep:recovery.when});$('#journal-form').dataset.dirty='true';$('#journal-form .save-status').textContent='Borrador preparado, todavía sin guardar. Haz el intento y registra después cómo quedó.';$('#journal-form').scrollIntoView({block:'start'});$('#action').focus({preventScroll:true});});
+  $('#use-recovery').addEventListener('click',()=>{if(!session||!dayData||!mayNavigate())return;const recovery=records.get('recovery')?.body;if(!recovery){tell('Guarda primero tu plan para retomar.');return;}fill($('#journal-form'),{...formValues($('#journal-form')),action:recovery.action,state:'partial',nextStep:recovery.when});$('#journal-form').dataset.dirty='true';$('#journal-form .save-status').textContent='Borrador preparado, todavía sin guardar. Haz el intento y registra después cómo quedó.';showSpace('day-section');$('#journal-form').scrollIntoView({block:'start'});$('#action').focus({preventScroll:true});});
   $('#export-system').addEventListener('click',async()=>{try{const latest=await api('session');download(formatSystemReport(latest),'mi-sistema-personal-100-dias.txt');tell('Informe descargado con tus registros confirmados.');}catch(error){tell(error.message);}});
-  $('#reuse-tool').addEventListener('click',()=>{const previous=previousTool();if(previous&&mayNavigate()){fillTool(previous.body);$('#tool-form').dataset.dirty='true';$('#tool-form .save-status').textContent='Copia preparada. Revísala y guarda para conservarla en este día.';}});
-  $('#continue-practice').addEventListener('click',()=>{const target=records.has('profile')?$('#day-section'):$('#profile-panel');if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});(records.has('profile')?$('#day-title'):$('#goal')).focus({preventScroll:true});});
+  $('#reuse-tool').addEventListener('click',()=>{const previous=previousTool();if(previous&&mayNavigate()){renderToolFields(previous.body);$('#tool-form').dataset.dirty='true';$('#tool-form .save-status').textContent='Copia preparada. Revísala y guarda para conservarla en este día.';}});
+  $('#continue-practice').addEventListener('click',()=>{showSpace('day-section');const target=records.has('profile')?$('#day-section'):$('#profile-panel');if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});(records.has('profile')?$('#day-title'):$('#goal')).focus({preventScroll:true});});
+  $('#welcome-prev').addEventListener('click',()=>renderWelcome(welcomeStep-1));
+  $('#play-welcome').addEventListener('click',async()=>{try{await $('#welcome-video').play();$('#welcome-video-status').textContent='Vídeo en reproducción. Puedes pausarlo con los controles.';}catch{$('#welcome-video-status').textContent='No se pudo reproducir. Puedes leer la transcripción o seguir los cinco pasos.';}});
+  $('#welcome-next').addEventListener('click',()=>{if(welcomeStep<4){renderWelcome(welcomeStep+1);return;}showSpace('profile-panel');$('#profile-panel').open=true;$('#profile-panel').scrollIntoView({block:'start'});$('#goal').focus({preventScroll:true});});
+  document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{const id=link.getAttribute('href').slice(1);showSpace(id);const target=$('#'+id);if(target?.tagName==='DETAILS')target.open=true;}));
   $('#lesson-audio').addEventListener('error',()=>{$('#audio-status').textContent='No se pudo cargar el audio. Puedes leer la transcripción y continuar.';});
   window.addEventListener('beforeunload', event => { if (hasDraft() || writing) { event.preventDefault(); event.returnValue = ''; } });
   function download(text, filename, type = 'text/plain;charset=utf-8') { const url = URL.createObjectURL(new Blob([text], { type })); const link = element('a'); link.href = url; link.download = filename; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }

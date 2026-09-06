@@ -86,3 +86,42 @@ body{overflow-wrap:anywhere}.member-header{background:#f5f7f6}.member-header,.me
 .member-content .system-workspace-heading{display:block}
 .member-content .system-workspace-heading>p{max-width:none}
 @media(max-width:640px){.member-content .system-areas{grid-template-columns:1fr}.member-content>.system-workspace{padding:22px 18px}.practice-check{padding:18px}.review-coaching,.report-instruction{padding:16px}}
+
+/* A small number of working views; fields stay mounted to preserve drafts. */
+[hidden]{display:none!important}
+.welcome-film{margin-top:26px;border-top:1px solid #dbe2dc;padding-top:20px}.welcome-film summary{cursor:pointer;font-weight:650}.welcome-film video{display:block;width:100%;max-width:920px;aspect-ratio:16/9;margin:20px auto 12px;background:#171f1d;border-radius:6px}.welcome-film>button{margin-top:8px}.welcome-transcript{max-width:72ch;line-height:1.75}
+.member-header{padding-top:16px;padding-bottom:16px}.member-shell>.status{margin-top:12px;margin-bottom:12px;min-height:20px}
+.member-heading{padding:12px 0;margin-bottom:20px}.member-heading h1{font-size:2.35rem;line-height:1.2;margin:6px 0 10px}
+.workspace-nav{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#e7eae7;border-radius:8px;margin:0 0 24px}
+.workspace-nav a{flex:1;text-align:center;padding:13px 10px;min-height:46px;border:0;border-radius:5px;font-size:1rem;text-decoration:none;color:#334239}
+.workspace-nav a[aria-current="page"]{background:#173a31;color:#fff;box-shadow:0 2px 4px #13291e15}
+.member-layout{align-items:start}.member-content{min-width:0}
+#member-workspace:not([data-current-space="practice"]) .member-sidebar{display:none}
+#member-workspace:not([data-current-space="practice"]) .member-layout{grid-template-columns:minmax(0,1fr)}
+.welcome-tour{padding:32px;border-top:3px solid #a08451}
+.welcome-heading{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:28px}
+.welcome-heading h2{font:400 2.3rem/1.15 Georgia,serif;margin:8px 0}
+.example-badge{display:inline-block;font-size:.875rem;line-height:1.5;color:#675333;background:#f4eddf;border:1px solid #dccdaf;border-radius:4px;padding:7px 10px}
+.welcome-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:36px}
+#welcome-steps{display:grid;gap:8px;align-content:start}
+#welcome-steps button{text-align:left;background:transparent;color:#48554d;border:1px solid #d3dbd5;padding:15px;font-weight:500;font-size:1rem;line-height:1.45}
+#welcome-steps button[aria-pressed="true"]{background:#173a31;border-color:#173a31;color:white}
+.welcome-content{min-width:0;border-left:1px solid #d8dfd9;padding-left:36px}
+.welcome-number{font:400 1.2rem Georgia,serif;color:#8c7043}.welcome-content h3{font:400 1.9rem/1.3 Georgia,serif;margin:14px 0}.welcome-content>p{font-size:1rem;line-height:1.7;max-width:64ch}
+.worked-example{margin:22px 0;display:grid;gap:0;background:#f5f7f5;border:1px solid #d6ded7;border-radius:6px;overflow:hidden}
+.worked-example>div{display:grid;grid-template-columns:145px 1fr;gap:16px;padding:15px 20px;border-bottom:1px solid #d6ded7}
+.worked-example>div:last-child{border-bottom:0}.worked-example dt{font-size:.875rem;color:#546259}.worked-example dd{margin:0;font-size:1rem;line-height:1.6;overflow-wrap:anywhere}
+.welcome-actions{display:flex;justify-content:space-between;gap:12px}.welcome-actions button{min-height:46px}
+.welcome-step-number{font-variant-numeric:tabular-nums}
+.tool-example,.tool-expansion{margin:18px 0;padding:0 20px;border:1px solid #cdd8d0;border-radius:6px;background:#fff}
+.tool-example>summary,.tool-expansion>summary{cursor:pointer;font-size:1rem;line-height:1.5;padding:16px 0;min-height:48px;color:#244d3c}
+.tool-example>p{line-height:1.7;font-size:1rem}.tool-example>.example-badge{margin-bottom:18px}
+.tool-expansion>button{margin:10px 0 22px}.tool-expansion>.tool-field{margin:16px 0}
+.ledger-row{border:1px solid #d5ddd7;border-radius:5px;margin:18px 0;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ledger-row>label{grid-column:1}.ledger-row>select{grid-column:2}.ledger-row legend{font-size:.875rem;color:#55695d;padding:0 6px}.ledger-row .tool-field label{font-size:.875rem}
+.money-overview{margin:24px 0;padding:22px;border:1px solid #c4d2c7;background:#f2f6f3;border-radius:6px}
+.money-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.money-totals span{display:block;font-size:.875rem;color:#55695d;margin-bottom:7px}.money-totals strong{display:block;font-size:1.2rem;overflow-wrap:anywhere;color:#183c2a}
+.payment-agenda{list-style:none;padding:0;margin:14px 0}.payment-agenda li{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding:14px 0;border-bottom:1px solid #d3ded6;font-size:.875rem}.payment-agenda li span{overflow-wrap:anywhere}
+.tool-expansion input,.tool-expansion textarea,.tool-expansion select{max-width:100%;min-width:0}
+@media(max-width:800px){.welcome-layout{grid-template-columns:1fr;gap:22px}.welcome-content{padding:0;border:0}#welcome-steps{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}#welcome-steps button{font-size:.875rem;padding:10px 8px}.welcome-heading{display:block}.welcome-heading .example-badge{margin-top:10px}}
+@media(max-width:540px){.member-heading h1{font-size:2rem}.workspace-nav{gap:4px;padding:5px}.workspace-nav a{flex:1 1 42%;font-size:.875rem;padding:12px 6px}.welcome-tour{padding:22px 18px}.welcome-heading h2{font-size:1.85rem}.welcome-content h3{font-size:1.55rem}#welcome-steps{grid-template-columns:repeat(5,1fr)}#welcome-steps button{text-align:center;padding:12px 4px;min-height:46px}#welcome-steps .welcome-step-label{display:none}.worked-example>div{grid-template-columns:1fr;gap:6px;padding:14px}.welcome-actions{flex-wrap:wrap}.welcome-actions button{flex:1}.tool-example,.tool-expansion{padding:0 14px}.ledger-row{grid-template-columns:1fr;padding:14px}.ledger-row>select,.ledger-row>label{grid-column:1}.money-totals{grid-template-columns:1fr;gap:14px}.money-overview{padding:16px}.money-totals>div{display:flex;align-items:center;justify-content:space-between;gap:12px}.money-totals strong{font-size:1rem}}
