@@ -49,5 +49,12 @@ test('pending, refunded, cancelled, unavailable and invalid forms do not show an
   }
   const f = ui(); await f.submit(); f.callbacks.onCancel(); assert.equal(f.requests.filter(request => request.url.endsWith('/capture')).length, 0);
   const g = ui(); g.config.enabled = false; await g.submit(); assert.equal(g.callbacks.createOrder, undefined);
-  const h = ui(); h.nodes['#checkout-form'].reportValidity = () => false; await h.submit(); assert.equal(h.requests.length, 0);
+  const h = ui(); h.nodes['#checkout-form'].reportValidity = () => false; await h.submit(); assert.equal(h.requests.filter(request=>request.url!=='/api/events').length, 0);
+});
+
+test('checkout funnel events never include buyer email, order reference or access code',async()=>{
+  const f=ui();await f.submit();await f.callbacks.createOrder();await f.callbacks.onApprove({orderID:'ORDER123'},{});
+  const events=f.requests.filter(request=>request.url==='/api/events');
+  assert.deepEqual(events.map(event=>event.body.name),['checkout_view','checkout_start']);
+  for(const event of events){assert.equal(event.body.detail,'alpha');assert.doesNotMatch(JSON.stringify(event.body),/test@example.com|PRIVATE-CODE|ORDER123|472d83db/);}
 });

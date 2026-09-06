@@ -1,6 +1,6 @@
 const MAX_BODY_BYTES = 16_384;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/u;
-const EVENT_NAMES = new Set(['page_view', 'waitlist_cta', 'social_outbound']);
+const EVENT_NAMES = new Set(['page_view', 'waitlist_cta', 'social_outbound', 'plan_click', 'checkout_view', 'checkout_start']);
 
 const clean = (value, max = 160) => String(value ?? '').trim().slice(0, max);
 const htmlResponse = (title, message, status, headers) => {
@@ -85,6 +85,7 @@ export async function handleAnalyticsEvent(request, env, headers) {
   catch { return new Response(null, { status: 400, headers }); }
   const name = clean(payload.name, 40);
   if (!EVENT_NAMES.has(name)) return new Response(null, { status: 400, headers });
+  if (['plan_click','checkout_view','checkout_start'].includes(name) && !['alpha','metodo',''].includes(payload.detail || '')) return new Response(null, { status: 400, headers });
   try {
     await env.DB.prepare(`INSERT INTO analytics_events
       (event_name, detail, path, source, medium, campaign, referrer_host, occurred_at)

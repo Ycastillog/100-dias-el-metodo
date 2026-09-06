@@ -56,7 +56,7 @@ export async function respond(request, assets, env = {}, program = null) {
     ? Uint8Array.from(atob(asset.data), c => c.charCodeAt(0))
     : asset.data;
   if (program && ['/', '/index.html'].includes(pathname) && typeof body === 'string' && !checkoutConfiguration(paymentEnvironment(env), programReady(program) && secretReady(env)).enabled) {
-    body = body.replace('<aside class="launch-notice">', '<aside class="launch-notice"><strong>Pago en verificación final: las compras nuevas están temporalmente cerradas.</strong><br>');
+    body = body.replace('<main>', '<aside class="launch-notice" role="status"><strong>Las compras nuevas están temporalmente cerradas.</strong> Si ya compraste, puedes entrar a tu Método.</aside><main>');
   }
   return new Response(body, { status: found ? 200 : 404, headers });
 }

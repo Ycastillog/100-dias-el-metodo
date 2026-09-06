@@ -1,66 +1,24 @@
 (() => {
-  const builder = document.querySelector('.route-builder');
-  if (!builder) return;
-
-  const areas = {
-    disciplina: {
-      label: 'Disciplina',
-      goal: 'Cumplir una prioridad pequeña aun cuando no tengas ganas.',
-      proof: 'terminaste una acción concreta y sabes qué repetir mañana.',
-      action: 'reduces una distracción y completas la versión más pequeña de tu prioridad',
-    },
-    finanzas: {
-      label: 'Finanzas',
-      goal: 'Ver tus compromisos de dinero antes de decidir qué gastar.',
-      proof: 'tienes tus próximos pagos, importes y fechas en un solo lugar.',
-      action: 'ordenas un compromiso próximo y tomas una decisión con la información delante',
-    },
-    relaciones: {
-      label: 'Relaciones',
-      goal: 'Hablar con más claridad sin ignorar lo que necesitas.',
-      proof: 'preparaste una conversación concreta y elegiste cuándo tenerla.',
-      action: 'aclaras qué necesitas decir y ensayas una petición o un límite cotidiano',
-    },
-    bienestar: {
-      label: 'Bienestar',
-      goal: 'Cuidar tu energía con una acción que sí cabe en tu día.',
-      proof: 'hiciste una pausa o cambio de entorno que puedes volver a realizar.',
-      action: 'preparas una pausa breve y observas qué ayuda a recuperar capacidad',
-    },
-    proyectos: {
-      label: 'Proyectos',
-      goal: 'Mover un proyecto con un siguiente paso visible y manejable.',
-      proof: 'un pendiente dejó de ser una idea vaga y tiene una próxima acción.',
-      action: 'conviertes un pendiente en una tarea concreta y produces un avance verificable',
-    },
-  };
-
-  const supportSelect = builder.querySelector('#route-support');
-  const output = {
-    kicker: builder.querySelector('#route-kicker'),
-    goal: builder.querySelector('#route-goal'),
-    proof: builder.querySelector('#route-proof'),
-    dayZero: builder.querySelector('#route-day-zero'),
-    daysOne: builder.querySelector('#route-days-one'),
-    daysMiddle: builder.querySelector('#route-days-middle'),
-  };
-
-  function updateRoute() {
-    const primaryKey = builder.querySelector('[name="route-area"]:checked')?.value || 'disciplina';
-    const minutes = builder.querySelector('[name="route-time"]:checked')?.value || '10';
-    const primary = areas[primaryKey];
-    for (const option of supportSelect.options) option.disabled = option.value === primaryKey;
-    if (supportSelect.value === primaryKey) supportSelect.value = [...supportSelect.options].find(option => !option.disabled)?.value || 'finanzas';
-    const support = areas[supportSelect.value];
-
-    output.kicker.textContent = `TU PRIMERA SEMANA · ${primary.label.toUpperCase()} + ${support.label.toUpperCase()}`;
-    output.goal.textContent = primary.goal;
-    output.proof.textContent = primary.proof;
-    output.dayZero.textContent = `Defines este norte y la señal concreta que usarás para reconocer avance.`;
-    output.daysOne.textContent = `Durante ${minutes} minutos, ${primary.action}; después registras qué ocurrió.`;
-    output.daysMiddle.textContent = `Conectas ${support.label.toLowerCase()} con tu norte sin intentar arreglar toda tu vida a la vez.`;
+  const demo = document.querySelector('.week-demo');
+  if (!demo) return;
+  const days = [
+    ['TU VIDA EN CONJUNTO','Ponle nombre a lo que quieres mejorar.','Antes de proponerte otra meta, mira cómo están tu rutina, tus pagos, tus relaciones, tu energía y tus proyectos. Elige por dónde empezar sin perder de vista el conjunto.','Describe tu situación en las cinco áreas. Escribe una dirección para este ciclo y una señal concreta que te permita reconocer un avance.','TU MAPA INICIAL',[['Quiero mejorar','Cumplir mis prioridades sin descuidar el resto.'],['Voy a observar','Qué intenté y qué me ayudó, cada semana.'],['Empiezo por','Una acción pequeña de disciplina.']],'Tu mapa da contexto a las prácticas. Puedes cambiar el foco del día dentro de las áreas elegidas.'],
+    ['DISCIPLINA','Haz espacio para una prioridad.','Empiezas por reducir una distracción y ejecutar una tarea breve que reduzca caos. Una acción acotada te permite ver qué ocurrió.','Elige algo pendiente, aparta una distracción y prueba la versión que cabe en tu bloque de hoy.','MI RUTINA MÍNIMA',[['Mi acción','Abrir el documento y escribir una idea.'],['Mi momento','Después del desayuno, en la mesa.'],['Mi versión pequeña','Escribir solamente el título.']],'Un momento protegido también puede servirte para ordenar un pago o preparar una conversación otro día.'],
+    ['DINERO COTIDIANO','Pon a la vista un compromiso próximo.','Un importe o una fecha que recuerdas a medias ocupa atención. Aquí puedes preparar una lista sencilla de lo que viene.','Anota hasta tres compromisos, sus importes y fechas en una misma moneda. Deja pendiente lo que necesites confirmar.','MIS PRÓXIMOS COMPROMISOS',[['Servicio · ejemplo','USD 25 · Fecha por confirmar.'],['Transporte · ejemplo','USD 10 · Fecha por confirmar.'],['Total de esta lista','USD 35 anotados; no es tu saldo ni un pago realizado.']],'Tener la información delante te ayuda a organizar la semana. La herramienta no conecta cuentas ni hace pagos.'],
+    ['RELACIONES','Prepara lo que necesitas expresar.','Piensa en una situación cotidiana que puedas conversar con seguridad. Darle forma a tu petición puede ayudarte a llegar con más claridad.','Describe la situación, lo que quieres expresar y una frase de ensayo. Tú decides si tener esa conversación y cuándo.','MI CONVERSACIÓN PREPARADA',[['La situación','Los cambios de horario me desorganizan.'],['Mi intención','Acordar cómo avisarnos.'],['Mi frase','¿Podemos avisarnos con tiempo cuando cambie el horario?']],'Ese acuerdo puede influir en tu rutina y tu descanso. El borrador es privado. Si hay amenazas o violencia, prioriza tu seguridad y busca apoyo.'],
+    ['BIENESTAR','Haz sitio para tu energía.','Tu capacidad disponible también forma parte del plan. Elige una acción cotidiana que reduzca una pequeña fricción.','Prepara algo que te facilite mañana y decide cómo reducirlo si hoy necesitas descansar.','MI ESPACIO PARA CUIDARME',[['Mi acción','Dejar listo lo imprescindible de mañana.'],['Mi momento','Después de cenar.'],['Si necesito reducirlo','Preparar solo una cosa y descansar.']],'Una mañana con menos decisiones puede dejar espacio para tu proyecto. Adapta la práctica a tu capacidad.'],
+    ['PROYECTOS','Convierte ese pendiente en un siguiente paso.','El proyecto completo puede parecer enorme. Hoy eliges una parte visible que puedas intentar.','Toma un pendiente, concreta un paso y reserva un momento. Define qué harías si solo tuvieras dos minutos.','MI PRÓXIMO PASO',[['Mi parte concreta','Aclarar una descripción de mi currículum.'],['Cuándo la intentaré','Antes de abrir las redes por la tarde.'],['Mi versión reducida','Corregir una frase.']],'Aquí reutilizas el espacio que preparaste en disciplina. Al terminar registras lo que sí ocurrió.'],
+    ['DISCIPLINA','Prepara una forma de volver.','Una interrupción puede mostrarte qué necesita cambiar. Revisa un intento que no encajó y reduce la próxima acción.','Usa el plan «Volver al camino»: qué me frenó, qué puedo hacer ahora y cuándo lo intentaré.','MI PLAN PARA RETOMAR',[['Qué me frenó','La tarea era demasiado grande para ese momento.'],['Mi regreso pequeño','Abrir el documento y revisar una frase.'],['Cuándo volveré','Después del desayuno de mañana.']],'Retomar no marca un día como completado. La práctica y su registro siguen siendo decisiones tuyas.'],
+    ['MI REVISIÓN','Mira la semana completa.','Vuelve a tu punto de partida y a lo que guardaste. Revisa las áreas juntas: qué recibió atención y qué quedó pendiente.','Anota una evidencia, una dificultad y un ajuste para la siguiente semana. Revisa cómo describes ahora las cinco áreas.','MI REVISIÓN SEMANAL',[['Lo que pude observar','Tuve dos momentos para mi prioridad.'],['Lo que me costó','Dejé un pago sin fecha confirmada.'],['Mi siguiente ajuste','Confirmar esa fecha antes de organizar la semana.']],'Son ejemplos, no una semana ideal que debas copiar. Dentro conservas tus revisiones y tus herramientas en un informe descargable.'],
+  ];
+  const set = (id,text) => demo.querySelector('#'+id).textContent=text;
+  function showDay(index) {
+    const [area,title,context,action,tool,rows,connection]=days[index];
+    set('demo-area',`DÍA ${index} / ${area}`);set('demo-title',title);set('demo-context',context);set('demo-action',action);set('demo-tool-label','LO QUE TE QUEDA / '+tool);set('demo-connection',connection);
+    const list=document.createElement('dl');
+    for(const [label,value] of rows){const row=document.createElement('div'),term=document.createElement('dt'),detail=document.createElement('dd');term.textContent=label;detail.textContent=value;row.append(term,detail);list.append(row);}
+    demo.querySelector('#demo-artifact').replaceChildren(list);
+    for(const button of demo.querySelectorAll('[data-demo-day]'))button.setAttribute('aria-pressed',String(Number(button.dataset.demoDay)===index));
   }
-
-  builder.addEventListener('change', updateRoute);
-  updateRoute();
+  for(const button of demo.querySelectorAll('[data-demo-day]'))button.addEventListener('click',()=>showDay(Number(button.dataset.demoDay)));
 })();

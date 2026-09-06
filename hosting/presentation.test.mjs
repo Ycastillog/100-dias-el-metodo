@@ -25,11 +25,11 @@ test('legacy artwork is preserved and the page features a disclosed optional vid
   assert.doesNotMatch(sales, /<img[^>]*practice-editorial/);
   assert.match(sales, /<video controls playsinline preload="none"/);
   assert.match(sales, /voz sintética y subtítulos integrados/);
-  assert.match(sales, /no un testimonio/);
+  assert.match(sales, /no es un testimonio/);
   const video = assets['/assets/first-step-example.mp4'];
   assert.equal(video.type,'video/mp4');
   assert.ok(Buffer.from(video.data,'base64').length<2500000);
-  assert.match(sales, /El recorrido es digital/);
+  assert.match(sales, /plataforma web privada/);
 });
 
 test('sales and member shells have valid local links, assets and unique anchors', () => {
@@ -51,7 +51,7 @@ test('mobile navigation, compact participant menu and honest practice wording ar
   assert.match(member, /<details class="member-menu"><summary>/);
   assert.match(member, /La acción que intenté o tenía prevista/);
   assert.match(member, /Tiempo total de mi práctica/);
-  assert.match(sales, /incluido el registro/);
+  assert.match(sales, /incluye la práctica y el registro/);
 });
 
 test('checkout presentation offers only the two ready plans and keeps explicit delivery', async () => {

@@ -1,4 +1,5 @@
 import { validToolRecord } from './guided-tools.js';
+import { validBalance, reviewDays } from './system-tools.js';
 
 export function participantStore(db) {
   const stmt = (sql, values) => db.prepare(sql).bind(...values);
@@ -34,15 +35,19 @@ export function validateRecord(key, body, maxDays) {
   if (typeof key === 'string' && key.startsWith('tool:')) {
     if (!validToolRecord(key, body, maxDays)) return null;
   } else if (key === 'profile') {
-    if (!only(['goal', 'evidence', 'firstStep', 'lifeArea', 'areas', 'minutes', 'energy']) || !text('goal', 500, true) || body.evidence !== undefined && !text('evidence', 500) || !text('firstStep', 500) || !dose() || !['mentalidad', 'bienestar', 'profesional', 'finanzas', 'relaciones'].includes(body.lifeArea)) return null;
+    if (!only(['goal', 'evidence', 'firstStep', 'lifeArea', 'areas', 'minutes', 'energy', 'baseline']) || !text('goal', 500, true) || body.evidence !== undefined && !text('evidence', 500) || !text('firstStep', 500) || !dose() || !['mentalidad', 'bienestar', 'profesional', 'finanzas', 'relaciones'].includes(body.lifeArea)) return null;
+    if (body.baseline !== undefined && !validBalance(body.baseline)) return null;
     if (body.areas !== undefined && (!Array.isArray(body.areas) || body.areas.length<1 || body.areas.length>5 || new Set(body.areas).size!==body.areas.length || body.areas.some(area=>!['mentalidad','bienestar','profesional','finanzas','relaciones'].includes(area)))) return null;
+  } else if (key === 'recovery') {
+    if (!only(['obstacle','action','when','day']) || !text('obstacle',1000) || !text('action',500,true) || !text('when',500,true) || !Number.isInteger(body.day) || body.day<1 || body.day>maxDays) return null;
   } else {
     const match = /^(day|review):([1-9]\d{0,2})$/.exec(key);
     const day = Number(match?.[2]);
     if (!match || day > maxDays) return null;
     if (match[1] === 'day') {
-      if (!only(['state', 'action', 'notes', 'obstacle', 'nextStep', 'minutes', 'energy']) || !['complete', 'partial', 'missed'].includes(body.state) || !text('action', 500, true) || !text('notes', 4000) || !text('obstacle', 1000) || !text('nextStep', 500) || !dose()) return null;
-    } else if (!(day % 7 === 0 || day === maxDays) || !only(['worked', 'difficult', 'nextStep']) || !text('worked', 1500) || !text('difficult', 1500) || !text('nextStep', 1500, true)) return null;
+      if (!only(['state', 'action', 'notes', 'obstacle', 'nextStep', 'minutes', 'energy', 'area']) || !['complete', 'partial', 'missed'].includes(body.state) || !text('action', 500, true) || !text('notes', 4000) || !text('obstacle', 1000) || !text('nextStep', 500) || !dose()) return null;
+      if (body.area !== undefined && !['mentalidad','finanzas','relaciones','bienestar','profesional'].includes(body.area)) return null;
+    } else if (!reviewDays(maxDays).includes(day) || !only(['worked', 'difficult', 'nextStep','balance']) || !text('worked', 1500) || !text('difficult', 1500) || !text('nextStep', 1500, true) || body.balance !== undefined && !validBalance(body.balance)) return null;
   }
   // Store an ordinary JSON object, never executable markup or an object prototype.
   return JSON.parse(JSON.stringify(body));

@@ -92,6 +92,24 @@ test('area tools retain purchase isolation and optimistic concurrency across dev
   assert.equal((await f.call('record',{key,body,revision:1},'',{origin:'https://other.example'})).status,403);
 });
 
+test('connected system records persist with purchase boundaries and conflict protection',async t=>{
+  const f=await fixture(t,{plan:'metodo'});
+  const balance=Object.fromEntries(['mentalidad','finanzas','relaciones','bienestar','profesional'].map(key=>[key,'attention']));
+  const drafts=[
+    ['profile',{...profile,baseline:balance}],
+    ['tool:100:relaciones',{area:'relaciones',first:'Un horario',second:'Acordarlo',third:'¿Podemos conversar?'}],
+    ['review:30',{worked:'Intenté tres veces',difficult:'Cansancio',nextStep:'Reducir',balance}],
+    ['review:60',{worked:'Un avance',difficult:'Tiempo',nextStep:'Repetir',balance}],
+    ['recovery',{obstacle:'Una pausa',action:'Una frase',when:'Mañana',day:61}],
+  ];
+  for(const[key,body]of drafts){assert.equal((await f.call('record',{key,body,revision:0})).status,200,key);assert.equal((await f.call('record',{key,body,revision:0})).status,409,key);}
+  const snapshot=await(await f.call('session')).json();assert.equal(snapshot.records.length,5);assert.equal(snapshot.records.find(row=>row.key==='profile').body.baseline.finanzas,'attention');
+  const alpha=await fixture(t);
+  for(const[key,body]of drafts.slice(1))assert.equal((await alpha.call('record',{key,body,revision:0})).status,400,key);
+  await f.store.reconcile(f.order,{id:'CAPTURE123'},'refunded',now());
+  assert.equal((await f.call('record',{key:'recovery',body:drafts[4][1],revision:1})).status,401);
+});
+
 test('the exact Git program supplies 100 complete lessons and dose-aware actions', () => {
   assert.equal(program.lessons.length, 100);
   for (const [index, lesson] of program.lessons.entries()) {

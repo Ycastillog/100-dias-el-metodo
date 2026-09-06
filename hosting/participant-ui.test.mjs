@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
+import * as systemTools from './system-tools.js';
+import * as guidedTools from './guided-tools.js';
 
 const source=await readFile(new URL('participant.js',import.meta.url),'utf8');
 // Run the real event handlers with a small in-memory form adapter. No browser,
@@ -15,7 +17,7 @@ function harness(){
   const form=(id,fields)=>{const node=get(id);node.fields=fields.map(name=>({name,value:'',disabled:false}));node.elements={namedItem:name=>node.fields.find(f=>f.name===name)};return node;};
   form('#journal-form',['action','state','notes','obstacle','nextStep']);form('#tool-form',['first','second','third']);form('#review-form',['worked','difficult','nextStep']);form('#profile-form',['goal','minutes','energy']);
   class FormAdapter {constructor(node){this.entries=node.fields.filter(f=>!f.disabled && f.checked!==false).map(f=>[f.name,f.value]);}[Symbol.iterator](){return this.entries[Symbol.iterator]();}getAll(key){return this.entries.filter(([k])=>k===key).map(([,v])=>v);}}
-  const context={document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
+  const context={...systemTools,...guidedTools,document:{querySelector:get,querySelectorAll:()=>[],createElement:make},window:{addEventListener(){},confirm:()=>true},FormData:FormAdapter,fetch:async()=>{throw new Error('No fake response set');},location:{},console,URL,Blob,setTimeout,clearTimeout};
   vm.createContext(context);
   const instrumented=source.replace(/^import .*;\r?\n/gm,'').replace(/  start\(\);\r?\n\}\)\(\);/,`  globalThis.subject={api,save,renderReview,renderDay,records,setSession:value=>{session=value;},invalidate:()=>{sessionGeneration++;},setDayData:value=>{dayData=value;},review:()=>renderedReview}; renderHistory=()=>{};\n})();`);
   vm.runInContext(instrumented,context);
@@ -24,8 +26,8 @@ function harness(){
 }
 test('cancelling review navigation restores the rendered review and saves to its original key',async()=>{
   const h=harness(),select=h.get('#review-select'),form=h.get('#review-form');
-  h.subject.records.set('review:7',{body:{worked:'First week',difficult:'x',nextStep:'a'}});
-  h.subject.records.set('review:14',{body:{worked:'Second week',difficult:'y',nextStep:'b'}});
+  h.subject.records.set('review:7',{key:'review:7',body:{worked:'First week',difficult:'x',nextStep:'a'}});
+  h.subject.records.set('review:14',{key:'review:14',body:{worked:'Second week',difficult:'y',nextStep:'b'}});
   select.value='7';h.subject.renderReview();select.value='14';select.handlers.change();
   form.dataset.dirty='true';h.context.window.confirm=()=>false;select.value='7';select.handlers.change();
   assert.equal(select.value,'14');assert.equal(h.subject.review(),'14');assert.equal(form.elements.namedItem('worked').value,'Second week');

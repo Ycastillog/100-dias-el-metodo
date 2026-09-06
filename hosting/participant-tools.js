@@ -39,7 +39,7 @@ export function formatJournalExport(snapshot, exportedAt = new Date().toISOStrin
     lines.push('Guardado: ' + row.updatedAt, '');
   }
   const reviews = rows.filter(row => /^review:\d+$/.test(row.key)).sort((a,b) => Number(a.key.split(':')[1]) - Number(b.key.split(':')[1]));
-  const tools=rows.filter(row=>/^tool:[1-7]:/.test(row.key)).sort((a,b)=>Number(a.key.split(':')[1])-Number(b.key.split(':')[1]) || a.key.localeCompare(b.key));
+  const tools=rows.filter(row=>/^tool:[1-9]\d{0,2}:/.test(row.key)).sort((a,b)=>Number(a.key.split(':')[1])-Number(b.key.split(':')[1]) || a.key.localeCompare(b.key));
   if(tools.length) lines.push('MIS HERRAMIENTAS POR ÁREA','');
   for(const row of tools){lines.push('DÍA '+row.key.split(':')[1]+' · '+(AREAS[row.body.area]?.name || row.body.area));if(row.body.area==='finanzas'){for(const payment of row.body.rows)if(payment.name.trim())lines.push(payment.name+' | '+(payment.amount||'importe pendiente')+' '+row.body.currency+' | '+(payment.date||'fecha pendiente'));}lines.push(toolPreview(row.body),'Guardado: '+row.updatedAt,'');}
   for (const row of reviews) {

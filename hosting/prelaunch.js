@@ -11,6 +11,7 @@
   })();
   const send = (name, detail = '') => fetch('/api/events', {
     method: 'POST',
+    credentials: 'omit',
     headers: { 'Content-Type': 'application/json' },
     keepalive: true,
     body: JSON.stringify({ name, detail, path: location.pathname, referrerHost, ...campaign }),
@@ -20,7 +21,14 @@
     field.value = campaign[field.dataset.utmField] || '';
   });
   document.querySelectorAll('[data-track]').forEach((element) => {
-    element.addEventListener('click', () => send(element.dataset.track, element.dataset.detail || ''));
+    element.addEventListener('click', () => send(element.dataset.track, element.dataset.detail || element.dataset.interest || ''));
+  });
+  // Carry only campaign labels to the same-site checkout; never copy other
+  // query parameters or persist browser identifiers.
+  document.querySelectorAll('a[href^="/comprar?plan="]').forEach(link=>{
+    const target=new URL(link.getAttribute('href'),location.origin);
+    for(const key of ['source','medium','campaign'])if(campaign[key])target.searchParams.set('utm_'+key,campaign[key].slice(0,120));
+    link.href=target.pathname+target.search;
   });
 
   // Enhance the existing POST form; without JavaScript the server flow still works.

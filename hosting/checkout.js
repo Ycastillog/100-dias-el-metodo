@@ -62,6 +62,12 @@
   });
   const requested = new URLSearchParams(location.search).get('plan');
   if (['alpha', 'metodo'].includes(requested)) form.querySelector('input[value="' + requested + '"]').checked = true;
+  const trackCheckout=(name,plan)=>{
+    const query=new URLSearchParams(location.search);let referrerHost='';
+    try{referrerHost=document.referrer?new URL(document.referrer).hostname:'';}catch{}
+    fetch('/api/events',{method:'POST',credentials:'omit',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({name,detail:['alpha','metodo'].includes(plan)?plan:'',path:'/comprar',source:query.get('utm_source')||'',medium:query.get('utm_medium')||'',campaign:query.get('utm_campaign')||'',referrerHost})}).catch(()=>{});
+  };
+  trackCheckout('checkout_view',requested);
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (next.disabled || busy || !form.reportValidity()) return;
@@ -71,6 +77,7 @@
       if (!config.enabled) throw new Error(messages.sales_closed);
       const data = new FormData(form);
       const selection = { plan: data.get('plan'), email: data.get('email'), requestId: crypto.randomUUID(), terms: data.get('terms') === 'on' };
+      trackCheckout('checkout_start',selection.plan);
       if (!window.paypal) await new Promise((resolve, reject) => {
         const script = document.createElement('script');
         const params = new URLSearchParams({ 'client-id': config.clientId, currency: 'USD', intent: 'capture', components: 'buttons', locale: 'es_ES', 'disable-funding': 'paylater,credit' });

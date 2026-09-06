@@ -1,5 +1,6 @@
 import { practiceSequence, journeyMap, formatJournalExport } from './participant-tools.js';
 import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, toolPreview } from './guided-tools.js';
+import { BALANCE_STATES, AREA_CONTEXT, reviewDays, systemSnapshot, formatSystemReport } from './system-tools.js';
 
 (() => {
   const $ = selector => document.querySelector(selector);
@@ -28,9 +29,47 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
   const formValues = form => Object.fromEntries(new FormData(form));
   const formSnapshot = form => JSON.stringify([...new FormData(form)]);
   function profileValues() { return records.get('profile')?.body || { goal: '', evidence: '', firstStep: '', minutes: 10, energy: 'steady', lifeArea: 'mentalidad' }; }
-  function hasDraft() { return ['#journal-form', '#profile-form', '#review-form', '#tool-form'].some(id => $(id).dataset.dirty === 'true'); }
+  function hasDraft() { return ['#journal-form', '#profile-form', '#review-form', '#tool-form', '#recovery-form'].some(id => $(id).dataset.dirty === 'true'); }
   function mayNavigate() { if (writing || loadingDay) { tell('Espera a que termine la carga o el guardado antes de cambiar.'); return false; } return !hasDraft() || window.confirm('Hay cambios sin guardar. ¿Quieres continuar sin guardarlos?'); }
   function element(tag, text, className) { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; if (className) node.className = className; return node; }
+  function renderBalance(container, prefix, values = {}) {
+    const target=$(container); target.replaceChildren();
+    for (const area of AREA_ORDER) {
+      const row=element('div',undefined,'balance-row'),label=element('label',AREA_CONTEXT[area].question),select=element('select');
+      select.name=prefix+':'+area; select.id=prefix+'-'+area; label.htmlFor=select.id;
+      for(const [key,text] of Object.entries(BALANCE_STATES)){const option=element('option',text);option.value=key;select.append(option);}
+      select.value=values[area] || ''; row.append(label,select);target.append(row);
+    }
+  }
+  function valuesWithBalance(form,prefix) {
+    const values=formValues(form);values[prefix]={};
+    for(const key of AREA_ORDER){values[prefix][key]=values[prefix+':'+key] || '';delete values[prefix+':'+key];}
+    return values;
+  }
+  function renderSystem() {
+    if(!session)return;
+    const state=systemSnapshot(records,session.plan.days),grid=$('#system-areas');grid.replaceChildren();
+    for(const [index,area] of state.areas.entries()){
+      const card=element('article',undefined,'system-area');
+      card.append(element('p',String(index+1).padStart(2,'0')+' / '+area.name,'eyebrow'),element('h3',area.title));
+      card.append(element('p',area.latest?toolPreview(area.latest.body):area.purpose,area.latest?'system-tool-text':'muted'));
+      card.append(element('p',area.latest?'Última versión: '+date(area.latest.updatedAt):'Todavía no guardaste esta herramienta.','fine'));
+      const button=element('button',area.latest?'Abrir mi herramienta →':'Preparar mi herramienta →','quiet');button.type='button';
+      button.addEventListener('click',async()=>{if(!mayNavigate())return;await renderDay(day,area.key);if(displayedArea!==area.key||!dayData)return;const target=$('#tool-section');target.scrollIntoView({block:'start'});$('#tool-title').setAttribute('tabindex','-1');$('#tool-title').focus({preventScroll:true});});
+      card.append(button);grid.append(card);
+    }
+    const report=$('#system-report');report.replaceChildren();
+    report.append(element('p',`${state.recorded} días con registro · ${state.counts.complete} completados · ${state.counts.partial} parciales · ${state.counts.missed} sin avance.`,'report-counts'));
+    const table=element('table',undefined,'balance-table'),caption=element('caption','Mi punto de partida y mi última revisión valorada'),head=element('thead'),headRow=element('tr');
+    for(const text of ['Área','Al empezar','Última valoración']){const cell=element('th',text);cell.scope='col';headRow.append(cell);}head.append(headRow);table.append(caption,head);
+    const body=element('tbody');
+    for(const area of state.areas){const row=element('tr'),name=element('th',area.name);name.scope='row';row.append(name,element('td',area.baseline),element('td',area.current?area.current+' · Día '+area.reviewDay:'Sin revisión valorada'));body.append(row);}table.append(body);
+    const wrapper=element('div',undefined,'table-scroll');wrapper.append(table);report.append(wrapper,element('p','Estas valoraciones son tuyas. Los registros anteriores sin área identificada se conservan sin asignarles una retrospectivamente.','fine'));
+    const milestones=element('div',undefined,'milestone-actions');
+    for(const d of (session.plan.days===14?[7,14]:[7,30,60,100])){const button=element('button','Día '+d+' · '+(records.has('review:'+d)?'Revisión guardada':'Revisar'),'quiet');button.type='button';button.addEventListener('click',()=>{if(!mayNavigate())return;$('#review-select').value=String(d);renderReview();$('#weekly-section').scrollIntoView({block:'start'});$('#worked').focus({preventScroll:true});});milestones.append(button);}
+    report.append(milestones);
+    const last=state.reviews.at(-1);report.append(element('h3','Mi siguiente decisión'),element('p',last?.body.nextStep || 'Aparecerá aquí cuando guardes una revisión. Al cerrar, escribe qué mantendrás y cuándo volverás a revisarlo.','continuity-note'));
+  }
   function renderDirection() {
     const profile = profileValues(), ready = records.has('profile');
     $('#direction-goal').textContent = ready ? profile.goal : 'Todavía no lo definiste.';
@@ -62,7 +101,7 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
       for (const [key, title] of [['notes', 'Lo que ocurrió'], ['obstacle', 'Dificultad'], ['nextStep', 'Siguiente paso']]) if (record.body[key]) item.append(element('p', title + ': ' + record.body[key]));
       item.append(element('p', 'Guardado: ' + date(record.updatedAt), 'record-date')); container.append(item);
     }
-    const tools=[...records.values()].filter(record=>/^tool:[1-7]:/.test(record.key)).sort((a,b)=>Number(b.key.split(':')[1])-Number(a.key.split(':')[1]));
+    const tools=[...records.values()].filter(record=>/^tool:[1-9]\d{0,2}:/.test(record.key)).sort((a,b)=>Number(b.key.split(':')[1])-Number(a.key.split(':')[1]));
     if(tools.length)container.append(element('h3','Mis herramientas guardadas'));
     for(const record of tools){
       const item=element('details',undefined,'saved-tool'),number=Number(record.key.split(':')[1]);
@@ -75,6 +114,7 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
     $('#start-record').textContent = days.length ? 'Ya tienes un registro: continúa tu práctica' : 'Haz una acción y guarda tu primer registro';
     renderDirection();
     renderOverview();
+    renderSystem();
   }
   function renderOverview() {
     if (!session) return;
@@ -83,21 +123,22 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
     $('#today-area').textContent = 'Foco de hoy · '+area.name;
     const profile = profileValues(), task = dayData?.guide?.task || dayData?.lesson.task || 'Una práctica para aprender, hacer y revisar.';
     $('#today-title').textContent = records.has('profile') ? 'Día ' + day + ' · ' + (dayData?.lesson.theme || 'Tu siguiente práctica') : 'Primero, define hacia dónde vas.';
-    $('#today-description').textContent = records.has('profile') ? `Para avanzar hacia «${profile.goal}», hoy: ${task}` : 'En el Día 0 elegirás un norte, una señal observable y el área que necesita dirección primero.';
+    $('#today-description').textContent = records.has('profile') ? task : 'En el Día 0 mirarás las cinco áreas y elegirás una dirección y una señal para reconocer avance.';
     $('#continue-practice').textContent = records.has('profile') ? 'Ir a mi práctica →' : 'Definir mi brújula →';
-    $('#today-context').textContent = records.has('profile') ? `${area.name} es el foco de hoy. Tu área principal sigue siendo ${AREAS[profile.lifeArea]?.name || area.name}.` : 'Después recibirás una acción por día y revisarás tu evidencia cada siete días.';
-    $('#week-summary').textContent = summary.weekRecorded + ' de 7 días con registro en tu primera semana.';
-    for (const state of ['complete','partial','missed']) $('#count-'+state).textContent=String(summary.weekCounts[state]);
+    $('#today-context').textContent = records.has('profile') ? `${profile.minutes} minutos · Hoy trabajas ${area.name.toLowerCase()}. Las siguientes prácticas conectan las demás áreas elegidas.` : 'Después recibirás una acción por día y revisarás tu evidencia cada siete días.';
+    const weekStart=Math.floor((day-1)/7)*7+1,weekEnd=Math.min(weekStart+6,session.plan.days);
+    const weekRows=[...records.values()].filter(row=>/^day:/.test(row.key)&&Number(row.key.slice(4))>=weekStart&&Number(row.key.slice(4))<=weekEnd);
+    $('#week-label').textContent='Mi semana · Días '+weekStart+'–'+weekEnd;
+    $('#week-summary').textContent = weekRows.length + ' de '+(weekEnd-weekStart+1)+' días con registro en esta semana.';
+    for (const state of ['complete','partial','missed']) $('#count-'+state).textContent=String(weekRows.filter(row=>row.body.state===state).length);
     const nav=$('#week-days'); nav.replaceChildren();
-    for(let d=1;d<=Math.min(7,session.plan.days);d++) {
+    for(let d=weekStart;d<=weekEnd;d++) {
       const saved=records.get('day:'+d)?.body.state;
       const btn=element('button',String(d),saved?'week-day '+saved:'week-day'); btn.type='button';
       const label={complete:'completado',partial:'parcial',missed:'sin avance'}[saved] || 'sin registro';
       btn.setAttribute('aria-label','Día '+d+' · '+label); if(d===day)btn.setAttribute('aria-current','step');
       btn.addEventListener('click',()=>{if(d!==day && mayNavigate())renderDay(d);}); nav.append(btn);
     }
-    const areas=$('#area-review');areas.replaceChildren();
-    for(const key of chosenAreas(profileValues())) {const total=[...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===key).length;const item=element('div');item.append(element('strong',AREAS[key].name),element('p',total+' herramientas guardadas'));areas.append(item);}
   }
   function toolBody() {
     const values=formValues($('#tool-form'));
@@ -110,9 +151,8 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
   }
   function updateToolPreview() { $('#tool-preview').textContent=toolPreview(toolBody()) || 'Tu preparación aparecerá aquí mientras completas los campos.'; }
   function renderTool() {
-    const section=$('#tool-section'); section.hidden=day>7;
-    if(day>7) { $('#tool-form').dataset.dirty=''; return; }
-    const area=AREAS[displayedArea]; $('#tool-area').textContent=area.name; $('#tool-title').textContent=area.title;
+    const section=$('#tool-section'); section.hidden=false;
+    const area=AREAS[displayedArea]; $('#tool-area').textContent=area.name; $('#tool-title').textContent=AREA_CONTEXT[displayedArea].title;
     $('#tool-intro').textContent=displayedArea==='finanzas' ? 'Anota hasta tres compromisos en una misma moneda. El total solo suma lo escrito; no comprueba tu cuenta ni marca nada como pagado.' : displayedArea==='relaciones' ? 'Ensaya una petición para una conversación segura. No se envía a nadie. Si hay amenazas o violencia, prioriza tu seguridad y busca apoyo; no tienes que iniciar esa conversación.' : 'Haz visible una acción, el momento de intentarla y una alternativa pequeña. Puedes volver a ajustarla.';
     const fields=$('#tool-fields'); fields.replaceChildren();
     const input=(name,type,label,placeholder,required=false)=>{
@@ -127,10 +167,12 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
       for(const [key,text] of [['DOP','Pesos dominicanos · DOP'],['USD','Dólares · USD'],['EUR','Euros · EUR']]){const o=element('option',text);o.value=key;currency.append(o);}fields.append(label,currency);
       for(let i=0;i<3;i++){const row=element('fieldset',undefined,'payment-row');row.append(element('legend','Pago '+(i+1)),input('name'+i,'text','Concepto','Sin números de cuenta',i===0),input('amount'+i,'number','Importe','0.00'),input('date'+i,'date','Vencimiento'));fields.append(row);}
     } else area.labels.forEach((label,i)=>fields.append(input(['first','second','third'][i],'textarea',label,area.prompts[i],i===0)));
-    fillTool(records.get(toolKey(day,displayedArea))?.body);
-    $('#reuse-tool').hidden=!previousTool();
+    const saved=records.get(toolKey(day,displayedArea)),previous=previousTool();
+    fillTool(saved?.body || previous?.body);
+    if(!saved&&previous)$('#tool-form .save-status').textContent='Última herramienta cargada como punto de partida. Revísala y guarda para crear una versión en este día.';
+    $('#reuse-tool').hidden=!previous;
   }
-  function previousTool(){return [...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===displayedArea&&Number(r.key.split(':')[1])<day).sort((a,b)=>Number(b.key.split(':')[1])-Number(a.key.split(':')[1]))[0];}
+  function previousTool(){return [...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===displayedArea&&r.key!==toolKey(day,displayedArea)).sort((a,b)=>(Date.parse(b.updatedAt)||0)-(Date.parse(a.updatedAt)||0) || Number(b.key.split(':')[1])-Number(a.key.split(':')[1]))[0];}
   function renderGuide(guide) {
     $('#lesson-audio').pause();$('#lesson-video').pause();$('#audio-status').textContent='';
     $('#guided-lesson').hidden=!guide;$('#lesson-audio-wrap').hidden=!guide?.audio;$('#lesson-video-wrap').hidden=!guide?.video;
@@ -140,8 +182,15 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
     $('#audio-transcript').textContent=guide.transcript||'';
     if(guide.audio)$('#lesson-audio').src=guide.audio;if(guide.video)$('#lesson-video').src=guide.video;
   }
-  function renderReview() { const profile=profileValues();renderedReview=$('#review-select').value;fill($('#review-form'), records.get('review:' + renderedReview)?.body);$('#review-direction').textContent=records.has('profile')?`Tu norte: ${profile.goal} · Evidencia que elegiste observar: ${profile.evidence || 'aún no definida'}.`:'Define primero tu brújula en el Día 0 para saber con qué comparar tus registros.'; }
-  function lockPractice(locked){for(const selector of ['#journal-form','#tool-form','#profile-form'])$(selector).querySelectorAll('input,textarea,select,button').forEach(field=>field.disabled=locked);}
+  function renderReview() {
+    const profile=profileValues();renderedReview=$('#review-select').value;const saved=records.get('review:' + renderedReview)?.body;fill($('#review-form'),saved);
+    renderBalance('#review-balance-fields','balance',saved?.balance);
+    $('#review-direction').textContent=records.has('profile')?`Tu norte: ${profile.goal} · Evidencia que elegiste observar: ${profile.evidence || 'aún no definida'}.`:'Define primero tu punto de partida en el Día 0 para saber con qué comparar tus registros.';
+    $('#review-next-label').textContent=Number(renderedReview)===session?.plan.days?'¿Qué mantendré al terminar y cuándo volveré a revisarlo?':'¿Qué ajustaré o mantendré desde ahora?';
+    const number=Number(renderedReview),from=number===30||number===60?number-29:number===100?61:Math.max(1,number-6),areas=$('#area-review');areas.replaceChildren();
+    for(const key of AREA_ORDER){const relevant=[...records.values()].filter(r=>r.key.startsWith('tool:')&&r.body.area===key&&Number(r.key.split(':')[1])>=from&&Number(r.key.split(':')[1])<=number);const item=element('div');item.append(element('strong',AREAS[key].name),element('p',relevant.length+' herramientas guardadas · Días '+from+'–'+number));areas.append(item);}
+  }
+  function lockPractice(locked){for(const selector of ['#journal-form','#tool-form','#profile-form','#recovery-form'])$(selector).querySelectorAll('input,textarea,select,button').forEach(field=>field.disabled=locked);if(!locked)syncPrimaryAreaChoice();}
   async function renderDay(nextDay,requestedArea) {
     const number = ++loadNumber;
     loadingDay=true;lockPractice(true);
@@ -153,13 +202,13 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
       day = nextDay; dayData = data; $('#day-select').value = String(day);
       displayedArea=data.area || requestedArea || focusArea(day,profileValues());
       const switcher=$('#area-switcher');switcher.replaceChildren();
-      for(const key of chosenAreas(profileValues())) {const button=element('button',AREAS[key].name,'quiet');button.type='button';button.setAttribute('aria-pressed',String(key===displayedArea));button.addEventListener('click',()=>{if(key!==displayedArea&&mayNavigate())renderDay(day,key);});switcher.append(button);}
+      for(const key of [...new Set([...chosenAreas(profileValues()),displayedArea])]) {const button=element('button',AREAS[key].name,'quiet');button.type='button';button.setAttribute('aria-pressed',String(key===displayedArea));button.addEventListener('click',()=>{if(key!==displayedArea&&mayNavigate())renderDay(day,key);});switcher.append(button);}
       $('#area-context').textContent='El recorrido alterna tus áreas. Puedes cambiar el foco de hoy; las herramientas guardadas de cada área se conservan por separado.';
       const { lesson, practice } = data;
       $('#day-label').textContent = 'Día ' + day + ' de ' + session.plan.days + ' · ' + lesson.phase;
       $('#day-title').textContent = lesson.theme; $('#day-principle').textContent = lesson.principle;
       const profile=profileValues();
-      $('#day-direction').textContent=records.has('profile')?`Conexión con tu norte: hoy trabajas ${AREAS[displayedArea].name.toLowerCase()} para acercarte a «${profile.goal}». Al terminar, observa si apareció esta evidencia: ${profile.evidence || 'un avance concreto que puedas describir'}.`:'Completa el Día 0 para conectar cada práctica con una dirección personal.';
+      $('#day-direction').textContent=records.has('profile')?`Tu dirección: ${profile.goal}. En ${AREAS[displayedArea].name.toLowerCase()}, tu herramienta sirve para ${AREA_CONTEXT[displayedArea].purpose.toLowerCase()} Al terminar, observa qué conexión tiene este intento con la señal que elegiste: ${profile.evidence || 'un avance que puedas describir'}.`:'Completa el Día 0 para conectar cada práctica con tu situación y una dirección personal.';
       $('#day-question').textContent = data.guide?.reflection || lesson.question;
       const sequence = practiceSequence(data.guide ? { action:data.guide.task } : lesson, profileValues().minutes);
       if(data.guide) sequence.steps[1].text=data.guide.activity;
@@ -215,9 +264,11 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
       for (const phase of journeyMap(loaded.plan.days)) {
         const item = element('li'); item.append(element('strong', 'Días ' + phase.from + '–' + phase.to + ' · ' + phase.title), element('p', phase.description)); roadmap.append(item);
       }
-      const reviews = loaded.days.filter(value => value.day % 7 === 0 || value.day === loaded.plan.days);
-      $('#review-select').replaceChildren(...reviews.map(value => { const option = element('option', 'Día ' + value.day + (value.day === loaded.plan.days ? ' · Cierre del recorrido' : ' · Revisión semanal')); option.value = value.day; return option; }));
+      const reviews = loaded.days.filter(value => reviewDays(loaded.plan.days).includes(value.day));
+      $('#review-select').replaceChildren(...reviews.map(value => { const option = element('option', 'Día ' + value.day + (value.day === loaded.plan.days ? ' · Cierre del recorrido' : value.day===30||value.day===60?' · Hito de etapa':' · Revisión semanal')); option.value = value.day; return option; }));
       fill($('#profile-form'), profileValues());
+      renderBalance('#baseline-fields','baseline',profileValues().baseline);
+      fill($('#recovery-form'),records.get('recovery')?.body);
       const areaChoices=$('#profile-areas');areaChoices.replaceChildren();
       for(const key of AREA_ORDER){const label=element('label'),checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.name='areas';checkbox.value=key;checkbox.checked=chosenAreas(profileValues()).includes(key);label.append(checkbox,element('span',AREAS[key].name));areaChoices.append(label);}
       syncPrimaryAreaChoice();renderDirection();
@@ -229,14 +280,14 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
   }
   $('#redeem-form').addEventListener('submit', async event => {
     event.preventDefault(); const button = event.currentTarget.querySelector('button'); if (button.disabled) return; button.disabled = true;
-    if(hasDraft()){download(JSON.stringify({notice:'Borradores sin guardar. Revisa antes de copiarlos a tu recorrido.',forms:Object.fromEntries(['journal','profile','review','tool'].filter(name=>$('#'+name+'-form').dataset.dirty==='true').map(name=>[name,formValues($('#'+name+'-form'))]))},null,2),'mis-borradores-sin-guardar.json','application/json');if(!window.confirm('Descargamos una copia de tus borradores. ¿Quieres entrar y cargar los registros de este código?')){button.disabled=false;return;}}
+    if(hasDraft()){download(JSON.stringify({notice:'Borradores sin guardar. Revisa antes de copiarlos a tu recorrido.',forms:Object.fromEntries(['journal','profile','review','tool','recovery'].filter(name=>$('#'+name+'-form').dataset.dirty==='true').map(name=>[name,formValues($('#'+name+'-form'))]))},null,2),'mis-borradores-sin-guardar.json','application/json');if(!window.confirm('Descargamos una copia de tus borradores. ¿Quieres entrar y cargar los registros de este código?')){button.disabled=false;return;}}
     try { await api('redeem', { code: $('#access-code').value.trim() }); $('#access-code').value = ''; await start(); }
     catch (error) { tell(error.message); } finally { button.disabled = false; }
   });
-  $('#journal-form').addEventListener('submit', async event => { event.preventDefault(); if (dayData) await save(event.currentTarget, 'day:' + day, { ...formValues(event.currentTarget), minutes: profileValues().minutes, energy: profileValues().energy }); });
-  $('#review-form').addEventListener('submit', async event => { event.preventDefault(); if(renderedReview)await save(event.currentTarget, 'review:' + renderedReview, formValues(event.currentTarget)); });
+  $('#journal-form').addEventListener('submit', async event => { event.preventDefault(); if (dayData) await save(event.currentTarget, 'day:' + day, { ...formValues(event.currentTarget), minutes: profileValues().minutes, energy: profileValues().energy, area:displayedArea }); });
+  $('#review-form').addEventListener('submit', async event => { event.preventDefault(); if(renderedReview)await save(event.currentTarget, 'review:' + renderedReview, valuesWithBalance(event.currentTarget,'balance')); });
   $('#profile-form').addEventListener('submit', async event => {
-    event.preventDefault(); const form = event.currentTarget; const values = formValues(form); values.minutes = Number(values.minutes);
+    event.preventDefault(); const form = event.currentTarget; const values = valuesWithBalance(form,'baseline'); values.minutes = Number(values.minutes);
     values.areas=[...new Set([values.lifeArea,...new FormData(form).getAll('areas')])];
     if($('#journal-form').dataset.dirty==='true'||$('#tool-form').dataset.dirty==='true'){tell('Guarda primero tu registro y tu herramienta para cambiar tus áreas sin perder el trabajo.');return;}
     if (await save(form, 'profile', values)) { $('#profile-panel').open = false; if ($('#journal-form').dataset.dirty !== 'true') await renderDay(day); else tell('Áreas guardadas. Tu borrador del día sigue aquí; guárdalo antes de recargar la práctica.'); }
@@ -253,9 +304,12 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
   $('#previous-day').addEventListener('click', () => { if (day > 1 && mayNavigate()) renderDay(day - 1); });
   $('#next-day').addEventListener('click', () => { if (day < session.plan.days && mayNavigate()) renderDay(day + 1); });
   $('#review-select').addEventListener('change', () => { if (mayNavigate()) renderReview(); else $('#review-select').value = renderedReview; });
-  for (const id of ['#journal-form', '#profile-form', '#review-form', '#tool-form']) $(id).addEventListener('input', () => { $(id).dataset.dirty = 'true'; });
+  for (const id of ['#journal-form', '#profile-form', '#review-form', '#tool-form','#recovery-form']) $(id).addEventListener('input', () => { $(id).dataset.dirty = 'true'; });
   $('#tool-form').addEventListener('input',updateToolPreview);
-  $('#tool-form').addEventListener('submit',async event=>{event.preventDefault();if(dayData&&day<=7)await save(event.currentTarget,toolKey(day,displayedArea),toolBody());});
+  $('#tool-form').addEventListener('submit',async event=>{event.preventDefault();if(dayData)await save(event.currentTarget,toolKey(day,displayedArea),toolBody());});
+  $('#recovery-form').addEventListener('submit',async event=>{event.preventDefault();await save(event.currentTarget,'recovery',{...formValues(event.currentTarget),day});});
+  $('#use-recovery').addEventListener('click',()=>{if(!session||!dayData||!mayNavigate())return;const recovery=records.get('recovery')?.body;if(!recovery){tell('Guarda primero tu plan para retomar.');return;}fill($('#journal-form'),{...formValues($('#journal-form')),action:recovery.action,state:'partial',nextStep:recovery.when});$('#journal-form').dataset.dirty='true';$('#journal-form .save-status').textContent='Borrador preparado, todavía sin guardar. Haz el intento y registra después cómo quedó.';$('#journal-form').scrollIntoView({block:'start'});$('#action').focus({preventScroll:true});});
+  $('#export-system').addEventListener('click',async()=>{try{const latest=await api('session');download(formatSystemReport(latest),'mi-sistema-personal-100-dias.txt');tell('Informe descargado con tus registros confirmados.');}catch(error){tell(error.message);}});
   $('#reuse-tool').addEventListener('click',()=>{const previous=previousTool();if(previous&&mayNavigate()){fillTool(previous.body);$('#tool-form').dataset.dirty='true';$('#tool-form .save-status').textContent='Copia preparada. Revísala y guarda para conservarla en este día.';}});
   $('#continue-practice').addEventListener('click',()=>{const target=records.has('profile')?$('#day-section'):$('#profile-panel');if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});(records.has('profile')?$('#day-title'):$('#goal')).focus({preventScroll:true});});
   $('#lesson-audio').addEventListener('error',()=>{$('#audio-status').textContent='No se pudo cargar el audio. Puedes leer la transcripción y continuar.';});
@@ -266,6 +320,6 @@ import { AREAS, AREA_ORDER, chosenAreas, focusArea, toolKey, summarizeJourney, t
   });
   $('#export-backup').addEventListener('click', async () => { try { const latest = await api('session'); download(JSON.stringify({ program: '100 Días — El Método', exportedAt: new Date().toISOString(), records: latest.records }, null, 2), 'mis-registros-100-dias.json', 'application/json'); tell('Copia de datos descargada. No incluye el código de acceso ni los borradores.'); } catch (error) { tell(error.message); } });
   $('#recover-code').addEventListener('click', async () => { try { const { access } = await api('access'); download('100 Días — El Método\nCódigo privado: ' + access.code + '\nEntrar: ' + location.origin + access.url + '\nAcceso hasta: ' + date(access.expiresAt) + '\nNo compartas este archivo.\n', 'mi-acceso-100-dias.txt'); } catch (error) { tell(error.message); } });
-  $('#logout').addEventListener('click', async () => { if (!mayNavigate()) return; try { await api('logout', {}); sessionGeneration++; for (const id of ['#journal-form', '#profile-form', '#review-form','#tool-form']) $(id).dataset.dirty = ''; try { localStorage.removeItem('metodo-checkout-last-order-v1'); } catch {} location.reload(); } catch (error) { tell(error.message); } });
+  $('#logout').addEventListener('click', async () => { if (!mayNavigate()) return; try { await api('logout', {}); sessionGeneration++; for (const id of ['#journal-form', '#profile-form', '#review-form','#tool-form','#recovery-form']) $(id).dataset.dirty = ''; try { localStorage.removeItem('metodo-checkout-last-order-v1'); } catch {} location.reload(); } catch (error) { tell(error.message); } });
   start();
 })();

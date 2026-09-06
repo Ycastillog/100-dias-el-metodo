@@ -40,7 +40,7 @@ export function toolPreview(body) {
 }
 
 export function validToolRecord(key,body,maxDays) {
-  const match=/^tool:([1-7]):(mentalidad|profesional|bienestar|relaciones|finanzas)$/.exec(key);
+  const match=/^tool:([1-9]\d{0,2}):(mentalidad|profesional|bienestar|relaciones|finanzas)$/.exec(key);
   if (!match || Number(match[1])>maxDays || body.area!==match[2]) return false;
   const only=keys=>Object.keys(body).every(k=>keys.includes(k));
   if(body.area!=='finanzas') return only(['area','first','second','third']) && ['first','second','third'].every(k=>typeof body[k]==='string' && body[k].length<=1500) && !!body.first.trim();

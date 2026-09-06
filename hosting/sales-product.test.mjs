@@ -54,17 +54,20 @@ test('every purchase link selects a real one-time offer with its price and durat
   assert.doesNotMatch(html, /USD (?:79|297)/);
 });
 
-test('interactive route preview explains the product without saving data or inventing results', async () => {
-  const preview = html.match(/<section class="product-preview route-builder"[\s\S]*?<\/section>/)[0];
-  assert.match(preview, /Vista interactiva · No guarda datos/);
-  assert.match(preview, /¿Dónde necesitas dirección primero?/);
-  assert.match(preview, /Tu señal de avance/);
-  assert.match(preview, /guía del día \+ acción concreta \+ herramienta o diario privado \+ revisión semanal/);
-  assert.match(preview, /<(?:input|select)\b/);
-  assert.doesNotMatch(preview, /Guardado correctamente|Testimonio|Cliente verificado/);
+test('interactive week preview is labelled and makes all eight example days explorable without collecting data', async () => {
+  assert.match(html, /Ejemplo interactivo · No guarda datos/);
+  assert.equal([...html.matchAll(/data-demo-day="\d"/g)].length, 8);
+  assert.match(html, /LO QUE HACES/);
+  assert.match(html, /LO QUE TE QUEDA/);
+  assert.match(html, /Ejemplos ilustrativos de uso, no resultados de clientes/);
   const script = await readFile(new URL('sales-experience.js', import.meta.url), 'utf8');
-  assert.doesNotMatch(script, /fetch\(|localStorage|sessionStorage|document\.cookie/);
-  new vm.Script(script);
+  assert.doesNotMatch(script, /fetch\(|localStorage|sessionStorage|document\.cookie|innerHTML/);
+  const nodes=new Map(), buttons=Array.from({length:8},(_,i)=>({dataset:{demoDay:String(i)},attributes:{},setAttribute(k,v){this.attributes[k]=v;},addEventListener(_,handler){this.click=handler;}}));
+  const node=()=>({textContent:'',children:[],append(...children){this.children.push(...children);},replaceChildren(...children){this.children=children;}});
+  const demo={querySelector(id){if(!nodes.has(id))nodes.set(id,node());return nodes.get(id);},querySelectorAll(){return buttons;}};
+  vm.runInNewContext(script,{document:{querySelector:()=>demo,createElement:node}});
+  for(let day=0;day<8;day++){buttons[day].click();assert.match(nodes.get('#demo-area').textContent,new RegExp('DÍA '+day));assert.equal(buttons.filter(b=>b.attributes['aria-pressed']==='true').length,1);assert.equal(nodes.get('#demo-artifact').children[0].children.length,3);}
+  buttons[2].click();assert.match(nodes.get('#demo-connection').textContent,/no conecta cuentas/);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
   assert.match(html, /no una transformación garantizada/);
 });
